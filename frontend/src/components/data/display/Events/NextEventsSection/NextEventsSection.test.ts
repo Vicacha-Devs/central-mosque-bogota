@@ -54,9 +54,9 @@ describe("NextEventsSection", () => {
 
       const cardHeadings = getAllByRole(root, "heading", { level: 3 });
       expect(cardHeadings.length).toBe(props.events.length);
-      expect(cardHeadings.map((h) => h.textContent.trim())).toEqual(
-        expect.arrayContaining(props.events.map((e) => e.title))
-      );
+      const renderedTitles = cardHeadings.map((h) => h.textContent.trim());
+      const expectedTitles = props.events.map((e) => e.title);
+      expect(renderedTitles).toEqual(expect.arrayContaining(expectedTitles));
     } finally {
       await close();
     }

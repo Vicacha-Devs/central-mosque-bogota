@@ -1,0 +1,53 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import EventsCatalogSection from "@components/data/display/Events/EventsCatalogSection/EventsCatalogSection.astro";
+import CommunityBroadcastChannelsSection from "@components/data/display/CommunityBroadcastChannelsSection/CommunityBroadcastChannelsSection.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { fetchStrapiData } from "@services/strapi";
+import { getLocalizedMocks } from "@utils/data.mocks";
+import type { TEvent } from "@utils/models/events";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localizedMocks = getLocalizedMocks(lang);
+
+const [eventEntries, cmsOccurrencesRes] = await Promise.all([
+  getCollection("events", (entry) => entry.data.locale === lang),
+  fetchStrapiData<{ data?: Array<TEvent> }>("events/occurrences", {
+    locale: lang,
+  }).catch(() => null),
+]);
+
+const allEvents: Array<TEvent>
+  = Array.isArray(cmsOccurrencesRes?.data) && cmsOccurrencesRes.data.length > 0
+    ? cmsOccurrencesRes.data
+    : eventEntries.length > 0
+      ? eventEntries.map((entry) => entry.data)
+      : localizedMocks.events;
+---
+
+<Layout
+  title={t("events-page.title")}
+  description={t("events-page.subtitle")}
+>
+  <!-- Hero Section -->
+  <PageHeroBanner
+    badgeIcon="calendar_month"
+    badgeLabel={t("events-page.badge")}
+    title={t("events-page.title")}
+    subtitle={t("events-page.subtitle")}
+  />
+
+  <!-- Category Filter Buttons & Events Grid -->
+  <EventsCatalogSection lang={lang} events={allEvents} />
+
+  <CommunityBroadcastChannelsSection lang={lang} />
+</Layout>

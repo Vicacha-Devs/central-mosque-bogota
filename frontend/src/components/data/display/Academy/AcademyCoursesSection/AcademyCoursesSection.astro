@@ -1,7 +1,7 @@
 ---
-import HomeSection from '@components/layout/HomeSection/HomeSection.astro'
-import AcademyCourseCard from './AcademyCourseCard.astro'
-import type { TAcademyArticle } from '@utils/models/academy'
+import HomeSection from "@components/layout/HomeSection/HomeSection.astro";
+import AcademyCourseCard from "./AcademyCourseCard.astro";
+import type { TAcademyArticle } from "@utils/models/academy";
 
 /**
  * @component AcademyCoursesSection
@@ -71,27 +71,27 @@ interface Props {
   /**
    * Section heading
    */
-  title: string
+  title: string;
   /**
    * Supporting text shown below the heading
    */
-  description: string
+  description: string;
   /**
    * URL for the section CTA link
    */
-  academyHref: string
+  academyHref: string;
   /**
    * Label for the section CTA link
    */
-  ctaLabel: string
+  ctaLabel: string;
   /**
    * Label used for each course card CTA button
    */
-  articleCtaLabel: string
+  articleCtaLabel: string;
   /**
    * List of academy articles displayed as cards
    */
-  articles: Array<TAcademyArticle>
+  articles: Array<TAcademyArticle>;
 }
 
 const { title, description, academyHref, ctaLabel, articleCtaLabel, articles }
@@ -106,7 +106,7 @@ const { title, description, academyHref, ctaLabel, articleCtaLabel, articles }
   bodyClass="grid grid-cols-1 gap-8 md:grid-cols-3"
 >
   {
-    articles.map(article => (
+    articles.map((article) => (
       <li>
         <AcademyCourseCard {...article} ctaLabel={articleCtaLabel} />
       </li>

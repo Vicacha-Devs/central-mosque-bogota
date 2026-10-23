@@ -1,23 +1,31 @@
 ---
+import { getCollection, getLiveEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import HeroHijri from "@components/layout/HeroHijri/HeroHijri.astro";
 import DailyPrayerTime from "@components/data/display/DailyPrayTime/DailyPrayTime.astro";
+import DailyDuaModal from "@components/data/display/DailyDuaModal/DailyDuaModal.astro";
 import CommunityServicesSection from "@components/data/display/CommunityServicesSection/CommunityServicesSection.astro";
 import AcademyCoursesSection from "@components/data/display/Academy/AcademyCoursesSection/AcademyCoursesSection.astro";
 import NextEventsSection from "@components/data/display/Events/NextEventsSection/NextEventsSection.astro";
+import EventSpotlightDock from "@components/data/display/Events/EventSpotlightDock/EventSpotlightDock.astro";
 import MediaHighlightsSection from "@components/data/display/Media/MediaHighlightsSection/MediaHighlightsSection.astro";
-import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
 import DonationImpactSection from "@components/data/display/Donations/DonationImpactSection/DonationImpactSection.astro";
 import { ui, type TLang } from "@i18n/ui";
 import {
-  academyCourses,
-  defaultServices,
-  events,
-  featuredDonation,
-  mediaHighlights,
-} from "@utils/data.mocks";
-import { getLiveEntry } from "astro:content";
+  fetchIslamSuiteFromStrapi,
+  fetchStrapiData,
+} from "@services/strapi";
+import { getLocalizedMocks } from "@utils/data.mocks";
+import type { TDailyDua } from "@utils/localized-mocks";
 import type { TAcademyArticle } from "@utils/models/academy";
+import type { TEvent, TEventSpotlight } from "@utils/models/events";
+import type { TCommunityService } from "@utils/models/services";
+import type { TMediaHighlight } from "@utils/models/media";
 
 export function getStaticPaths() {
   const langs = Object.keys(ui) as Array<TLang>;
@@ -26,31 +34,137 @@ export function getStaticPaths() {
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const localizedMocks = getLocalizedMocks(lang);
+const {
+  heroPhrase,
+  dailyDua: fallbackDailyDua,
+  eventSpotlights: fallbackSpotlights,
+  featuredDonation: fallbackFeaturedDonation,
+} = localizedMocks;
+
+type TCmsCampaignSummary = {
+  title?: string;
+  description?: string;
+  goalAmount?: number;
+  raisedAmount?: number;
+  currency?: string;
+  coverUrl?: string;
+  imageUrl?: string;
+};
+
+const [
+  articleEntries,
+  eventEntries,
+  serviceEntries,
+  mediaEntries,
+  cmsSpotlightsRes,
+  cmsDailyInspiration,
+  cmsCampaignsRes,
+] = await Promise.all([
+  getCollection("articles", (entry) => entry.data.locale === lang),
+  getCollection("events", (entry) => entry.data.locale === lang),
+  getCollection("communityServices", (entry) => entry.data.locale === lang),
+  getCollection("mediaHighlights", (entry) => entry.data.locale === lang),
+  fetchStrapiData<{ data?: TEventSpotlight[] }>("events/spotlights", {
+    locale: lang,
+  }).catch(() => null),
+  fetchIslamSuiteFromStrapi<Partial<TDailyDua>>("daily-inspiration", {
+    locale: lang,
+  }),
+  fetchStrapiData<{ data?: TCmsCampaignSummary[] }>("donations/campaigns", {
+    locale: lang,
+  }).catch(() => null),
+]);
+
+const dailyDua: TDailyDua
+  = cmsDailyInspiration?.arabic && cmsDailyInspiration?.translation
+    ? {
+        ...fallbackDailyDua,
+        ...cmsDailyInspiration,
+      }
+    : fallbackDailyDua;
+
+const primaryCmsCampaign
+  = Array.isArray(cmsCampaignsRes?.data) && cmsCampaignsRes.data.length > 0
+    ? cmsCampaignsRes.data[0]
+    : null;
+
+const featuredDonation
+  = primaryCmsCampaign?.title
+    && typeof primaryCmsCampaign.goalAmount === "number"
+    && typeof primaryCmsCampaign.raisedAmount === "number"
+    ? {
+        title: primaryCmsCampaign.title,
+        description:
+          primaryCmsCampaign.description
+          ?? fallbackFeaturedDonation.description,
+        goal: `$${primaryCmsCampaign.goalAmount.toLocaleString(lang)} ${primaryCmsCampaign.currency ?? "COP"}`,
+        raised: `$${primaryCmsCampaign.raisedAmount.toLocaleString(lang)} ${primaryCmsCampaign.currency ?? "COP"}`,
+        ctaHref: fallbackFeaturedDonation.ctaHref,
+        imageAlt: primaryCmsCampaign.title,
+        imageUrl:
+          primaryCmsCampaign.coverUrl
+          ?? primaryCmsCampaign.imageUrl
+          ?? fallbackFeaturedDonation.imageUrl,
+      }
+    : fallbackFeaturedDonation;
+
+const eventSpotlights: TEventSpotlight[]
+  = Array.isArray(cmsSpotlightsRes?.data) && cmsSpotlightsRes.data.length > 0
+    ? cmsSpotlightsRes.data
+    : fallbackSpotlights;
+
+const academyCourses
+  = articleEntries.length > 0
+    ? articleEntries.map((entry) => entry.data)
+    : localizedMocks.academyCourses;
+
+const events: Array<TEvent>
+  = eventEntries.length > 0
+    ? eventEntries.map((entry) => entry.data)
+    : localizedMocks.events;
+
+const defaultServices: Array<TCommunityService>
+  = serviceEntries.length > 0
+    ? serviceEntries.map((entry) => entry.data)
+    : localizedMocks.defaultServices;
+
+const mediaHighlights: Array<TMediaHighlight>
+  = mediaEntries.length > 0
+    ? mediaEntries.map((entry) => ({
+        title: entry.data.title,
+        href: entry.data.href,
+        imageUrl: entry.data.imageUrl,
+        imageAlt: entry.data.imageAlt,
+      }))
+    : localizedMocks.mediaHighlights;
 
 const live = await getLiveEntry("prayerTimes", {
   languageCode: lang,
 });
 
-const { entry, error } = live;
+const { entry } = live;
 
-// TODO: refactor to get default values from entry
 const { times, location, hijriDate, currentDate } = entry!.data || {};
 ---
 
 <Layout>
   <HeroHijri
     imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuDdlrd8AprY013bVQSvLjSWaOwTysETvmudIyet1ui8bdnFC2mjZ1b5okpi2OJ9rqogESejmF4lJRn8efBrCuCrJcxw9DU7VIr03J1sT4lIhkty48r2AqpqaH069FoNZ5-xcE2ZXPcFDt2HXcaLaHtFY5swEUTuMeikRCAw6RFG_iB1VLOJMmIOLxfFbwudkXDYHFbFajgfAC6WR6QPpMCSmvGVwiv1G7w56_9SUpKGblDJo4l4GYZLxuc-WOiJFjPnUpSaZYKovL4"
-    imageAlt="Beautiful Mosque Architecture"
+    imageAlt={t("home.hero-image-alt")}
     hijriDate={hijriDate}
     currentDate={currentDate}
-    phrase="Unidos en oración y comunidad. Bienvenidos al corazón de la espiritualidad islámica en Bogotá."
+    phrase={heroPhrase}
   />
   <DailyPrayerTime
+    lang={lang}
     location={location}
     hijriDate={hijriDate}
     currentDate={currentDate}
     schedule={times}
   />
+  <DailyDuaModal lang={lang} dua={dailyDua} />
   <CommunityServicesSection
     title={t("services.community-services")}
     services={defaultServices}
@@ -62,7 +176,7 @@ const { times, location, hijriDate, currentDate } = entry!.data || {};
         description={t("academy.home-description")}
         ctaLabel={t("academy.home-cta-label")}
         articleCtaLabel={t("academy.article-cta-label")}
-        academyHref="/academy"
+        academyHref={translatePath("/islam-and-faith")}
         articles={academyCourses.map<TAcademyArticle>((courses) => ({
           ...courses,
           ctaLabel: t("academy.article-cta-label"),
@@ -73,9 +187,11 @@ const { times, location, hijriDate, currentDate } = entry!.data || {};
   {
     events.length > 0 && (
       <NextEventsSection
+        lang={lang}
         title={t("events.next-events")}
         description={t("events.join-us")}
         ctaLabel={t("events.see-calendar")}
+        calendarHref={translatePath("/events-and-programs")}
         events={events}
       />
     )
@@ -87,10 +203,19 @@ const { times, location, hijriDate, currentDate } = entry!.data || {};
         description={t("media-highlights.description")}
         cardCtaLabel={t("media-highlights.cta-card")}
         ctaLabel={t("media-highlights.cta")}
-        mediaHref="/media"
+        mediaHref={translatePath("/media")}
         highlights={mediaHighlights}
       />
     )
   }
-  {featuredDonation && <DonationImpactSection {...featuredDonation} />}
+  {
+    featuredDonation && (
+      <DonationImpactSection lang={lang} {...featuredDonation} />
+    )
+  }
+  {
+    eventSpotlights && eventSpotlights.length > 0 && (
+      <EventSpotlightDock lang={lang} spotlights={eventSpotlights} />
+    )
+  }
 </Layout>

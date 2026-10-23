@@ -94,9 +94,9 @@ type InitDownloadPdfButtonsOptions = {
 
 const initializedButtons = new WeakSet<HTMLButtonElement>();
 
-export function initDownloadPdfButtons(
-  options: InitDownloadPdfButtonsOptions = {}
-): void {
+type TInitPdfOpts = InitDownloadPdfButtonsOptions;
+
+export function initDownloadPdfButtons(options: TInitPdfOpts = {}): void {
   const buttonSelector =
     options.buttonSelector ?? "[data-action='download-pdf']";
 

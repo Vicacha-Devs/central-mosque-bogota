@@ -1,0 +1,311 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Checkbox } from "@/components/starwind/checkbox";
+import { Input } from "@/components/starwind/input";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { fetchStrapiData } from "@services/strapi";
+import type { TLang } from "@i18n/ui";
+import {
+  FALLBACK_BROADCAST_ARCHIVE,
+  FALLBACK_BROADCAST_CHANNELS,
+  getBroadcastChannelsCopy,
+  type TArchiveBroadcastItem,
+  type TPublicChannelItem,
+} from "@utils/inbox-mocks";
+import BroadcastArchiveCard from "./BroadcastArchiveCard.astro";
+import BroadcastChannelCard from "./BroadcastChannelCard.astro";
+
+/**
+ * @component CommunityBroadcastChannelsSection
+ * @title Community Broadcast Channels & Segmented Newsletter Section
+ * @description Omnichannel broadcast hub (`broadcasts/public/channels` & `broadcasts/public/archive`) displaying direct WhatsApp/Telegram channels, recent dispatch archives, and a segmented double opt-in subscription form (`POST /api/submissions` with `formType: "newsletter"`).
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `channels`: optional preloaded list of `TPublicChannelItem` (skips Strapi fetch when provided)
+ * - `archiveItems`: optional preloaded list of `TArchiveBroadcastItem` (skips Strapi fetch when provided)
+ *
+ * @preview
+ *
+ * <CommunityBroadcastChannelsSection lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import CommunityBroadcastChannelsSection from "@components/data/display/CommunityBroadcastChannelsSection/CommunityBroadcastChannelsSection.astro";
+ * ---
+ *
+ * <CommunityBroadcastChannelsSection lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Optional preloaded broadcast channels (bypasses Strapi network call when provided).
+   */
+  channels?: TPublicChannelItem[];
+  /**
+   * Optional preloaded broadcast archive items (bypasses Strapi network call when provided).
+   */
+  archiveItems?: TArchiveBroadcastItem[];
+}
+
+const {
+  lang,
+  channels: propChannels,
+  archiveItems: propArchiveItems,
+} = Astro.props;
+const copy = getBroadcastChannelsCopy(lang);
+
+let channels: TPublicChannelItem[]
+  = propChannels && propChannels.length > 0
+    ? propChannels
+    : FALLBACK_BROADCAST_CHANNELS;
+let archiveItems: TArchiveBroadcastItem[]
+  = propArchiveItems && propArchiveItems.length > 0
+    ? propArchiveItems
+    : FALLBACK_BROADCAST_ARCHIVE;
+
+if (!propChannels || !propArchiveItems) {
+  try {
+    if (!propChannels) {
+      const cmsChannels = await fetchStrapiData<{
+        publicChannelLinks?: TPublicChannelItem[];
+      }>("broadcasts/public/channels", { locale: lang });
+      if (
+        cmsChannels?.publicChannelLinks
+        && Array.isArray(cmsChannels.publicChannelLinks)
+        && cmsChannels.publicChannelLinks.length > 0
+      ) {
+        channels = cmsChannels.publicChannelLinks;
+      }
+    }
+
+    if (!propArchiveItems) {
+      const cmsArchive = await fetchStrapiData<TArchiveBroadcastItem[]>(
+        "broadcasts/public/archive",
+        { locale: lang }
+      );
+      if (Array.isArray(cmsArchive) && cmsArchive.length > 0) {
+        archiveItems = cmsArchive;
+      }
+    }
+  }
+  catch {
+    // Use localized fallbacks when Strapi backend is offline
+  }
+}
+---
+
+<section
+  id="community-broadcast-channels"
+  aria-labelledby="broadcast-section-heading"
+  class="
+    rounded-3xl border border-slate-200 bg-white p-6 shadow-sm
+    sm:p-10
+    dark:border-slate-800 dark:bg-slate-900
+  "
+>
+  <div class="mx-auto max-w-4xl text-center">
+    <Badge
+      variant="success"
+      class="
+        mb-3 gap-2 bg-emerald-50 px-4 py-1 text-xs font-bold tracking-wider
+        text-emerald-800 uppercase
+        dark:bg-emerald-950/60 dark:text-emerald-300
+      "
+    >
+      <Icon name="campaign" class="text-sm" />
+      <span>{copy.badge}</span>
+    </Badge>
+    <h2
+      id="broadcast-section-heading"
+      class="
+        mb-3 text-2xl font-extrabold text-slate-900
+        sm:text-3xl
+        dark:text-white
+      "
+    >
+      {copy.title}
+    </h2>
+    <p class="
+      mx-auto mb-8 max-w-2xl text-sm text-slate-600
+      sm:text-base
+      dark:text-slate-400
+    "
+    >
+      {copy.subtitle}
+    </p>
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-8
+    lg:grid-cols-12
+  "
+  >
+    <!-- Left Column: Direct Channels + Recent Broadcast Archive -->
+    <div class="
+      space-y-6
+      lg:col-span-7
+    "
+    >
+      <h3 class="
+        text-lg font-bold text-slate-900
+        dark:text-white
+      "
+      >
+        {copy.channelsHeading}
+      </h3>
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        {
+          channels.map((ch) => (
+            <BroadcastChannelCard
+              channel={ch}
+              lang={lang}
+              joinLabel={copy.joinBtn}
+            />
+          ))
+        }
+      </div>
+
+      <div class="pt-2">
+        <h3 class="
+          mb-3 text-lg font-bold text-slate-900
+          dark:text-white
+        "
+        >
+          {copy.archiveHeading}
+        </h3>
+        <div class="space-y-3">
+          {
+            archiveItems.slice(0, 3).map((item) => (
+              <BroadcastArchiveCard item={item} lang={lang} />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Segmented Topic Subscription Form -->
+    <div
+      class="
+        rounded-2xl border border-emerald-200 bg-emerald-50/40 p-6
+        lg:col-span-5
+        dark:border-emerald-900/50 dark:bg-emerald-950/20
+      "
+    >
+      <h3 class="
+        mb-2 text-lg font-bold text-slate-900
+        dark:text-white
+      "
+      >
+        {copy.subscribeHeading}
+      </h3>
+      <p class="
+        mb-4 text-xs text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {copy.subscribeDesc}
+      </p>
+
+      <form id="mosque-broadcast-subscribe-form" class="space-y-4">
+        <input type="hidden" name="locale" value={lang} />
+        <div class="hidden" aria-hidden="true">
+          <label for="broadcast-website">Website</label>
+          <input
+            id="broadcast-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+        <div>
+          <Input
+            type="email"
+            name="email"
+            required
+            placeholder={copy.emailPlaceholder}
+            class="
+              rounded-xl bg-white
+              dark:bg-slate-900
+            "
+          />
+        </div>
+        <div>
+          <Input
+            type="tel"
+            name="phone"
+            placeholder={copy.phonePlaceholder}
+            class="
+              rounded-xl bg-white
+              dark:bg-slate-900
+            "
+          />
+        </div>
+
+        <fieldset class="space-y-2.5">
+          {
+            Object.entries(copy.topics).map(([topicKey, topicLabel]) => (
+              <Checkbox
+                id={`broadcast-topic-${topicKey}`}
+                name="topics"
+                value={topicKey}
+                variant="secondary"
+                size="sm"
+                checked={
+                  topicKey === "announcements" || topicKey === "ramadan_eid"
+                }
+                label={topicLabel}
+              />
+            ))
+          }
+        </fieldset>
+
+        <Button
+          type="submit"
+          variant="secondary"
+          class="
+            w-full justify-center rounded-xl bg-emerald-700 text-sm font-bold
+            text-white shadow-sm
+            hover:bg-emerald-800
+          "
+        >
+          {copy.submitBtn}
+        </Button>
+
+        <p
+          id="mosque-broadcast-subscribe-feedback"
+          role="status"
+          aria-live="polite"
+          data-success-msg={copy.successMsg}
+          class="
+            hidden rounded-xl bg-emerald-100 p-3 text-xs font-medium
+            text-emerald-900
+            dark:bg-emerald-900/40 dark:text-emerald-200
+          "
+        >
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  import {
+    initBroadcastSubscriptionForm,
+  } from "./community-broadcast-channels.controller";
+
+  initBroadcastSubscriptionForm();
+  document.addEventListener("astro:after-swap", initBroadcastSubscriptionForm);
+</script>

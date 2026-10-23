@@ -1,0 +1,168 @@
+---
+import { AspectRatio } from "@/components/starwind/aspect-ratio";
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent, CardFooter } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TResourceGalleryAlbum } from "@utils/resources-mocks";
+
+/**
+ * @component PhotoGalleryAlbumCard
+ * @title Photo Gallery Album Card
+ * @description Renders a single Strapi v5 Media Library photo album card with a 16:10 cover image, category and photo-count badges, photographer credit, Hijri/Gregorian date, and folder path footer.
+ *
+ * Props
+ * - `album`: gallery album metadata (`TResourceGalleryAlbum`)
+ * - `photosCountLabel`: localized label for photo count (e.g. `"fotos"`, `"photos"`)
+ * - `mediaFolderLabel`: localized label for the Strapi Media Library folder path
+ *
+ * @preview
+ *
+ * <div class="max-w-sm">
+ *   <PhotoGalleryAlbumCard
+ *     album={album}
+ *     photosCountLabel="fotos"
+ *     mediaFolderLabel="Carpeta Media Library"
+ *   />
+ * </div>
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import PhotoGalleryAlbumCard from "@components/data/display/Resources/PhotoGalleriesSection/PhotoGalleryAlbumCard.astro";
+ * import { getLocalizedGalleryAlbums, getResourcesHubCopy } from "@utils/resources-mocks";
+ *
+ * const copy = getResourcesHubCopy("es");
+ * const [album] = getLocalizedGalleryAlbums("es");
+ * ---
+ *
+ * <PhotoGalleryAlbumCard
+ *   album={album}
+ *   photosCountLabel={copy.photosCountLabel}
+ *   mediaFolderLabel={copy.mediaFolderLabel}
+ * />
+ * ```
+ */
+interface Props {
+  /**
+   * Gallery album item to render.
+   */
+  album: TResourceGalleryAlbum;
+  /**
+   * Localized label displayed next to the photo count badge.
+   */
+  photosCountLabel: string;
+  /**
+   * Localized label displayed next to the Strapi Media Library folder path.
+   */
+  mediaFolderLabel: string;
+}
+
+const { album, photosCountLabel, mediaFolderLabel } = Astro.props as Props;
+---
+
+<Card
+  class="
+    flex flex-col justify-between gap-0 overflow-hidden rounded-2xl
+    border-slate-200 bg-white py-0 shadow-sm transition-all
+    hover:shadow-md
+    dark:border-slate-800 dark:bg-slate-900
+  "
+>
+  <div>
+    <AspectRatio ratio={16 / 10} class="overflow-hidden">
+      <img
+        src={album.coverUrl}
+        alt={album.coverAlt}
+        loading="lazy"
+        class="
+          size-full object-cover transition-transform duration-300
+          hover:scale-105
+        "
+      />
+      <div
+        class="
+          absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent
+          to-transparent
+        "
+      />
+      <Badge
+        variant="secondary"
+        class="
+          absolute top-4 left-4 bg-secondary px-3 py-1 text-xs font-bold
+          text-white shadow-sm
+        "
+      >
+        {album.categoryLabel}
+      </Badge>
+      <Badge
+        variant="default"
+        class="
+          absolute right-4 bottom-3 gap-1 rounded-md bg-slate-950/80 px-2.5 py-1
+          text-xs font-bold text-amber-300
+        "
+      >
+        <Icon name="collections" class="text-xs" />
+        <span>
+          {album.photoCount}
+          {" "}
+          {photosCountLabel}
+        </span>
+      </Badge>
+    </AspectRatio>
+
+    <CardContent class="p-6">
+      <div
+        class="
+          mb-2 flex items-center justify-between text-xs text-slate-500
+          dark:text-slate-400
+        "
+      >
+        <span>{album.photographerCredit}</span>
+        <span>{album.secondaryDateFormatted}</span>
+      </div>
+      <h3 class="
+        text-lg font-bold text-slate-900
+        dark:text-white
+      "
+      >
+        {album.title}
+      </h3>
+      <p class="
+        mt-2 text-sm/relaxed text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {album.description}
+      </p>
+    </CardContent>
+  </div>
+
+  <div>
+    <Separator class="
+      bg-slate-100
+      dark:bg-slate-800
+    "
+    />
+    <CardFooter
+      class="
+        flex items-center justify-between px-6 py-3.5 text-xs text-slate-500
+        dark:text-slate-400
+      "
+    >
+      <span>
+        {mediaFolderLabel}
+        :
+      </span>
+      <code
+        class="
+          rounded-sm bg-slate-100 px-2 py-0.5 font-mono text-[11px]
+          dark:bg-slate-800
+        "
+      >
+        {album.mediaFolderPath}
+      </code>
+    </CardFooter>
+  </div>
+</Card>

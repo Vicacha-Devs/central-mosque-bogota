@@ -1,8 +1,8 @@
 ---
-import Button from "@components/actions/Button/Button.astro";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TAcademyArticle } from "@utils/models/academy";
-import { cn } from "@utils/styles.utils";
 import { Image } from "astro:assets";
 
 /**
@@ -54,14 +54,6 @@ const {
   ctaLabel,
   ctaIcon,
 } = Astro.props as Props;
-
-const badgeClasses = cn(
-  `
-    rounded-full px-3 py-1 text-[10px] font-extrabold tracking-widest text-white
-    uppercase shadow-lg
-  `,
-  badgeTone === "secondary" ? "bg-secondary" : "bg-primary",
-);
 ---
 
 <article class="group relative h-[450px] overflow-hidden rounded-2xl shadow-lg">
@@ -83,7 +75,14 @@ const badgeClasses = cn(
   >
   </div>
   <div class="absolute top-6 left-6">
-    <span class={badgeClasses}>{badgeLabel}</span>
+    <Badge
+      variant={badgeTone === "secondary" ? "secondary" : "primary"}
+      class="
+        px-3 py-1 text-[10px] font-extrabold tracking-widest uppercase shadow-lg
+      "
+    >
+      {badgeLabel}
+    </Badge>
   </div>
   <div class="absolute inset-x-8 bottom-8">
     <h3
@@ -98,12 +97,10 @@ const badgeClasses = cn(
       {description}
     </p>
     <Button
-      as="a"
       href={href}
       class="w-full rounded-xl tracking-widest uppercase"
       size="sm"
-      color="secondary"
-      variant="solid"
+      variant="secondary"
     >
       {ctaLabel}
       <Icon name={ctaIcon} class="text-[18px]" />

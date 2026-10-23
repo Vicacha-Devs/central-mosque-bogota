@@ -11,6 +11,13 @@ import "@/styles/global.css";
 export default definePreview({
   addons: [addonA11y(), addonDocs(), addonThemes()],
   decorators: [
+    (Story) => `
+        <div
+          class='bg-background font-display text-slate-900
+            transition-colors duration-300 dark:text-slate-100'>
+            ${Story()}
+        </div>
+      `,
     withThemeByDataAttribute<AstroRenderer>({
       themes: {
         light: "light",
@@ -21,6 +28,15 @@ export default definePreview({
     }),
   ],
   parameters: {
+    backgrounds: {
+      options: {
+        dark: { name: "Dark", value: "oklch(0.208 0.042 265.755)" },
+        light: {
+          name: "Light",
+          value: "oklch(0.984 0.003 247.858)",
+        },
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

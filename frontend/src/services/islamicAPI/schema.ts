@@ -16,3 +16,21 @@ export const prayerTimeEntrySchema = z.object({
     isha: z.string(),
   }),
 });
+
+export const zakatNisabEntrySchema = z.object({
+  fetchedAt: z.string(),
+  standard: z.enum(["classical", "common"]),
+  currency: z.string(),
+  weightUnit: z.string(),
+  zakatRate: z.number(),
+  gold: z.object({
+    weightGrams: z.number(),
+    unitPrice: z.number(),
+    nisabAmount: z.number(),
+  }),
+  silver: z.object({
+    weightGrams: z.number(),
+    unitPrice: z.number(),
+    nisabAmount: z.number(),
+  }),
+});

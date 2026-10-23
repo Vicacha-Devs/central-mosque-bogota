@@ -1,5 +1,5 @@
 ---
-import Button from "@components/actions/Button/Button.astro";
+import { Button } from "@/components/starwind/button";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { ComponentProps } from "astro/types";
 import { cn } from "@utils/styles.utils";
@@ -69,7 +69,7 @@ type DownloadPDFLabels = {
 
 interface DownloadPDFProps extends Pick<
   ComponentProps<typeof Button>,
-  "class" | "variant" | "color"
+  "class" | "variant" | "size"
 > {
   /**
    * The title of the document to be downloaded.
@@ -88,85 +88,52 @@ interface DownloadPDFProps extends Pick<
    * Falls back to a plain English label set when the prop is omitted entirely.
    */
   labels?: Partial<DownloadPDFLabels>;
+  /**
+   * Legacy alias for labels
+   */
+  label?: Partial<DownloadPDFLabels>;
 }
 
 const {
   documentTitle,
   targetAttr = "data-document-prayer-calendar-table",
   marginMm = 10,
-  variant = "solid",
-  color = "primary",
+  variant = "primary",
+  size = "md",
   class: className = "",
-  labels = {
-    aria: "Download",
-    button: "Download",
-    loading: "Loading",
-    error: "Error",
-  },
+  labels,
+  label,
 } = Astro.props as DownloadPDFProps;
+
+const effectiveLabels = labels ?? label ?? {
+  aria: "Download",
+  button: "Download",
+  loading: "Loading",
+  error: "Error",
+};
 ---
 
 <Button
-  color={color}
   variant={variant}
+  size={size}
   data-action="download-pdf"
   class={cn("print:hidden", className)}
   data-document-title={documentTitle}
   data-target-attr={targetAttr}
   data-pdf-margin-mm={marginMm}
-  data-loading-label={labels.loading}
-  data-error-label={labels.error}
-  ariaLabel={labels.aria}
+  data-loading-label={effectiveLabels.loading}
+  data-error-label={effectiveLabels.error}
+  aria-label={effectiveLabels.aria}
 >
   <Icon name="picture_as_pdf" />
-  <span>{labels.button}</span>
+  <span>{effectiveLabels.button}</span>
 </Button>
 
 <script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   import { initDownloadPdfButtons } from "./download-pdf.controller";
 
   const setup = () => initDownloadPdfButtons();
 
   document.addEventListener("DOMContentLoaded", setup);
   document.addEventListener("astro:after-swap", setup);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>

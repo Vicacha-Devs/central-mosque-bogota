@@ -1,0 +1,39 @@
+import { tv } from "tailwind-variants";
+
+export const input = tv({
+  base: [
+    `
+      w-full rounded-md border border-input bg-transparent text-foreground
+      shadow-xs
+      dark:bg-input/30
+    `,
+    `
+      transition-[color,box-shadow]
+      focus-visible:border-outline focus-visible:ring-3
+      focus-visible:ring-outline/50
+    `,
+    `
+      file:my-auto file:mr-4 file:h-full file:border-0 file:bg-transparent
+      file:text-sm file:font-medium file:text-foreground
+    `,
+    "disabled:cursor-not-allowed disabled:opacity-50",
+    `
+      aria-invalid:border-error
+      aria-invalid:focus-visible:ring-error/40
+    `,
+    `
+      peer
+      placeholder:text-muted-foreground
+    `,
+  ],
+  variants: {
+    size: {
+      sm: "h-9 px-2 text-sm",
+      md: "h-11 px-3 text-base",
+      lg: `
+      h-12 px-4 text-lg
+    `,
+    },
+  },
+  defaultVariants: { size: "md" },
+});

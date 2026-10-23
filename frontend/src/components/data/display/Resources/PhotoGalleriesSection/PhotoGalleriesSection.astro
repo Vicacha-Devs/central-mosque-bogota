@@ -1,0 +1,104 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl } from "@i18n/utils";
+import {
+  getResourcesHubCopy,
+  type TResourceGalleryAlbum,
+  type TResourcesHubCopy,
+} from "@utils/resources-mocks";
+import PhotoGalleryAlbumCard from "./PhotoGalleryAlbumCard.astro";
+
+/**
+ * @component PhotoGalleriesSection
+ * @title Photo Galleries Section
+ * @description Renders a 3-column grid of `PhotoGalleryAlbumCard` items synchronized from Strapi v5 Media Library folders (`plugin::upload.folder`).
+ *
+ * Props
+ * - `lang`: optional locale code (`TLang`)
+ * - `copy`: optional localized section headings and labels (`TResourcesHubCopy`)
+ * - `albums`: array of gallery album items (`TResourceGalleryAlbum[]`)
+ *
+ * @preview
+ *
+ * <PhotoGalleriesSection albums={albums} />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import PhotoGalleriesSection from "@components/data/display/Resources/PhotoGalleriesSection/PhotoGalleriesSection.astro";
+ * import { getLocalizedGalleryAlbums } from "@utils/resources-mocks";
+ *
+ * const albums = getLocalizedGalleryAlbums("es");
+ * ---
+ *
+ * <PhotoGalleriesSection lang="es" albums={albums} />
+ * ```
+ */
+interface Props {
+  /**
+   * Optional locale override. Defaults to URL locale.
+   */
+  lang?: TLang;
+  /**
+   * Optional localized copy override for the Photo Galleries section header and card labels.
+   */
+  copy?: TResourcesHubCopy;
+  /**
+   * List of gallery albums to display.
+   */
+  albums: TResourceGalleryAlbum[];
+}
+
+const { lang: propLang, copy: propCopy, albums } = Astro.props as Props;
+const lang = propLang ?? getLangFromUrl(Astro.url);
+const copy = propCopy ?? getResourcesHubCopy(lang);
+---
+
+<section id="media-photo-galleries" class="space-y-8">
+  <div class="text-center">
+    <Badge
+      variant="secondary"
+      class="
+        mb-3 gap-2 bg-secondary/10 px-4 py-1 text-xs font-bold tracking-widest
+        text-secondary uppercase
+        dark:bg-blue-950/60 dark:text-blue-300
+      "
+    >
+      <Icon name="photo_library" class="text-sm" />
+      <span>{copy.galleriesBadge}</span>
+    </Badge>
+    <h2 class="
+      text-3xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {copy.galleriesTitle}
+    </h2>
+    <p class="
+      mx-auto mt-2 max-w-2xl text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {copy.galleriesSubtitle}
+    </p>
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-8
+    md:grid-cols-3
+  "
+  >
+    {
+      albums.map((album) => (
+        <PhotoGalleryAlbumCard
+          album={album}
+          photosCountLabel={copy.photosCountLabel}
+          mediaFolderLabel={copy.mediaFolderLabel}
+        />
+      ))
+    }
+  </div>
+</section>

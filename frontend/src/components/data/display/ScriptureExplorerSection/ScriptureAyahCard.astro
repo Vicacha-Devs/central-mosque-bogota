@@ -1,0 +1,141 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TScriptureAyahCard } from "@utils/islam-suite-mocks";
+
+/**
+ * @component ScriptureAyahCard
+ * @title Scripture Quranic Ayah Card
+ * @description Renders a curated Quranic Ayah card with Uthmani Arabic script (`translate="no"`), transliteration, translation, and audio recitation link.
+ *
+ * Props
+ * - `ayah`: Quranic Ayah card data (`TScriptureAyahCard`)
+ * - `listenRecitationLabel`: localized audio link label
+ *
+ * @preview
+ *
+ * <ScriptureAyahCard
+ *   ayah={{
+ *     id: "ayah-2-286",
+ *     referenceKey: "2:286",
+ *     surahNameAr: "سورة البقرة",
+ *     surahNameTranslit: "Al-Baqarah",
+ *     arabicUthmani: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",
+ *     transliteration: "Lā yukallifu Allāhu nafsan illā wus'ahā",
+ *     translation: "Allah no exige a ningún alma más allá de su capacidad.",
+ *     reflection: "Consuelo divino ante las pruebas cotidianas.",
+ *     audioUrl: "https://everyayah.com/data/Alafasy_128kbps/002286.mp3"
+ *   }}
+ *   listenRecitationLabel="Escuchar recitación"
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import ScriptureAyahCard from "@components/data/display/ScriptureExplorerSection/ScriptureAyahCard.astro";
+ * ---
+ *
+ * <ScriptureAyahCard ayah={ayahItem} listenRecitationLabel="Escuchar recitación" />
+ * ```
+ */
+interface Props {
+  /**
+   * Curated Quranic Ayah card model.
+   */
+  ayah: TScriptureAyahCard;
+  /**
+   * Localized label for the recitation audio link.
+   */
+  listenRecitationLabel: string;
+}
+
+const { ayah, listenRecitationLabel } = Astro.props;
+---
+
+<Card
+  class="
+    flex flex-col justify-between rounded-2xl border border-slate-200 bg-white
+    p-0 shadow-sm
+    dark:border-slate-800 dark:bg-slate-900
+  "
+  data-scripture-ayah-card={ayah.referenceKey}
+>
+  <CardContent class="flex h-full flex-col justify-between p-6">
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <Badge
+          variant="secondary"
+          class="
+            rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold
+            text-secondary
+            dark:bg-blue-400/15 dark:text-blue-300
+          "
+        >
+          {ayah.referenceKey}
+        </Badge>
+        <span
+          class="notranslate text-base font-bold text-primary"
+          dir="rtl"
+          lang="ar"
+          translate="no"
+        >
+          {ayah.surahNameAr}
+        </span>
+      </div>
+
+      <p
+        class="
+          notranslate text-right text-lg/loose font-bold text-slate-900
+          dark:text-white
+        "
+        dir="rtl"
+        lang="ar"
+        translate="no"
+      >
+        {ayah.arabicUthmani}
+      </p>
+
+      <p class="
+        text-xs text-slate-500 italic
+        dark:text-slate-400
+      "
+      >
+        {ayah.transliteration}
+      </p>
+
+      <p
+        class="
+          notranslate text-sm/relaxed text-slate-700
+          dark:text-slate-200
+        "
+        translate="no"
+      >
+        {ayah.translation}
+      </p>
+    </div>
+
+    <div class="mt-6 space-y-3">
+      <Separator class="
+        bg-slate-100
+        dark:bg-slate-800
+      "
+      />
+      <a
+        href={ayah.audioUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="
+          inline-flex items-center gap-1.5 text-xs font-bold text-secondary
+          hover:text-primary
+          dark:text-blue-300
+        "
+      >
+        <Icon name="volume_up" class="text-base" />
+        <span>{listenRecitationLabel}</span>
+      </a>
+    </div>
+  </CardContent>
+</Card>

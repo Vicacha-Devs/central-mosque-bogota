@@ -37,14 +37,13 @@ describe("CommunityServicesSection", () => {
       expect(
         getByRole(root, "heading", { level: 2, name: props.title })
       ).toBeInTheDocument();
-      expect(
-        getByText(root, props.services[0].description)
-      ).toBeInTheDocument();
+      const firstDesc = props.services[0].description;
+      expect(getByText(root, firstDesc)).toBeInTheDocument();
 
       const titles = getAllByRole(root, "heading", { level: 3 });
-      expect(titles.map((h) => h.textContent.trim())).toEqual(
-        expect.arrayContaining(props.services.map((s) => s.title))
-      );
+      const renderedTitles = titles.map((h) => h.textContent.trim());
+      const expectedTitles = props.services.map((s) => s.title);
+      expect(renderedTitles).toEqual(expect.arrayContaining(expectedTitles));
     } finally {
       await close();
     }

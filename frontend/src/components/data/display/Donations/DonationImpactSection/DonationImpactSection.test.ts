@@ -35,7 +35,7 @@ describe("DonationImpactSection", () => {
       const progressBar = getByRole(root, "progressbar", {
         name: projectLabel,
       });
-      expect(progressBar.getAttribute("value")).toBe("75");
+      expect(progressBar.getAttribute("aria-valuenow")).toBe("75");
       expect(getAllByText(root, /75\s*%/).length).toBeGreaterThan(0);
 
       expect(
@@ -75,7 +75,7 @@ describe("DonationImpactSection", () => {
       const progressBar = getByRole(root, "progressbar", {
         name: projectLabel,
       });
-      expect(progressBar.getAttribute("value")).toBe("100");
+      expect(progressBar.getAttribute("aria-valuenow")).toBe("100");
       expect(getAllByText(root, /100\s*%/).length).toBeGreaterThan(0);
     } finally {
       await close();
@@ -103,7 +103,7 @@ describe("DonationImpactSection", () => {
       const progressBar = getByRole(root, "progressbar", {
         name: projectLabel,
       });
-      expect(progressBar.getAttribute("value")).toBe("0");
+      expect(progressBar.getAttribute("aria-valuenow")).toBe("0");
       expect(getAllByText(root, /0\s*%/).length).toBeGreaterThan(0);
     } finally {
       await close();

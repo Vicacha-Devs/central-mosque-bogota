@@ -1,0 +1,318 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/starwind/breadcrumb";
+import { Button } from "@/components/starwind/button";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import EventVerticalCard from "@components/data/display/Events/EventVerticalCard/EventVerticalCard.astro";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import TiptapContent from "@components/data/display/TiptapContent/TiptapContent.astro";
+import type { TLang } from "@i18n/ui";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+import {
+  getDetailedEvents,
+  type TDetailedEvent,
+} from "@utils/localized-mocks";
+
+interface Props {
+  lang?: TLang;
+  eventItem?: TDetailedEvent & { richDescription?: string };
+  relatedEvents?: Array<TDetailedEvent & { richDescription?: string }>;
+}
+
+const {
+  lang: langProp,
+  eventItem: eventItemProp,
+  relatedEvents: relatedEventsProp,
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const fallbackEvents = getDetailedEvents(lang);
+const eventItem = eventItemProp ?? fallbackEvents[0];
+const relatedEvents
+  = relatedEventsProp
+    ?? fallbackEvents.filter((ev) => ev.slug !== eventItem.slug);
+---
+
+<div class="space-y-10">
+  <!-- Breadcrumb -->
+  <Breadcrumb>
+    <BreadcrumbList>
+      <BreadcrumbItem>
+        <BreadcrumbLink
+          href={translatePath("/events-and-programs")}
+          class="
+            inline-flex items-center gap-2 font-bold text-secondary
+            hover:text-primary
+            dark:text-blue-400
+          "
+        >
+          <Icon name="arrow_back" class="text-base" />
+          <span>{t("event-detail.back")}</span>
+        </BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator />
+      <BreadcrumbItem>
+        <BreadcrumbPage class="line-clamp-1 max-w-xs font-bold">
+          {eventItem.title}
+        </BreadcrumbPage>
+      </BreadcrumbItem>
+    </BreadcrumbList>
+  </Breadcrumb>
+
+  <!-- Hero Banner -->
+  <Card
+    class="
+      overflow-hidden rounded-3xl border border-slate-200 bg-white p-0 shadow-xl
+      dark:border-slate-800 dark:bg-slate-900
+    "
+  >
+    <div class="
+      grid grid-cols-1
+      lg:grid-cols-12
+    "
+    >
+      <div class="
+        relative min-h-72
+        lg:col-span-5
+      "
+      >
+        <img
+          src={eventItem.image}
+          alt={eventItem.title}
+          class="size-full object-cover"
+          loading="eager"
+        />
+        <div
+          class="
+            absolute top-4 left-4 rounded-2xl bg-secondary/95 px-4 py-2
+            text-center text-white shadow-lg backdrop-blur-sm
+          "
+        >
+          <span class="block text-xs font-bold uppercase opacity-80">
+            {eventItem.date.month}
+          </span>
+          <span class="block text-2xl font-extrabold">
+            {eventItem.date.day}
+          </span>
+        </div>
+      </div>
+
+      <div
+        class="
+          flex flex-col justify-center space-y-6 p-8
+          sm:p-12
+          lg:col-span-7
+        "
+      >
+        <div class="flex flex-wrap items-center gap-3">
+          <Badge
+            variant="primary"
+            class="
+              rounded-full bg-primary/10 px-3.5 py-1 text-xs font-extrabold
+              tracking-wider text-primary uppercase
+            "
+          >
+            {eventItem.category}
+          </Badge>
+          <span
+            class="
+              inline-flex items-center gap-1.5 text-xs font-semibold
+              text-slate-500
+              dark:text-slate-400
+            "
+          >
+            <Icon name="schedule" class="text-sm text-secondary" />
+            <span>{eventItem.schedule}</span>
+          </span>
+        </div>
+
+        <h1
+          class="
+            text-3xl font-extrabold tracking-tight text-slate-900
+            sm:text-4xl
+            dark:text-white
+          "
+        >
+          {eventItem.title}
+        </h1>
+
+        <p class="
+          text-base/relaxed text-slate-600
+          dark:text-slate-300
+        "
+        >
+          {eventItem.description}
+        </p>
+
+        <Separator class="
+          bg-slate-200
+          dark:bg-slate-800
+        "
+        />
+
+        <div class="
+          grid grid-cols-1 gap-4 pt-2
+          sm:grid-cols-2
+        "
+        >
+          <div class="flex items-start gap-3">
+            <Icon name="person" class="mt-0.5 text-xl text-primary" />
+            <div>
+              <p class="text-xs font-bold text-slate-400 uppercase">
+                {t("event-detail.speaker")}
+              </p>
+              <p class="
+                text-sm font-bold text-slate-900
+                dark:text-white
+              "
+              >
+                {eventItem.speaker}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <Icon name="location_on" class="mt-0.5 text-xl text-secondary" />
+            <div>
+              <p class="text-xs font-bold text-slate-400 uppercase">
+                {t("event-detail.location")}
+              </p>
+              <p class="
+                text-sm font-bold text-slate-900
+                dark:text-white
+              "
+              >
+                {eventItem.location}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+
+  <!-- Main Content & Registration Sidebar -->
+  <section class="
+    grid grid-cols-1 gap-10
+    lg:grid-cols-12
+  "
+  >
+    <Card
+      class="
+        rounded-3xl border border-slate-200 bg-white p-0 shadow-sm
+        lg:col-span-8
+        dark:border-slate-800 dark:bg-slate-900
+      "
+    >
+      <CardContent class="space-y-6 p-8">
+        <h2 class="
+          text-2xl font-extrabold text-slate-900
+          dark:text-white
+        "
+        >
+          {t("event-detail.about")}
+        </h2>
+        <TiptapContent
+          content={eventItem.richDescription ?? eventItem.fullDescription}
+        />
+
+        <div
+          class="
+            mt-8 rounded-2xl border border-slate-100 bg-slate-50 p-6
+            dark:border-slate-800 dark:bg-slate-800/50
+          "
+        >
+          <p class="text-xs font-bold text-slate-400 uppercase">
+            {t("event-detail.audience")}
+          </p>
+          <p class="
+            mt-1 text-base font-bold text-slate-900
+            dark:text-white
+          "
+          >
+            {eventItem.audience}
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+
+    <aside class="
+      space-y-6
+      lg:col-span-4
+    "
+    >
+      <Card class="rounded-3xl border-0 bg-secondary p-0 text-white shadow-xl">
+        <CardContent class="p-8">
+          <Badge
+            variant="outline"
+            class="
+              gap-1.5 rounded-full border-0 bg-white/10 px-3 py-1 text-xs
+              font-bold text-amber-300 uppercase
+            "
+          >
+            <Icon name="verified" class="text-sm" />
+            <span>{t("event-detail.free-admission")}</span>
+          </Badge>
+
+          <h3 class="mt-4 text-xl font-extrabold">
+            {eventItem.title}
+          </h3>
+          <p class="mt-2 text-sm text-blue-100/80">
+            {eventItem.schedule}
+            {" "}
+            •
+            {eventItem.location}
+          </p>
+
+          <div class="mt-6">
+            <Button
+              href={translatePath("/contact-and-visit")}
+              variant="primary"
+              class="w-full justify-center"
+            >
+              {t("event-detail.register-cta")}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </aside>
+  </section>
+
+  <!-- Related Events -->
+  {
+    relatedEvents.length > 0 && (
+      <section class="space-y-6">
+        <h2 class="
+          text-2xl font-extrabold text-slate-900
+          dark:text-white
+        "
+        >
+          {t("event-detail.related")}
+        </h2>
+        <div class="
+          grid grid-cols-1 gap-8
+          md:grid-cols-2
+        "
+        >
+          {relatedEvents.map((item) => (
+            <EventVerticalCard lang={lang} {...item} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</div>

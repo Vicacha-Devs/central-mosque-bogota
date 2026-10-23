@@ -1,43 +1,107 @@
 ---
-import Footer from '@components/layout/Footer/Footer.astro'
-import Header from '@components/layout/Header/Header.astro'
-import { getLangFromUrl } from '@i18n/utils'
-import { Font } from 'astro:assets'
+import { getCollection } from "astro:content";
+import Footer from "@components/layout/Footer/Footer.astro";
+import Header from "@components/layout/Header/Header.astro";
+import UrgentAlertBanner from "@components/data/display/UrgentAlertBanner/UrgentAlertBanner.astro";
+import { defaultLang, ui, type TLang } from "@i18n/ui";
 import {
-  contactInfo,
-  fastLinks,
-  lemma,
-  navLinks,
-  rightsText,
-  socialNetworkLinks,
-} from '@utils/data.mocks'
+  buildAlternateLangHref,
+  getLangFromUrl,
+  useTranslations,
+} from "@i18n/utils";
+import { Font } from "astro:assets";
+import { getLocalizedMocks } from "@utils/data.mocks";
 
-import '@styles/global.css'
+import "@styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const { title: pageTitleProp, description: pageDescriptionProp }
+  = Astro.props as Props;
+
+const defaultSiteTitle = t("seo.default-title");
+const pageTitle = pageTitleProp
+  ? `${pageTitleProp} | ${defaultSiteTitle}`
+  : defaultSiteTitle;
+const pageDescription = pageDescriptionProp ?? t("seo.default-description");
+
+const supportedLangs = Object.keys(ui) as Array<TLang>;
+const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
+const canonicalUrl = new URL(
+  buildAlternateLangHref(Astro.url, lang, lang),
+  siteOrigin,
+).href;
+const alternateLinks = supportedLangs.map((targetLang) => ({
+  hreflang: targetLang,
+  href: new URL(
+    buildAlternateLangHref(Astro.url, targetLang, lang),
+    siteOrigin,
+  ).href,
+}));
+const xDefaultHref = new URL(
+  buildAlternateLangHref(Astro.url, defaultLang, lang),
+  siteOrigin,
+).href;
+
+const localizedMocks = getLocalizedMocks(lang);
+const globalSettingEntries = await getCollection(
+  "globalSetting",
+  (entry) => entry.data.locale === lang,
+);
+const globalSetting = globalSettingEntries[0]?.data;
+
+const dir = localizedMocks.dir;
+const contactInfo = globalSetting?.contactInfo ?? localizedMocks.contactInfo;
+const fastLinks = globalSetting?.fastLinks ?? localizedMocks.fastLinks;
+const lemma = globalSetting?.lemma ?? localizedMocks.lemma;
+const navLinks = globalSetting?.navLinks ?? localizedMocks.navLinks;
+const rightsText = globalSetting?.rightsText ?? localizedMocks.rightsText;
+const socialNetworkLinks
+  = globalSetting?.socialNetworkLinks ?? localizedMocks.socialNetworkLinks;
 ---
 
 <!doctype html>
 <!-- ﷽ - In the name of Allah, the Most Gracious, the Most Merciful -->
-<html lang={lang}>
+<html lang={lang} dir={dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>Mezquita Central de Bogotá Abu Bakr As-Siddiq</title>
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:locale" content={lang} />
+    <meta property="og:url" content={canonicalUrl} />
+    <link rel="canonical" href={canonicalUrl} />
+    {
+      alternateLinks.map(({ hreflang, href }) => (
+        <link rel="alternate" hreflang={hreflang} href={href} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 
     <Font cssVariable="--font-display" />
     <Font cssVariable="--font-sans" />
     <Font cssVariable="--font-symbols" preload />
 
     <script is:inline>
-      function initTheme() {
-        const STORAGE_KEY = "theme";
+      function applyResolvedTheme(resolved) {
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.classList.toggle("dark", resolved === "dark");
+      }
 
+      function initTheme() {
         try {
-          const stored = localStorage.getItem(STORAGE_KEY);
+          const stored =
+            localStorage.getItem("colorTheme") || localStorage.getItem("theme");
           const setting =
             stored === "light" || stored === "dark" || stored === "system"
               ? stored
@@ -50,29 +114,38 @@ const lang = getLangFromUrl(Astro.url);
                 : "dark"
               : setting;
 
-          document.documentElement.dataset.theme = resolved;
-          localStorage.setItem(STORAGE_KEY, setting);
+          applyResolvedTheme(resolved);
+          localStorage.setItem("colorTheme", setting);
+          localStorage.setItem("theme", setting);
 
           const mql = window.matchMedia("(prefers-color-scheme: dark)");
           const handleSystemChange = () => {
-            if (localStorage.getItem(STORAGE_KEY) !== "system") return;
-            document.documentElement.dataset.theme = mql.matches
-              ? "dark"
-              : "light";
+            const current =
+              localStorage.getItem("colorTheme") ||
+              localStorage.getItem("theme");
+            if (current !== "system") return;
+            applyResolvedTheme(mql.matches ? "dark" : "light");
           };
           mql.addEventListener("change", handleSystemChange);
         } catch {
           const prefersDark = window.matchMedia(
             "(prefers-color-scheme: dark)",
           ).matches;
-          document.documentElement.dataset.theme = prefersDark
-            ? "dark"
-            : "light";
+          applyResolvedTheme(prefersDark ? "dark" : "light");
         }
       }
 
       initTheme();
       document.addEventListener("astro:after-swap", initTheme);
+      document.addEventListener("theme:change", (e) => {
+        const next = e?.detail?.theme;
+        if (next === "dark" || next === "light") {
+          applyResolvedTheme(next);
+          try {
+            localStorage.setItem("theme", next);
+          } catch {}
+        }
+      });
     </script>
   </head>
   <body
@@ -81,7 +154,8 @@ const lang = getLangFromUrl(Astro.url);
       dark:text-slate-100
     "
   >
-    <Header navLinks={navLinks} />
+    <UrgentAlertBanner lang={lang} />
+    <Header lang={lang} navLinks={navLinks} />
     <main
       class="
         mx-auto my-20 flex max-w-7xl flex-col gap-20 px-4
@@ -92,6 +166,7 @@ const lang = getLangFromUrl(Astro.url);
       <slot />
     </main>
     <Footer
+      lang={lang}
       lemma={lemma}
       contactInfo={contactInfo}
       rightsText={rightsText}

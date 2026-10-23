@@ -1,0 +1,84 @@
+---
+/**
+ * Organism: EventsCatalogSection
+ *
+ * Renders the filterable Events Catalog with category filter buttons
+ * (`[data-event-filter]`) and `EventVerticalCard` molecules.
+ */
+import EventVerticalCard from "@components/data/display/Events/EventVerticalCard/EventVerticalCard.astro";
+import { useTranslations } from "@i18n/utils";
+import type { TLang } from "@i18n/ui";
+import { getLocalizedMocks } from "@utils/data.mocks";
+import type { TEvent } from "@utils/models/events";
+
+export interface Props {
+  lang?: TLang;
+  events?: TEvent[];
+}
+
+const { lang = "es", events } = Astro.props;
+const t = useTranslations(lang);
+const allEvents = events ?? getLocalizedMocks(lang).events;
+const categories = Array.from(new Set(allEvents.map((e) => e.category)));
+---
+
+<section class="space-y-8">
+  <div
+    class="flex flex-wrap items-center justify-center gap-3"
+    role="tablist"
+    aria-label={t("events-page.filter-aria")}
+  >
+    <button
+      type="button"
+      data-event-filter="all"
+      class="
+        cursor-pointer rounded-full bg-secondary px-5 py-2 text-sm font-bold
+        text-white shadow-sm transition-colors
+      "
+    >
+      {t("events-page.filter-all")}
+    </button>
+    {
+      categories.map((cat) => (
+        <button
+          type="button"
+          data-event-filter={cat}
+          class="
+            cursor-pointer rounded-full border border-slate-300 bg-white px-5
+            py-2 text-sm font-semibold text-slate-700 transition-colors
+            hover:bg-slate-100
+            dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200
+            dark:hover:bg-slate-800
+          "
+        >
+          {cat}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- Events Grid -->
+  <div
+    id="events-grid"
+    class="
+      grid grid-cols-1 gap-8
+      md:grid-cols-2
+      lg:grid-cols-3
+    "
+  >
+    {
+      allEvents.map((eventItem) => (
+        <div data-event-category={eventItem.category}>
+          <EventVerticalCard lang={lang} {...eventItem} />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { initEventFilters } from "./events-catalog.controller";
+
+  initEventFilters();
+  document.addEventListener("astro:after-swap", initEventFilters);
+</script>

@@ -1,0 +1,75 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import MediaArchiveSection from "@components/data/display/Media/MediaArchiveSection/MediaArchiveSection.astro";
+import RamadanScheduleBanner from "@components/data/display/RamadanScheduleBanner/RamadanScheduleBanner.astro";
+import PhotoGalleriesSection from "@components/data/display/Resources/PhotoGalleriesSection/PhotoGalleriesSection.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { fetchStrapiData } from "@services/strapi";
+import {
+  getDetailedMediaHighlights,
+  type TDetailedMediaItem,
+} from "@utils/localized-mocks";
+import {
+  getLocalizedGalleryAlbums,
+  type TResourceGalleryAlbum,
+} from "@utils/resources-mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const fallbackGalleryAlbums = getLocalizedGalleryAlbums(lang);
+
+const [mediaEntries, cmsEpisodesRes, cmsGalleriesRes] = await Promise.all([
+  getCollection("mediaHighlights", (entry) => entry.data.locale === lang),
+  fetchStrapiData<{ data?: TDetailedMediaItem[] }>("media-feeds/episodes", {
+    locale: lang,
+  }).catch(() => null),
+  fetchStrapiData<{ data?: TResourceGalleryAlbum[] }>("resources/galleries", {
+    locale: lang,
+  }).catch(() => null),
+]);
+
+const mediaItems: TDetailedMediaItem[]
+  = Array.isArray(cmsEpisodesRes?.data) && cmsEpisodesRes.data.length > 0
+    ? cmsEpisodesRes.data
+    : mediaEntries.length > 0
+      ? mediaEntries.map((entry) => entry.data)
+      : getDetailedMediaHighlights(lang);
+
+const galleryAlbums: TResourceGalleryAlbum[]
+  = Array.isArray(cmsGalleriesRes?.data) && cmsGalleriesRes.data.length > 0
+    ? cmsGalleriesRes.data
+    : fallbackGalleryAlbums;
+---
+
+<Layout
+  title={t("media-page.title")}
+  description={t("media-page.subtitle")}
+>
+  <!-- Hero Section -->
+  <PageHeroBanner
+    badgeIcon="podcasts"
+    badgeLabel={t("media-page.badge")}
+    title={t("media-page.title")}
+    subtitle={t("media-page.subtitle")}
+  />
+
+  <!-- Live Stream Spotlight & Filterable Media Archive -->
+  <MediaArchiveSection lang={lang} items={mediaItems} />
+
+  <!--
+    Strapi v5 Media Library Photo Galleries
+    (@vicacha-devs/strapi-plugin-resources)
+  -->
+  <PhotoGalleriesSection lang={lang} albums={galleryAlbums} />
+
+  <!-- Ramadan Suhoor & Iftar Reference Banner Component -->
+  <RamadanScheduleBanner lang={lang} />
+</Layout>

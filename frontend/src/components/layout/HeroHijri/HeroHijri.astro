@@ -1,4 +1,5 @@
 ---
+import { Badge } from "@/components/starwind/badge";
 import { Image } from "astro:assets";
 
 /**
@@ -74,10 +75,11 @@ const { imageUrl, imageAlt, hijriDate, currentDate, phrase }
     height={512}
   />
   <div class="hero-overlay absolute inset-0"></div>
-  <div class="
-    relative mx-auto w-full max-w-7xl px-4 text-center
-    lg:px-8
-  "
+  <div
+    class="
+      relative mx-auto w-full max-w-7xl px-4 text-center
+      lg:px-8
+    "
   >
     <h1
       class="
@@ -87,7 +89,8 @@ const { imageUrl, imageAlt, hijriDate, currentDate, phrase }
     >
       {hijriDate}
     </h1>
-    <div
+    <Badge
+      variant="outline"
       class="
         mx-auto mb-6 inline-flex flex-wrap items-center justify-center gap-x-3
         gap-y-2 rounded-full border border-white/15 bg-white/10 px-5 py-2
@@ -97,12 +100,11 @@ const { imageUrl, imageAlt, hijriDate, currentDate, phrase }
       <span class="font-semibold tracking-wide">{hijriDate}</span>
       <span class="text-white/50">•</span>
       <span class="font-medium">{currentDate}</span>
-    </div>
-
+    </Badge>
     <p
       class="
-        mx-auto max-w-2xl text-lg/relaxed font-light text-white/90
-        sm:text-xl/relaxed
+        mx-auto max-w-xl text-lg font-medium text-white/90
+        lg:text-xl
       "
     >
       {phrase}
