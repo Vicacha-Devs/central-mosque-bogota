@@ -1,0 +1,151 @@
+{
+  "kind": "singleType",
+  "collectionName": "prayer_settings",
+  "info": {
+    "singularName": "prayer-setting",
+    "pluralName": "prayer-settings",
+    "displayName": "Prayer Setting",
+    "description": "IslamicAPI calculation parameters, Hijri moon-sighting shifting, and Mosque Iqamah schedule"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "method": {
+      "type": "enumeration",
+      "enum": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23"
+      ],
+      "default": "3",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "school": {
+      "type": "enumeration",
+      "enum": ["1", "2"],
+      "default": "1",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "calender": {
+      "type": "enumeration",
+      "enum": ["MATHEMATICAL", "UAQ", "HJCoSA", "DIYANET"],
+      "default": "MATHEMATICAL",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "shifting": {
+      "type": "enumeration",
+      "enum": ["-2", "-1", "0", "1", "2"],
+      "default": "0",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "defaultLat": {
+      "type": "float",
+      "default": 4.6685,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "defaultLon": {
+      "type": "float",
+      "default": -74.0758,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "iqamahRules": {
+      "type": "component",
+      "repeatable": true,
+      "component": "prayer.iqamah-rule",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "jumuahKhutbahTime": {
+      "type": "string",
+      "default": "12:15 PM",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "jumuahPrayerTime": {
+      "type": "string",
+      "default": "12:45 PM",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "ramadanBannerActive": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "ramadanNotes": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}
