@@ -1,0 +1,114 @@
+---
+import { Prose } from "@/components/starwind/prose";
+import {
+  TiptapBlocks,
+  type TiptapBlockUserComponents,
+  type TiptapBlockUserTheme,
+  type TiptapContentInput,
+} from "@vicacha-devs/astro-tiptap-blocks";
+
+/**
+ * @component TiptapContent
+ * @title Tiptap Rich Text Content
+ * @description Renders sanitized Tiptap HTML or ProseMirror JSON AST into native Astro block elements wrapped in Starwind `Prose` typography (`@vicacha-devs/astro-tiptap-blocks`).
+ *
+ * Props
+ * - `content`: HTML string or ProseMirror JSON document (`TiptapContentInput`)
+ * - `theme`: optional theme overrides (`TiptapBlockUserTheme`)
+ * - `blocks`: optional custom block component overrides (`TiptapBlockUserComponents`)
+ * - `class`: optional CSS classes applied to the outer `Prose` container
+ *
+ * @preview
+ *
+ * <TiptapContent content="<h2>Historia de la Mezquita</h2><p>Bienvenidos a la Mezquita Central de Bogotá.</p>" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import TiptapContent from "@components/data/display/TiptapContent/TiptapContent.astro";
+ * ---
+ *
+ * <TiptapContent content={article.contentHtml} />
+ * ```
+ */
+interface Props {
+  /**
+   * Tiptap HTML string or ProseMirror JSON document AST.
+   */
+  content: TiptapContentInput;
+  /**
+   * Optional Tailwind class theme overrides for Tiptap blocks.
+   */
+  theme?: TiptapBlockUserTheme;
+  /**
+   * Optional custom Astro components for specific ProseMirror node types.
+   */
+  blocks?: TiptapBlockUserComponents;
+  /**
+   * Optional CSS class names for the outer Prose wrapper.
+   */
+  class?: string;
+}
+
+const { content, theme, blocks, class: className = "" } = Astro.props;
+
+const mosqueTheme: TiptapBlockUserTheme = {
+  overwrite: {
+    default: [
+      "tiptap-content space-y-4 text-base leading-relaxed text-slate-600 dark:text-slate-300",
+      theme?.overwrite?.default,
+    ]
+      .flat()
+      .filter(Boolean) as string[],
+    heading: {
+      default: "text-slate-900 dark:text-white tracking-tight",
+      h1: "mt-8 text-3xl font-extrabold",
+      h2: "mt-6 text-2xl font-extrabold",
+      h3: "mt-5 text-xl font-bold",
+      h4: "mt-4 text-lg font-bold",
+      h5: "mt-4 text-base font-bold",
+      h6: "mt-3 text-sm font-bold uppercase tracking-wider",
+      ...theme?.overwrite?.heading,
+    },
+    paragraph: {
+      default: "leading-relaxed",
+      link: "font-semibold text-secondary underline hover:text-primary dark:text-blue-400",
+      bold: "font-bold text-slate-900 dark:text-white",
+      italic: "italic",
+      underline: "underline",
+      strikethrough: "line-through",
+      code: "font-mono text-sm px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800",
+      highlight: "bg-amber-200/70 dark:bg-amber-500/30 px-1 rounded",
+      ...theme?.overwrite?.paragraph,
+    },
+    quote: {
+      default: "border-s-4 border-primary ps-4 italic my-4",
+      ...theme?.overwrite?.quote,
+    },
+    list: {
+      default: "space-y-1.5 ps-6 my-4",
+      ordered: "list-decimal",
+      unordered: "list-disc",
+      item: "leading-relaxed",
+      ...theme?.overwrite?.list,
+    },
+    image: {
+      default: "my-4",
+      image: "max-w-full h-auto rounded-2xl",
+      caption: "text-sm text-slate-500 dark:text-slate-400 mt-2 text-center",
+      ...theme?.overwrite?.image,
+    },
+  },
+  extend: theme?.extend,
+};
+---
+
+<Prose class="max-w-none">
+  <TiptapBlocks
+    data={content}
+    theme={mosqueTheme}
+    blocks={blocks}
+    class={className}
+  />
+</Prose>

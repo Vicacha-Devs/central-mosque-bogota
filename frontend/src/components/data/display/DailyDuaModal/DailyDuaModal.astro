@@ -1,0 +1,186 @@
+---
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/starwind/dialog";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import type { TDailyDua } from "@utils/localized-mocks";
+
+/**
+ * @component DailyDuaModal
+ * @title Daily Dua Banner & Modal
+ * @description Renders a callout banner with the daily Hijri date badge, title, translation preview, and a modal dialog trigger displaying the full Arabic supplication, transliteration, source reference, and copy-to-clipboard button.
+ *
+ * i18n keys
+ * - `daily-dua.trigger`
+ * - `daily-dua.copy`
+ * - `daily-dua.copied`
+ */
+interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * Daily supplication data object.
+   */
+  dua: TDailyDua;
+}
+
+const { lang: langProp, dua } = Astro.props as Props;
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const triggerLabel = t("daily-dua.trigger");
+const copyLabel = t("daily-dua.copy");
+const copiedLabel = t("daily-dua.copied");
+---
+
+<section
+  data-daily-dua
+  class="
+    rounded-3xl border border-slate-200 bg-linear-to-r from-secondary
+    to-slate-900 p-6 text-white shadow-lg
+    sm:p-8
+    dark:border-slate-800
+  "
+>
+  <div class="
+    flex flex-col items-center justify-between gap-6
+    md:flex-row
+  "
+  >
+    <div class="
+      space-y-2 text-center
+      md:text-start
+    "
+    >
+      <span
+        class="
+          inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1
+          text-xs font-bold tracking-widest text-amber-300 uppercase
+        "
+      >
+        <Icon name="auto_awesome" class="text-sm" />
+        <span>{dua.hijriBadge}</span>
+      </span>
+      <h2 class="
+        text-2xl font-extrabold tracking-tight
+        sm:text-3xl
+      "
+      >
+        {dua.title}
+      </h2>
+      <p class="max-w-2xl text-sm text-blue-100/85">
+        {dua.translation}
+      </p>
+    </div>
+
+    <Dialog>
+      <DialogTrigger
+        class="
+          inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-full
+          bg-primary px-6 py-3 text-sm font-bold text-white shadow-md
+          transition-transform
+          hover:scale-105
+        "
+      >
+        <Icon name="menu_book" class="text-lg" />
+        <span>{triggerLabel}</span>
+      </DialogTrigger>
+
+      <DialogContent class="max-w-2xl rounded-3xl bg-slate-900 p-8 text-white">
+        <DialogHeader class="text-center">
+          <span
+            class="
+              mx-auto mb-2 inline-flex items-center gap-1.5 rounded-full
+              bg-white/10 px-3.5 py-1 text-xs font-bold tracking-widest
+              text-amber-300 uppercase
+            "
+          >
+            <Icon name="auto_awesome" class="text-sm" />
+            <span>{dua.hijriBadge}</span>
+          </span>
+          <DialogTitle class="
+            text-2xl font-extrabold text-white
+            sm:text-3xl
+          "
+          >
+            {dua.title}
+          </DialogTitle>
+          <DialogDescription class="text-sm text-blue-200/80">
+            {dua.subtitle}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div class="my-6 space-y-6 text-center">
+          <div class="
+            rounded-2xl border border-white/10 bg-white/5 p-6
+            sm:p-8
+          "
+          >
+            <p
+              class="
+                text-3xl/relaxed font-bold text-amber-300
+                sm:text-4xl
+              "
+              dir="rtl"
+            >
+              {dua.arabic}
+            </p>
+            <p class="mt-4 text-sm text-blue-200 italic">
+              {dua.transliteration}
+            </p>
+          </div>
+
+          <div
+            class="rounded-2xl border border-white/10 bg-white/5 p-5 text-start"
+          >
+            <p class="text-base/relaxed font-medium text-white">
+              {dua.translation}
+            </p>
+            <p class="mt-2 text-xs font-semibold text-blue-300/70">
+              {dua.source}
+            </p>
+          </div>
+        </div>
+
+        <DialogFooter class="
+          flex items-center justify-center
+          sm:justify-end
+        "
+        >
+          <button
+            type="button"
+            data-copy-dua={`${dua.arabic}\n${dua.transliteration}\n${dua.translation}`}
+            data-copy-label={copyLabel}
+            data-copied-label={copiedLabel}
+            class="
+              inline-flex cursor-pointer items-center gap-2 rounded-xl
+              bg-primary px-5 py-2.5 text-sm font-bold text-white
+              transition-opacity
+              hover:opacity-90
+            "
+          >
+            <Icon name="content_copy" class="text-base" />
+            <span data-copy-dua-text>{copyLabel}</span>
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  </div>
+</section>
+
+<script>
+  import { initCopyDuaButtons } from "./daily-dua-modal.controller";
+
+  initCopyDuaButtons();
+  document.addEventListener("astro:after-swap", () => initCopyDuaButtons());
+</script>

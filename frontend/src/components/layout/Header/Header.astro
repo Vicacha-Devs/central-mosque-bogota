@@ -1,7 +1,14 @@
 ---
-import ThemeSwitcher from "@components/actions/ThemeSwitcher/ThemeSwitcher.astro";
+import { Button } from "@/components/starwind/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetTrigger,
+} from "@/components/starwind/sheet";
+import { ThemeToggle } from "@/components/starwind/theme-toggle";
 import Icon from "@components/data/display/Icons/Icon.astro";
-import Button from "@components/actions/Button/Button.astro";
+import type { TLang } from "@i18n/ui";
 import {
   getLangFromUrl,
   useTranslations,
@@ -10,12 +17,6 @@ import {
 import LanguagePicker from "@components/navigation/LanguagePicker/LanguagePicker.astro";
 import Link from "@components/actions/Link/Link.astro";
 import type { TNavLink } from "@utils/models/types";
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetTrigger,
-} from "@components/layout/Sheet";
 
 /**
  * @component Header
@@ -23,6 +24,7 @@ import {
  * @description Fixed top navigation header with branding, desktop nav links, language/theme controls, a donate CTA, and a mobile sheet menu.
  *
  * Props
+ * - `lang`: optional locale override (`es`, `en`, `ar`, `tr`)
  * - `navLinks`: list of navigation links rendered in the desktop nav and mobile sheet
  *
  * i18n (used)
@@ -56,14 +58,18 @@ import {
  */
 interface Props {
   /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
    * Optional list of navigation links.
    */
   navLinks: Array<TNavLink>;
 }
 
-const { navLinks } = Astro.props as Props;
+const { lang: langProp, navLinks } = Astro.props as Props;
 
-const lang = getLangFromUrl(Astro.url);
+const lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const translatePath = useTranslatedPath(lang);
@@ -84,10 +90,10 @@ const translatePath = useTranslatedPath(lang);
       </div>
       <div>
         <span class="block text-xl/tight font-bold tracking-tight">
-          Mezquita Central
+          {t("brand.title")}
         </span>
         <span class="text-xs tracking-widest uppercase opacity-80">
-          de Bogotá
+          {t("brand.subtitle")}
         </span>
       </div>
     </a>
@@ -114,10 +120,49 @@ const translatePath = useTranslatedPath(lang);
       xl:gap-4
     "
     >
-      <LanguagePicker align="end" />
-      <ThemeSwitcher />
+      <a
+        href={translatePath("/search")}
+        aria-label={t("header.search")}
+        class="
+          inline-flex size-9 items-center justify-center rounded-full
+          bg-white/10 text-white transition-colors
+          hover:bg-white/20
+        "
+      >
+        <Icon name="search" class="text-lg" />
+      </a>
+      <LanguagePicker lang={lang} align="end" />
+      <ThemeToggle
+        ariaLabel={t("theme-switcher.system-label")}
+        class="
+          rounded-full border-white/20 bg-white/10 text-white
+          hover:border-white/40 hover:bg-white/20 hover:text-white
+          data-[state=on]:text-white
+        "
+      >
+        <Icon
+          slot="light-icon"
+          name="light_mode"
+          size="md"
+          class="
+            hidden size-5
+            group-data-[state=off]:data-ready:inline-flex
+          "
+          data-theme-icon
+        />
+        <Icon
+          slot="dark-icon"
+          name="dark_mode"
+          size="md"
+          class="
+            hidden size-5
+            group-data-[state=on]:data-ready:inline-flex
+          "
+          data-theme-icon
+        />
+      </ThemeToggle>
       <Button
-        as="a"
+        variant="primary"
         class="
           transform rounded-full shadow-md transition-all
           hover:scale-105
@@ -166,10 +211,46 @@ const translatePath = useTranslatedPath(lang);
             xl:gap-4
           "
         >
-          <LanguagePicker align="center" />
-          <ThemeSwitcher />
+          <a
+            href={translatePath("/search")}
+            aria-label={t("header.search")}
+            class="
+              inline-flex size-9 items-center justify-center rounded-full
+              bg-slate-200 text-slate-800 transition-colors
+              hover:bg-slate-300
+              dark:bg-slate-800 dark:text-slate-100
+            "
+          >
+            <Icon name="search" class="text-lg" />
+          </a>
+          <LanguagePicker lang={lang} align="center" />
+          <ThemeToggle
+            ariaLabel={t("theme-switcher.system-label")}
+            class="rounded-full"
+          >
+            <Icon
+              slot="light-icon"
+              name="light_mode"
+              size="md"
+              class="
+                hidden size-5
+                group-data-[state=off]:data-ready:inline-flex
+              "
+              data-theme-icon
+            />
+            <Icon
+              slot="dark-icon"
+              name="dark_mode"
+              size="md"
+              class="
+                hidden size-5
+                group-data-[state=on]:data-ready:inline-flex
+              "
+              data-theme-icon
+            />
+          </ThemeToggle>
           <Button
-            as="a"
+            variant="primary"
             class="
               transform rounded-full shadow-md transition-all
               hover:scale-105

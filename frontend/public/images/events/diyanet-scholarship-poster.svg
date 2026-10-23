@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120" role="img" aria-label="TDV Diyanet Bursları Scholarship Poster">
+  <defs>
+    <linearGradient id="tdvBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="55%" stop-color="#0f766e" />
+      <stop offset="100%" stop-color="#042f2e" />
+    </linearGradient>
+    <linearGradient id="tdvGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fde68a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="1120" fill="url(#tdvBg)" rx="24" />
+  <circle cx="120" cy="160" r="240" fill="#ffffff" fill-opacity="0.04" />
+  <circle cx="680" cy="960" r="280" fill="#2dd4bf" fill-opacity="0.07" />
+
+  <!-- Top Header Badge -->
+  <rect x="60" y="56" width="680" height="64" rx="32" fill="#ffffff" fill-opacity="0.12" stroke="#5eead4" stroke-opacity="0.35" />
+  <text x="400" y="96" text-anchor="middle" fill="#fef3c7" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="800" letter-spacing="2.5">
+    TÜRKİYE DİYANET VAKFI • TDV BURSLARI
+  </text>
+
+  <!-- Mosque Dome & Book Emblem -->
+  <circle cx="400" cy="220" r="64" fill="#ffffff" fill-opacity="0.12" stroke="url(#tdvGold)" stroke-width="3" />
+  <path d="M360 238 C360 198 400 176 400 176 C400 176 440 198 440 238 Z" fill="#fde68a" />
+  <rect x="352" y="242" width="96" height="12" rx="6" fill="#ffffff" />
+
+  <!-- Main Title -->
+  <text x="400" y="348" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="900">
+    DİYANET BURSLARI
+  </text>
+  <text x="400" y="396" text-anchor="middle" fill="#fde68a" font-family="system-ui, -apple-system, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2">
+    TEOLOGÍA Y ESTUDIOS ISLÁMICOS EN TURQUÍA
+  </text>
+
+  <!-- Divider -->
+  <rect x="240" y="424" width="320" height="4" rx="2" fill="url(#tdvGold)" />
+
+  <!-- Program Levels -->
+  <rect x="80" y="460" width="640" height="90" rx="18" fill="#000000" fill-opacity="0.25" stroke="#ffffff" stroke-opacity="0.18" />
+  <text x="400" y="500" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800">
+     SECUNDARIA İMAM HATİP • LICENCIATURA • POSGRADO
+  </text>
+  <text x="400" y="532" text-anchor="middle" fill="#99f6e4" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="500">
+    International Islamic Studies &amp; Theology Scholarships
+  </text>
+
+  <!-- Benefits Grid -->
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" fill="#ffffff">
+    <rect x="80" y="582" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="232" y="620" text-anchor="middle" fill="#fde68a">✓ Beca Académica Total</text>
+    <text x="232" y="648" text-anchor="middle" font-size="16" font-weight="500" fill="#ccfbf1">Full Tuition &amp; Materials</text>
+
+    <rect x="415" y="582" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="567" y="620" text-anchor="middle" fill="#fde68a">✓ Residencia Estudiantil</text>
+    <text x="567" y="648" text-anchor="middle" font-size="16" font-weight="500" fill="#ccfbf1">TDV Dormitory &amp; Meals</text>
+
+    <rect x="80" y="684" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="232" y="722" text-anchor="middle" fill="#fde68a">✓ Árabe y Turco</text>
+    <text x="232" y="750" text-anchor="middle" font-size="16" font-weight="500" fill="#ccfbf1">Prep Year &amp; Seminars</text>
+
+    <rect x="415" y="684" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="567" y="722" text-anchor="middle" fill="#fde68a">✓ Vuelos y Seguro</text>
+    <text x="567" y="750" text-anchor="middle" font-size="16" font-weight="500" fill="#ccfbf1">Annual Flights &amp; Health Care</text>
+  </g>
+
+  <!-- Application Window Callout -->
+  <rect x="80" y="804" width="640" height="128" rx="20" fill="url(#tdvGold)" />
+  <text x="400" y="852" text-anchor="middle" fill="#042f2e" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="1.5">
+    CONVOCATORIA ANUAL / APPLICATION WINDOW
+  </text>
+  <text x="400" y="902" text-anchor="middle" fill="#064e3b" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="900">
+    1 FEBRERO – 28 FEBRERO
+  </text>
+
+  <!-- Footer -->
+  <text x="400" y="988" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">
+    diyanetburslari.tdv.org
+  </text>
+  <text x="400" y="1032" text-anchor="middle" fill="#99f6e4" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600">
+    Aval y Orientación • Mezquita Central Abu Bakr As-Siddiq de Bogotá
+  </text>
+</svg>

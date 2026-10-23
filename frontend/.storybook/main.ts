@@ -1,4 +1,5 @@
 import { defineMain } from "@storybook-astro/framework/node";
+import remarkGfm from "remark-gfm";
 // import path from "node:path";
 
 /*
@@ -13,7 +14,14 @@ export default defineMain({
   addons: [
     "@storybook/addon-a11y",
     "@storybook/addon-designs",
-    "@storybook/addon-docs",
+    {
+      name: "@storybook/addon-docs",
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: { remarkPlugins: [remarkGfm] },
+        },
+      },
+    },
     "@storybook/addon-themes",
     "@storybook/addon-vitest",
     "storybook-addon-rtl",

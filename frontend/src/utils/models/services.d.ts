@@ -11,4 +11,8 @@ export type TCommunityService = {
    * Description of the community service
    */
   description: string;
+  /**
+   * Optional rich text description from Strapi Tiptap editor
+   */
+  longDescription?: string;
 };

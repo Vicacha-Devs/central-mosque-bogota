@@ -8,6 +8,8 @@ import { Window } from "happy-dom";
 type GlobalDomShim = {
   window: Window;
   document: Document;
+  navigator: Navigator;
+  FormData: typeof FormData;
   HTMLDialogElement: typeof HTMLDialogElement;
   HTMLButtonElement: typeof HTMLButtonElement;
   HTMLElement: typeof HTMLElement;
@@ -28,10 +30,29 @@ type GlobalDomShim = {
  * @param window - The `happy-dom` window instance for the test.
  * @param document - The `happy-dom` document instance for the test.
  */
-export function installDomGlobals(window: Window, document: Document): void {
+export function installDomGlobals(
+  window: Window,
+  document: Document | Window["document"]
+): void {
   const globalDom = globalThis as unknown as GlobalDomShim;
   globalDom.window = window;
-  globalDom.document = document;
+  globalDom.document = document as unknown as Document;
+  Object.defineProperty(globalThis, "navigator", {
+    value: window.navigator,
+    configurable: true,
+    writable: true,
+  });
+  Object.defineProperty(globalThis, "localStorage", {
+    value: window.localStorage,
+    configurable: true,
+    writable: true,
+  });
+  Object.defineProperty(globalThis, "sessionStorage", {
+    value: window.sessionStorage,
+    configurable: true,
+    writable: true,
+  });
+  globalDom.FormData = window.FormData as unknown as typeof FormData;
 
   globalDom.HTMLDialogElement =
     window.HTMLDialogElement as unknown as typeof HTMLDialogElement;
@@ -47,6 +68,30 @@ export function installDomGlobals(window: Window, document: Document): void {
   globalDom.requestAnimationFrame = (cb: FrameRequestCallback): number => {
     cb(0);
     return 0;
+  };
+}
+
+/**
+ * Creates a standalone `happy-dom` Window, installs DOM globals on `globalThis`,
+ * and mounts the provided HTML markup into `document.body` for controller tests.
+ */
+export function createTestDom(html: string): {
+  window: Window;
+  root: HTMLElement;
+  close: () => Promise<void>;
+} {
+  const window = new Window({
+    innerHeight: 768,
+    innerWidth: 1024,
+    url: "http://localhost:4321",
+  });
+  const doc = window.document as unknown as Document;
+  installDomGlobals(window, doc);
+  window.document.body.innerHTML = html;
+  return {
+    window,
+    root: window.document.body as unknown as HTMLElement,
+    close: () => window.happyDOM.close(),
   };
 }
 

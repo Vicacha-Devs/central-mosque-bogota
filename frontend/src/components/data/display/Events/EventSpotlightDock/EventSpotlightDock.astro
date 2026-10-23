@@ -1,0 +1,511 @@
+---
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/starwind/dialog";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import type {
+  TEventActionLink,
+  TEventSpotlight,
+  TEventSpotlightPosition,
+} from "@utils/models/events";
+
+/**
+ * @component EventSpotlightDock
+ * @title Generic Event Spotlight Corner Dock & Poster Lightbox
+ * @description Renders a floating bottom-corner spotlight dock for time-sensitive events with posters, multi-event pill tabs, full-resolution poster lightbox modal, action links, and localStorage minimize-to-pill persistence.
+ *
+ * i18n keys
+ * - `event-spotlight.dock-label`
+ * - `event-spotlight.view-poster`
+ * - `event-spotlight.download-poster`
+ * - `event-spotlight.minimize`
+ * - `event-spotlight.expand`
+ * - `event-spotlight.days-remaining`
+ */
+interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * Active spotlight events sorted by priority.
+   */
+  spotlights: TEventSpotlight[];
+  /**
+   * Optional corner position override (`bottom-end` or `bottom-start`).
+   */
+  position?: TEventSpotlightPosition;
+}
+
+function toSafeHref(rawUrl: string | undefined): string {
+  if (!rawUrl) return "#";
+  const trimmed = rawUrl.trim();
+  if (trimmed.startsWith("/") && !trimmed.startsWith("//")) {
+    return trimmed;
+  }
+  try {
+    const parsed = new URL(trimmed);
+    if (
+      parsed.protocol === "https:"
+      || parsed.protocol === "http:"
+      || parsed.protocol === "mailto:"
+    ) {
+      return trimmed;
+    }
+    return "#";
+  }
+  catch {
+    return "#";
+  }
+}
+
+function getActionLinkClasses(variant: TEventActionLink["variant"]): string {
+  if (variant === "secondary") {
+    return "bg-secondary text-white hover:opacity-95";
+  }
+  if (variant === "outline") {
+    return "border border-slate-300 bg-white/80 text-slate-800 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700";
+  }
+  return "bg-primary text-white shadow-sm hover:opacity-95";
+}
+
+const { lang: langProp, spotlights = [], position } = Astro.props as Props;
+const activeSpotlights = spotlights.filter(
+  (item) => item.spotlightConfig?.enabled,
+);
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const dockLabel = t("event-spotlight.dock-label");
+const viewPosterLabel = t("event-spotlight.view-poster");
+const downloadPosterLabel = t("event-spotlight.download-poster");
+const minimizeLabel = t("event-spotlight.minimize");
+const expandLabel = t("event-spotlight.expand");
+const daysRemainingLabel = t("event-spotlight.days-remaining");
+
+const effectivePosition: TEventSpotlightPosition
+  = position ?? activeSpotlights[0]?.spotlightConfig?.position ?? "bottom-end";
+
+const positionClass
+  = effectivePosition === "bottom-start"
+    ? "bottom-4 start-4 sm:bottom-6 sm:start-6"
+    : "bottom-4 end-4 sm:bottom-6 sm:end-6";
+
+const storageKey = `mosque_spotlight_min_${activeSpotlights.map((s) => s.id).join("_")}`;
+---
+
+{
+  activeSpotlights.length > 0 && (
+    <aside
+      data-event-spotlight-dock
+      data-storage-key={storageKey}
+      data-days-remaining-label={daysRemainingLabel}
+      aria-label={dockLabel}
+      class:list={["fixed z-40 max-w-[calc(100vw-2rem)]", positionClass]}
+    >
+      {/* Minimized Floating Pill Button */}
+      <button
+        type="button"
+        data-spotlight-expand
+        aria-label={expandLabel}
+        class="
+          hidden cursor-pointer items-center gap-2.5 rounded-full border
+          border-slate-200/80 bg-slate-900/95 px-4 py-2.5 text-xs font-bold
+          text-white shadow-xl backdrop-blur-md transition-transform
+          hover:scale-105
+          dark:border-slate-700
+        "
+      >
+        <span class="relative flex size-2.5">
+          <span class="
+            absolute inline-flex size-full animate-ping rounded-full
+            bg-amber-400 opacity-75
+          "
+          />
+          <span class="relative inline-flex size-2.5 rounded-full bg-amber-400" />
+        </span>
+        <Icon name="campaign" class="text-base text-amber-300" />
+        <span>{expandLabel}</span>
+        <span class="
+          rounded-full bg-primary px-2 py-0.5 text-[11px] font-extrabold
+          text-white
+        "
+        >
+          {activeSpotlights.length}
+        </span>
+      </button>
+
+      {/* Expanded Spotlight Card */}
+      <div
+        data-spotlight-card
+        class="
+          w-88 overflow-hidden rounded-3xl border border-slate-200/90
+          bg-white/95 shadow-2xl backdrop-blur-md
+          sm:w-[24rem]
+          dark:border-slate-800 dark:bg-slate-900/95
+        "
+      >
+        {/* Top Bar: Header Label + Multi-Event Pill Tabs + Minimize Button */}
+        <div class="
+          border-b border-slate-200/80 bg-slate-900 px-4 py-3 text-white
+          dark:border-slate-800
+        "
+        >
+          <div class="flex items-center justify-between gap-2">
+            <div class="
+              flex items-center gap-1.5 text-[11px] font-bold tracking-wider
+              text-amber-300 uppercase
+            "
+            >
+              <Icon name="campaign" class="text-sm" />
+              <span class="truncate">{dockLabel}</span>
+            </div>
+            <button
+              type="button"
+              data-spotlight-minimize
+              aria-label={minimizeLabel}
+              title={minimizeLabel}
+              class="
+                inline-flex size-7 shrink-0 cursor-pointer items-center
+                justify-center rounded-full bg-white/10 text-slate-200
+                transition-colors
+                hover:bg-white/20 hover:text-white
+              "
+            >
+              <Icon name="remove" class="text-base" />
+            </button>
+          </div>
+
+          {activeSpotlights.length > 1 && (
+            <div
+              role="tablist"
+              aria-label={dockLabel}
+              class="mt-2.5 flex gap-1.5 overflow-x-auto pb-0.5"
+            >
+              {activeSpotlights.map((item, idx) => (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={idx === 0 ? "true" : "false"}
+                  data-spotlight-tab={item.id}
+                  class:list={[
+                    `
+                      cursor-pointer rounded-full px-3 py-1 text-xs font-bold
+                      whitespace-nowrap transition-colors
+                    `,
+                    idx === 0
+                      ? "bg-amber-400 text-slate-950 shadow-xs"
+                      : `
+                        bg-white/10 text-slate-200
+                        hover:bg-white/20
+                      `,
+                  ]}
+                >
+                  {item.tabLabel}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Spotlight Event Panels */}
+        {activeSpotlights.map((item, idx) => {
+          const safePosterUrl = toSafeHref(item.poster.url);
+          const posterAlt = item.poster.alt || item.title;
+
+          return (
+            <div
+              role="tabpanel"
+              data-spotlight-panel={item.id}
+              class:list={["p-4", idx === 0 ? "block" : "hidden"]}
+            >
+              {/* Status Badge & Countdown */}
+              <div class="
+                mb-3 flex flex-wrap items-center justify-between gap-2
+              "
+              >
+                {item.spotlightConfig.badgeText && (
+                  <span class="
+                    inline-flex items-center gap-1 rounded-full bg-primary/10
+                    px-2.5 py-0.5 text-[11px] font-bold text-primary
+                    dark:bg-primary/20 dark:text-amber-300
+                  "
+                  >
+                    <Icon name="auto_awesome" class="text-xs" />
+                    <span>{item.spotlightConfig.badgeText}</span>
+                  </span>
+                )}
+                {item.spotlightConfig.showCountdown
+                  && item.spotlightConfig.endAt && (
+                  <span
+                    data-spotlight-countdown={item.spotlightConfig.endAt}
+                    class="
+                      hidden items-center gap-1 rounded-full bg-amber-500/15
+                      px-2.5 py-0.5 text-[11px] font-bold text-amber-800
+                      dark:bg-amber-400/20 dark:text-amber-300
+                    "
+                  />
+                )}
+              </div>
+
+              {/* Poster Thumbnail + Content Preview */}
+              <div class="flex items-start gap-3.5">
+                <div class="
+                  group relative w-24 shrink-0 overflow-hidden rounded-xl border
+                  border-slate-200 bg-slate-100 shadow-sm
+                  dark:border-slate-700 dark:bg-slate-800
+                "
+                >
+                  <img
+                    src={safePosterUrl}
+                    alt={posterAlt}
+                    width={item.poster.width ?? 240}
+                    height={item.poster.height ?? 336}
+                    loading="lazy"
+                    class="
+                      aspect-5/7 w-full object-cover transition-transform
+                      duration-300
+                      group-hover:scale-105
+                    "
+                  />
+                </div>
+
+                <div class="min-w-0 flex-1 space-y-1.5 text-start">
+                  <p class="
+                    text-[11px] font-semibold tracking-wide text-slate-500
+                    uppercase
+                    dark:text-slate-400
+                  "
+                  >
+                    {item.category}
+                  </p>
+                  <h3 class="
+                    line-clamp-2 text-sm/snug font-extrabold text-slate-900
+                    dark:text-white
+                  "
+                  >
+                    {item.title}
+                  </h3>
+                  <p class="
+                    line-clamp-3 text-xs/relaxed text-slate-600
+                    dark:text-slate-300
+                  "
+                  >
+                    {item.summary}
+                  </p>
+                  <p class="
+                    flex items-center gap-1 pt-0.5 text-[11px] font-semibold
+                    text-slate-700
+                    dark:text-slate-300
+                  "
+                  >
+                    <Icon name="calendar_month" class="text-xs text-primary" />
+                    <span class="truncate">{item.schedule}</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons & Full Poster Lightbox Trigger */}
+              <div class="
+                mt-4 flex flex-wrap items-center gap-2 border-t border-slate-100
+                pt-3
+                dark:border-slate-800
+              "
+              >
+                <Dialog>
+                  <DialogTrigger class="
+                    inline-flex flex-1 cursor-pointer items-center
+                    justify-center gap-1.5 rounded-xl border border-slate-300
+                    bg-slate-50 px-3 py-2 text-xs font-bold text-slate-800
+                    transition-colors
+                    hover:bg-slate-100
+                    dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100
+                    dark:hover:bg-slate-700
+                  "
+                  >
+                    <Icon name="zoom_in" class="text-sm text-primary" />
+                    <span>{viewPosterLabel}</span>
+                  </DialogTrigger>
+
+                  <DialogContent class="
+                    max-w-3xl rounded-3xl bg-slate-950 p-6 text-white
+                    sm:p-8
+                  "
+                  >
+                    <DialogHeader class="text-start">
+                      <div class="mb-2 flex flex-wrap items-center gap-2">
+                        {item.spotlightConfig.badgeText && (
+                          <span class="
+                            inline-flex items-center gap-1 rounded-full
+                            bg-amber-400/20 px-3 py-1 text-xs font-bold
+                            text-amber-300
+                          "
+                          >
+                            <Icon name="campaign" class="text-sm" />
+                            <span>{item.spotlightConfig.badgeText}</span>
+                          </span>
+                        )}
+                        <span class="text-xs font-semibold text-slate-300">
+                          {item.schedule}
+                        </span>
+                      </div>
+                      <DialogTitle class="
+                        text-xl font-extrabold text-white
+                        sm:text-2xl
+                      "
+                      >
+                        {item.title}
+                      </DialogTitle>
+                      <DialogDescription class="mt-1 text-sm text-slate-300">
+                        {item.summary}
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <div class="
+                      my-5 flex flex-col items-center gap-5
+                      md:flex-row md:items-start
+                    "
+                    >
+                      <div class="
+                        w-full max-w-xs shrink-0 overflow-hidden rounded-2xl
+                        border border-white/15 bg-slate-900 shadow-lg
+                      "
+                      >
+                        <img
+                          src={safePosterUrl}
+                          alt={posterAlt}
+                          width={item.poster.width ?? 800}
+                          height={item.poster.height ?? 1120}
+                          class="max-h-[60vh] w-full object-contain"
+                        />
+                      </div>
+
+                      <div class="flex-1 space-y-4 text-start">
+                        <div class="
+                          space-y-2 rounded-2xl border border-white/10
+                          bg-white/5 p-4
+                        "
+                        >
+                          <p class="
+                            flex items-center gap-2 text-xs font-semibold
+                            text-amber-300
+                          "
+                          >
+                            <Icon name="calendar_month" class="text-base" />
+                            <span>{item.schedule}</span>
+                          </p>
+                          <p class="
+                            flex items-center gap-2 text-xs text-slate-300
+                          "
+                          >
+                            <Icon name="location_on" class="text-base" />
+                            <span>{item.location}</span>
+                          </p>
+                        </div>
+
+                        <div class="flex flex-col gap-2.5">
+                          {item.actionLinks.map((link) => {
+                            const safeLinkUrl = toSafeHref(link.url);
+                            return (
+                              <a
+                                href={safeLinkUrl}
+                                target={link.external ? "_blank" : undefined}
+                                rel={
+                                  link.external
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
+                                class:list={[
+                                  `
+                                    inline-flex items-center justify-center
+                                    gap-2 rounded-xl px-4 py-2.5 text-xs
+                                    font-bold transition-all
+                                  `,
+                                  getActionLinkClasses(link.variant),
+                                ]}
+                              >
+                                {link.icon && (
+                                  <Icon name={link.icon} class="text-sm" />
+                                )}
+                                <span>{link.label}</span>
+                              </a>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    <DialogFooter class="
+                      flex flex-wrap items-center justify-between gap-3 border-t
+                      border-white/10 pt-4
+                    "
+                    >
+                      <a
+                        href={safePosterUrl}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="
+                          inline-flex items-center gap-1.5 rounded-xl border
+                          border-white/20 bg-white/10 px-4 py-2 text-xs
+                          font-bold text-white transition-colors
+                          hover:bg-white/20
+                        "
+                      >
+                        <Icon name="download" class="text-sm" />
+                        <span>{downloadPosterLabel}</span>
+                      </a>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
+                {item.actionLinks.slice(0, 1).map((primaryLink) => {
+                  const safePrimaryUrl = toSafeHref(primaryLink.url);
+                  return (
+                    <a
+                      href={safePrimaryUrl}
+                      target={primaryLink.external ? "_blank" : undefined}
+                      rel={
+                        primaryLink.external ? "noopener noreferrer" : undefined
+                      }
+                      class:list={[
+                        `
+                          inline-flex flex-1 items-center justify-center gap-1.5
+                          rounded-xl px-3 py-2 text-xs font-bold transition-all
+                        `,
+                        getActionLinkClasses(primaryLink.variant ?? "primary"),
+                      ]}
+                    >
+                      {primaryLink.icon && (
+                        <Icon name={primaryLink.icon} class="text-sm" />
+                      )}
+                      <span class="truncate">{primaryLink.label}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </aside>
+  )
+}
+
+<script>
+  import { initEventSpotlightDocks } from "./event-spotlight-dock.controller";
+
+  initEventSpotlightDocks();
+  document.addEventListener("astro:after-swap", () =>
+    initEventSpotlightDocks()
+  );
+</script>

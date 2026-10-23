@@ -1,0 +1,208 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl } from "@i18n/utils";
+import {
+  getResourcesHubCopy,
+  type TResourceGlossaryTerm,
+  type TResourcePublication,
+  type TResourcesHubCopy,
+} from "@utils/resources-mocks";
+import GlossaryTermCard from "./GlossaryTermCard.astro";
+import PublicationCard from "./PublicationCard.astro";
+
+/**
+ * @component PublicationsAndGlossarySection
+ * @title Publications & Islamic Glossary Section
+ * @description Renders the Digital Library downloadable publications (`PublicationCard`) and the interactive A–Z Islamic Glossary (`GlossaryTermCard`) with client-side letter filtering.
+ *
+ * Props
+ * - `lang`: optional locale code (`TLang`)
+ * - `copy`: optional localized section headings and labels (`TResourcesHubCopy`)
+ * - `publications`: array of downloadable publications (`TResourcePublication[]`)
+ * - `glossaryTerms`: array of Islamic glossary terms (`TResourceGlossaryTerm[]`)
+ *
+ * @preview
+ *
+ * <PublicationsAndGlossarySection
+ *   publications={publications}
+ *   glossaryTerms={glossaryTerms}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import PublicationsAndGlossarySection from "@components/data/display/Resources/PublicationsAndGlossarySection/PublicationsAndGlossarySection.astro";
+ * import {
+ *   getLocalizedGlossaryTerms,
+ *   getLocalizedPublications,
+ * } from "@utils/resources-mocks";
+ *
+ * const publications = getLocalizedPublications("es");
+ * const glossaryTerms = getLocalizedGlossaryTerms("es");
+ * ---
+ *
+ * <PublicationsAndGlossarySection
+ *   lang="es"
+ *   publications={publications}
+ *   glossaryTerms={glossaryTerms}
+ * />
+ * ```
+ */
+interface Props {
+  /**
+   * Optional locale override. Defaults to URL locale.
+   */
+  lang?: TLang;
+  /**
+   * Optional localized copy override for the Digital Library and Glossary sections.
+   */
+  copy?: TResourcesHubCopy;
+  /**
+   * List of downloadable publications.
+   */
+  publications: TResourcePublication[];
+  /**
+   * List of alphabetical Islamic glossary terms.
+   */
+  glossaryTerms: TResourceGlossaryTerm[];
+}
+
+const {
+  lang: propLang,
+  copy: propCopy,
+  publications,
+  glossaryTerms,
+} = Astro.props as Props;
+const lang = propLang ?? getLangFromUrl(Astro.url);
+const copy = propCopy ?? getResourcesHubCopy(lang);
+const letterGroups = Array.from(
+  new Set(glossaryTerms.map((item) => item.letterGroup))
+).sort();
+---
+
+<!--
+  Digital Library Publications (Strapi v5 Media Library plugin::upload.file)
+-->
+<section id="digital-library" class="space-y-8">
+  <div class="text-center">
+    <Badge
+      variant="secondary"
+      class="
+        mb-3 gap-2 bg-secondary/10 px-4 py-1 text-xs font-bold tracking-widest
+        text-secondary uppercase
+        dark:bg-blue-950/60 dark:text-blue-300
+      "
+    >
+      <Icon name="library_books" class="text-sm" />
+      <span>{copy.publicationsBadge}</span>
+    </Badge>
+    <h2 class="
+      text-3xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {copy.publicationsTitle}
+    </h2>
+    <p class="
+      mx-auto mt-2 max-w-2xl text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {copy.publicationsSubtitle}
+    </p>
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-6
+    md:grid-cols-3
+  "
+  >
+    {
+      publications.map((pub) => (
+        <PublicationCard
+          publication={pub}
+          pagesLabel={copy.pagesLabel}
+          downloadLabel={copy.downloadLabel}
+        />
+      ))
+    }
+  </div>
+</section>
+
+<!-- Interactive A-Z Islamic Glossary (plugin::resources.glossary-term) -->
+<section id="islamic-glossary" class="space-y-8">
+  <div class="text-center">
+    <Badge
+      variant="warning"
+      class="
+        mb-3 gap-2 bg-amber-500/15 px-4 py-1 text-xs font-bold tracking-widest
+        text-amber-700 uppercase
+        dark:text-amber-300
+      "
+    >
+      <Icon name="translate" class="text-sm" />
+      <span>{copy.glossaryBadge}</span>
+    </Badge>
+    <h2 class="
+      text-3xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {copy.glossaryTitle}
+    </h2>
+    <p class="
+      mx-auto mt-2 max-w-2xl text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {copy.glossarySubtitle}
+    </p>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-center gap-2">
+    <button
+      type="button"
+      data-glossary-letter="ALL"
+      class="
+        cursor-pointer rounded-full bg-secondary px-4 py-1.5 text-xs font-bold
+        text-white
+      "
+    >
+      {copy.allLettersLabel}
+    </button>
+    {
+      letterGroups.map((letter) => (
+        <button
+          type="button"
+          data-glossary-letter={letter}
+          class="
+            cursor-pointer rounded-full border border-slate-300 bg-white px-3.5
+            py-1.5 text-xs font-bold text-slate-700
+            hover:bg-slate-100
+            dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200
+          "
+        >
+          {letter}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-6
+    sm:grid-cols-2
+  "
+  >
+    {glossaryTerms.map((term) => <GlossaryTermCard term={term} />)}
+  </div>
+</section>
+
+<script>
+  import { initGlossaryFilter } from "./publications-and-glossary.controller";
+
+  initGlossaryFilter();
+  document.addEventListener("astro:after-swap", () => initGlossaryFilter());
+</script>

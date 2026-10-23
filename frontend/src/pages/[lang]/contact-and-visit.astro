@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import ContactAndVisitFormsSection from "@components/actions/ContactAndVisitFormsSection/ContactAndVisitFormsSection.astro";
+import VisitorEtiquetteSection from "@components/data/display/VisitorEtiquetteSection/VisitorEtiquetteSection.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { getLocalizedMocks } from "@utils/data.mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localizedMocks = getLocalizedMocks(lang);
+
+const [globalEntries, contactPageEntries] = await Promise.all([
+  getCollection("globalSetting", (entry) => entry.data.locale === lang),
+  getCollection("contactPage", (entry) => entry.data.locale === lang),
+]);
+
+const contactInfo
+  = globalEntries[0]?.data.contactInfo ?? localizedMocks.contactInfo;
+const contactPageData
+  = contactPageEntries[0]?.data ?? localizedMocks.contactVisitData;
+---
+
+<Layout
+  title={t("contact-page.title")}
+  description={t("contact-page.subtitle")}
+>
+  <!-- Hero Section -->
+  <PageHeroBanner
+    badgeIcon="location_on"
+    badgeLabel={contactInfo.address}
+    title={t("contact-page.title")}
+    subtitle={t("contact-page.subtitle")}
+  />
+
+  <!-- Forms Section: General Contact + Guided Visit Booking -->
+  <ContactAndVisitFormsSection lang={lang} />
+
+  <!-- Visitor Etiquette Guidelines & Directions -->
+  <VisitorEtiquetteSection
+    lang={lang}
+    etiquetteItems={contactPageData.visitorEtiquette}
+    transitDirections={contactPageData.transitDirections}
+  />
+</Layout>

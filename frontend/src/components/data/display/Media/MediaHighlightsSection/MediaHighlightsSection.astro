@@ -1,7 +1,7 @@
 ---
-import type { TMediaHighlight } from '@utils/models/media'
-import MediaHighlightCard from './MediaHighlightCard.astro'
-import HomeSection from '@components/layout/HomeSection/HomeSection.astro'
+import type { TMediaHighlight } from "@utils/models/media";
+import MediaHighlightCard from "./MediaHighlightCard.astro";
+import HomeSection from "@components/layout/HomeSection/HomeSection.astro";
 
 /**
  * @component MediaHighlightsSection
@@ -68,27 +68,27 @@ interface Props {
   /**
    * Title of the media highlights section.
    */
-  title: string
+  title: string;
   /**
    * Description of the media highlights section.
    */
-  description: string
+  description: string;
   /**
    * Array of media highlights to display.
    */
-  highlights: Array<TMediaHighlight>
+  highlights: Array<TMediaHighlight>;
   /**
    * Label for the call-to-action button.
    */
-  cardCtaLabel: string
+  cardCtaLabel: string;
   /**
    * URL for the section CTA link.
    */
-  mediaHref: string
+  mediaHref: string;
   /**
    * Label for the section CTA link.
    */
-  ctaLabel: string
+  ctaLabel: string;
 }
 
 const { title, description, highlights, cardCtaLabel, mediaHref, ctaLabel }
@@ -103,7 +103,7 @@ const { title, description, highlights, cardCtaLabel, mediaHref, ctaLabel }
   bodyClass="grid grid-cols-1 md:grid-cols-3 gap-6"
 >
   {
-    highlights.map(highlight => (
+    highlights.map((highlight) => (
       <li>
         <MediaHighlightCard {...highlight} ctaLabel={cardCtaLabel} />
       </li>

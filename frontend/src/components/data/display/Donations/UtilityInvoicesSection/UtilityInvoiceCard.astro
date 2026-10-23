@@ -1,0 +1,270 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Progress } from "@/components/starwind/progress";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import {
+  getDonatePageStrings,
+  type UtilityInvoiceMock,
+} from "@utils/donation-mocks";
+
+/**
+ * @component UtilityInvoiceCard
+ * @title Utility Invoice Card
+ * @description Renders a mosque utility bill crowdfunding card (`UtilityInvoiceMock`) with provider details, invoice reference, due date, funding progress bar, suggested chip-in buttons, and a "Sponsor Remaining Balance" action.
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `invoice`: utility invoice metadata (`UtilityInvoiceMock`)
+ *
+ * @preview
+ *
+ * <div class="max-w-md">
+ *   <UtilityInvoiceCard lang="es" invoice={invoice} />
+ * </div>
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import UtilityInvoiceCard from "@components/data/display/Donations/UtilityInvoicesSection/UtilityInvoiceCard.astro";
+ * import { getLocalizedUtilityInvoices } from "@utils/donation-mocks";
+ *
+ * const [invoice] = getLocalizedUtilityInvoices("es");
+ * ---
+ *
+ * <UtilityInvoiceCard lang="es" invoice={invoice} />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Utility bill item to display.
+   */
+  invoice: UtilityInvoiceMock;
+}
+
+const { lang, invoice: inv } = Astro.props as Props;
+const t = getDonatePageStrings(lang);
+
+const formatCop = (value: number) =>
+  new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(value);
+
+const isPaid = inv.invoiceStatus === "paid" || inv.remainingAmount <= 0;
+const badgeLabel = isPaid
+  ? t.paidBadge
+  : inv.invoiceStatus === "partially_funded"
+    ? t.partialBadge
+    : t.openBadge;
+const badgeVariant = isPaid
+  ? "success"
+  : inv.invoiceStatus === "partially_funded"
+    ? "warning"
+    : "info";
+---
+
+<Card
+  class="
+    flex flex-col justify-between rounded-2xl border border-slate-200 bg-white
+    shadow-sm transition
+    hover:shadow-md
+    dark:border-slate-800 dark:bg-slate-900/90
+  "
+>
+  <CardContent class="flex h-full flex-col justify-between p-6">
+    <div>
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+        <div class="inline-flex items-center gap-2.5">
+          <span
+            class="
+              inline-flex size-10 items-center justify-center rounded-xl
+              bg-secondary/10 text-secondary
+              dark:bg-blue-500/20 dark:text-blue-300
+            "
+          >
+            <Icon name={inv.icon || "receipt_long"} class="text-xl" />
+          </span>
+          <div>
+            <span
+              class="
+                block text-xs font-bold text-slate-500
+                dark:text-slate-400
+              "
+            >
+              {inv.provider}
+              {" "}
+              •
+              {inv.billingPeriod}
+            </span>
+            <span class="
+              block text-[11px] text-slate-400
+              dark:text-slate-500
+            "
+            >
+              Ref:
+              {" "}
+              {inv.invoiceReference}
+              {" "}
+              •
+              {" "}
+              {t.billDueLabel}
+              :
+              {" "}
+              {inv.dueDate}
+            </span>
+          </div>
+        </div>
+        <Badge variant={badgeVariant} class="text-[11px] font-extrabold">
+          {badgeLabel}
+        </Badge>
+      </div>
+
+      <h3 class="
+        mb-2 text-lg font-bold text-slate-900
+        dark:text-white
+      "
+      >
+        {inv.title}
+      </h3>
+      <p class="
+        mb-5 text-sm/relaxed text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {inv.description}
+      </p>
+    </div>
+
+    <div
+      class="
+        space-y-4 border-t border-slate-100 pt-4
+        dark:border-slate-800
+      "
+    >
+      <div class="grid grid-cols-3 gap-2 text-xs">
+        <div>
+          <span class="
+            block text-slate-500
+            dark:text-slate-400
+          "
+          >
+            {t.billTotalLabel}
+          </span
+          >
+          <span class="
+            font-bold text-slate-800
+            dark:text-slate-200
+          "
+          >
+            {formatCop(inv.goalAmount)}
+          </span>
+        </div>
+        <div>
+          <span class="
+            block text-slate-500
+            dark:text-slate-400
+          "
+          >
+            {t.billRaisedLabel}
+          </span
+          >
+          <span class="
+            font-bold text-emerald-700
+            dark:text-emerald-400
+          "
+          >
+            {formatCop(inv.raisedAmount)}
+          </span>
+        </div>
+        <div class="text-end">
+          <span class="
+            block text-slate-500
+            dark:text-slate-400
+          "
+          >
+            {t.billRemainingLabel}
+          </span
+          >
+          <span class="
+            font-extrabold text-secondary
+            dark:text-amber-300
+          "
+          >
+            {formatCop(inv.remainingAmount)}
+          </span>
+        </div>
+      </div>
+
+      <Progress
+        value={inv.percent}
+        max={100}
+        variant={isPaid ? "success" : "primary"}
+        aria-label={inv.title}
+        class="h-2.5"
+      />
+
+      {
+        !isPaid && (
+          <div class="space-y-2.5 pt-1">
+            <div class="flex flex-wrap gap-1.5">
+              {inv.suggestedAmounts.map((amt) => (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  data-invoice-chip
+                  data-slug={inv.slug}
+                  data-title={inv.title}
+                  data-amount={String(amt)}
+                  data-full="false"
+                  class="
+                    rounded-lg text-xs font-bold
+                    hover:border-secondary hover:bg-secondary hover:text-white
+                  "
+                >
+                  {t.chipInLabel}
+                  {" "}
+                  {formatCop(amt)}
+                </Button>
+              ))}
+            </div>
+
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              data-invoice-chip
+              data-slug={inv.slug}
+              data-title={inv.title}
+              data-amount={String(inv.remainingAmount)}
+              data-full="true"
+              class="
+                w-full justify-center gap-2 rounded-xl py-2.5 text-xs
+                font-extrabold
+              "
+            >
+              <Icon name="task_alt" class="text-base" />
+              <span>
+                {t.payRemainingLabel}
+                {" "}
+                (
+                {formatCop(inv.remainingAmount)}
+                {" "}
+                COP)
+              </span>
+            </Button>
+          </div>
+        )
+      }
+    </div>
+  </CardContent>
+</Card>

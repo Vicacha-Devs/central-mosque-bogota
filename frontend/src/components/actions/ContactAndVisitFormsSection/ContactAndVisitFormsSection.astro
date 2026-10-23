@@ -1,0 +1,441 @@
+---
+/**
+ * Organism: ContactAndVisitFormsSection
+ *
+ * Dual interactive form section for General Contact inquiries (`formType: "contact"`)
+ * and Guided Visit Bookings (`formType: "visit"`), localized via `useTranslations(lang)`.
+ */
+import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/starwind/native-select";
+import { Textarea } from "@/components/starwind/textarea";
+import { useTranslations } from "@i18n/utils";
+import type { TLang } from "@i18n/ui";
+
+export interface Props {
+  /** Active page locale (`es` | `en` | `ar` | `tr`). */
+  lang?: TLang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = useTranslations(lang);
+
+const subjects = [
+  { value: "general", label: t("contact-page.subject-general") },
+  { value: "education", label: t("contact-page.subject-education") },
+  { value: "nikah", label: t("contact-page.subject-nikah") },
+  { value: "funeral", label: t("contact-page.subject-funeral") },
+  { value: "media", label: t("contact-page.subject-media") },
+];
+---
+
+<section class="
+  grid grid-cols-1 gap-10
+  lg:grid-cols-2
+"
+>
+  <!-- Contact Form -->
+  <div
+    class="
+      rounded-2xl border border-slate-200 bg-white p-8 shadow-sm
+      dark:border-slate-800 dark:bg-slate-900
+    "
+  >
+    <h2 class="
+      mb-2 text-2xl font-bold text-slate-900
+      dark:text-white
+    "
+    >
+      {t("contact-page.contact-title")}
+    </h2>
+    <p class="
+      mb-6 text-sm text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {t("contact-page.contact-subtitle")}
+    </p>
+
+    <form
+      id="contact-form"
+      data-locale={lang}
+      data-sending-text={t("contact-page.sending")}
+      data-success-text={t("contact-page.contact-success")}
+      data-error-text={t("contact-page.error")}
+      class="space-y-4"
+    >
+      <div class="hidden" aria-hidden="true">
+        <label for="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+      <div>
+        <Label
+          for="contact-name"
+          class="
+            mb-1 block text-sm font-semibold text-slate-700
+            dark:text-slate-300
+          "
+        >
+          {t("contact-page.name-label")}
+        </Label>
+        <Input
+          id="contact-name"
+          name="fullName"
+          type="text"
+          required
+          maxlength={120}
+          class="rounded-xl"
+        />
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        <div>
+          <Label
+            for="contact-email"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.email-label")}
+          </Label>
+          <Input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            maxlength={160}
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="contact-phone"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.phone-label")}
+          </Label>
+          <Input
+            id="contact-phone"
+            name="phone"
+            type="tel"
+            maxlength={40}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label
+          for="contact-subject"
+          class="
+            mb-1 block text-sm font-semibold text-slate-700
+            dark:text-slate-300
+          "
+        >
+          {t("contact-page.subject-label")}
+        </Label>
+        <NativeSelect
+          id="contact-subject"
+          name="subject"
+          class="w-full rounded-xl"
+        >
+          {
+            subjects.map((subj) => (
+              <NativeSelectOption value={subj.value}>
+                {subj.label}
+              </NativeSelectOption>
+            ))
+          }
+        </NativeSelect>
+      </div>
+
+      <div>
+        <Label
+          for="contact-message"
+          class="
+            mb-1 block text-sm font-semibold text-slate-700
+            dark:text-slate-300
+          "
+        >
+          {t("contact-page.message-label")}
+        </Label>
+        <Textarea
+          id="contact-message"
+          name="message"
+          rows={4}
+          required
+          maxlength={4000}
+          class="rounded-xl"
+        />
+      </div>
+
+      <p
+        id="contact-status"
+        role="status"
+        class="hidden rounded-xl px-4 py-2.5 text-sm font-semibold"
+      >
+      </p>
+
+      <Button type="submit" variant="primary" class="w-full">
+        {t("contact-page.contact-submit")}
+      </Button>
+    </form>
+  </div>
+
+  <!-- Guided Visit Booking Form -->
+  <div
+    class="
+      rounded-2xl border border-slate-200 bg-white p-8 shadow-sm
+      dark:border-slate-800 dark:bg-slate-900
+    "
+  >
+    <h2 class="
+      mb-2 text-2xl font-bold text-slate-900
+      dark:text-white
+    "
+    >
+      {t("contact-page.visit-title")}
+    </h2>
+    <p class="
+      mb-6 text-sm text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {t("contact-page.visit-subtitle")}
+    </p>
+
+    <form
+      id="visit-form"
+      data-locale={lang}
+      data-sending-text={t("contact-page.sending")}
+      data-success-text={t("contact-page.visit-success")}
+      data-error-text={t("contact-page.error")}
+      class="space-y-4"
+    >
+      <div class="hidden" aria-hidden="true">
+        <label for="visit-website">Website</label>
+        <input
+          id="visit-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        <div>
+          <Label
+            for="visit-name"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.visitor-name-label")}
+          </Label>
+          <Input
+            id="visit-name"
+            name="visitorName"
+            type="text"
+            required
+            maxlength={120}
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="visit-org"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.organization-label")}
+          </Label>
+          <Input
+            id="visit-org"
+            name="organizationOrSchool"
+            type="text"
+            maxlength={160}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        <div>
+          <Label
+            for="visit-email"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.email-label")}
+          </Label>
+          <Input
+            id="visit-email"
+            name="email"
+            type="email"
+            required
+            maxlength={160}
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="visit-phone"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.visit-phone-label")}
+          </Label>
+          <Input
+            id="visit-phone"
+            name="phone"
+            type="tel"
+            required
+            maxlength={40}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-3
+      "
+      >
+        <div>
+          <Label
+            for="visit-date"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.preferred-date-label")}
+          </Label>
+          <Input
+            id="visit-date"
+            name="preferredDate"
+            type="date"
+            required
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="visit-slot"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.time-slot-label")}
+          </Label>
+          <NativeSelect
+            id="visit-slot"
+            name="preferredTimeSlot"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="morning">
+              {t("contact-page.morning-slot")}
+            </NativeSelectOption>
+            <NativeSelectOption value="afternoon">
+              {t("contact-page.afternoon-slot")}
+            </NativeSelectOption>
+          </NativeSelect>
+        </div>
+        <div>
+          <Label
+            for="visit-size"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t("contact-page.group-size-label")}
+          </Label>
+          <Input
+            id="visit-size"
+            name="groupSize"
+            type="number"
+            min="1"
+            max="150"
+            value="5"
+            required
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label
+          for="visit-notes"
+          class="
+            mb-1 block text-sm font-semibold text-slate-700
+            dark:text-slate-300
+          "
+        >
+          {t("contact-page.notes-label")}
+        </Label>
+        <Textarea
+          id="visit-notes"
+          name="notes"
+          rows={2}
+          maxlength={2000}
+          class="rounded-xl"
+        />
+      </div>
+
+      <p
+        id="visit-status"
+        role="status"
+        class="hidden rounded-xl px-4 py-2.5 text-sm font-semibold"
+      >
+      </p>
+
+      <Button type="submit" variant="secondary" class="w-full">
+        {t("contact-page.visit-submit")}
+      </Button>
+    </form>
+  </div>
+</section>
+
+<script>
+  import {
+    initContactAndVisitForms,
+  } from "./contact-and-visit-forms.controller";
+
+  initContactAndVisitForms();
+  document.addEventListener("astro:after-swap", initContactAndVisitForms);
+</script>

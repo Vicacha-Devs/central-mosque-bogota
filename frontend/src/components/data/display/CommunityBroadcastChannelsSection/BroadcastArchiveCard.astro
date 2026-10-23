@@ -1,0 +1,94 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+import type { TLang } from "@i18n/ui";
+import type { TArchiveBroadcastItem } from "@utils/inbox-mocks";
+
+/**
+ * @component BroadcastArchiveCard
+ * @title Broadcast Archive Card
+ * @description Molecule card displaying a recent community dispatch from the mosque broadcast archive with optional Hijri/Gregorian secondary date badge.
+ *
+ * Props
+ * - `item`: `TArchiveBroadcastItem` archive entry
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ *
+ * @preview
+ *
+ * <BroadcastArchiveCard
+ *   lang="es"
+ *   item={{
+ *     code: "BC-20260327-JUMUA",
+ *     topic: "announcements",
+ *     subject: "Jumu'ah de esta semana: Dos turnos (12:15 PM y 1:00 PM)",
+ *     bodyText: "Recordamos llegar con 15 minutos de anticipación.",
+ *     secondaryDateLabel: "8 Shawwal 1447 AH",
+ *   }}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import BroadcastArchiveCard from "@components/data/display/CommunityBroadcastChannelsSection/BroadcastArchiveCard.astro";
+ * ---
+ *
+ * <BroadcastArchiveCard item={item} lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Archived broadcast item entry.
+   */
+  item: TArchiveBroadcastItem;
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+}
+
+const { item, lang } = Astro.props;
+const locCopy = item.translations?.[lang];
+const subject = locCopy?.subject || item.subject;
+const body = locCopy?.bodyText || item.bodyText;
+---
+
+<Card
+  class="
+    gap-0 rounded-2xl border-slate-200 p-4 shadow-none
+    dark:border-slate-800
+  "
+>
+  <CardContent class="p-0">
+    <div class="mb-1 flex flex-wrap items-center justify-between gap-2">
+      <h4 class="
+        text-sm font-bold text-slate-900
+        dark:text-white
+      "
+      >
+        {subject}
+      </h4>
+      {
+        item.secondaryDateLabel && (
+          <Badge
+            variant="warning"
+            class="
+              bg-amber-100 px-2.5 py-0.5 text-[11px] font-semibold
+              text-amber-900
+              dark:bg-amber-950/60 dark:text-amber-300
+            "
+          >
+            {item.secondaryDateLabel}
+          </Badge>
+        )
+      }
+    </div>
+    <p class="
+      text-xs text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {body}
+    </p>
+  </CardContent>
+</Card>
