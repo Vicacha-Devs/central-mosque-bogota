@@ -1,0 +1,23 @@
+{
+  "name": "@central-mosque-bogota/docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bilingual (EN/ES) Developer Handbook, Onboarding & Verification Portal powered by Astro Starlight, Pele, and TypeDoc",
+  "scripts": {
+    "dev": "astro dev --port 4322",
+    "build": "node ./scripts/sync-typedoc.ts && astro build",
+    "preview": "astro preview --port 4322",
+    "typedoc": "node ./scripts/sync-typedoc.ts"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.34.4",
+    "astro": "5.18.2",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "typedoc": "0.28.7",
+    "typedoc-plugin-markdown": "4.7.0",
+    "typescript": "^5.7.2"
+  }
+}
