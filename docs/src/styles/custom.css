@@ -1,0 +1,46 @@
+:root {
+  --sl-color-accent-low: #064e3b;
+  --sl-color-accent: #10b981;
+  --sl-color-accent-high: #a7f3d0;
+
+  /* Pele (https://pele.run/) Dark Theme Variables */
+  --pele-bg: #111827;
+  --pele-fg: #f9fafb;
+  --pele-muted: #9ca3af;
+  --pele-line: #34d399;
+  --pele-surface: #1f2937;
+  --pele-surface-alt: #064e3b;
+  --pele-border: #059669;
+  --pele-accent: #f59e0b;
+  --pele-critical: #ef4444;
+  --pele-error: #ef4444;
+  --pele-radius: 8px;
+}
+
+:root[data-theme="light"] {
+  --sl-color-accent-low: #d1fae5;
+  --sl-color-accent: #047857;
+  --sl-color-accent-high: #064e3b;
+
+  /* Pele (https://pele.run/) Light Theme Variables */
+  --pele-bg: #ffffff;
+  --pele-fg: #111827;
+  --pele-muted: #4b5563;
+  --pele-line: #047857;
+  --pele-surface: #f0fdf4;
+  --pele-surface-alt: #ecfdf5;
+  --pele-border: #059669;
+  --pele-accent: #d97706;
+  --pele-critical: #dc2626;
+  --pele-error: #dc2626;
+  --pele-radius: 8px;
+}
+
+.pele-diagram {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--pele-border);
+  background-color: var(--pele-bg);
+  overflow: hidden;
+}
