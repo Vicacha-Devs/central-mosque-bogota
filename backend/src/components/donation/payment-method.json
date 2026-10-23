@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_donation_payment_methods",
+  "info": {
+    "displayName": "Payment Method",
+    "icon": "creditCard",
+    "description": "Bank transfer, Nequi, Wompi, or QR code donation channel"
+  },
+  "options": {},
+  "attributes": {
+    "providerName": {
+      "type": "string",
+      "required": true
+    },
+    "accountType": {
+      "type": "string"
+    },
+    "accountNumber": {
+      "type": "string"
+    },
+    "accountHolder": {
+      "type": "string"
+    },
+    "nit": {
+      "type": "string"
+    },
+    "checkoutUrl": {
+      "type": "string"
+    },
+    "qrCodeImageUrl": {
+      "type": "string"
+    },
+    "qrCodeImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "instructions": {
+      "type": "text"
+    }
+  }
+}

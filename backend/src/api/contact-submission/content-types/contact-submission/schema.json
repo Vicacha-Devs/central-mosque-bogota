@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_submissions",
+  "info": {
+    "singularName": "contact-submission",
+    "pluralName": "contact-submissions",
+    "displayName": "Contact Submission",
+    "description": "Inbound inquiries submitted via the Contact page"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "subject": {
+      "type": "enumeration",
+      "enum": [
+        "general",
+        "education",
+        "nikah",
+        "funeral",
+        "media",
+        "other"
+      ],
+      "default": "general",
+      "required": true
+    },
+    "message": {
+      "type": "text",
+      "required": true,
+      "maxLength": 4000
+    },
+    "locale": {
+      "type": "enumeration",
+      "enum": ["es", "en", "ar", "tr"],
+      "default": "es"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["new", "in_progress", "resolved"],
+      "default": "new"
+    }
+  }
+}

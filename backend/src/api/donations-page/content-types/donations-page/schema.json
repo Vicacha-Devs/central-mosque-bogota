@@ -1,0 +1,123 @@
+{
+  "kind": "singleType",
+  "collectionName": "donations_pages",
+  "info": {
+    "singularName": "donations-page",
+    "pluralName": "donations-pages",
+    "displayName": "Donations Page",
+    "description": "Donations & Zakat page settings, IslamicAPI Zakat Nisab standard, and bank/QR payment methods"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "heroTitle": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "heroSubtitle": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "zakatStandard": {
+      "type": "enumeration",
+      "enum": ["common", "classical"],
+      "default": "common",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "defaultCurrency": {
+      "type": "enumeration",
+      "enum": ["cop", "usd"],
+      "default": "cop",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "fallbackGoldPriceCop": {
+      "type": "decimal",
+      "default": 385000,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "fallbackSilverPriceCop": {
+      "type": "decimal",
+      "default": 4400,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "fallbackGoldPriceUsd": {
+      "type": "decimal",
+      "default": 92.5,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "fallbackSilverPriceUsd": {
+      "type": "decimal",
+      "default": 1.05,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "paymentMethods": {
+      "type": "component",
+      "repeatable": true,
+      "component": "donation.payment-method",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "transparencyNote": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "visit_bookings",
+  "info": {
+    "singularName": "visit-booking",
+    "pluralName": "visit-bookings",
+    "displayName": "Visit Booking",
+    "description": "Guided tour and school/university visit reservations"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "visitorName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "organizationOrSchool": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40
+    },
+    "preferredDate": {
+      "type": "date",
+      "required": true
+    },
+    "preferredTimeSlot": {
+      "type": "enumeration",
+      "enum": ["morning", "afternoon"],
+      "default": "morning",
+      "required": true
+    },
+    "groupSize": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 150,
+      "default": 5
+    },
+    "notes": {
+      "type": "text",
+      "maxLength": 2000
+    },
+    "locale": {
+      "type": "enumeration",
+      "enum": ["es", "en", "ar", "tr"],
+      "default": "es"
+    },
+    "preferredGuideLanguage": {
+      "type": "enumeration",
+      "enum": ["es", "en", "ar", "tr"],
+      "default": "es"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "confirmed", "cancelled"],
+      "default": "pending"
+    }
+  }
+}

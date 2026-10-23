@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_prayer_iqamah_rules",
+  "info": {
+    "displayName": "Iqamah Rule",
+    "icon": "clock",
+    "description": "Iqamah offset or fixed congregation time per daily prayer"
+  },
+  "options": {},
+  "attributes": {
+    "prayerName": {
+      "type": "enumeration",
+      "enum": [
+        "fajr",
+        "dhuhr",
+        "asr",
+        "maghrib",
+        "isha",
+        "jumuah"
+      ],
+      "required": true
+    },
+    "mode": {
+      "type": "enumeration",
+      "enum": [
+        "offset_minutes",
+        "fixed_time"
+      ],
+      "default": "offset_minutes",
+      "required": true
+    },
+    "offsetMinutes": {
+      "type": "integer",
+      "default": 15
+    },
+    "fixedTime": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donation_submissions",
+  "info": {
+    "singularName": "donation-submission",
+    "pluralName": "donation-submissions",
+    "displayName": "Donation Submission & Tax Certificate",
+    "description": "Donor transfer notifications (Bancolombia, Nequi, Daviplata, Wompi, PayPal), mosque utility bill payments, and Colombian DIAN tax certificate requests"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "referenceCode": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "donorName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 140
+    },
+    "donorEmail": {
+      "type": "email",
+      "required": true
+    },
+    "donorPhone": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "documentType": {
+      "type": "enumeration",
+      "enum": ["CC", "CE", "NIT", "PASSPORT", "OTHER"],
+      "default": "CC"
+    },
+    "documentNumber": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "isAnonymous": {
+      "type": "boolean",
+      "default": false
+    },
+    "amount": {
+      "type": "decimal",
+      "required": true,
+      "min": 1
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": ["COP", "USD", "EUR", "TRY"],
+      "default": "COP",
+      "required": true
+    },
+    "convertedBaseAmount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "donationType": {
+      "type": "enumeration",
+      "enum": ["zakat", "sadaqah", "waqf", "iftar", "utility_bills", "general"],
+      "default": "general",
+      "required": true
+    },
+    "campaignKind": {
+      "type": "enumeration",
+      "enum": ["major_campaign", "utility_invoice", "micro_need"],
+      "default": "major_campaign"
+    },
+    "coversRemainingBalance": {
+      "type": "boolean",
+      "default": false
+    },
+    "paymentMethodUsed": {
+      "type": "enumeration",
+      "enum": ["bancolombia", "nequi", "daviplata", "wompi", "paypal", "other"],
+      "default": "bancolombia",
+      "required": true
+    },
+    "transactionReference": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "receiptFile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files"]
+    },
+    "requestsTaxCertificate": {
+      "type": "boolean",
+      "default": false
+    },
+    "campaignSlug": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "notes": {
+      "type": "text",
+      "maxLength": 2000
+    },
+    "locale": {
+      "type": "enumeration",
+      "enum": ["es", "en", "ar", "tr"],
+      "default": "es"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "verified", "certificate_issued", "rejected"],
+      "default": "pending"
+    },
+    "verifiedAt": {
+      "type": "datetime"
+    },
+    "verifiedBy": {
+      "type": "string"
+    },
+    "certificateSerialNumber": {
+      "type": "string"
+    },
+    "certificateVerifyUrl": {
+      "type": "string"
+    }
+  }
+}
