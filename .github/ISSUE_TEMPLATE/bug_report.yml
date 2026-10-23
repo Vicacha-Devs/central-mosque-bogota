@@ -1,0 +1,83 @@
+name: Bug Report
+description: Report a bug in the Central Mosque of Bogotá website, BFF, Strapi CMS, or documentation
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the **Central Mosque of Bogotá (Mezquita Central de Bogotá)** platform. Please fill out the details below so we can reproduce and resolve the issue quickly.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Workspace / Area
+      description: Which part of the monorepo is affected?
+      options:
+        - "Frontend — Astro 6 SSR / UI Components (frontend/)"
+        - "Frontend — BFF API Routes (/api/*)"
+        - "Frontend — Islamic APIs (Prayer Times, Quran, Hadith, Hijri, Ramadan)"
+        - "Frontend — Internationalization (es, en, ar, tr) or RTL Layout"
+        - "Backend — Strapi v5 CMS & Custom Plugins (backend/)"
+        - "Documentation — Astro Starlight Portal (docs/)"
+        - "Docker / CI / Build Tooling"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: locale
+    attributes:
+      label: Locale / Direction
+      description: Does this issue occur in a specific language or text direction?
+      options:
+        - "All locales (es, en, ar, tr)"
+        - "Spanish (es — LTR)"
+        - "English (en — LTR)"
+        - "Arabic (ar — RTL)"
+        - "Turkish (tr — LTR)"
+        - "Not applicable (Backend / Build)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "Describe what went wrong..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the behavior.
+      placeholder: |
+        1. Navigate to '/ar/horarios'
+        2. Switch theme to dark mode
+        3. Observe layout overflow on mobile viewport
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots, Console Output, or Stack Trace
+      description: Paste any relevant terminal logs, browser console errors, or screenshots.
+      render: shell
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment Details
+      description: "OS, Browser, Node.js version, and whether Strapi backend was running or in offline fallback mode."
+      placeholder: "macOS 15, Chrome 135, Node v24.14.1, Offline Mock Mode"
