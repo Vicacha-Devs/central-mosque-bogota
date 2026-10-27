@@ -12,11 +12,48 @@
     "build:docs": "pnpm --filter @central-mosque-bogota/docs build",
     "test:unit": "pnpm --filter frontend test:unit --run",
     "test:coverage": "pnpm --filter frontend test:unit --run --coverage",
+    "test:backend": "pnpm --filter @central-mosque-bogota/backend test",
+    "typecheck:backend": "pnpm --filter @central-mosque-bogota/backend typecheck",
     "verify": "node ./scripts/verify-all.ts"
   },
   "engines": {
     "node": ">=24",
     "pnpm": ">=10"
   },
-  "packageManager": "pnpm@10.33.3"
+  "packageManager": "pnpm@10.33.3",
+  "pnpm": {
+    "overrides": {
+      "@vicacha-devs/strapi-plugin-bookings": "file:../strapi-v5-extensions/packages/strapi-plugin-bookings",
+      "@vicacha-devs/strapi-plugin-calendar": "file:../strapi-v5-extensions/packages/strapi-plugin-calendar",
+      "@vicacha-devs/strapi-plugin-certificates": "file:../strapi-v5-extensions/packages/strapi-plugin-certificates",
+      "better-sqlite3": "^13.0.3"
+    },
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "better-sqlite3",
+      "core-js",
+      "core-js-pure",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@strapi/sdk-plugin"
+      ],
+      "allowAny": [
+        "@strapi/*",
+        "@types/react",
+        "codemirror",
+        "eslint",
+        "react",
+        "react-intl",
+        "react-router-dom",
+        "styled-components",
+        "typescript",
+        "webpack",
+        "zod"
+      ]
+    }
+  }
 }

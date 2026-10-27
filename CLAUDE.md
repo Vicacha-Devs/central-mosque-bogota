@@ -4,7 +4,7 @@
 
 Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en`, `es`) documentation monorepo for the **Central Mosque of Bogotá (Mezquita Central Abu Bakr As-Siddiq)**:
 - **`frontend/`**: Astro 7 SSR application (`@astrojs/node`), Tailwind CSS v4, Starwind UI, `@sensinum/astro-strapi-loader` (`src/content.config.ts` & `src/services/strapi/loader.ts`), typed Strapi v5 REST client (`src/services/strapi/api.ts`), `@vicacha-devs/astro-tiptap-blocks` (`TiptapContent.astro`), and IslamicAPI integration (`src/services/islamicAPI/`).
-- **`backend/`**: Strapi v5 (`^5.39.0`) Headless CMS with 17 content schemas, `@notum-cz/strapi-plugin-tiptap-editor`, 10 custom `@vicacha-devs/strapi-plugin-*` domain extensions, and Cloudinary media uploads.
+- **`backend/`**: Strapi v5 (`5.59.0`) Headless CMS with 17 content schemas (`src/api/`), 10 shared components (`src/components/`), `@notum-cz/strapi-plugin-tiptap-editor`, `@notum-cz/strapi-plugin-seo`, `strapi-global-search`, `strapi-cache` (`^1.13.0`), 10 custom `@vicacha-devs/strapi-plugin-*` domain extensions, and Cloudinary media uploads.
 - **`docs/`**: Bilingual (`en` / `es`) Astro Starlight documentation portal with **Pele** (`https://pele.run/`) SVG Mermaid diagrams, **Archify** standalone HTML diagrams (`docs/public/archify/`), and **TypeDoc** API reference generation.
 
 ---

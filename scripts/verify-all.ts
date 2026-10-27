@@ -17,6 +17,7 @@ interface VerificationStep {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
 const frontendDir = path.join(rootDir, "frontend");
+const backendDir = path.join(rootDir, "backend");
 const docsDir = path.join(rootDir, "docs");
 const docsContentDir = path.join(docsDir, "src/content/docs");
 const MAX_DOC_LINES = 500;
@@ -63,6 +64,30 @@ function verifyDocLineLimits(): void {
   );
 }
 
+const backendTestFiles = fs
+  .readdirSync(path.join(backendDir, "tests"))
+  .filter((name) => name.endsWith(".test.ts"))
+  .sort()
+  .map((name) => path.join("tests", name));
+
+const BACKEND_STEPS: VerificationStep[] = [
+  {
+    name: "tsc --noEmit (backend)",
+    bin: path.join(backendDir, "node_modules/.bin/tsc"),
+    args: ["--noEmit"],
+  },
+  {
+    name: "node --test backend & 10-plugin suite",
+    bin: process.execPath,
+    args: [
+      "--import",
+      "./tests/register-ts-resolver.mjs",
+      "--test",
+      ...backendTestFiles,
+    ],
+  },
+];
+
 const FRONTEND_STEPS: VerificationStep[] = [
   {
     name: "oxfmt --check",
@@ -97,6 +122,11 @@ const FRONTEND_STEPS: VerificationStep[] = [
 ];
 
 verifyDocLineLimits();
+
+for (const step of BACKEND_STEPS) {
+  process.stdout.write(`\n=== Running Backend Gate: ${step.name} ===\n`);
+  execFileSync(step.bin, step.args, { cwd: backendDir, stdio: "inherit" });
+}
 
 for (const step of FRONTEND_STEPS) {
   process.stdout.write(`\n=== Running Frontend Gate: ${step.name} ===\n`);
