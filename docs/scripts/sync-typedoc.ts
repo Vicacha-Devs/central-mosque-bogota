@@ -38,11 +38,20 @@ if (fs.existsSync(typedocBin)) {
 fs.mkdirSync(enApiDir, { recursive: true });
 fs.mkdirSync(esApiDir, { recursive: true });
 
+function resolveTypeScript(): typeof import("typescript") {
+  for (const pkgDir of [docsRoot, frontendDir, path.join(repoRoot, "backend")]) {
+    try {
+      const req = createRequire(path.join(pkgDir, "package.json"));
+      return req("typescript") as typeof import("typescript");
+    } catch {
+      // try next workspace package
+    }
+  }
+  throw new Error("Could not resolve typescript in workspace");
+}
+
 function extractAstSummaries(): string[] {
-  const requireFromFrontend = createRequire(
-    path.join(frontendDir, "package.json")
-  );
-  const ts = requireFromFrontend("typescript") as typeof import("typescript");
+  const ts = resolveTypeScript();
   const sections: string[] = [];
 
   for (const relPath of ENTRY_FILES) {

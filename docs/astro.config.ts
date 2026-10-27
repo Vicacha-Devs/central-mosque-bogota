@@ -57,6 +57,11 @@ export default defineConfig({
               translations: { es: "Guía de Onboarding Paso a Paso" },
             },
             {
+              slug: "01-getting-started/learning-roadmap",
+              label: "4-Tier Learning Roadmap & Tutorials",
+              translations: { es: "Ruta de Aprendizaje (4 Niveles) y YouTube" },
+            },
+            {
               slug: "01-getting-started/environment-setup",
               label: "Environment & Local Stack",
               translations: { es: "Variables de Entorno y Stack Local" },

@@ -11,7 +11,7 @@ description: Decisiones de arquitectura autoritativas actualizadas para el stack
 
 | ADR | Área | Decisión Seleccionada | Estado |
 | :--- | :--- | :--- | :--- |
-| **ADR-001** | Stack Principal | Monorepo TypeScript **Astro 7 SSR (`@astrojs/node`) + Strapi v5 (`^5.39.0`)** | Aceptado |
+| **ADR-001** | Stack Principal | Monorepo TypeScript **Astro 7 SSR (`@astrojs/node`) + Strapi v5 (`5.59.0`)** | Aceptado |
 | **ADR-002** | Seguridad Rich Text | **`@vicacha-devs/astro-tiptap-blocks`** + `isomorphic-dompurify` (cero `set:html`) | Aceptado |
 | **ADR-003** | Carga de Contenido | **`@sensinum/astro-strapi-loader`** + Astro Live Collections + Mocks offline en 4 idiomas | Aceptado |
 | **ADR-004** | Localización (i18n) | **4 Idiomas (`es`, `en`, `ar` RTL, `tr`)** tanto en `@strapi/i18n` como en rutas Astro | Aceptado |
@@ -30,7 +30,7 @@ description: Decisiones de arquitectura autoritativas actualizadas para el stack
 
 ### ADR-001: Monorepo TypeScript con Astro 7 SSR y Strapi v5
 - **Contexto**: Unificar todo el stack en TypeScript elimina la fricción entre lenguajes y permite compartir contratos de datos entre el CMS, los plugins y el frontend.
-- **Decisión**: Adoptar Astro 7 (`@astrojs/node` standalone) junto con Strapi v5 (`@strapi/strapi` `^5.39.0`).
+- **Decisión**: Adoptar Astro 7 (`@astrojs/node` standalone) junto con Strapi v5 (`@strapi/strapi` `5.59.0`).
 
 ### ADR-002: Renderizado de Texto Enriquecido sin `set:html`
 - **Contexto**: Inyectar HTML crudo del CMS con `set:html` expone la aplicación a riesgos XSS.

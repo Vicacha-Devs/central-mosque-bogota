@@ -36,16 +36,15 @@ Ensure your directory tree matches:
 /Projects/experiments/
 ├── astro-tiptap-blocks/
 ├── strapi-v5-extensions/
-└── central-mosque-website/
-    └── central-mosque-bogota/
-        ├── frontend/
-        ├── backend/
-        └── docs/
+└── central-mosque-bogota/
+    ├── frontend/
+    ├── backend/
+    └── docs/
 ```
 
 ### 3. Booting the Frontend in Offline Mock Mode
 ```bash
-cd central-mosque-website/central-mosque-bogota/frontend
+cd central-mosque-bogota/frontend
 cp .env.example .env
 pnpm install
 pnpm dev
@@ -86,7 +85,7 @@ All 92 unit test files (201 tests) run in ~9 seconds and verify:
 By default, `backend/` uses zero-config **SQLite** (`.tmp/data.db`) so you do not need PostgreSQL running locally.
 
 ```bash
-cd central-mosque-website/central-mosque-bogota/backend
+cd central-mosque-bogota/backend
 cp .env.example .env
 pnpm install
 pnpm develop

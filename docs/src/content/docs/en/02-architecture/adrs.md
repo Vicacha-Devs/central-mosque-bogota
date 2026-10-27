@@ -11,7 +11,7 @@ description: Authoritative Architecture Decision Records updated for the Astro 7
 
 | ADR | Area | Selected Decision | Status |
 | :--- | :--- | :--- | :--- |
-| **ADR-001** | Core Stack | **Astro 7 SSR (`@astrojs/node`) + Strapi v5 (`^5.39.0`)** full-stack TypeScript monorepo | Accepted |
+| **ADR-001** | Core Stack | **Astro 7 SSR (`@astrojs/node`) + Strapi v5 (`5.59.0`)** full-stack TypeScript monorepo | Accepted |
 | **ADR-002** | Rich Text Security | **`@vicacha-devs/astro-tiptap-blocks`** + `isomorphic-dompurify` (zero `set:html`) | Accepted |
 | **ADR-003** | Content Loading | **`@sensinum/astro-strapi-loader`** + Astro Live Collections + 4-locale offline mocks | Accepted |
 | **ADR-004** | Localization (i18n) | **4 Locales (`es`, `en`, `ar` RTL, `tr`)** in both Strapi `@strapi/i18n` and Astro routes | Accepted |
@@ -30,7 +30,7 @@ description: Authoritative Architecture Decision Records updated for the Astro 7
 
 ### ADR-001: Astro 7 SSR + Strapi v5 Full-Stack TypeScript Monorepo
 - **Context**: Using a unified TypeScript toolchain across frontend, CMS, and plugins eliminates context switching between Python/Django and TypeScript.
-- **Decision**: Adopt Astro 7 (`@astrojs/node` standalone adapter) paired with Strapi v5 (`@strapi/strapi` `^5.39.0`).
+- **Decision**: Adopt Astro 7 (`@astrojs/node` standalone adapter) paired with Strapi v5 (`@strapi/strapi` `5.59.0`).
 
 ### ADR-002: Zero-`set:html` Rich Text Rendering
 - **Context**: Rendering raw CMS HTML with `set:html` introduces XSS risks and inconsistent typography.

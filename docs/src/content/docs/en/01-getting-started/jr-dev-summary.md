@@ -14,7 +14,7 @@ The repository is a TypeScript monorepo with **3 workspaces**:
 | Workspace | Path | Tech Stack | Default Port |
 | :--- | :--- | :--- | :--- |
 | **Frontend** | `frontend/` | Astro 7 SSR (`@astrojs/node`), Tailwind CSS v4, Starwind UI, Vitest, Storybook 10 | `http://localhost:4321` |
-| **Backend (CMS)** | `backend/` | Strapi v5 (`^5.39.0`), SQLite (local) / PostgreSQL 16 (Docker), 10 `@vicacha-devs/strapi-plugin-*` extensions | `http://127.0.0.1:1337` |
+| **Backend (CMS)** | `backend/` | Strapi v5 (`5.59.0`), SQLite (local) / PostgreSQL 16 (Docker), `strapi-cache` (`^1.13.0`), 10 `@vicacha-devs/strapi-plugin-*` extensions | `http://127.0.0.1:1337` |
 | **Documentation** | `docs/` | Astro Starlight (`en` + `es`), Pele SVG diagrams (`https://pele.run/`), TypeDoc | `http://localhost:4322` |
 
 ### Why You Can Work Offline Immediately

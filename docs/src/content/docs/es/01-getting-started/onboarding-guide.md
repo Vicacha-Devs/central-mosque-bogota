@@ -32,7 +32,7 @@ El monorepo enlaza dos paquetes hermanos ubicados en `/Projects/experiments`:
 
 ### 3. Levantar el Frontend en Modo Offline Mock
 ```bash
-cd central-mosque-website/central-mosque-bogota/frontend
+cd central-mosque-bogota/frontend
 cp .env.example .env
 pnpm install
 pnpm dev
@@ -66,7 +66,7 @@ Los 92 archivos de prueba (201 tests) se ejecutan en ~9 segundos usando `renderA
 Por defecto, `backend/` utiliza **SQLite** (`.tmp/data.db`) sin requerir configuración externa:
 
 ```bash
-cd central-mosque-website/central-mosque-bogota/backend
+cd central-mosque-bogota/backend
 cp .env.example .env
 pnpm install
 pnpm develop

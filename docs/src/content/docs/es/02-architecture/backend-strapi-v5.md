@@ -15,9 +15,12 @@ backend/
 │   ├── plugins.ts        # Configuración de los 10 plugins @vicacha-devs + Tiptap + SEO + Cache
 │   └── server.ts         # Host (127.0.0.1), Puerto (1337) y tareas Cron
 ├── src/
-│   ├── api/              # 17 Single Types, Collection Types y ruta /api/health
-│   ├── components/       # Esquemas reutilizables (shared.seo, shared.link, prayer.iqamah-config, etc.)
-│   └── index.ts          # Ciclo bootstrap: idiomas, permisos públicos y semilla inicial
+│   ├── admin/            # Traducciones admin en 4 idiomas (es, en, ar, tr) y Vite transforms
+│   ├── api/              # 9 esquemas propios (5 Single Types + 4 Collection Types) y /api/health
+│   ├── bootstrap/        # Idiomas, permisos, Content Manager Organizer, metadatos y lifecycles
+│   ├── components/       # 7 esquemas reutilizables (shared.seo, shared.link, faith.pillar-card, etc.)
+│   ├── seed/             # Semillas idempotentes en 4 idiomas, navegación, sitemap, tiptap y emails
+│   └── index.ts          # Orquestador de los ciclos register y bootstrap
 ├── Dockerfile            # Contenedor multi-stage Node 24 Alpine para producción
 └── package.json
 ```
@@ -44,5 +47,7 @@ flowchart LR
    - Autoriza explícitamente `res.cloudinary.com` para recursos multimedia y `*.tile.openstreetmap.org` para mapas.
 2. **CORS (`strapi::cors`)**:
    - Restringe peticiones cross-origin a los orígenes configurados (`CORS_ORIGINS`, por defecto `http://localhost:4321`).
-3. **Caché REST (`strapi-cache`)**:
-   - Almacena en caché las respuestas `GET` de los tipos principales durante 1 hora (máx. 500 llaves) y limpia la caché automáticamente cuando un editor publica cambios.
+3. **Caché REST (`strapi-cache` `v1.13.0`)**:
+   - Soporta proveedores `memory` (LRU), `valkey` y `redis` (`CACHE_TTL=3600000` / 1 hora, `CACHE_MAX_ITEMS=1000`).
+   - Almacena en caché las respuestas `GET` de `/api/global-setting`, `/api/about-page`, `/api/donations-page`, `/api/islam-faith-page`, `/api/contact-page`, `/api/community-services`, `/api/articles`, `/api/leaders`, `/api/faqs`, `/api/events/occurrences`, `/api/events/spotlights`, `/api/media-feeds/episodes` y `/api/donations/campaigns`, excluyendo rutas transaccionales (`/api/bookings`, `/api/inbox`, `/api/certificates/apply`, `/api/certificates/verify`, `/api/donations/pledges`, `/api/donations/webhooks`, `/api/events/register`, `/api/events/cancel`).
+   - Incluye traducciones nativas del panel de administración para `en`, `es`, `ar`, `tr` y `de` (botones `Purge Cache` / `Purge Entity Cache`) y purga la caché automáticamente al publicar cambios editoriales.

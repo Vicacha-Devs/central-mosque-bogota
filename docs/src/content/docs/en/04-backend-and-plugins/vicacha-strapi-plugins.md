@@ -1,11 +1,11 @@
 ---
-title: 10 Custom @vicacha-devs Strapi v5 Extensions
-description: Architecture and REST endpoints of the 10 custom Strapi v5 domain plugins in backend/config/plugins.ts.
+title: 10 Custom @vicacha-devs Extensions & Community Plugin Stack
+description: Architecture, REST endpoints, and 4-locale admin internationalization of the 10 @vicacha-devs domain plugins and companion Strapi v5 plugins.
 ---
 
-## 1. Custom Plugin Ecosystem Overview
+## 1. Custom `@vicacha-devs` Plugin Ecosystem Overview
 
-In addition to core Strapi v5 schemas, `backend/package.json` integrates **10 purpose-built `@vicacha-devs/strapi-plugin-*` extensions** (located in `../strapi-v5-extensions/packages/`):
+In addition to core Strapi v5 schemas, `backend/package.json` integrates **10 purpose-built `@vicacha-devs/strapi-plugin-*` extensions** (located in `../../strapi-v5-extensions/packages/`):
 
 ```mermaid
 flowchart TB
@@ -23,7 +23,7 @@ flowchart TB
 
 ---
 
-## 2. Plugin Reference & Frontend Integration Matrix
+## 2. `@vicacha-devs` Plugin Reference & Frontend Integration Matrix
 
 | Plugin Package | Strapi Config Key | REST Prefix | Frontend Consumer (`src/services/strapi/api.ts`) |
 | :--- | :--- | :--- | :--- |
@@ -35,5 +35,24 @@ flowchart TB
 | `@vicacha-devs/strapi-plugin-resources` | `resources` | `/api/resources/*` | `fetchPublicationsFromStrapi`, `fetchGlossaryFromStrapi`, `fetchPhotoGalleriesFromStrapi`, `GET /api/resources/publications/[slug]/download` |
 | `@vicacha-devs/strapi-plugin-media-feeds` | `media-feeds` | `/api/media-feeds/*` | `fetchMediaArchiveFromStrapi`, `GET /api/media-feeds/rss.xml` |
 | `@vicacha-devs/strapi-plugin-broadcasts` | `broadcasts` | `/api/broadcasts/*` | `fetchBroadcastsFromStrapi`, `POST /api/submissions` (`newsletter-subscription`) |
-| `@vicacha-devs/strapi-plugin-calendar` | `calendar` | `/api/calendar/*` | Hijri observance synchronization with `QiblaAndObservancesSection` |
-| `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Official Mosque PDF certificate generation (Shahada, Nikah, Tax-deductible Donations) |
+| `@vicacha-devs/strapi-plugin-calendar` | `calendar` | `/api/calendar/*` | Hijri (`islamic-umalqura`) observance synchronization with `QiblaAndObservancesSection` |
+| `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Official Mosque Ed25519-signed certificate generation & verification (Shahada, Nikah, Donations) |
+
+---
+
+## 3. Companion Editorial, Caching & Search Plugins (`backend/config/plugins.ts`)
+
+| Package | Version | Role & 4-Locale (`en`, `es`, `ar`, `tr`) Admin Support |
+| :--- | :--- | :--- |
+| `strapi-cache` | `^1.13.0` | LRU / Redis / Valkey REST API cache with automatic invalidation on content updates and native `en`, `es`, `ar`, `tr`, and `de` Admin UI translations |
+| `strapi-global-search` | `2.x` (`file:`) | Spotlight `Cmd/Ctrl + K` global search across all `api::*` and `plugin::*` content types (`en`, `es`, `ar`, `tr`, `fr`) |
+| `@notum-cz/strapi-plugin-tiptap-editor` | `file:` | TipTap v3 + Edifice IO WYSIWYG editor with 48 features and relational media/link sync (`en`, `es`, `ar`, `tr`, +7 locales) |
+| `@notum-cz/strapi-plugin-seo` | `file:` | SEO metadata component & live SERP analyzer (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
+| `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Real-time Typesense search indexing across localized collections |
+| `strapi-plugin-navigation` | `^3.3.7` | Hierarchical header/footer menu builder supporting both `api::*` and `plugin::*` items |
+| `strapi-plugin-content-manager-organizer` | `^2.0.3` | Groups the 28 visible collection and single types into 8 logical sidebar folders |
+| `strapi-plugin-email-designer-5` | `^0.0.10` | Visual Unlayer template designer for transactional notification emails |
+| `strapi-5-sitemap-plugin` | `^1.0.8` | Dynamic multilingual XML sitemap generation |
+| `strapi-plugin-publisher` | `^2.0.9` | Scheduled publish/unpublish automation |
+| `strapi-plugin-config-sync` | `^3.2.0` | Exports/imports Strapi configuration across environments (`en`, `es`, `ar`, `tr`, +18 locales) |
+| `@frameless/preview-button` & `@frameless/strapi-plugin-notes` | `^2.2.2` / `^1.1.2` | Live frontend preview button & editorial notes (`es`, `ar`, `tr` injected via `src/admin/translations.ts`) |
