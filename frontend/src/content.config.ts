@@ -31,6 +31,40 @@ const asStr = (...values: Array<unknown>): string => {
   return "";
 };
 
+const inferProfileSlug = (nameOrSlug: string): string => {
+  const lower = nameOrSlug.toLowerCase();
+  if (
+    lower.includes("mansoor")
+    || lower.includes("mansur")
+    || lower.includes("منصور")
+  ) {
+    return "sheikh-ahmad-al-mansoor";
+  }
+  if (
+    lower.includes("tariq")
+    || lower.includes("tarık")
+    || lower.includes("طارق")
+  ) {
+    return "ustadh-tariq-ramirez";
+  }
+  if (lower.includes("amina") || lower.includes("أمينة")) {
+    return "dra-amina-gomez";
+  }
+  if (
+    lower.includes("ibrahim")
+    || lower.includes("إبراهيم")
+    || lower.includes("khatib")
+  ) {
+    return "hajj-ibrahim-al-khatib";
+  }
+  return nameOrSlug
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+
 const articlesCollection = defineCollection({
   loader: createStrapiCollectionLoader({
     contentType: "articles",
@@ -38,18 +72,21 @@ const articlesCollection = defineCollection({
     fallbackByLocale: (lang: TLang) => {
       return getDetailedArticles(lang).map((item) => ({
         ...item,
+        authorSlug: inferProfileSlug(item.authorName),
         content: item.contentParagraphs.map((p) => `<p>${p}</p>`).join("\n"),
       }));
     },
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getDetailedArticles(lang)[0];
       const slug = asStr(raw.slug, defaults.slug);
-      const rawContent =
-        typeof raw.content === "string" && raw.content.trim()
+      const rawContent
+        = typeof raw.content === "string" && raw.content.trim()
           ? raw.content
           : defaults.contentParagraphs.map((p) => `<p>${p}</p>`).join("\n");
+      const authorName = asStr(raw.author, defaults.authorName);
+      const authorSlug = asStr(raw.authorSlug, inferProfileSlug(authorName));
 
-      const item: TDetailedArticle & { content: string } = {
+      const item: TDetailedArticle & { content: string; authorSlug: string } = {
         slug,
         badgeLabel: asStr(raw.tag, raw.category, defaults.badgeLabel),
         badgeTone: defaults.badgeTone,
@@ -59,10 +96,11 @@ const articlesCollection = defineCollection({
         ctaIcon: defaults.ctaIcon,
         imageAlt: asStr(raw.imageAlt, raw.title, defaults.imageAlt),
         imageUrl: asStr(raw.imageUrl, defaults.imageUrl),
-        authorName: asStr(raw.author, defaults.authorName),
+        authorName,
+        authorSlug,
         readingTimeMinutes:
-          Number.parseInt(asStr(raw.readingTime), 10) ||
-          defaults.readingTimeMinutes,
+          Number.parseInt(asStr(raw.readingTime), 10)
+          || defaults.readingTimeMinutes,
         instructorRole: defaults.instructorRole,
         scheduleLabel: defaults.scheduleLabel,
         contentParagraphs: defaults.contentParagraphs,
@@ -85,6 +123,7 @@ const articlesCollection = defineCollection({
     imageAlt: z.string(),
     imageUrl: z.string(),
     authorName: z.string(),
+    authorSlug: z.string().optional(),
     readingTimeMinutes: z.number(),
     instructorRole: z.string(),
     scheduleLabel: z.string(),
@@ -96,30 +135,35 @@ const articlesCollection = defineCollection({
 
 const eventsCollection = defineCollection({
   loader: createStrapiCollectionLoader({
-    contentType: "events",
+    contentType: "events/occurrences",
     idField: "slug",
-    fallbackByLocale: (lang: TLang) =>
-      getDetailedEvents(lang).map((ev) => ({
-        ...ev,
-        richDescription: ev.fullDescription
-          .map((p) => `<p>${p}</p>`)
-          .join("\n"),
-      })),
+    fallbackByLocale: (lang: TLang) => getDetailedEvents(lang).map((ev) => ({
+      ...ev,
+      speakerSlug: inferProfileSlug(ev.speaker),
+      richDescription: ev.fullDescription
+        .map((p) => `<p>${p}</p>`)
+        .join("\n"),
+    })),
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getDetailedEvents(lang)[0];
       const slug = asStr(raw.slug, defaults.slug);
-      const startDate =
-        typeof raw.startDate === "string"
+      const startDate
+        = typeof raw.startDate === "string"
           ? new Date(raw.startDate)
           : new Date();
       const month = startDate.toLocaleString(lang, { month: "short" });
       const day = startDate.getUTCDate();
-      const richDescription =
-        typeof raw.description === "string" && raw.description.trim()
+      const richDescription
+        = typeof raw.description === "string" && raw.description.trim()
           ? raw.description
           : defaults.fullDescription.map((p) => `<p>${p}</p>`).join("\n");
+      const speaker = asStr(raw.speaker, defaults.speaker);
+      const speakerSlug = asStr(raw.speakerSlug, inferProfileSlug(speaker));
 
-      const item: TDetailedEvent & { richDescription: string } = {
+      const item: TDetailedEvent & {
+        richDescription: string;
+        speakerSlug: string;
+      } = {
         slug,
         category: asStr(raw.category, defaults.category),
         title: asStr(raw.title, defaults.title),
@@ -129,7 +173,8 @@ const eventsCollection = defineCollection({
         url: `/${lang}/events/${slug}`,
         image: asStr(raw.imageUrl, defaults.image),
         date: { month, day },
-        speaker: defaults.speaker,
+        speaker,
+        speakerSlug,
         fullDescription: defaults.fullDescription,
         audience: defaults.audience,
         richDescription,
@@ -153,6 +198,7 @@ const eventsCollection = defineCollection({
       day: z.number(),
     }),
     speaker: z.string(),
+    speakerSlug: z.string().optional(),
     fullDescription: z.array(z.string()),
     audience: z.string(),
     richDescription: z.string().optional(),
@@ -221,19 +267,28 @@ const communityServicesCollection = defineCollection({
 
 const mediaHighlightsCollection = defineCollection({
   loader: createStrapiCollectionLoader({
-    contentType: "media-highlights",
+    contentType: "media-feeds/episodes",
     idField: "slug",
     fallbackByLocale: (lang: TLang) => {
-      return getDetailedMediaHighlights(lang).map((item) => ({ ...item }));
+      return getDetailedMediaHighlights(lang).map((item) => ({
+        ...item,
+        speakerSlug: inferProfileSlug(item.speakerName),
+      }));
     },
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getDetailedMediaHighlights(lang)[0];
       const rawType = asStr(raw.type, defaults.type);
-      const type: TDetailedMediaItem["type"] =
-        rawType === "khutbah" || rawType === "podcast" || rawType === "video"
+      const type: TDetailedMediaItem["type"]
+        = rawType === "khutbah" || rawType === "podcast" || rawType === "video"
           ? rawType
           : defaults.type;
-      const item: TDetailedMediaItem = {
+      const speakerName = asStr(
+        raw.speaker,
+        raw.speakerName,
+        defaults.speakerName
+      );
+      const speakerSlug = asStr(raw.speakerSlug, inferProfileSlug(speakerName));
+      const item: TDetailedMediaItem & { speakerSlug: string } = {
         slug: asStr(raw.slug, defaults.slug),
         type,
         typeLabel: asStr(raw.typeLabel, defaults.typeLabel),
@@ -245,10 +300,16 @@ const mediaHighlightsCollection = defineCollection({
             : defaults.externalId,
         embedUrl:
           typeof raw.embedUrl === "string" ? raw.embedUrl : defaults.embedUrl,
-        watchUrl: asStr(raw.href, raw.watchUrl, defaults.watchUrl),
+        watchUrl: asStr(
+          raw.href,
+          raw.sourceUrl,
+          raw.watchUrl,
+          defaults.watchUrl
+        ),
         title: asStr(raw.title, defaults.title),
         description: asStr(raw.description, defaults.description),
-        speakerName: asStr(raw.speaker, raw.speakerName, defaults.speakerName),
+        speakerName,
+        speakerSlug,
         duration: asStr(raw.duration, defaults.duration),
         publishedDate: asStr(
           raw.publishedAtLabel,
@@ -263,7 +324,7 @@ const mediaHighlightsCollection = defineCollection({
           ? raw.spokenLanguages.map((item) => asStr(item))
           : defaults.spokenLanguages,
         languageTracks: defaults.languageTracks,
-        href: asStr(raw.href, `/${lang}/media`),
+        href: asStr(raw.href, raw.sourceUrl, `/${lang}/media`),
         imageUrl: asStr(raw.imageUrl, defaults.imageUrl),
         imageAlt: asStr(raw.imageAlt, raw.title, defaults.imageAlt),
       };
@@ -292,19 +353,18 @@ const mediaHighlightsCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     speakerName: z.string(),
+    speakerSlug: z.string().optional(),
     duration: z.string(),
     publishedDate: z.string(),
     hijriDate: z.string().optional(),
     spokenLanguages: z.array(z.string()),
     languageTracks: z
-      .array(
-        z.object({
-          locale: z.string(),
-          label: z.string(),
-          audioUrl: z.string().optional(),
-          transcriptUrl: z.string().optional(),
-        })
-      )
+      .array(z.object({
+        locale: z.string(),
+        label: z.string(),
+        audioUrl: z.string().optional(),
+        transcriptUrl: z.string().optional(),
+      }))
       .optional(),
     href: z.string(),
     imageUrl: z.string(),
@@ -314,7 +374,7 @@ const mediaHighlightsCollection = defineCollection({
 
 const donationCampaignsCollection = defineCollection({
   loader: createStrapiCollectionLoader({
-    contentType: "donation-campaigns",
+    contentType: "donations/campaigns",
     idField: "slug",
     fallbackByLocale: (lang: TLang) => {
       return getLocalizedMocks(lang).donationCampaigns.map((camp) => ({
@@ -325,8 +385,8 @@ const donationCampaignsCollection = defineCollection({
       const defaults = getLocalizedMocks(lang).donationCampaigns[0];
       const goalAmount = Number(raw.goalAmount ?? defaults.goalAmount);
       const raisedAmount = Number(raw.raisedAmount ?? defaults.raisedAmount);
-      const percent =
-        goalAmount > 0
+      const percent
+        = goalAmount > 0
           ? Math.min(100, Math.round((raisedAmount / goalAmount) * 100))
           : defaults.percent;
       return {
@@ -356,7 +416,7 @@ const donationCampaignsCollection = defineCollection({
 const leadersCollection = defineCollection({
   loader: createStrapiCollectionLoader({
     contentType: "leaders",
-    idField: "name",
+    idField: "slug",
     fallbackByLocale: (lang: TLang) => {
       return getLocalizedAboutPageData(lang).leaders.map((leader) => ({
         ...leader,
@@ -364,11 +424,33 @@ const leadersCollection = defineCollection({
     },
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getLocalizedAboutPageData(lang).leaders[0];
+      const name = asStr(raw.name, defaults.name);
+      const slug = asStr(raw.slug, inferProfileSlug(name));
       return {
-        name: asStr(raw.name, defaults.name),
+        name,
+        slug,
+        honorificTitle: asStr(raw.honorificTitle, defaults.honorificTitle),
         roleTitle: asStr(raw.roleTitle, defaults.roleTitle),
+        memberCategory: asStr(raw.memberCategory, defaults.memberCategory),
+        shortSummary: asStr(raw.shortSummary, raw.bio, defaults.shortSummary),
         bio: asStr(raw.bio, defaults.bio),
+        credentials: asStr(raw.credentials, defaults.credentials),
+        officeHours: asStr(raw.officeHours, defaults.officeHours),
         languagesSpoken: asStr(raw.languagesSpoken, defaults.languagesSpoken),
+        showInStaffDirectory:
+          typeof raw.showInStaffDirectory === "boolean"
+            ? raw.showInStaffDirectory
+            : true,
+        hasDedicatedPage:
+          typeof raw.hasDedicatedPage === "boolean"
+            ? raw.hasDedicatedPage
+            : true,
+        isAuthor:
+          typeof raw.isAuthor === "boolean" ? raw.isAuthor : defaults.isAuthor,
+        isKhateeb:
+          typeof raw.isKhateeb === "boolean"
+            ? raw.isKhateeb
+            : defaults.isKhateeb,
       };
     },
   }),
@@ -376,9 +458,19 @@ const leadersCollection = defineCollection({
     documentId: z.string(),
     locale: langEnum,
     name: z.string(),
+    slug: z.string(),
+    honorificTitle: z.string().optional(),
     roleTitle: z.string(),
+    memberCategory: z.string().optional(),
+    shortSummary: z.string().optional(),
     bio: z.string(),
+    credentials: z.string().optional(),
+    officeHours: z.string().optional(),
     languagesSpoken: z.string(),
+    showInStaffDirectory: z.boolean().optional(),
+    hasDedicatedPage: z.boolean().optional(),
+    isAuthor: z.boolean().optional(),
+    isKhateeb: z.boolean().optional(),
   }),
 });
 
@@ -405,8 +497,8 @@ const aboutPageCollection = defineCollection({
           ? (raw.architectureHighlights as typeof defaultHighlights)
           : defaultHighlights,
         architectureDescription:
-          typeof raw.architectureDescription === "string" &&
-          raw.architectureDescription.trim()
+          typeof raw.architectureDescription === "string"
+          && raw.architectureDescription.trim()
             ? raw.architectureDescription
             : undefined,
         leaders: Array.isArray(raw.leaders)
@@ -425,29 +517,33 @@ const aboutPageCollection = defineCollection({
     missionBody: z.string(),
     visionTitle: z.string(),
     visionBody: z.string(),
-    historyTimeline: z.array(
-      z.object({
-        year: z.string(),
-        title: z.string(),
-        description: z.string(),
-      })
-    ),
-    architectureHighlights: z.array(
-      z.object({
-        icon: z.string(),
-        title: z.string(),
-        description: z.string(),
-      })
-    ),
+    historyTimeline: z.array(z.object({
+      year: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })),
+    architectureHighlights: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })),
     architectureDescription: z.string().optional(),
-    leaders: z.array(
-      z.object({
-        name: z.string(),
-        roleTitle: z.string(),
-        bio: z.string(),
-        languagesSpoken: z.string(),
-      })
-    ),
+    leaders: z.array(z.object({
+      name: z.string(),
+      slug: z.string().optional(),
+      honorificTitle: z.string().optional(),
+      roleTitle: z.string(),
+      memberCategory: z.string().optional(),
+      shortSummary: z.string().optional(),
+      bio: z.string(),
+      credentials: z.string().optional(),
+      officeHours: z.string().optional(),
+      languagesSpoken: z.string(),
+      showInStaffDirectory: z.boolean().optional(),
+      hasDedicatedPage: z.boolean().optional(),
+      isAuthor: z.boolean().optional(),
+      isKhateeb: z.boolean().optional(),
+    })),
   }),
 });
 
@@ -496,18 +592,14 @@ const globalSettingCollection = defineCollection({
       phone: z.string(),
       email: z.string(),
     }),
-    navLinks: z.array(
-      z.object({
-        label: z.string(),
-        href: z.string(),
-      })
-    ),
-    fastLinks: z.array(
-      z.object({
-        label: z.string(),
-        href: z.string(),
-      })
-    ),
+    navLinks: z.array(z.object({
+      label: z.string(),
+      href: z.string(),
+    })),
+    fastLinks: z.array(z.object({
+      label: z.string(),
+      href: z.string(),
+    })),
     rightsText: z.object({
       copyRight: z.string(),
       privacyPolicy: z.object({
@@ -519,13 +611,11 @@ const globalSettingCollection = defineCollection({
         href: z.string(),
       }),
     }),
-    socialNetworkLinks: z.array(
-      z.object({
-        label: z.string(),
-        href: z.string(),
-        icon: z.enum(["facebook", "instagram", "youtube"]),
-      })
-    ),
+    socialNetworkLinks: z.array(z.object({
+      label: z.string(),
+      href: z.string(),
+      icon: z.enum(["facebook", "instagram", "youtube"]),
+    })),
   }),
 });
 
@@ -571,31 +661,62 @@ const islamFaithPageCollection = defineCollection({
     shahadaTransliteration: z.string(),
     shahadaTranslation: z.string(),
     introText: z.string().optional(),
-    fivePillars: z.array(
-      z.object({
-        number: z.number(),
-        arabicName: z.string(),
-        transliteration: z.string(),
-        title: z.string(),
-        description: z.string(),
-        icon: z.string(),
-      })
-    ),
+    fivePillars: z.array(z.object({
+      number: z.number(),
+      arabicName: z.string(),
+      transliteration: z.string(),
+      title: z.string(),
+      description: z.string(),
+      icon: z.string(),
+    })),
   }),
 });
 
 const donationsPageCollection = defineCollection({
   loader: createStrapiSingleTypeLoader({
-    contentType: "donations-page",
+    contentType: "donations/calculator",
     fallbackByLocale: (lang: TLang) => ({
       paymentMethods: getLocalizedPaymentMethods(lang),
     }),
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getLocalizedPaymentMethods(lang);
+      if (Array.isArray(raw.paymentMethods) && raw.paymentMethods.length > 0) {
+        const mapMethod = (item: Record<string, unknown>, idx: number) => {
+          const fallbackItem = defaults[idx % defaults.length];
+          const rawInstructions = item.instructions;
+          const localizedInstructions
+            = rawInstructions && typeof rawInstructions === "object"
+              ? (rawInstructions as Record<string, unknown>)[lang]
+              : undefined;
+          const instructions
+            = typeof localizedInstructions === "string"
+              ? localizedInstructions
+              : asStr(rawInstructions, fallbackItem.instructions);
+
+          return {
+            providerName: asStr(item.providerName, fallbackItem.providerName),
+            accountType: asStr(
+              item.accountType,
+              item.channel,
+              fallbackItem.accountType
+            ),
+            accountNumber: asStr(
+              item.accountNumber,
+              fallbackItem.accountNumber
+            ),
+            accountHolder: asStr(
+              item.accountHolder,
+              item.accountTitle,
+              fallbackItem.accountHolder
+            ),
+            nit: asStr(item.nit, item.taxId, fallbackItem.nit),
+            instructions,
+          };
+        };
+        return { paymentMethods: raw.paymentMethods.map(mapMethod) };
+      }
       return {
-        paymentMethods: Array.isArray(raw.paymentMethods)
-          ? (raw.paymentMethods as typeof defaults)
-          : defaults,
+        paymentMethods: defaults,
       };
     },
   }),
@@ -603,16 +724,14 @@ const donationsPageCollection = defineCollection({
     documentId: z.string(),
     locale: langEnum,
     slug: z.string(),
-    paymentMethods: z.array(
-      z.object({
-        providerName: z.string(),
-        accountType: z.string(),
-        accountNumber: z.string(),
-        accountHolder: z.string(),
-        nit: z.string(),
-        instructions: z.string(),
-      })
-    ),
+    paymentMethods: z.array(z.object({
+      providerName: z.string(),
+      accountType: z.string(),
+      accountNumber: z.string(),
+      accountHolder: z.string(),
+      nit: z.string(),
+      instructions: z.string(),
+    })),
   }),
 });
 
@@ -642,20 +761,16 @@ const contactPageCollection = defineCollection({
     documentId: z.string(),
     locale: langEnum,
     slug: z.string(),
-    visitorEtiquette: z.array(
-      z.object({
-        icon: z.string(),
-        title: z.string(),
-        description: z.string(),
-      })
-    ),
-    transitDirections: z.array(
-      z.object({
-        icon: z.string(),
-        title: z.string(),
-        description: z.string(),
-      })
-    ),
+    visitorEtiquette: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })),
+    transitDirections: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })),
   }),
 });
 

@@ -224,13 +224,9 @@ describe("POST /api/submissions BFF endpoint", () => {
         groupSize: "not-a-num",
       }),
     } as never);
-    expect(
-      ((await upstreamVisit.json()) as TSubmissionResponse).referenceCode
-    ).toBe("BKG-UPSTREAM-1");
+    expect(((await upstreamVisit.json()) as TSubmissionResponse).referenceCode).toBe("BKG-UPSTREAM-1");
 
-    mockFetch
-      .mockRejectedValueOnce(new Error("Reserve failed"))
-      .mockRejectedValueOnce(new Error("Fallback failed"));
+    mockFetch.mockRejectedValueOnce(new Error("Reserve failed"));
     const fallbackVisit = await POST({
       request: buildJsonRequest({
         formType: "visit",
@@ -263,13 +259,9 @@ describe("POST /api/submissions BFF endpoint", () => {
         requestsTaxCertificate: "true",
       }),
     } as never);
-    expect(
-      ((await upstreamDon.json()) as TSubmissionResponse).referenceCode
-    ).toBe("DON-UPSTREAM-1");
+    expect(((await upstreamDon.json()) as TSubmissionResponse).referenceCode).toBe("DON-UPSTREAM-1");
 
-    mockFetch
-      .mockRejectedValueOnce(new Error("Pledge failed"))
-      .mockRejectedValueOnce(new Error("Donation fallback failed"));
+    mockFetch.mockRejectedValueOnce(new Error("Pledge failed"));
     const fallbackDon = await POST({
       request: buildJsonRequest({
         formType: "donation",
@@ -301,9 +293,7 @@ describe("POST /api/submissions BFF endpoint", () => {
         details: "Need certificate",
       }),
     } as never);
-    expect(
-      ((await certService.json()) as TSubmissionResponse).referenceCode
-    ).toBe("CERT-99");
+    expect(((await certService.json()) as TSubmissionResponse).referenceCode).toBe("CERT-99");
 
     mockFetch
       .mockRejectedValueOnce(new Error("Cert offline"))

@@ -53,6 +53,16 @@ type TCmsCampaignSummary = {
   imageUrl?: string;
 };
 
+type TCmsDailyInspirationPayload = Partial<TDailyDua> & {
+  ayahOfTheDay?: {
+    referenceKey?: string;
+    surahNameTranslit?: string;
+    arabicUthmani?: string;
+    transliteration?: string;
+    translations?: Record<string, string>;
+  };
+};
+
 const [
   articleEntries,
   eventEntries,
@@ -69,7 +79,7 @@ const [
   fetchStrapiData<{ data?: TEventSpotlight[] }>("events/spotlights", {
     locale: lang,
   }).catch(() => null),
-  fetchIslamSuiteFromStrapi<Partial<TDailyDua>>("daily-inspiration", {
+  fetchIslamSuiteFromStrapi<TCmsDailyInspirationPayload>("daily-inspiration", {
     locale: lang,
   }),
   fetchStrapiData<{ data?: TCmsCampaignSummary[] }>("donations/campaigns", {
@@ -83,7 +93,24 @@ const dailyDua: TDailyDua
         ...fallbackDailyDua,
         ...cmsDailyInspiration,
       }
-    : fallbackDailyDua;
+    : cmsDailyInspiration?.ayahOfTheDay?.arabicUthmani
+      ? {
+          ...fallbackDailyDua,
+          arabic: cmsDailyInspiration.ayahOfTheDay.arabicUthmani,
+          transliteration:
+            cmsDailyInspiration.ayahOfTheDay.transliteration
+            ?? fallbackDailyDua.transliteration,
+          translation:
+            cmsDailyInspiration.ayahOfTheDay.translations?.[lang]
+            ?? cmsDailyInspiration.ayahOfTheDay.translations?.es
+            ?? fallbackDailyDua.translation,
+          reference:
+            cmsDailyInspiration.ayahOfTheDay.surahNameTranslit
+            && cmsDailyInspiration.ayahOfTheDay.referenceKey
+              ? `${cmsDailyInspiration.ayahOfTheDay.surahNameTranslit} (${cmsDailyInspiration.ayahOfTheDay.referenceKey})`
+              : fallbackDailyDua.reference,
+        }
+      : fallbackDailyDua;
 
 const primaryCmsCampaign
   = Array.isArray(cmsCampaignsRes?.data) && cmsCampaignsRes.data.length > 0

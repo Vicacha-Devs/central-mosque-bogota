@@ -134,10 +134,10 @@ export const POST: APIRoute = async ({ request }) => {
       const notes = sanitizeText(body.notes, 2000);
 
       if (
-        !visitorName ||
-        !EMAIL_REGEX.test(email) ||
-        !phone ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)
+        !visitorName
+        || !EMAIL_REGEX.test(email)
+        || !phone
+        || !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)
       ) {
         return new Response(
           JSON.stringify({
@@ -177,39 +177,13 @@ export const POST: APIRoute = async ({ request }) => {
             }),
           }
         );
-        const upstreamRef =
-          reserveRes.data?.referenceCode ?? reserveRes.referenceCode;
+        const upstreamRef
+          = reserveRes.data?.referenceCode ?? reserveRes.referenceCode;
         if (typeof upstreamRef === "string" && upstreamRef.trim()) {
           referenceCode = upstreamRef.trim();
         }
       } catch {
-        try {
-          await fetchStrapiData(
-            "visit-bookings",
-            {},
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                data: {
-                  visitorName,
-                  organizationOrSchool,
-                  email,
-                  phone,
-                  preferredDate,
-                  preferredTimeSlot,
-                  groupSize,
-                  preferredGuideLanguage: locale,
-                  notes,
-                  locale,
-                  status: "pending",
-                },
-              }),
-            }
-          );
-        } catch {
-          // Graceful offline acceptance when local Strapi server is not running
-        }
+        // Graceful offline acceptance when local Strapi server is not running
       }
 
       return new Response(JSON.stringify({ ok: true, referenceCode }), {
@@ -231,8 +205,8 @@ export const POST: APIRoute = async ({ request }) => {
         : "CC";
       const documentNumber = sanitizeText(body.documentNumber, 40);
       const amountNum = Number(body.amount ?? 0);
-      const amount =
-        Number.isFinite(amountNum) && amountNum > 0 ? amountNum : 0;
+      const amount
+        = Number.isFinite(amountNum) && amountNum > 0 ? amountNum : 0;
       const rawCurrency = sanitizeText(body.currency, 10);
       const currency = ALLOWED_CURRENCIES.has(rawCurrency)
         ? rawCurrency
@@ -253,14 +227,14 @@ export const POST: APIRoute = async ({ request }) => {
         : donationType === "utility_bills"
           ? "utility_invoice"
           : "major_campaign";
-      const coversRemainingBalance =
-        body.coversRemainingBalance === true ||
-        body.coversRemainingBalance === "on" ||
-        body.coversRemainingBalance === "true";
-      const requestsTaxCertificate =
-        body.requestsTaxCertificate === true ||
-        body.requestsTaxCertificate === "on" ||
-        body.requestsTaxCertificate === "true";
+      const coversRemainingBalance
+        = body.coversRemainingBalance === true
+          || body.coversRemainingBalance === "on"
+          || body.coversRemainingBalance === "true";
+      const requestsTaxCertificate
+        = body.requestsTaxCertificate === true
+          || body.requestsTaxCertificate === "on"
+          || body.requestsTaxCertificate === "true";
       const notes = sanitizeText(body.notes, 2000);
       const fallbackReferenceCode = `${campaignKind === "utility_invoice" ? "INV" : "DON"}-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
       let referenceCode = fallbackReferenceCode;
@@ -311,46 +285,13 @@ export const POST: APIRoute = async ({ request }) => {
             }),
           }
         );
-        const upstreamRef =
-          pledgeRes.data?.referenceCode ?? pledgeRes.referenceCode;
+        const upstreamRef
+          = pledgeRes.data?.referenceCode ?? pledgeRes.referenceCode;
         if (typeof upstreamRef === "string" && upstreamRef.trim()) {
           referenceCode = upstreamRef.trim();
         }
       } catch {
-        try {
-          await fetchStrapiData(
-            "donation-submissions",
-            {},
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                data: {
-                  referenceCode: fallbackReferenceCode,
-                  donorName,
-                  donorEmail,
-                  donorPhone,
-                  documentType,
-                  documentNumber,
-                  amount,
-                  currency,
-                  donationType,
-                  campaignSlug: campaignSlug || undefined,
-                  campaignKind,
-                  coversRemainingBalance,
-                  paymentMethodUsed,
-                  transactionReference,
-                  requestsTaxCertificate,
-                  notes,
-                  locale,
-                  status: "pending",
-                },
-              }),
-            }
-          );
-        } catch {
-          // Graceful offline acceptance when local Strapi server is not running
-        }
+        // Graceful offline acceptance when local Strapi server is not running
       }
 
       return new Response(JSON.stringify({ ok: true, referenceCode }), {
@@ -399,8 +340,8 @@ export const POST: APIRoute = async ({ request }) => {
         hajj_umrah: "consular-muslim-certificate",
         halal: "halal-compliance-certificate",
       };
-      const certificateTemplateSlug =
-        CERTIFICATE_TEMPLATE_BY_SERVICE[serviceType];
+      const certificateTemplateSlug
+        = CERTIFICATE_TEMPLATE_BY_SERVICE[serviceType];
 
       if (certificateTemplateSlug) {
         try {
@@ -426,11 +367,11 @@ export const POST: APIRoute = async ({ request }) => {
               }),
             }
           );
-          const upstreamRef =
-            certRes.data?.referenceCode ??
-            certRes.data?.serialNumber ??
-            certRes.referenceCode ??
-            certRes.serialNumber;
+          const upstreamRef
+            = certRes.data?.referenceCode
+              ?? certRes.data?.serialNumber
+              ?? certRes.referenceCode
+              ?? certRes.serialNumber;
           if (typeof upstreamRef === "string" && upstreamRef.trim()) {
             referenceCode = upstreamRef.trim();
           }
@@ -474,8 +415,8 @@ export const POST: APIRoute = async ({ request }) => {
       const email = sanitizeText(body.email, 160);
       const fullName = sanitizeText(body.fullName, 120);
       const phone = sanitizeText(body.phone, 40);
-      const sourceFormSlug =
-        sanitizeText(body.sourceFormSlug, 60) || "footer-newsletter";
+      const sourceFormSlug
+        = sanitizeText(body.sourceFormSlug, 60) || "footer-newsletter";
       const topics = Array.isArray(body.topics)
         ? body.topics.map((t) => sanitizeText(t, 30)).filter(Boolean)
         : ["announcements", "events"];

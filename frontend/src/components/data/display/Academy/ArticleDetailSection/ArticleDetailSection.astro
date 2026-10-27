@@ -24,10 +24,15 @@ import {
   type TDetailedArticle,
 } from "@utils/localized-mocks";
 
+type TArticleWithAuthor = TDetailedArticle & {
+  content?: string;
+  authorSlug?: string;
+};
+
 interface Props {
   lang?: TLang;
-  article?: TDetailedArticle & { content?: string };
-  relatedArticles?: Array<TDetailedArticle & { content?: string }>;
+  article?: TArticleWithAuthor;
+  relatedArticles?: Array<TArticleWithAuthor>;
 }
 
 const {
@@ -40,10 +45,25 @@ const lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const fallbackArticles = getDetailedArticles(lang);
-const article = articleProp ?? fallbackArticles[0];
+const article: TArticleWithAuthor = articleProp ?? fallbackArticles[0];
 const relatedArticles
   = relatedArticlesProp
     ?? fallbackArticles.filter((a) => a.slug !== article.slug);
+const inferredAuthorSlug
+  = article.authorSlug
+    || (article.authorName.toLowerCase().includes("mansoor")
+      || article.authorName.toLowerCase().includes("منصور")
+      ? "sheikh-ahmad-al-mansoor"
+      : article.authorName.toLowerCase().includes("tariq")
+        || article.authorName.toLowerCase().includes("طارق")
+        ? "ustadh-tariq-ramirez"
+        : article.authorName.toLowerCase().includes("amina")
+          || article.authorName.toLowerCase().includes("أمينة")
+          ? "dra-amina-gomez"
+          : "");
+const authorProfileHref = inferredAuthorSlug
+  ? translatePath(`/staff/${inferredAuthorSlug}`)
+  : "";
 ---
 
 <div class="space-y-10">
@@ -191,7 +211,21 @@ const relatedArticles
               dark:text-white
             "
             >
-              {article.authorName}
+              {authorProfileHref
+                ? (
+                    <a
+                      href={authorProfileHref}
+                      class="
+                        transition-colors
+                        hover:text-primary hover:underline
+                      "
+                    >
+                      {article.authorName}
+                    </a>
+                  )
+                : (
+                    article.authorName
+                  )}
             </p>
             <p class="
               text-xs text-slate-500

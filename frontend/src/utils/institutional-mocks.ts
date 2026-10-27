@@ -7,7 +7,18 @@ import {
   paymentMethods,
 } from "./data.mocks";
 
-export type TAboutPageData = typeof aboutPageData;
+type TAboutPageSource = typeof aboutPageData;
+
+type TAboutLeader = TAboutPageSource["leaders"][number];
+type TAboutLeaderRequired = "name" | "roleTitle" | "bio" | "languagesSpoken";
+
+// CMS-sourced leaders only guarantee the core fields; the rest are optional
+export type TAboutPageData = Omit<TAboutPageSource, "leaders"> & {
+  leaders: Array<
+    Pick<TAboutLeader, TAboutLeaderRequired>
+    & Partial<Omit<TAboutLeader, TAboutLeaderRequired>>
+  >;
+};
 export type TIslamFaithData = typeof islamFaithData;
 export type TDonationCampaign = (typeof donationCampaigns)[number];
 export type TPaymentMethod = (typeof paymentMethods)[number];
@@ -15,8 +26,8 @@ export type TPaymentMethod = (typeof paymentMethods)[number];
 type TNonDefaultLang = Exclude<TLang, "es">;
 
 const SHAHADA_ARABIC = "أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ ٱللَّٰهِ";
-const SHAHADA_TRANSLITERATION =
-  "Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan Rasulu Allah";
+const SHAHADA_TRANSLITERATION
+  = "Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan Rasulu Allah";
 
 const ABOUT_PAGE_BY_LANG: Record<TNonDefaultLang, TAboutPageData> = {
   en: {
@@ -78,21 +89,75 @@ const ABOUT_PAGE_BY_LANG: Record<TNonDefaultLang, TAboutPageData> = {
     leaders: [
       {
         name: "Sheikh Ahmad Al-Mansoor",
+        slug: "sheikh-ahmad-al-mansoor",
+        honorificTitle: "Sheikh / Imam",
         roleTitle: "Resident Imam & Spiritual Director",
+        memberCategory: "imam_scholar",
+        shortSummary:
+          "B.A. in Islamic Sciences and Jurisprudence (Fiqh). Spiritual leader and Friday Khateeb of the Abu Bakr As-Siddiq Central Mosque since 2014.",
         bio: "B.A. in Islamic Sciences and Jurisprudence (Fiqh). Spiritual leader of the Abu Bakr As-Siddiq Central Mosque since 2014.",
+        credentials:
+          "B.A. in Sharia & Islamic Jurisprudence (Fiqh) · Ijazah in Quranic Recitation (Hafs an Asim)",
+        officeHours: "Tuesday to Sunday, 2:00 PM – 5:30 PM",
         languagesSpoken: "Arabic, Spanish, English",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: true,
       },
       {
         name: "Ustadh Tariq Ramírez",
+        slug: "ustadh-tariq-ramirez",
+        honorificTitle: "Ustadh",
         roleTitle: "Director of Education & New Muslim Support",
+        memberCategory: "instructor",
+        shortSummary:
+          "Specialist in Islamic pedagogy, Arabic language instruction, and comprehensive mentorship for new Muslims.",
         bio: "Specialist in Islamic pedagogy, Arabic language instruction, and comprehensive mentorship for new Muslims.",
+        credentials:
+          "Diploma in Arabic Language & Islamic Studies · Head of Mosque Cultural Academy",
+        officeHours: "Wednesday to Saturday, 10:00 AM – 4:00 PM",
         languagesSpoken: "Spanish, Arabic, English",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: true,
       },
       {
         name: "Dr. Amina Gómez",
+        slug: "dra-amina-gomez",
+        honorificTitle: "Dr.",
         roleTitle: "Director of Social Outreach & Family Programs",
+        memberCategory: "board_administration",
+        shortSummary:
+          "Leads community welfare initiatives, Zakat distribution, and educational programs for women and youth.",
         bio: "Leads community welfare initiatives, Zakat distribution, and educational programs for women and youth.",
+        credentials:
+          "Ph.D. in Social & Community Development · Director of Family & Welfare Committee",
+        officeHours: "Monday to Friday, 9:00 AM – 3:00 PM",
         languagesSpoken: "Spanish, English",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: false,
+      },
+      {
+        name: "Hajj Ibrahim Al-Khatib",
+        slug: "hajj-ibrahim-al-khatib",
+        honorificTitle: "Hajj",
+        roleTitle: "Mosque Caretaker & Resident Muadhin (Qayyim al-Masjid)",
+        memberCategory: "staff_caretaker",
+        shortSummary:
+          "Oversees the daily care of the sanctuary, opening for all five daily prayers, calling the Adhan, and welcoming guests.",
+        bio: "Custodian and operations caretaker (Qayyim) of the Abu Bakr As-Siddiq Central Mosque. Oversees daily opening for the five congregational prayers, calling the Adhan, and hospitality for worshippers and visitors.",
+        credentials:
+          "Mosque Custodianship & Community Service since 2012 · Resident Muadhin",
+        officeHours: "Daily across all 5 congregational prayer times",
+        languagesSpoken: "Arabic, Spanish",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: false,
+        isKhateeb: false,
       },
     ],
   },
@@ -155,21 +220,74 @@ const ABOUT_PAGE_BY_LANG: Record<TNonDefaultLang, TAboutPageData> = {
     leaders: [
       {
         name: "الشيخ أحمد المنصور",
+        slug: "sheikh-ahmad-al-mansoor",
+        honorificTitle: "فضيلة الشيخ / الإمام",
         roleTitle: "إمام المسجد والمدير الشرعي",
+        memberCategory: "imam_scholar",
+        shortSummary:
+          "إجازة في العلوم الإسلامية والفقه، وإمام وخطيب مسجد أبو بكر الصديق المركزي منذ عام 2014.",
         bio: "إجازة في العلوم الإسلامية والفقه، وإمام وخطيب مسجد أبو بكر الصديق المركزي منذ عام 2014.",
+        credentials:
+          "بكالوريوس في الشريعة والفقه الإسلامي · إجازة في تلاوة القرآن الكريم برواية حفص عن عاصم",
+        officeHours: "من الثلاثاء إلى الأحد، 2:00 ظهراً – 5:30 مساءً",
         languagesSpoken: "العربية، الإسبانية، الإنجليزية",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: true,
       },
       {
         name: "الأستاذ طارق راميريز",
+        slug: "ustadh-tariq-ramirez",
+        honorificTitle: "الأستاذ",
         roleTitle: "منسق التعليم ورعاية المسلمين الجدد",
+        memberCategory: "instructor",
+        shortSummary:
+          "متخصص في التربية الإسلامية وتعليم اللغة العربية ومرافقة المهتدين الجدد.",
         bio: "متخصص في التربية الإسلامية وتعليم اللغة العربية ومرافقة المهتدين الجدد.",
+        credentials:
+          "دبلوم في اللغة العربية والدراسات الإسلامية · منسق الأكاديمية الثقافية بالمسجد",
+        officeHours: "من الأربعاء إلى السبت، 10:00 صباحاً – 4:00 عصراً",
         languagesSpoken: "الإسبانية، العربية، الإنجليزية",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: true,
       },
       {
         name: "د. أمينة غوميز",
+        slug: "dra-amina-gomez",
+        honorificTitle: "الدكتورة",
         roleTitle: "مديرة العمل الاجتماعي وبرامج الأسرة",
+        memberCategory: "board_administration",
+        shortSummary:
+          "تشرف على مبادرات التكافل الاجتماعي وتوزيع الزكاة والبرامج التعليمية للنساء والشباب.",
         bio: "تشرف على مبادرات التكافل الاجتماعي وتوزيع الزكاة والبرامج التعليمية للنساء والشباب.",
+        credentials:
+          "دكتوراه في التنمية الاجتماعية والمجتمعية · مديرة لجنة الأسرة والتكافل",
+        officeHours: "من الإثنين إلى الجمعة، 9:00 صباحاً – 3:00 عصراً",
         languagesSpoken: "الإسبانية، الإنجليزية",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: false,
+      },
+      {
+        name: "الحاج إبراهيم الخطيب",
+        slug: "hajj-ibrahim-al-khatib",
+        honorificTitle: "الحاج",
+        roleTitle: "قيّم المسجد والمؤذن المقيم",
+        memberCategory: "staff_caretaker",
+        shortSummary:
+          "مسؤول عن رعاية المسجد اليومية وفتحه للصلوات الخمس ورفع الأذان واستقبال المصلين والزوار.",
+        bio: "قيّم مسجد أبو بكر الصديق المركزي والمؤذن المقيم. يشرف على فتح المسجد للصلوات الخمس اليومية، والعناية بمصليات الرجال والنساء، ورفع الأذان، وحسن وفادة المصلين والزوار.",
+        credentials: "خدمة ورعاية بيت الله منذ عام 2012 · المؤذن المقيم",
+        officeHours: "يومياً خلال أوقات الصلوات الخمس",
+        languagesSpoken: "العربية، الإسبانية",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: false,
+        isKhateeb: false,
       },
     ],
   },
@@ -232,21 +350,74 @@ const ABOUT_PAGE_BY_LANG: Record<TNonDefaultLang, TAboutPageData> = {
     leaders: [
       {
         name: "Şeyh Ahmad Al-Mansoor",
+        slug: "sheikh-ahmad-al-mansoor",
+        honorificTitle: "Şeyh / İmam",
         roleTitle: "Baş İmam ve Manevi Rehber",
+        memberCategory: "imam_scholar",
+        shortSummary:
+          "İslami İlimler ve Fıkıh mezunu. 2014'ten bu yana Ebû Bekir Es-Sıddîk Merkez Camii'nin baş imamı ve Cuma hatibi.",
         bio: "İslami İlimler ve Fıkıh mezunu. 2014'ten bu yana Ebû Bekir Es-Sıddîk Merkez Camii'nin baş imamı.",
+        credentials:
+          "İslam Hukuku (Şeriat ve Fıkıh) Lisansı · Kur'ân-ı Kerîm Kıraat İcazeti",
+        officeHours: "Salı – Pazar, 14:00 – 17:30",
         languagesSpoken: "Arapça, İspanyolca, İngilizce",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: true,
       },
       {
         name: "Üstad Tariq Ramírez",
+        slug: "ustadh-tariq-ramirez",
+        honorificTitle: "Üstad",
         roleTitle: "Eğitim ve Yeni Müslümanlar Koordinatörü",
+        memberCategory: "instructor",
+        shortSummary:
+          "İslami pedagoji, Arapça öğretimi ve yeni Müslümanlara rehberlik alanında uzman.",
         bio: "İslami pedagoji, Arapça öğretimi ve yeni Müslümanlara rehberlik alanında uzman.",
+        credentials:
+          "Arap Dili ve İslami İlimler Uzmanlığı · Cami Kültür Akademisi Koordinatörü",
+        officeHours: "Çarşamba – Cumartesi, 10:00 – 16:00",
         languagesSpoken: "İspanyolca, Arapça, İngilizce",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: true,
       },
       {
         name: "Dr. Amina Gómez",
+        slug: "dra-amina-gomez",
+        honorificTitle: "Dr.",
         roleTitle: "Sosyal Hizmetler ve Aile Programları Direktörü",
+        memberCategory: "board_administration",
+        shortSummary:
+          "Sosyal yardımlaşma, zekât dağıtımı ile kadın ve gençlik eğitim programlarını yönetmektedir.",
         bio: "Sosyal yardımlaşma, zekât dağıtımı ile kadın ve gençlik eğitim programlarını yönetmektedir.",
+        credentials:
+          "Sosyal ve Toplumsal Kalkınma Doktorası · Aile ve Yardımlaşma Komitesi Direktörü",
+        officeHours: "Pazartesi – Cuma, 09:00 – 15:00",
         languagesSpoken: "İspanyolca, İngilizce",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: true,
+        isKhateeb: false,
+      },
+      {
+        name: "Hacı İbrahim El-Hatib",
+        slug: "hajj-ibrahim-al-khatib",
+        honorificTitle: "Hacı",
+        roleTitle: "Cami Görevlisi ve Müezzin (Kayyim)",
+        memberCategory: "staff_caretaker",
+        shortSummary:
+          "Caminin günlük bakımı, beş vakit namaz için açılışı, ezan okunması ve ziyaretçilerin ağırlanmasından sorumludur.",
+        bio: "Ebû Bekir Es-Sıddîk Merkez Camii'nin cami görevlisi (Kayyim) ve mukim müezzini. Beş vakit namaz için caminin açılışını, ezanların okunmasını ve misafirperverliği koordine eder.",
+        credentials: "2012'den Beri Cami Hizmeti ve Müezzinlik Görevi",
+        officeHours: "Her gün beş vakit namaz saatlerinde",
+        languagesSpoken: "Arapça, İspanyolca",
+        showInStaffDirectory: true,
+        hasDedicatedPage: true,
+        isAuthor: false,
+        isKhateeb: false,
       },
     ],
   },

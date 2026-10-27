@@ -42,6 +42,7 @@ export type TDailyDua = {
   transliteration: string;
   translation: string;
   source: string;
+  reference?: string;
   triggerLabel: string;
   copyLabel: string;
   copiedLabel: string;
@@ -211,8 +212,8 @@ const FEATURED_DONATION_COPY_BY_LANG: Record<
   },
 };
 
-const CONTACT_VISIT_BY_LANG: Record<TNonDefaultLang, typeof contactVisitData> =
-  {
+const CONTACT_VISIT_BY_LANG: Record<TNonDefaultLang, typeof contactVisitData>
+  = {
     en: {
       visitorEtiquette: [
         {
@@ -353,8 +354,8 @@ export function getLocalizedMocks(lang: TLang) {
   const detailedMedia = getDetailedMediaHighlights(lang);
   const services = getLocalizedServices(lang);
 
-  const localizedFeaturedDonation =
-    lang === "es"
+  const localizedFeaturedDonation
+    = lang === "es"
       ? {
           ...featuredDonation,
           ctaHref: `/${lang}/donate`,
@@ -365,8 +366,8 @@ export function getLocalizedMocks(lang: TLang) {
           ctaHref: `/${lang}/donate`,
         };
 
-  const localizedContactVisit =
-    lang === "es" ? contactVisitData : CONTACT_VISIT_BY_LANG[lang];
+  const localizedContactVisit
+    = lang === "es" ? contactVisitData : CONTACT_VISIT_BY_LANG[lang];
 
   return {
     lang,

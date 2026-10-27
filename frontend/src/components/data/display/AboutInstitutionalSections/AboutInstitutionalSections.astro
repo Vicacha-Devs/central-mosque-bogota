@@ -237,7 +237,7 @@ const t = useTranslations(lang);
     </div>
   </section>
 
-  <!-- Leadership & Imam Directory -->
+  <!-- Leadership, Imams & Mosque Staff Directory -->
   <section class="space-y-10">
     <div class="text-center">
       <h2 class="
@@ -258,66 +258,126 @@ const t = useTranslations(lang);
 
     <div class="
       grid grid-cols-1 gap-8
-      md:grid-cols-3
+      md:grid-cols-2
+      lg:grid-cols-4
     "
     >
       {
-        content.leaders.map((leader) => (
-          <Card class="
-            flex flex-col justify-between rounded-2xl border border-slate-200
-            bg-white p-0 shadow-sm
-            dark:border-slate-800 dark:bg-slate-900
-          "
-          >
-            <CardContent class="flex h-full flex-col justify-between p-6">
-              <div>
-                <Avatar size="lg" variant="secondary" class="mb-4 size-14">
-                  <AvatarFallback class="
-                    bg-secondary text-xl font-bold text-white
-                  "
-                  >
-                    <Icon name="person" class="text-2xl" />
-                  </AvatarFallback>
-                </Avatar>
-                <h3 class="
-                  text-xl font-bold text-slate-900
-                  dark:text-white
-                "
-                >
-                  {leader.name}
-                </h3>
-                <p class="mt-1 text-sm font-semibold text-primary">
-                  {leader.roleTitle}
-                </p>
-                <p class="
-                  mt-4 text-sm/relaxed text-slate-600
-                  dark:text-slate-400
-                "
-                >
-                  {leader.bio}
-                </p>
-              </div>
-              <div class="mt-6">
-                <Separator class="
-                  mb-4 bg-slate-100
-                  dark:bg-slate-800
-                "
-                />
-                <div class="
-                  text-xs font-medium text-slate-500
-                  dark:text-slate-400
-                "
-                >
-                  <span>
-                    {t("about-page.languages-label")}
-                    :
-                    {leader.languagesSpoken}
-                  </span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))
+        content.leaders
+          .filter((leader) => leader.showInStaffDirectory !== false)
+          .map((leader) => {
+            const profileHref
+              = leader.slug && leader.hasDedicatedPage !== false
+                ? `/${lang}/staff/${leader.slug}`
+                : undefined;
+            const categoryIcon
+              = leader.memberCategory === "imam_scholar"
+                ? "mosque"
+                : leader.memberCategory === "instructor"
+                  ? "school"
+                  : leader.memberCategory === "staff_caretaker"
+                    ? "verified_user"
+                    : "person";
+            return (
+              <Card class="
+                flex flex-col justify-between rounded-2xl border
+                border-slate-200 bg-white p-0 shadow-sm transition-shadow
+                hover:shadow-md
+                dark:border-slate-800 dark:bg-slate-900
+              "
+              >
+                <CardContent class="flex h-full flex-col justify-between p-6">
+                  <div>
+                    <div class="mb-4 flex items-center justify-between gap-2">
+                      <Avatar size="lg" variant="secondary" class="size-14">
+                        <AvatarFallback class="
+                          bg-secondary text-xl font-bold text-white
+                        "
+                        >
+                          <Icon name={categoryIcon} class="text-2xl" />
+                        </AvatarFallback>
+                      </Avatar>
+                      {leader.honorificTitle && (
+                        <Badge
+                          variant="outline"
+                          class="
+                            rounded-full border-slate-200 px-3 py-1 text-xs
+                            font-semibold text-slate-600
+                            dark:border-slate-700 dark:text-slate-300
+                          "
+                        >
+                          {leader.honorificTitle}
+                        </Badge>
+                      )}
+                    </div>
+                    <h3 class="
+                      text-xl font-bold text-slate-900
+                      dark:text-white
+                    "
+                    >
+                      {profileHref
+                        ? (
+                            <a
+                              href={profileHref}
+                              class="
+                                transition-colors
+                                hover:text-primary
+                              "
+                            >
+                              {leader.name}
+                            </a>
+                          )
+                        : (
+                            leader.name
+                          )}
+                    </h3>
+                    <p class="mt-1 text-sm font-semibold text-primary">
+                      {leader.roleTitle}
+                    </p>
+                    <p class="
+                      mt-4 text-sm/relaxed text-slate-600
+                      dark:text-slate-400
+                    "
+                    >
+                      {leader.shortSummary || leader.bio}
+                    </p>
+                  </div>
+                  <div class="mt-6">
+                    <Separator class="
+                      mb-4 bg-slate-100
+                      dark:bg-slate-800
+                    "
+                    />
+                    <div class="
+                      flex items-center justify-between gap-2 text-xs
+                      font-medium text-slate-500
+                      dark:text-slate-400
+                    "
+                    >
+                      <span>
+                        {t("about-page.languages-label")}
+                        :
+                        {leader.languagesSpoken}
+                      </span>
+                      {profileHref && (
+                        <a
+                          href={profileHref}
+                          class="
+                            inline-flex shrink-0 items-center gap-1 font-bold
+                            text-secondary
+                            hover:text-primary
+                            dark:text-blue-300
+                          "
+                        >
+                          <Icon name="arrow_forward" class="text-sm" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })
       }
     </div>
   </section>

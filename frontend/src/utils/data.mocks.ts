@@ -1,8 +1,8 @@
 import type { TEvent } from "./models/events";
 import type { TCommunityService } from "./models/services";
 
-export const lemma =
-  "La primera y principal mezquita de Bogotá, brindando servicios espirituales y sociales a la comunidad desde hace más de 30 años.";
+export const lemma
+  = "La primera y principal mezquita de Bogotá, brindando servicios espirituales y sociales a la comunidad desde hace más de 30 años.";
 
 export const contactInfo = {
   address: "Calle 80 #30-45, Bogotá D.C., Colombia",
@@ -255,21 +255,76 @@ export const aboutPageData = {
   leaders: [
     {
       name: "Sheikh Ahmad Al-Mansoor",
+      slug: "sheikh-ahmad-al-mansoor",
+      honorificTitle: "Sheikh / Imam",
       roleTitle: "Imam Principal y Director Espiritual",
+      memberCategory: "imam_scholar",
+      shortSummary:
+        "Licenciado en Ciencias Islámicas y Jurisprudencia (Fiqh). Guía espiritual y Khateeb de la Mezquita Central Abu Bakr As-Siddiq desde 2014.",
       bio: "Licenciado en Ciencias Islámicas y Jurisprudencia (Fiqh). Guía espiritual de la Mezquita Central Abu Bakr As-Siddiq desde 2014.",
+      credentials:
+        "Licenciatura en Sharia y Jurisprudencia Islámica (Fiqh) · Ijazah en Recitación del Sagrado Corán (Hafs an Asim)",
+      officeHours: "Martes a Domingo, 2:00 PM – 5:30 PM",
       languagesSpoken: "Árabe, Español, Inglés",
+      showInStaffDirectory: true,
+      hasDedicatedPage: true,
+      isAuthor: true,
+      isKhateeb: true,
     },
     {
       name: "Ustadh Tariq Ramírez",
+      slug: "ustadh-tariq-ramirez",
+      honorificTitle: "Ustadh",
       roleTitle: "Coordinador de Educación y Nuevos Musulmanes",
+      memberCategory: "instructor",
+      shortSummary:
+        "Especialista en pedagogía islámica, enseñanza del idioma árabe y acompañamiento integral para nuevos musulmanes.",
       bio: "Especialista en pedagogía islámica, enseñanza del idioma árabe y acompañamiento integral para nuevos musulmanes.",
+      credentials:
+        "Especialización en Lengua Árabe y Estudios Islámicos · Coordinador de la Academia Cultural Mezquita Central",
+      officeHours: "Miércoles a Sábado, 10:00 AM – 4:00 PM",
       languagesSpoken: "Español, Árabe, Inglés",
+      showInStaffDirectory: true,
+      hasDedicatedPage: true,
+      isAuthor: true,
+      isKhateeb: true,
     },
     {
       name: "Dra. Amina Gómez",
+      slug: "dra-amina-gomez",
+      honorificTitle: "Dra.",
       roleTitle: "Directora de Acción Social y Programas Familiares",
+      memberCategory: "board_administration",
+      shortSummary:
+        "Lidera los programas de bienestar comunitario, distribución de Zakat y actividades educativas para mujeres y jóvenes.",
       bio: "Lidera los programas de bienestar comunitario, distribución de Zakat y actividades educativas para mujeres y jóvenes.",
+      credentials:
+        "Doctorado en Desarrollo Social y Comunitario · Directora del Comité de Bienestar y Familia",
+      officeHours: "Lunes a Viernes, 9:00 AM – 3:00 PM",
       languagesSpoken: "Español, Inglés",
+      showInStaffDirectory: true,
+      hasDedicatedPage: true,
+      isAuthor: true,
+      isKhateeb: false,
+    },
+    {
+      name: "Hajj Ibrahim Al-Khatib",
+      slug: "hajj-ibrahim-al-khatib",
+      honorificTitle: "Hajj",
+      roleTitle: "Encargado de la Mezquita y Muadhin (Qayyim al-Masjid)",
+      memberCategory: "staff_caretaker",
+      shortSummary:
+        "Responsable del cuidado diario del recinto sagrado, apertura para las cinco oraciones, llamado al Adhan y hospitalidad a los visitantes.",
+      bio: "Custodio y encargado operativo (Qayyim) de la Mezquita Central Abu Bakr As-Siddiq. Supervisa la apertura puntual para las cinco oraciones diarias, el llamado al Adhan y la recepción hospitalaria de la comunidad y visitantes.",
+      credentials:
+        "Servicio Comunitario y Custodia de Mezquita desde 2012 · Muadhin Residente",
+      officeHours:
+        "Todos los días durante los horarios de las 5 oraciones diarias",
+      languagesSpoken: "Árabe, Español",
+      showInStaffDirectory: true,
+      hasDedicatedPage: true,
+      isAuthor: false,
+      isKhateeb: false,
     },
   ],
 };
