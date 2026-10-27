@@ -45,7 +45,11 @@
       }
     },
     "longDescription": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::tiptap-editor.RichText",
+      "options": {
+        "preset": "editorial"
+      },
       "pluginOptions": {
         "i18n": {
           "localized": true

@@ -412,46 +412,392 @@ export async function seedAdditionalCmsContent(
     }
   }
 
-  // Collection Types
+  // Collection Types (site-specific + plugin collections)
   const collectionTypeSeeds: Array<{
-    uid:
-      | 'api::event.event'
-      | 'api::community-service.community-service'
-      | 'api::article.article'
-      | 'api::donation-campaign.donation-campaign'
-      | 'api::media-highlight.media-highlight'
-      | 'api::faq.faq';
+    uid: string;
     byLocale: Record<string, Array<Record<string, unknown>>>;
+    transform?: (item: Record<string, unknown>) => Record<string, unknown>;
   }> = [
-    { uid: 'api::event.event', byLocale: EVENTS_BY_LOCALE },
+    { uid: 'plugin::events.event', byLocale: EVENTS_BY_LOCALE },
     {
       uid: 'api::community-service.community-service',
       byLocale: COMMUNITY_SERVICES_BY_LOCALE,
     },
     { uid: 'api::article.article', byLocale: ARTICLES_BY_LOCALE },
     {
-      uid: 'api::donation-campaign.donation-campaign',
+      uid: 'plugin::donations.campaign',
       byLocale: DONATION_CAMPAIGNS_BY_LOCALE,
+      transform: (item) => {
+        const { category, active, ...rest } = item;
+        return {
+          ...rest,
+          categoryKey: (item.categoryKey ?? category ?? 'general_fund') as string,
+          isActive: item.isActive ?? active ?? true,
+        };
+      },
     },
     {
-      uid: 'api::media-highlight.media-highlight',
+      uid: 'plugin::media-feeds.media-item',
       byLocale: MEDIA_HIGHLIGHTS_BY_LOCALE,
+      transform: (item) => ({
+        ...item,
+        sourceUrl: (item.sourceUrl ?? item.href ?? '') as string,
+      }),
     },
     { uid: 'api::faq.faq', byLocale: FAQS_BY_LOCALE },
   ];
 
-  for (const { uid, byLocale } of collectionTypeSeeds) {
+  for (const { uid, byLocale, transform } of collectionTypeSeeds) {
     for (const [locale, items] of Object.entries(byLocale)) {
-      const existing = await strapi.documents(uid).findMany({ locale });
+      const existing = await (strapi.documents as any)(uid).findMany({ locale });
       if (existing.length === 0) {
         for (const item of items) {
-          await strapi.documents(uid).create({
+          const payload = transform ? transform(item) : item;
+          await (strapi.documents as any)(uid).create({
             locale,
             status: 'published',
-            data: item as any,
+            data: payload as any,
           });
         }
       }
     }
+  }
+
+  // Ensure plugin::bookings.resource has default bookable resources
+  try {
+    if (strapi.contentTypes?.['plugin::bookings.resource' as keyof typeof strapi.contentTypes]) {
+      const existingResources = await (strapi.documents as any)('plugin::bookings.resource').findMany();
+      if (!existingResources || existingResources.length === 0) {
+        const defaultBookingResources = [
+          {
+            name: 'Visita Guiada Cultural y Académica',
+            slug: 'visita-guiada-cultural-academica',
+            resourceType: 'service',
+            description:
+              'Recorrido guiado por la arquitectura, caligrafía y espacios de oración de la Mezquita Central Abu Bakr As-Siddiq.',
+            color: '#0F766E',
+            timezone: 'America/Bogota',
+            slotDurationMinutes: 60,
+            capacityPerSlot: 1,
+            maxPartySize: 45,
+            minLeadTimeHours: 24,
+            maxAdvanceDays: 90,
+            requiresApproval: true,
+            active: true,
+          },
+          {
+            name: 'Consejería Espiritual y Matrimonio Islámico (Nikah)',
+            slug: 'consejeria-espiritual-nikah',
+            resourceType: 'appointment',
+            description:
+              'Atención personalizada con el Imam Principal para orientación familiar, declaración de Shahada o contrato matrimonial Nikah.',
+            color: '#B45309',
+            timezone: 'America/Bogota',
+            slotDurationMinutes: 45,
+            capacityPerSlot: 1,
+            maxPartySize: 10,
+            minLeadTimeHours: 12,
+            maxAdvanceDays: 60,
+            requiresApproval: true,
+            active: true,
+          },
+        ];
+        for (const resItem of defaultBookingResources) {
+          await (strapi.documents as any)('plugin::bookings.resource').create({
+            data: resItem,
+          });
+        }
+      }
+    }
+  } catch {
+    // Ignore if bookings plugin is not loaded in unit tests
+  }
+
+  // Ensure plugin::media-feeds.media-series has localized published entries across es, en, ar, tr
+  try {
+    if (strapi.contentTypes?.['plugin::media-feeds.media-series' as keyof typeof strapi.contentTypes]) {
+      const seriesByLocale: Record<string, Array<Record<string, unknown>>> = {
+        en: [
+          {
+            title: "Friday Jumu'ah Khutbahs",
+            slug: 'jumuah-khutbahs-en',
+            description: 'Weekly Friday sermons delivered at the Abu Bakr As-Siddiq Central Mosque in Bogotá.',
+            author: 'Sheikh Ahmad Al-Mansoor',
+            category: 'khutbah',
+            defaultType: 'video',
+            spokenLanguages: ['es', 'ar', 'en'],
+            rssEnabled: true,
+            active: true,
+          },
+        ],
+        ar: [
+          {
+            title: 'خطب الجمعة الأسبوعية',
+            slug: 'jumuah-khutbahs-ar',
+            description: 'خطب صلاة الجمعة من مسجد أبو بكر الصديق المركزي في بوغوتا.',
+            author: 'الشيخ أحمد المنصور',
+            category: 'khutbah',
+            defaultType: 'video',
+            spokenLanguages: ['ar', 'es'],
+            rssEnabled: true,
+            active: true,
+          },
+        ],
+        tr: [
+          {
+            title: 'Cuma Hutbeleri Serisi',
+            slug: 'jumuah-khutbahs-tr',
+            description: 'Bogota Ebû Bekir Es-Sıddîk Merkez Camii haftalık Cuma hutbeleri.',
+            author: 'Şeyh Ahmed El-Mansur',
+            category: 'khutbah',
+            defaultType: 'video',
+            spokenLanguages: ['tr', 'es', 'ar'],
+            rssEnabled: true,
+            active: true,
+          },
+        ],
+      };
+      for (const [locale, items] of Object.entries(seriesByLocale)) {
+        const existing = await (strapi.documents as any)('plugin::media-feeds.media-series').findMany({ locale });
+        if (!existing || existing.length === 0) {
+          for (const item of items) {
+            await (strapi.documents as any)('plugin::media-feeds.media-series').create({
+              locale,
+              status: 'published',
+              data: item,
+            });
+          }
+        }
+      }
+    }
+  } catch {
+    // Ignore in unit tests
+  }
+
+  // Ensure plugin::resources.* entries are marked published and have Turkish (tr) localizations
+  try {
+    const resourceSeedsTr: Array<{ uid: string; data: Record<string, unknown> }> = [
+      {
+        uid: 'plugin::resources.publication',
+        data: {
+          title: 'Cami Ziyaret Rehberi ve İslam’a Giriş',
+          slug: 'cami-ziyaret-rehberi-islama-giris-tr',
+          summary: 'Ebû Bekir Es-Sıddîk Merkez Camii ziyaretçileri için ibadet adabı, mimari ve İslam’ın temel ilkeleri rehberi.',
+          category: 'guide',
+          authorName: 'Ebû Bekir Es-Sıddîk Merkez Camii',
+          pageCount: 24,
+          languageCode: 'tr',
+          publishedAtDate: '2025-01-15',
+          featured: true,
+          allowPublicDownload: true,
+        },
+      },
+      {
+        uid: 'plugin::resources.gallery-album',
+        data: {
+          title: 'Hat Sanatı Kubbesi ve Mihrap Mimarisi',
+          slug: 'hat-sanati-kubbesi-ve-mihrap-mimarisi-tr',
+          description: 'Bogota Merkez Camii’nin klasik İslam mimarisi, kubbe hat yazıları ve ibadet alanı.',
+          category: 'architecture',
+          eventDate: '2025-01-10',
+          featured: true,
+          sortOrder: 1,
+        },
+      },
+      {
+        uid: 'plugin::resources.glossary-term',
+        data: {
+          term: 'Ezan (Adhan)',
+          slug: 'adhan-tr',
+          nativeScript: 'أَذَان',
+          transliteration: 'Adhān',
+          definition: 'Günde beş vakit farz namazlar için müezzin tarafından okunan İslami namaz çağrısı.',
+          category: 'worship',
+          letterGroup: 'E',
+          featured: true,
+        },
+      },
+    ];
+    for (const { uid, data } of resourceSeedsTr) {
+      if (!strapi.contentTypes?.[uid as keyof typeof strapi.contentTypes]) continue;
+      const existingTr = await (strapi.documents as any)(uid).findMany({ locale: 'tr' });
+      if (!existingTr || existingTr.length === 0) {
+        await (strapi.documents as any)(uid).create({
+          locale: 'tr',
+          status: 'published',
+          data,
+        });
+      }
+      const query = strapi.db?.query?.(uid);
+      if (query) {
+        const unpublished = await query.findMany({ where: { publishedAt: null } });
+        for (const row of unpublished || []) {
+          await query.update({
+            where: { id: row.id },
+            data: { publishedAt: new Date() },
+          });
+        }
+      }
+    }
+  } catch {
+    // Ignore in unit tests
+  }
+
+  // Seed default Islam Scripture & Dua entries (non-localized collectionType)
+  try {
+    if (strapi.contentTypes?.['plugin::islam.scripture-entry' as keyof typeof strapi.contentTypes]) {
+      const existingScriptures = await (strapi.documents as any)('plugin::islam.scripture-entry').findMany();
+      if (!existingScriptures || existingScriptures.length === 0) {
+        const scriptureSeeds = [
+          {
+            entryKind: 'ayah',
+            slug: 'ayat-al-kursi-2-255',
+            referenceKey: 'Quran 2:255',
+            arabicText:
+              'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ',
+            transliteration:
+              'Allāhu lā ilāha illā Huwa al-Ḥayyu al-Qayyūm, lā ta’khudhuhu sinatun wa lā nawm.',
+            translations: {
+              es: 'Alá: no hay más divinidad que Él, el Viviente, el Sustentador Eterno. Ni la somnolencia ni el sueño Lo alcanzan.',
+              en: 'Allah—there is no deity except Him, the Ever-Living, the Sustainer of all existence. Neither drowsiness overtakes Him nor sleep.',
+              ar: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ',
+              tr: 'Allah, O’ndan başka ilah yoktur; O, Hayy ve Kayyûm’dur. O’nu ne bir uyuklama tutabilir ne de bir uyku.',
+            },
+            reflections: {
+              es: 'Recitar Ayat al-Kursi después de cada oración obligatoria brinda protección divina constante.',
+              en: 'Reciting Ayat al-Kursi after every obligatory prayer grants continuous divine protection.',
+              ar: 'قراءة آية الكرسي دبر كل صلاة مكتوبة سبب للحفظ والرعاية الإلهية.',
+              tr: 'Her farz namazın ardından Âyetü’l-Kürsî okumak ilahi koruma vesilesidir.',
+            },
+            gradingOrCategory: 'Surah Al-Baqarah',
+            recommendedRepetitions: 1,
+            topicTags: ['tawhid', 'protection', 'adhkar'],
+            active: true,
+          },
+          {
+            entryKind: 'hadith',
+            slug: 'actions-by-intentions-bukhari-1',
+            referenceKey: 'Sahih al-Bukhari 1',
+            arabicText: 'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى',
+            transliteration: 'Innamā al-aʿmālu bi-n-niyyāt, wa innamā li-kulli imriʾin mā nawā.',
+            translations: {
+              es: 'Ciertamente las acciones se juzgan por las intenciones, y a cada persona le corresponde lo que haya tenido por intención.',
+              en: 'Actions are judged only by intentions, and every person shall have only that which they intended.',
+              ar: 'إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.',
+              tr: 'Ameller niyetlere göredir ve herkese ancak niyet ettiği şey vardır.',
+            },
+            reflections: {
+              es: 'La sinceridad (Ikhlas) es el fundamento espiritual de toda obra de adoración y servicio comunitario.',
+              en: 'Sincerity (Ikhlas) is the spiritual foundation of every act of worship and community service.',
+              ar: 'الإخلاص هو الأساس الروحي لكل عبادة وعمل خيري.',
+              tr: 'İhlas, her ibadetin ve toplumsal hizmetin manevi temelidir.',
+            },
+            gradingOrCategory: 'Sahih (Bukhari & Muslim)',
+            recommendedRepetitions: 1,
+            topicTags: ['intentions', 'ethics', 'ikhlas'],
+            active: true,
+          },
+          {
+            entryKind: 'dua',
+            slug: 'dua-entering-mosque-muslim-713',
+            referenceKey: 'Sahih Muslim 713',
+            arabicText: 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ',
+            transliteration: 'Allāhumma iftaḥ lī abwāba raḥmatik.',
+            translations: {
+              es: '¡Oh Alá! Ábreme las puertas de Tu misericordia.',
+              en: 'O Allah, open for me the gates of Your mercy.',
+              ar: 'اللهم افتح لي أبواب رحمتك.',
+              tr: 'Allah’ım! Bana rahmetinin kapılarını aç.',
+            },
+            reflections: {
+              es: 'Súplica profética recomendada al ingresar a la Mezquita Central con el pie derecho.',
+              en: 'Prophetic supplication recommended when entering the Central Mosque with the right foot.',
+              ar: 'دعاء الدخول إلى المسجد بالقدم اليمنى طلباً للرحمة والسكينة.',
+              tr: 'Merkez Camii’ne sağ ayakla girerken okunması sünnet olan dua.',
+            },
+            gradingOrCategory: 'Hisnul Muslim — Mosque Etiquette',
+            recommendedRepetitions: 1,
+            topicTags: ['mosque', 'dua', 'mercy'],
+            active: true,
+          },
+        ];
+        for (const item of scriptureSeeds) {
+          await (strapi.documents as any)('plugin::islam.scripture-entry').create({
+            data: item,
+          });
+        }
+      }
+    }
+  } catch {
+    // Ignore in unit tests
+  }
+
+  // Seed default Islam Hilal Moon-Sighting announcements (non-localized collectionType)
+  try {
+    if (strapi.contentTypes?.['plugin::islam.hilal-announcement' as keyof typeof strapi.contentTypes]) {
+      const existingHilal = await (strapi.documents as any)('plugin::islam.hilal-announcement').findMany();
+      if (!existingHilal || existingHilal.length === 0) {
+        const hilalSeeds = [
+          {
+            occasion: 'ramadan',
+            hijriYear: 1446,
+            hijriMonth: 9,
+            confirmedGregorianDate: '2025-03-01',
+            shiftingApplied: '0',
+            approvedByImam: 'Sheikh Ahmad Al-Mansur',
+            notes: {
+              es: 'Confirmación oficial del inicio del mes sagrado de Ramadán 1446 H en la Mezquita Central Abou Bakr Al-Siddiq de Bogotá.',
+              en: 'Official confirmation of the start of the blessed month of Ramadan 1446 AH at Abou Bakr Al-Siddiq Central Mosque of Bogotá.',
+              ar: 'الإعلان الرسمي لبداية شهر رمضان المبارك ١٤٤٦ هـ في مسجد أبي بكر الصديق المركزي ببوغوتا.',
+              tr: 'Bogota Ebû Bekir Es-Sıddîk Merkez Camii’nde 1446 H. mübarek Ramazan ayının başlangıcına dair resmi ilan.',
+            },
+            broadcastDispatched: true,
+          },
+          {
+            occasion: 'eid_al_fitr',
+            hijriYear: 1446,
+            hijriMonth: 10,
+            confirmedGregorianDate: '2025-03-30',
+            shiftingApplied: '0',
+            approvedByImam: 'Sheikh Ahmad Al-Mansur',
+            notes: {
+              es: 'Anuncio oficial de Eid al-Fitr 1446 H (1 de Shawwal). Oración comunitaria de Eid en la sala principal a las 7:30 AM.',
+              en: 'Official announcement of Eid al-Fitr 1446 AH (1st Shawwal). Congregational Eid prayer in the main hall at 7:30 AM.',
+              ar: 'الإعلان الرسمي لعيد الفطر المبارك ١٤٤٦ هـ (١ شوال). تقام صلاة العيد في المصلى الرئيسي الساعة ٧:٣٠ صباحاً.',
+              tr: '1446 H. Ramazan Bayramı (1 Şevval) resmi ilanı. Bayram namazı ana ibadet salonunda saat 07:30’da kılınacaktır.',
+            },
+            broadcastDispatched: true,
+          },
+        ];
+        for (const item of hilalSeeds) {
+          await (strapi.documents as any)('plugin::islam.hilal-announcement').create({
+            data: item,
+          });
+        }
+      }
+    }
+  } catch {
+    // Ignore in unit tests
+  }
+
+  // Ensure default Inbox Forms are seeded and published
+  try {
+    if (strapi.contentTypes?.['plugin::inbox.form' as keyof typeof strapi.contentTypes]) {
+      const formService = strapi.plugin('inbox')?.service?.('formService') as
+        | {
+            listForms?: (opts?: Record<string, unknown>) => Promise<Array<Record<string, unknown>>>;
+            createFromTemplate?: (templateId: string) => Promise<unknown>;
+          }
+        | undefined;
+      if (formService?.listForms && formService?.createFromTemplate) {
+        const existingForms = await formService.listForms({ activeOnly: false });
+        if (!existingForms || existingForms.length === 0) {
+          await formService.createFromTemplate('general-contact');
+          await formService.createFromTemplate('service-desk-application');
+        }
+      }
+    }
+  } catch {
+    // Ignore in unit tests
   }
 }

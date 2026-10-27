@@ -257,7 +257,7 @@ export function buildMosqueBroadcastsPluginConfig(env: EnvFn) {
           slug: 'auto-event-published-broadcast',
           name: 'Difusión Automática de Nuevos Eventos Comunitarios',
           eventName: 'event.published',
-          targetContentType: 'api::event.event',
+          targetContentType: 'plugin::events.event',
           topic: 'events',
           channels: ['telegram', 'email'],
           active: true,

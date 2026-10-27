@@ -44,7 +44,11 @@
       }
     },
     "transitDirections": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::tiptap-editor.RichText",
+      "options": {
+        "preset": "standard"
+      },
       "pluginOptions": {
         "i18n": {
           "localized": true

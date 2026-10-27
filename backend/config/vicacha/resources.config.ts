@@ -47,6 +47,15 @@ export function buildMosqueResourcesPluginConfig(env: EnvFn) {
         'application/zip',
       ],
       maxPhotosPerAlbum: env.int('RESOURCES_MAX_PHOTOS_PER_ALBUM', 120),
+      schemaExtensions: {
+        publication: {
+          authorProfile: {
+            type: 'relation',
+            relation: 'manyToOne',
+            target: 'api::leader.leader',
+          },
+        },
+      },
     },
   };
 }

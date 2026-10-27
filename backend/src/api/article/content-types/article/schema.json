@@ -45,7 +45,11 @@
       }
     },
     "content": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::tiptap-editor.RichText",
+      "options": {
+        "preset": "editorial"
+      },
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -85,6 +89,20 @@
         }
       }
     },
+    "authorSlug": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "authorProfile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::leader.leader",
+      "inversedBy": "articles"
+    },
     "readingTime": {
       "type": "string",
       "pluginOptions": {
@@ -113,16 +131,6 @@
       "type": "media",
       "multiple": false,
       "allowedTypes": ["images"],
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "downloadablePdf": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": ["files"],
       "pluginOptions": {
         "i18n": {
           "localized": true

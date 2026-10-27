@@ -33,9 +33,9 @@ export default ({ env }) => {
     sqlite: {
       connection: {
         filename: path.join(
-          __dirname,
-          '..',
-          '..',
+          typeof __dirname !== 'undefined'
+            ? path.join(__dirname, '..', '..')
+            : process.cwd(),
           env('DATABASE_FILENAME', '.tmp/data.db')
         ),
       },

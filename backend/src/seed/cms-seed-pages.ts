@@ -143,113 +143,29 @@ export const DONATIONS_PAGE_BY_LOCALE: Record<string, Record<string, unknown>> =
       heroTitle: 'Donaciones, Zakat y Sostenimiento (Waqf)',
       heroSubtitle:
         'Calcula tu Zakat con precios actualizados de oro y plata y apoya los programas sociales y educativos de la Mezquita Central de Bogotá.',
-      zakatStandard: 'common',
-      defaultCurrency: 'cop',
-      fallbackGoldPriceCop: 385000,
-      fallbackSilverPriceCop: 4400,
-      fallbackGoldPriceUsd: 92.5,
-      fallbackSilverPriceUsd: 1.05,
       transparencyNote:
         'El 100 % de los fondos de Zakat se administra en una cuenta separada y se distribuye exclusivamente a los beneficiarios legítimos según el Corán (At-Tawbah 9:60). Emitimos certificado tributario de donación (DIAN).',
-      paymentMethods: [
-        {
-          providerName: 'Bancolombia',
-          accountType: 'Cuenta Corriente',
-          accountNumber: '192-000123-45',
-          accountHolder: 'Asociación Benéfica Islámica de Bogotá',
-          nit: '900.123.456-7',
-          instructions:
-            'Realiza tu transferencia y reporta el comprobante para emitir tu certificado de donación DIAN.',
-        },
-        {
-          providerName: 'Nequi / Daviplata',
-          accountType: 'Billetera Móvil',
-          accountNumber: '310 555 0199',
-          accountHolder: 'Mezquita Central Bogotá',
-          instructions:
-            'Indica en el mensaje si tu aporte corresponde a Zakat, Sadaqah o Sostenimiento.',
-        },
-      ],
     },
     en: {
       heroTitle: 'Donations, Zakat & Mosque Endowment (Waqf)',
       heroSubtitle:
         'Calculate your Zakat using live gold and silver Nisab thresholds and support the social and educational programs of the Central Mosque of Bogotá.',
-      zakatStandard: 'common',
-      defaultCurrency: 'cop',
-      fallbackGoldPriceCop: 385000,
-      fallbackSilverPriceCop: 4400,
-      fallbackGoldPriceUsd: 92.5,
-      fallbackSilverPriceUsd: 1.05,
       transparencyNote:
         '100% of Zakat funds are held in a dedicated account and distributed strictly to eligible recipients defined in the Quran (At-Tawbah 9:60). Colombian DIAN tax certificates are available upon request.',
-      paymentMethods: [
-        {
-          providerName: 'Bancolombia',
-          accountType: 'Checking Account (Cuenta Corriente)',
-          accountNumber: '192-000123-45',
-          accountHolder: 'Asociación Benéfica Islámica de Bogotá',
-          nit: '900.123.456-7',
-          instructions:
-            'Complete your bank transfer and submit the receipt to request a Colombian DIAN tax certificate.',
-        },
-        {
-          providerName: 'Nequi / Daviplata',
-          accountType: 'Mobile Wallet',
-          accountNumber: '310 555 0199',
-          accountHolder: 'Mezquita Central Bogotá',
-          instructions:
-            'Please specify in the transfer note whether your contribution is Zakat, Sadaqah, or Waqf.',
-        },
-      ],
     },
     ar: {
       heroTitle: 'التبرعات والزكاة والوقف الخيري',
       heroSubtitle:
         'احسب زكاة مالك وفق نصاب الذهب والفضة المحدث، وساهم في دعم البرامج التعليمية والاجتماعية لمسجد أبو بكر الصديق المركزي في بوغوتا.',
-      zakatStandard: 'common',
-      defaultCurrency: 'cop',
-      fallbackGoldPriceCop: 385000,
-      fallbackSilverPriceCop: 4400,
-      fallbackGoldPriceUsd: 92.5,
-      fallbackSilverPriceUsd: 1.05,
       transparencyNote:
         'تُودع أموال الزكاة بنسبة 100% في حساب مستقل وتُصرف حصرياً في مصارفها الشرعية المحددة في سورة التوبة (الآية 60).',
-      paymentMethods: [
-        {
-          providerName: 'Bancolombia',
-          accountType: 'حساب جاري (Cuenta Corriente)',
-          accountNumber: '192-000123-45',
-          accountHolder: 'Asociación Benéfica Islámica de Bogotá',
-          nit: '900.123.456-7',
-          instructions:
-            'يرجى إرسال إشعار التحويل البنكي لتوثيق التبرع أو طلب شهادة الإعفاء الضريبي.',
-        },
-      ],
     },
     tr: {
       heroTitle: 'Bağış, Zekât ve Cami Vakfı (Vakıf)',
       heroSubtitle:
         'Güncel altın ve gümüş nisap değerleriyle zekâtınızı hesaplayın ve Bogota Merkez Camii’nin eğitim ve sosyal yardım faaliyetlerine destek olun.',
-      zakatStandard: 'common',
-      defaultCurrency: 'cop',
-      fallbackGoldPriceCop: 385000,
-      fallbackSilverPriceCop: 4400,
-      fallbackGoldPriceUsd: 92.5,
-      fallbackSilverPriceUsd: 1.05,
       transparencyNote:
         'Zekât fonlarının %100’ü ayrı bir hesapta tutulmakta ve yalnızca Kur’an-ı Kerim’de (Tevbe 9:60) belirtilen hak sahiplerine ulaştırılmaktadır.',
-      paymentMethods: [
-        {
-          providerName: 'Bancolombia',
-          accountType: 'Cari Hesap (Cuenta Corriente)',
-          accountNumber: '192-000123-45',
-          accountHolder: 'Asociación Benéfica Islámica de Bogotá',
-          nit: '900.123.456-7',
-          instructions:
-            'Banka havalesi sonrasında dekontunuzu ileterek DIAN vergi muafiyet sertifikası talep edebilirsiniz.',
-        },
-      ],
     },
   };
 

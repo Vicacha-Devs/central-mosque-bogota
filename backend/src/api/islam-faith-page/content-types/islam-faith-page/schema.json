@@ -34,7 +34,11 @@
       }
     },
     "introText": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::tiptap-editor.RichText",
+      "options": {
+        "preset": "editorial"
+      },
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -71,16 +75,6 @@
       "type": "component",
       "repeatable": true,
       "component": "page.pillar-card",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "newMuslimGuidePdf": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": ["files"],
       "pluginOptions": {
         "i18n": {
           "localized": true

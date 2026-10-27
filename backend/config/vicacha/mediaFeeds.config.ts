@@ -78,73 +78,27 @@ export function buildMosqueMediaFeedsPluginConfig(env: any, hijriCalendar: any) 
           active: true,
         },
       ],
-      sources: [
-        {
-          id: 'mosque-media-highlights',
-          label: 'Media Highlights & Khutbahs (Colección)',
-          uid: 'api::media-highlight.media-highlight',
-          enabled: true,
-          defaultType: 'khutbah',
-          defaultSpokenLanguages: ['ar', 'es'],
-          typeLabels: {
-            es: {
-              khutbah: 'Khutbah del Viernes',
-              podcast: 'Podcast Espiritual',
-              video: 'Conferencia en Video',
-              audio: 'Recitación de Audio',
-              live: 'Transmisión en Vivo',
-            },
-            en: {
-              khutbah: 'Friday Khutbah',
-              podcast: 'Spiritual Podcast',
-              video: 'Video Lecture',
-              audio: 'Audio Recitation',
-              live: 'Live Broadcast',
-            },
-            ar: {
-              khutbah: 'خطبة الجمعة',
-              podcast: 'بودكاست إيماني',
-              video: 'محاضرة مرئية',
-              audio: 'تلاوة صوتية',
-              live: 'بث مباشر',
-            },
-            tr: {
-              khutbah: 'Cuma Hutbesi',
-              podcast: 'Manevi Podcast',
-              video: 'Video Konferans',
-              audio: 'Sesli Tilavet',
-              live: 'Canlı Yayın',
+      schemaExtensions: {
+        'media-item': {
+          hijriDate: {
+            type: 'string',
+            pluginOptions: {
+              i18n: {
+                localized: true,
+              },
             },
           },
-          fields: {
-            title: 'title',
-            slug: 'slug',
-            description: 'description',
-            type: 'type',
-            provider: 'provider',
-            externalId: 'externalId',
-            sourceUrl: 'href',
-            embedUrl: 'embedUrl',
-            audioFile: 'audioFile',
-            transcriptFile: 'transcriptPdf',
-            thumbnail: 'thumbnail',
-            imageUrl: 'imageUrl',
-            imageAlt: 'imageAlt',
-            speaker: 'speaker',
-            duration: 'duration',
-            publishedAtLabel: 'publishedAtLabel',
-            seriesSlug: 'seriesSlug',
-            spokenLanguages: 'spokenLanguages',
-            languageTracks: 'languageTracks',
-            chapters: 'chapters',
-            featured: 'featured',
-            isLive: 'isLive',
-            alternateDateFields: {
-              hijri: 'hijriDate',
-            },
+          href: {
+            type: 'string',
+          },
+          speakerProfile: {
+            type: 'relation',
+            relation: 'manyToOne',
+            target: 'api::leader.leader',
           },
         },
-      ],
+      },
+      sources: [],
     },
   };
 }

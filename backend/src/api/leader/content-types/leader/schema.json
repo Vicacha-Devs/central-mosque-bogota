@@ -4,8 +4,8 @@
   "info": {
     "singularName": "leader",
     "pluralName": "leaders",
-    "displayName": "Leader & Imam",
-    "description": "Imams, scholars, and administrative board members of Central Mosque Bogotá"
+    "displayName": "Staff, Scholar & Author",
+    "description": "Imams, Shuyukh, mosque caretakers, instructors, board members, and content authors of Central Mosque Bogotá"
   },
   "options": {
     "draftAndPublish": true
@@ -25,6 +25,24 @@
         }
       }
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "honorificTitle": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "roleTitle": {
       "type": "string",
       "required": true,
@@ -34,11 +52,64 @@
         }
       }
     },
-    "bio": {
+    "memberCategory": {
+      "type": "enumeration",
+      "enum": [
+        "imam_scholar",
+        "instructor",
+        "staff_caretaker",
+        "board_administration",
+        "guest_author"
+      ],
+      "default": "imam_scholar",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "shortSummary": {
       "type": "text",
       "pluginOptions": {
         "i18n": {
           "localized": true
+        }
+      }
+    },
+    "bio": {
+      "type": "customField",
+      "customField": "plugin::tiptap-editor.RichText",
+      "options": {
+        "preset": "editorial"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "credentials": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "officeHours": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "publicEmail": {
+      "type": "email",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
         }
       }
     },
@@ -63,12 +134,82 @@
         }
       }
     },
+    "showInStaffDirectory": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "hasDedicatedPage": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "isAuthor": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "isKhateeb": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "adminUserEmail": {
+      "type": "email",
+      "private": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "adminUserId": {
+      "type": "integer",
+      "private": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "order": {
       "type": "integer",
       "default": 0,
       "pluginOptions": {
         "i18n": {
           "localized": false
+        }
+      }
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article",
+      "mappedBy": "authorProfile"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
         }
       }
     }

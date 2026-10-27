@@ -27,14 +27,56 @@ export function buildVicachaPluginsConfig(env: StrapiEnvFn) {
       enabled: true,
       config: {
         defaultTimezone: env('CALENDAR_TIMEZONE', 'America/Bogota'),
-        defaultLocale: 'auto',
+        defaultLocale: 'es',
         defaultView: 'dayGridMonth',
+        theme: 'breeze',
+        secondaryCalendarLanguage: 'local',
         firstDayOfWeek: 1,
         weekNumbers: true,
         weekNumberCalculation: 'ISO',
         timeFormat24h: false,
         feedTitle: 'Mezquita Central Abu Bakr As-Siddiq — Calendario General',
         secondaryCalendars: [hijriCalendar],
+        recurrencePresets: [
+          { id: 'daily', label: 'Daily', rrule: 'FREQ=DAILY;INTERVAL=1' },
+          {
+            id: 'weekly-mon',
+            label: 'Weekly on Mondays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=MO',
+          },
+          {
+            id: 'weekly-tue',
+            label: 'Weekly on Tuesdays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=TU',
+          },
+          {
+            id: 'weekly-wed',
+            label: 'Weekly on Wednesdays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=WE',
+          },
+          {
+            id: 'weekly-thu',
+            label: 'Weekly on Thursdays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=TH',
+          },
+          {
+            id: 'weekly-fri',
+            label: "Weekly on Fridays (Jumu'ah)",
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=FR',
+          },
+          {
+            id: 'weekly-sat',
+            label: 'Weekly on Saturdays (Halaqa)',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=SA',
+          },
+          {
+            id: 'weekly-sun',
+            label: 'Weekly on Sundays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=SU',
+          },
+          { id: 'monthly', label: 'Monthly', rrule: 'FREQ=MONTHLY;INTERVAL=1' },
+          { id: 'yearly', label: 'Yearly', rrule: 'FREQ=YEARLY;INTERVAL=1' },
+        ],
       },
     },
 
@@ -52,14 +94,39 @@ export function buildVicachaPluginsConfig(env: StrapiEnvFn) {
         recurrencePresets: [
           { id: 'daily', label: 'Daily', rrule: 'FREQ=DAILY;INTERVAL=1' },
           {
-            id: 'jumuah',
+            id: 'weekly-mon',
+            label: 'Weekly on Mondays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=MO',
+          },
+          {
+            id: 'weekly-tue',
+            label: 'Weekly on Tuesdays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=TU',
+          },
+          {
+            id: 'weekly-wed',
+            label: 'Weekly on Wednesdays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=WE',
+          },
+          {
+            id: 'weekly-thu',
+            label: 'Weekly on Thursdays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=TH',
+          },
+          {
+            id: 'weekly-fri',
             label: "Weekly on Fridays (Jumu'ah)",
             rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=FR',
           },
           {
-            id: 'weekend-halaqa',
+            id: 'weekly-sat',
             label: 'Weekly on Saturdays (Halaqa)',
             rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=SA',
+          },
+          {
+            id: 'weekly-sun',
+            label: 'Weekly on Sundays',
+            rrule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=SU',
           },
           { id: 'monthly', label: 'Monthly', rrule: 'FREQ=MONTHLY;INTERVAL=1' },
           { id: 'yearly', label: 'Yearly', rrule: 'FREQ=YEARLY;INTERVAL=1' },
@@ -74,13 +141,37 @@ export function buildVicachaPluginsConfig(env: StrapiEnvFn) {
                 },
               },
             },
+            timeLabel: {
+              type: 'string',
+              pluginOptions: {
+                i18n: {
+                  localized: true,
+                },
+              },
+            },
+            imageUrl: {
+              type: 'string',
+            },
+            imageAlt: {
+              type: 'string',
+              pluginOptions: {
+                i18n: {
+                  localized: true,
+                },
+              },
+            },
+            speakerProfile: {
+              type: 'relation',
+              relation: 'manyToOne',
+              target: 'api::leader.leader',
+            },
           },
         },
         sources: [
           {
-            id: 'mosque-events',
+            id: 'plugin-events',
             label: 'Eventos de la Mezquita',
-            uid: 'api::event.event',
+            uid: 'plugin::events.event',
             color: '#0D9488',
             enabled: true,
             fields: {
@@ -100,7 +191,7 @@ export function buildVicachaPluginsConfig(env: StrapiEnvFn) {
               alternateDateFields: {
                 hijri: 'hijriDate',
               },
-              customFields: ['hijriDate', 'featured', 'timeLabel'],
+              customFields: ['hijriDate', 'featured', 'timeLabel', 'imageUrl', 'imageAlt'],
             },
             categoryColors: {
               education: '#2563EB',
@@ -119,6 +210,9 @@ export function buildVicachaPluginsConfig(env: StrapiEnvFn) {
       enabled: true,
       config: {
         defaultTimezone: env('BOOKINGS_TIMEZONE', 'America/Bogota'),
+        defaultLocale: 'es',
+        theme: 'breeze',
+        secondaryCalendarLanguage: 'local',
         defaultSlotDurationMinutes: 180,
         defaultBufferBeforeMinutes: 0,
         defaultBufferAfterMinutes: 30,
@@ -172,19 +266,19 @@ export function buildVicachaPluginsConfig(env: StrapiEnvFn) {
         sources: [
           {
             id: 'visit-bookings',
-            uid: 'api::visit-booking.visit-booking',
-            label: 'Visitas Guiadas (Colección)',
+            uid: 'plugin::bookings.booking',
+            label: 'Visitas Guiadas (Bookings)',
             color: '#D97706',
             enabled: true,
-            customerNameField: 'visitorName',
-            customerEmailField: 'email',
-            customerPhoneField: 'phone',
-            organizationField: 'organizationOrSchool',
-            dateField: 'preferredDate',
-            slotLabelField: 'preferredTimeSlot',
-            partySizeField: 'groupSize',
+            customerNameField: 'customerName',
+            customerEmailField: 'customerEmail',
+            customerPhoneField: 'customerPhone',
+            organizationField: 'organization',
+            dateField: 'startDate',
+            slotLabelField: 'slotLabel',
+            partySizeField: 'partySize',
             statusField: 'status',
-            languageField: 'preferredGuideLanguage',
+            languageField: 'preferredLanguage',
             notesField: 'notes',
             slotWindows: {
               morning: { start: '09:00', end: '12:00' },

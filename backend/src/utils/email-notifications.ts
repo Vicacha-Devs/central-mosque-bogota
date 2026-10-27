@@ -239,15 +239,30 @@ export async function notifyContactSubmission(
   const adminTo = (
     process.env.EMAIL_ADMIN_NOTIFICATION_TO || 'info@mezquitabogota.org'
   ).trim();
-  const rawFullName = sanitizeHeaderLine(record.fullName || 'Visitor', 120);
-  const fullName = escapeHtml(record.fullName);
-  const email = sanitizeHeaderLine(record.email, 120);
-  const rawPhone = sanitizeHeaderLine(record.phone || '—', 60);
-  const phone = escapeHtml(record.phone || '—');
-  const rawSubjectCategory = sanitizeHeaderLine(record.subject || 'general', 60);
-  const subjectCategory = escapeHtml(record.subject || 'general');
-  const rawMessage = String(record.message || '').slice(0, 4000);
-  const message = escapeHtml(record.message);
+  const dataBag =
+    record.data && typeof record.data === 'object'
+      ? (record.data as Record<string, unknown>)
+      : {};
+  const rawNameVal =
+    record.fullName ?? record.applicantName ?? dataBag.fullName ?? 'Visitor';
+  const rawEmailVal =
+    record.email ?? record.applicantEmail ?? dataBag.email ?? '';
+  const rawPhoneVal =
+    record.phone ?? record.applicantPhone ?? dataBag.phone ?? '—';
+  const rawSubjectVal =
+    record.subject ?? dataBag.subject ?? record.category ?? 'general';
+  const rawMessageVal =
+    record.message ?? dataBag.message ?? dataBag.details ?? '';
+
+  const rawFullName = sanitizeHeaderLine(rawNameVal, 120);
+  const fullName = escapeHtml(rawNameVal);
+  const email = sanitizeHeaderLine(rawEmailVal, 120);
+  const rawPhone = sanitizeHeaderLine(rawPhoneVal, 60);
+  const phone = escapeHtml(rawPhoneVal);
+  const rawSubjectCategory = sanitizeHeaderLine(rawSubjectVal, 60);
+  const subjectCategory = escapeHtml(rawSubjectVal);
+  const rawMessage = String(rawMessageVal).slice(0, 4000);
+  const message = escapeHtml(rawMessageVal);
   const { code, dir, copy, mosque } = getCopyForLocale(record.locale);
 
   const templateData = {
@@ -311,24 +326,37 @@ export async function notifyVisitBooking(
   const adminTo = (
     process.env.EMAIL_ADMIN_NOTIFICATION_TO || 'info@mezquitabogota.org'
   ).trim();
-  const rawVisitorName = sanitizeHeaderLine(record.visitorName || 'Visitor', 120);
-  const visitorName = escapeHtml(record.visitorName);
-  const rawOrganization = sanitizeHeaderLine(record.organizationOrSchool || '—', 140);
-  const organization = escapeHtml(record.organizationOrSchool || '—');
-  const email = sanitizeHeaderLine(record.email, 120);
-  const rawPhone = sanitizeHeaderLine(record.phone || '—', 60);
-  const phone = escapeHtml(record.phone || '—');
-  const rawPreferredDate = sanitizeHeaderLine(record.preferredDate || '', 40);
-  const preferredDate = escapeHtml(record.preferredDate);
-  const rawPreferredTimeSlot = sanitizeHeaderLine(record.preferredTimeSlot || '', 60);
-  const preferredTimeSlot = escapeHtml(record.preferredTimeSlot);
-  const rawGroupSize = sanitizeHeaderLine(record.groupSize || 1, 20);
-  const groupSize = escapeHtml(record.groupSize);
-  const rawGuideLang = sanitizeHeaderLine(record.preferredGuideLanguage || 'es', 20);
-  const guideLang = escapeHtml(record.preferredGuideLanguage || 'es');
-  const rawNotes = String(record.notes || '—').slice(0, 2000);
-  const notes = escapeHtml(record.notes || '—');
-  const { code, dir, copy, mosque } = getCopyForLocale(record.locale);
+  const visitorVal = record.visitorName ?? record.customerName ?? 'Visitor';
+  const orgVal = record.organizationOrSchool ?? record.organization ?? '—';
+  const emailVal = record.email ?? record.customerEmail ?? '';
+  const phoneVal = record.phone ?? record.customerPhone ?? '—';
+  const dateVal = record.preferredDate ?? record.startDate ?? '';
+  const slotVal = record.preferredTimeSlot ?? record.slotLabel ?? '';
+  const sizeVal = record.groupSize ?? record.partySize ?? 1;
+  const langVal =
+    record.preferredGuideLanguage ?? record.preferredLanguage ?? record.locale ?? 'es';
+  const notesVal = record.notes ?? '—';
+
+  const rawVisitorName = sanitizeHeaderLine(visitorVal, 120);
+  const visitorName = escapeHtml(visitorVal);
+  const rawOrganization = sanitizeHeaderLine(orgVal, 140);
+  const organization = escapeHtml(orgVal);
+  const email = sanitizeHeaderLine(emailVal, 120);
+  const rawPhone = sanitizeHeaderLine(phoneVal, 60);
+  const phone = escapeHtml(phoneVal);
+  const rawPreferredDate = sanitizeHeaderLine(dateVal, 40);
+  const preferredDate = escapeHtml(dateVal);
+  const rawPreferredTimeSlot = sanitizeHeaderLine(slotVal, 60);
+  const preferredTimeSlot = escapeHtml(slotVal);
+  const rawGroupSize = sanitizeHeaderLine(sizeVal, 20);
+  const groupSize = escapeHtml(sizeVal);
+  const rawGuideLang = sanitizeHeaderLine(langVal, 20);
+  const guideLang = escapeHtml(langVal);
+  const rawNotes = String(notesVal).slice(0, 2000);
+  const notes = escapeHtml(notesVal);
+  const { code, dir, copy, mosque } = getCopyForLocale(
+    record.locale ?? record.preferredLanguage
+  );
 
   const templateData = {
     mosque,
@@ -401,6 +429,13 @@ export async function notifyDonationSubmission(
   const adminTo = (
     process.env.EMAIL_ADMIN_NOTIFICATION_TO || 'info@mezquitabogota.org'
   ).trim();
+  const donationTypeVal = record.donationType ?? record.categoryKey ?? 'general';
+  const paymentMethodVal =
+    record.paymentMethodUsed ??
+    record.paymentProvider ??
+    record.paymentChannel ??
+    'bancolombia';
+
   const rawDonorName = sanitizeHeaderLine(record.donorName || 'Donor', 120);
   const donorName = escapeHtml(record.donorName);
   const email = sanitizeHeaderLine(record.donorEmail, 120);
@@ -408,16 +443,15 @@ export async function notifyDonationSubmission(
   const amount = escapeHtml(record.amount);
   const rawCurrency = sanitizeHeaderLine(record.currency || 'COP', 10);
   const currency = escapeHtml(record.currency || 'COP');
-  const rawDonationType = sanitizeHeaderLine(record.donationType || 'general', 40);
-  const donationType = escapeHtml(record.donationType || 'general');
-  const rawPaymentMethod = sanitizeHeaderLine(
-    record.paymentMethodUsed || 'bancolombia',
-    40
-  );
-  const paymentMethodUsed = escapeHtml(record.paymentMethodUsed || 'bancolombia');
+  const rawDonationType = sanitizeHeaderLine(donationTypeVal, 40);
+  const donationType = escapeHtml(donationTypeVal);
+  const rawPaymentMethod = sanitizeHeaderLine(paymentMethodVal, 40);
+  const paymentMethodUsed = escapeHtml(paymentMethodVal);
   const rawReference = sanitizeHeaderLine(record.transactionReference || '—', 80);
   const reference = escapeHtml(record.transactionReference || '—');
-  const requestsCertificate = Boolean(record.requestsTaxCertificate);
+  const requestsCertificate = Boolean(
+    record.requestsTaxCertificate ?? record.donorTaxId
+  );
   const { code, dir, copy, mosque } = getCopyForLocale(record.locale);
 
   const templateData = {

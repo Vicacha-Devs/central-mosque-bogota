@@ -5,7 +5,7 @@
     "singularName": "global-setting",
     "pluralName": "global-settings",
     "displayName": "Global Setting",
-    "description": "Global Mosque branding, motto, contact information, navigation links, and default SEO"
+    "description": "Global Mosque branding, motto, contact information, social network links, and default SEO"
   },
   "options": {
     "draftAndPublish": true
@@ -47,26 +47,6 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.contact-info",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "navLinks": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.link",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "fastLinks": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.link",
       "pluginOptions": {
         "i18n": {
           "localized": true

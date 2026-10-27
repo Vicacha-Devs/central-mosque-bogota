@@ -26,6 +26,14 @@ export default ({ env }) => {
         salt: resolveSecret("TRANSFER_TOKEN_SALT"),
       },
     },
+    secrets: {
+      encryptionKey: env("ENCRYPTION_KEY", resolveSecret("ADMIN_JWT_SECRET")),
+    },
+    forgotPassword: {
+      from: env("EMAIL_DEFAULT_FROM", "no-reply@mezquitabogota.org"),
+      replyTo: env("EMAIL_DEFAULT_REPLY_TO", "info@mezquitabogota.org"),
+      expiresIn: env("ADMIN_FORGOT_PASSWORD_EXPIRES_IN", "1h"),
+    },
     flags: {
       nps: env.bool("FLAG_NPS", false),
       promoteEE: env.bool("FLAG_PROMOTE_EE", false),

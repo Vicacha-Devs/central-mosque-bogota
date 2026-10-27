@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "sections": {
+    "collectionTypes": {
+      "groups": [
+        {
+          "id": "editorial-community",
+          "name": "Editorial & Community",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "api::article.article" },
+            { "type": "contentType", "uid": "api::community-service.community-service" },
+            { "type": "contentType", "uid": "api::faq.faq" },
+            { "type": "contentType", "uid": "api::leader.leader" }
+          ]
+        },
+        {
+          "id": "events-scheduling-bookings",
+          "name": "Events, Scheduling & Bookings",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "plugin::events.event" },
+            { "type": "contentType", "uid": "plugin::events.registration" },
+            { "type": "contentType", "uid": "plugin::bookings.resource" },
+            { "type": "contentType", "uid": "plugin::bookings.booking" }
+          ]
+        },
+        {
+          "id": "islam-liturgy-scripture",
+          "name": "Islam, Liturgy & Scripture",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "plugin::islam.scripture-entry" },
+            { "type": "contentType", "uid": "plugin::islam.hilal-announcement" }
+          ]
+        },
+        {
+          "id": "donations-certificates",
+          "name": "Donations & Certificates",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "plugin::donations.campaign" },
+            { "type": "contentType", "uid": "plugin::donations.pledge" },
+            { "type": "contentType", "uid": "plugin::certificates.template" },
+            { "type": "contentType", "uid": "plugin::certificates.certificate" }
+          ]
+        },
+        {
+          "id": "media-resources-publications",
+          "name": "Media, Resources & Library",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "plugin::media-feeds.media-item" },
+            { "type": "contentType", "uid": "plugin::media-feeds.media-series" },
+            { "type": "contentType", "uid": "plugin::resources.publication" },
+            { "type": "contentType", "uid": "plugin::resources.gallery-album" },
+            { "type": "contentType", "uid": "plugin::resources.glossary-term" }
+          ]
+        },
+        {
+          "id": "inbox-broadcasts-communications",
+          "name": "Inbox & Omnichannel Broadcasts",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "plugin::inbox.form" },
+            { "type": "contentType", "uid": "plugin::inbox.submission" },
+            { "type": "contentType", "uid": "plugin::inbox.subscriber" },
+            { "type": "contentType", "uid": "plugin::inbox.alert-banner" },
+            { "type": "contentType", "uid": "plugin::broadcasts.campaign" },
+            { "type": "contentType", "uid": "plugin::broadcasts.automation-rule" },
+            { "type": "contentType", "uid": "plugin::broadcasts.delivery-log" }
+          ]
+        }
+      ]
+    },
+    "singleTypes": {
+      "groups": [
+        {
+          "id": "public-website-pages",
+          "name": "Public Website Pages",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "api::about-page.about-page" },
+            { "type": "contentType", "uid": "api::islam-faith-page.islam-faith-page" },
+            { "type": "contentType", "uid": "api::donations-page.donations-page" },
+            { "type": "contentType", "uid": "api::contact-page.contact-page" }
+          ]
+        },
+        {
+          "id": "global-configuration-broadcasts",
+          "name": "Global Configuration",
+          "parent": null,
+          "children": [
+            { "type": "contentType", "uid": "api::global-setting.global-setting" }
+          ]
+        }
+      ]
+    }
+  }
+}

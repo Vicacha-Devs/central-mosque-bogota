@@ -26,8 +26,12 @@
       }
     },
     "answer": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::tiptap-editor.RichText",
       "required": true,
+      "options": {
+        "preset": "standard"
+      },
       "pluginOptions": {
         "i18n": {
           "localized": true
