@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Architecture & Developer Documentation
+    url: https://github.com/Vicacha-Devs/central-mosque-bogota/tree/main/docs
+    about: Read the 38-page Astro Starlight documentation covering architecture, i18n, Islamic APIs, and Strapi v5 integration.
