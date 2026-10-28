@@ -23,6 +23,9 @@ const THIRD_PARTY_PLUGIN_TRANSLATIONS: Record<
     'entity-notes.plugin.name': 'Editorial Notes',
     'entity-notes.component.emptyStateLayout': 'No notes yet',
     'entity-notes.component.noteListContent.add.button': 'Add note',
+    'tiptap-editor.slash.beforeAfterSlider.label': 'Before / After Image Slider',
+    'tiptap-editor.slash.beforeAfterSlider.description':
+      'Compare two images from the Media Library with caption support',
   },
   es: {
     'preview-button.panel.title': 'Vista Previa en el Sitio',
@@ -32,6 +35,9 @@ const THIRD_PARTY_PLUGIN_TRANSLATIONS: Record<
     'entity-notes.plugin.name': 'Notas Editoriales',
     'entity-notes.component.emptyStateLayout': 'Aún no hay notas',
     'entity-notes.component.noteListContent.add.button': 'Añadir nota',
+    'tiptap-editor.slash.beforeAfterSlider.label': 'Deslizador de Imágenes Antes / Después',
+    'tiptap-editor.slash.beforeAfterSlider.description':
+      'Compara dos imágenes de la Biblioteca de Medios con leyenda',
   },
   ar: {
     'preview-button.panel.title': 'معاينة مباشرة للموقع',
@@ -40,6 +46,9 @@ const THIRD_PARTY_PLUGIN_TRANSLATIONS: Record<
     'entity-notes.plugin.name': 'ملاحظات تحريرية',
     'entity-notes.component.emptyStateLayout': 'لا توجد ملاحظات بعد',
     'entity-notes.component.noteListContent.add.button': 'إضافة ملاحظة',
+    'tiptap-editor.slash.beforeAfterSlider.label': 'شريط مقارنة الصور قبل / بعد',
+    'tiptap-editor.slash.beforeAfterSlider.description':
+      'قارن بين صورتين من مكتبة الوسائط مع دعم التعليق',
   },
   tr: {
     'preview-button.panel.title': 'Canlı Site Önizlemesi',
@@ -48,6 +57,9 @@ const THIRD_PARTY_PLUGIN_TRANSLATIONS: Record<
     'entity-notes.plugin.name': 'Editoryal Notlar',
     'entity-notes.component.emptyStateLayout': 'Henüz not yok',
     'entity-notes.component.noteListContent.add.button': 'Not ekle',
+    'tiptap-editor.slash.beforeAfterSlider.label': 'Önce / Sonra Görsel Kaydırıcı',
+    'tiptap-editor.slash.beforeAfterSlider.description':
+      'Medya Kütüphanesi\'nden iki görseli açıklama desteğiyle karşılaştırın',
   },
 };
 

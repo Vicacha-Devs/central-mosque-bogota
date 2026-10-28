@@ -12,3 +12,4 @@ public/uploads/*
 *.log
 .strapi-updater.json
 coverage/
+/favicon.png

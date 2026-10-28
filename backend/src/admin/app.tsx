@@ -1,5 +1,6 @@
 import type { StrapiApp } from '@strapi/strapi/admin';
 import { AuthorProfileFormSync } from './i18n/authorFieldSync';
+import { registerBeforeAfterSliderExtension } from './tiptap/beforeAfterSlider';
 import { ALL_ADMIN_TRANSLATIONS } from './translations';
 
 (globalThis as any).__CM_I18N_MESSAGES__ = ALL_ADMIN_TRANSLATIONS;
@@ -11,6 +12,7 @@ export default {
   },
   register() {
     (globalThis as any).__CM_I18N_MESSAGES__ = ALL_ADMIN_TRANSLATIONS;
+    registerBeforeAfterSliderExtension();
   },
   bootstrap(app: StrapiApp) {
     const appTrads = (app as any)?.configurations?.translations || {};
