@@ -21,12 +21,15 @@ Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en
 - **System Architecture Explorer (Dark/Light + Motion)**: [`docs/public/archify/central-mosque-architecture.html`](./docs/public/archify/central-mosque-architecture.html)
 - **One-Page Platform Explainer**: [`docs/public/archify/central-mosque-explainer.html`](./docs/public/archify/central-mosque-explainer.html)
 
-### Bilingual Starlight Documentation (`/docs`)
+### Bilingual Starlight Documentation (`/docs`) & Junior Learning Plan
+
+- **Junior Developer 4-Tier Learning Roadmap & YouTube Tutorials**: [`./JUNIOR_ONBOARDING_PLAN.md`](./JUNIOR_ONBOARDING_PLAN.md)
 
 | Guide | English (`en`) | Español (`es`) |
 | :--- | :--- | :--- |
 | **Jr. Dev 10-Minute Executive Summary** | [`01-getting-started/jr-dev-summary.md`](./docs/src/content/docs/en/01-getting-started/jr-dev-summary.md) | [`01-getting-started/jr-dev-summary.md`](./docs/src/content/docs/es/01-getting-started/jr-dev-summary.md) |
 | **Step-by-Step Onboarding Guide** | [`01-getting-started/onboarding-guide.md`](./docs/src/content/docs/en/01-getting-started/onboarding-guide.md) | [`01-getting-started/onboarding-guide.md`](./docs/src/content/docs/es/01-getting-started/onboarding-guide.md) |
+| **4-Tier Learning Roadmap & YouTube Tutorials** | [`01-getting-started/learning-roadmap.md`](./docs/src/content/docs/en/01-getting-started/learning-roadmap.md) | [`01-getting-started/learning-roadmap.md`](./docs/src/content/docs/es/01-getting-started/learning-roadmap.md) |
 | **Environment Setup** | [`01-getting-started/environment-setup.md`](./docs/src/content/docs/en/01-getting-started/environment-setup.md) | [`01-getting-started/environment-setup.md`](./docs/src/content/docs/es/01-getting-started/environment-setup.md) |
 | **System Overview & Data Flows** | [`02-architecture/system-overview.md`](./docs/src/content/docs/en/02-architecture/system-overview.md) | [`02-architecture/system-overview.md`](./docs/src/content/docs/es/02-architecture/system-overview.md) |
 | **System Architecture ADRs (001–012)** | [`02-architecture/adrs.md`](./docs/src/content/docs/en/02-architecture/adrs.md) | [`02-architecture/adrs.md`](./docs/src/content/docs/es/02-architecture/adrs.md) |
@@ -96,7 +99,6 @@ pnpm run verify
 ```
 
 Executes [`scripts/verify-all.ts`](./scripts/verify-all.ts), which enforces:
-
 1. All documentation files in `docs/src/content/docs/` are `<= 500 lines`.
 2. `oxfmt --check` formatting gate.
 3. `eslint . --quiet` static analysis gate.
