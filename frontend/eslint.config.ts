@@ -4,7 +4,7 @@ import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import stylistic from "@stylistic/eslint-plugin";
 import vitest from "@vitest/eslint-plugin";
-import parserAstro from "astro-eslint-parser";
+import * as parserAstro from "astro-eslint-parser";
 import astro from "eslint-plugin-astro";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import { importX } from "eslint-plugin-import-x";
@@ -28,6 +28,7 @@ export default defineConfig([
   globalIgnores([
     "coverage",
     "dist",
+    "storybook-static",
     "node_modules",
     ".astro",
     ".github",

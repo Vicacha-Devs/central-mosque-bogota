@@ -1,0 +1,392 @@
+---
+import { Avatar, AvatarFallback } from "@/components/starwind/avatar";
+import { Badge } from "@/components/starwind/badge";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/starwind/breadcrumb";
+import { Card, CardContent } from "@/components/starwind/card";
+import CourseEnrollmentForm from "@components/actions/CourseEnrollmentForm/CourseEnrollmentForm.astro";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import TiptapContent from "@components/data/display/TiptapContent/TiptapContent.astro";
+import type { TLang } from "@i18n/ui";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+import {
+  getDetailedArticles,
+  type TDetailedArticle,
+} from "@utils/localized-mocks";
+
+type TArticleWithAuthor = TDetailedArticle & {
+  content?: string;
+  authorSlug?: string;
+};
+
+interface Props {
+  lang?: TLang;
+  article?: TArticleWithAuthor;
+  relatedArticles?: Array<TArticleWithAuthor>;
+}
+
+const {
+  lang: langProp,
+  article: articleProp,
+  relatedArticles: relatedArticlesProp,
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const fallbackArticles = getDetailedArticles(lang);
+const article: TArticleWithAuthor = articleProp ?? fallbackArticles[0];
+const relatedArticles
+  = relatedArticlesProp
+    ?? fallbackArticles.filter((a) => a.slug !== article.slug);
+const inferredAuthorSlug
+  = article.authorSlug
+    || (article.authorName.toLowerCase().includes("mansoor")
+      || article.authorName.toLowerCase().includes("منصور")
+      ? "sheikh-ahmad-al-mansoor"
+      : article.authorName.toLowerCase().includes("tariq")
+        || article.authorName.toLowerCase().includes("طارق")
+        ? "ustadh-tariq-ramirez"
+        : article.authorName.toLowerCase().includes("amina")
+          || article.authorName.toLowerCase().includes("أمينة")
+          ? "dra-amina-gomez"
+          : "");
+const authorProfileHref = inferredAuthorSlug
+  ? translatePath(`/staff/${inferredAuthorSlug}`)
+  : "";
+---
+
+<div class="space-y-10">
+  <!-- Breadcrumb -->
+  <Breadcrumb>
+    <BreadcrumbList>
+      <BreadcrumbItem>
+        <BreadcrumbLink
+          href={translatePath("/islam-and-faith")}
+          class="
+            inline-flex items-center gap-2 font-semibold text-secondary
+            hover:text-primary
+            dark:text-blue-300
+          "
+        >
+          <Icon name="arrow_back" class="text-base" />
+          <span>{t("article-detail.back")}</span>
+        </BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator />
+      <BreadcrumbItem>
+        <BreadcrumbPage class="line-clamp-1 max-w-xs font-bold">
+          {article.title}
+        </BreadcrumbPage>
+      </BreadcrumbItem>
+    </BreadcrumbList>
+  </Breadcrumb>
+
+  <!-- Article Hero -->
+  <Card
+    class="
+      overflow-hidden rounded-3xl border border-slate-200 bg-white p-0 shadow-xl
+      dark:border-slate-800 dark:bg-slate-900
+    "
+  >
+    <div class="
+      grid grid-cols-1
+      lg:grid-cols-12
+    "
+    >
+      <div class="
+        relative min-h-72
+        lg:col-span-5
+      "
+      >
+        <img
+          src={article.imageUrl}
+          alt={article.imageAlt}
+          class="size-full object-cover"
+        />
+        <div
+          class="
+            absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-950/20
+            to-transparent
+          "
+        >
+        </div>
+        <div class="absolute top-6 left-6">
+          <Badge
+            variant="primary"
+            class="
+              gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-extrabold
+              tracking-wider text-slate-950 uppercase shadow-md
+            "
+          >
+            <Icon name={article.ctaIcon} class="text-sm" />
+            <span>{article.badgeLabel}</span>
+          </Badge>
+        </div>
+      </div>
+
+      <div class="
+        flex flex-col justify-between p-8
+        sm:p-10
+        lg:col-span-7
+      "
+      >
+        <div class="space-y-5">
+          <div
+            class="
+              flex flex-wrap items-center gap-4 text-xs font-semibold
+              text-slate-500
+              dark:text-slate-400
+            "
+          >
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="schedule" class="text-sm text-primary" />
+              <span>
+                {article.readingTimeMinutes}
+                {t("article-detail.reading-time")}
+              </span>
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+              <Icon
+                name="calendar_month"
+                class="
+                  text-sm text-secondary
+                  dark:text-blue-400
+                "
+              />
+              <span>{article.scheduleLabel}</span>
+            </span>
+          </div>
+
+          <h1
+            class="
+              text-2xl font-extrabold tracking-tight text-slate-900
+              sm:text-4xl
+              dark:text-white
+            "
+          >
+            {article.title}
+          </h1>
+
+          <p
+            class="
+              text-base/relaxed text-slate-600
+              dark:text-slate-300
+            "
+          >
+            {article.description}
+          </p>
+        </div>
+
+        <div
+          class="
+            mt-8 flex items-center gap-4 rounded-2xl border border-slate-100
+            bg-slate-50 p-4
+            dark:border-slate-800 dark:bg-slate-800/60
+          "
+        >
+          <Avatar size="lg" variant="secondary" class="shrink-0">
+            <AvatarFallback class="bg-secondary text-white">
+              <Icon name="school" class="text-xl" />
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <p
+              class="text-xs font-bold tracking-wider text-slate-400 uppercase"
+            >
+              {t("article-detail.author")}
+            </p>
+            <p class="
+              text-sm font-bold text-slate-900
+              dark:text-white
+            "
+            >
+              {authorProfileHref
+                ? (
+                    <a
+                      href={authorProfileHref}
+                      class="
+                        transition-colors
+                        hover:text-primary hover:underline
+                      "
+                    >
+                      {article.authorName}
+                    </a>
+                  )
+                : (
+                    article.authorName
+                  )}
+            </p>
+            <p class="
+              text-xs text-slate-500
+              dark:text-slate-400
+            "
+            >
+              {article.instructorRole}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+
+  <!-- Main Content & Enrollment Form -->
+  <div class="
+    grid grid-cols-1 gap-10
+    lg:grid-cols-12
+  "
+  >
+    <!-- Left Column: Article Content & Learning Objectives -->
+    <div class="
+      space-y-8
+      lg:col-span-7
+    "
+    >
+      <Card
+        class="
+          rounded-3xl border border-slate-200 bg-white p-0 shadow-sm
+          dark:border-slate-800 dark:bg-slate-900
+        "
+      >
+        <CardContent class="space-y-5 p-8">
+          <TiptapContent
+            content={article.content ?? article.contentParagraphs}
+          />
+        </CardContent>
+      </Card>
+
+      <Card
+        class="
+          rounded-3xl border border-emerald-500/25 bg-emerald-500/5 p-0
+          dark:bg-emerald-950/20
+        "
+      >
+        <CardContent class="p-8">
+          <div class="mb-5 flex items-center gap-3">
+            <div
+              class="
+                flex size-10 items-center justify-center rounded-xl bg-secondary
+                text-white
+              "
+            >
+              <Icon name="verified" class="text-lg" />
+            </div>
+            <h2 class="
+              text-xl font-extrabold text-slate-900
+              dark:text-white
+            "
+            >
+              {t("article-detail.learning-objectives")}
+            </h2>
+          </div>
+
+          <ul class="space-y-3">
+            {
+              article.learningObjectives.map((objective) => (
+                <li class="
+                  flex items-start gap-3 text-sm font-medium text-slate-700
+                  dark:text-slate-200
+                "
+                >
+                  <Icon
+                    name="check_circle"
+                    class="
+                      mt-0.5 shrink-0 text-base text-emerald-600
+                      dark:text-emerald-400
+                    "
+                  />
+                  <span>{objective}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Right Column: Course Registration Form Component -->
+    <div class="lg:col-span-5">
+      <CourseEnrollmentForm lang={lang} courseTitle={article.title} />
+    </div>
+  </div>
+
+  <!-- Related Courses & Articles -->
+  {
+    relatedArticles.length > 0 && (
+      <section class="space-y-6">
+        <h2 class="
+          text-2xl font-extrabold text-slate-900
+          dark:text-white
+        "
+        >
+          {t("article-detail.more-courses")}
+        </h2>
+        <div class="
+          grid grid-cols-1 gap-6
+          md:grid-cols-2
+        "
+        >
+          {relatedArticles.map((related) => (
+            <a
+              href={related.href}
+              class="
+                group flex flex-col justify-between rounded-2xl border
+                border-slate-200 bg-white p-6 shadow-sm transition-all
+                hover:-translate-y-1 hover:shadow-md
+                dark:border-slate-800 dark:bg-slate-900
+              "
+            >
+              <div>
+                <Badge
+                  variant="secondary"
+                  class="
+                    rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold
+                    text-secondary
+                    dark:bg-blue-400/10 dark:text-blue-300
+                  "
+                >
+                  {related.badgeLabel}
+                </Badge>
+                <h3 class="
+                  mt-3 text-lg font-bold text-slate-900
+                  group-hover:text-secondary
+                  dark:text-white
+                  dark:group-hover:text-primary
+                "
+                >
+                  {related.title}
+                </h3>
+                <p class="
+                  mt-2 text-sm text-slate-600
+                  dark:text-slate-400
+                "
+                >
+                  {related.description}
+                </p>
+              </div>
+              <div class="
+                mt-4 flex items-center justify-between text-xs font-semibold
+                text-slate-500
+                dark:text-slate-400
+              "
+              >
+                <span>{related.authorName}</span>
+                <span>{related.scheduleLabel}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</div>

@@ -38,11 +38,16 @@ export const fetchIslamicData = async <
 
   if (typeof apiKey === "string" && apiKey.trim()) {
     searchParams.set("api_key", apiKey);
+  } else {
+    throw new Error("ISLAMIC_API_KEY is not configured; using fallback data");
   }
 
   url.search = searchParams.toString();
 
-  const res = await fetch(url, init);
+  const res = await fetch(url, {
+    ...init,
+    signal: init?.signal ?? AbortSignal.timeout(2500),
+  });
 
   if (!res.ok) {
     throw new Error(`Islamic API request failed (${String(res.status)})`);

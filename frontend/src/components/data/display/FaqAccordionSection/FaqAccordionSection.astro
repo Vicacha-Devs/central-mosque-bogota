@@ -1,0 +1,87 @@
+---
+/**
+ * Organism: FaqAccordionSection
+ *
+ * Renders the Frequently Asked Questions accordion using Starwind UI Accordion
+ * and `TiptapContent` for sanitized rich-text answers.
+ */
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/starwind/accordion";
+import TiptapContent from "@components/data/display/TiptapContent/TiptapContent.astro";
+import type { TiptapContentInput } from "@vicacha-devs/astro-tiptap-blocks";
+import { useTranslations } from "@i18n/utils";
+import type { TLang } from "@i18n/ui";
+import { getLocalizedMocks } from "@utils/data.mocks";
+
+export interface TFaqItem {
+  question: string;
+  answer: TiptapContentInput;
+  category?: string;
+}
+
+export interface Props {
+  lang?: TLang;
+  faqs?: TFaqItem[];
+}
+
+const { lang = "es", faqs } = Astro.props;
+const t = useTranslations(lang);
+const resolvedFaqs = faqs ?? getLocalizedMocks(lang).islamFaithData.faqs;
+---
+
+<section class="space-y-8">
+  <div class="text-center">
+    <h2 class="
+      text-3xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {t("islam-page.faq-title")}
+    </h2>
+    <p class="
+      mt-2 text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {t("islam-page.faq-subtitle")}
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-4xl">
+    <Accordion type="single" class="space-y-4">
+      {
+        resolvedFaqs.map((faq, idx) => (
+          <AccordionItem
+            value={`faq-${idx}`}
+            class="
+              rounded-2xl border border-slate-200 bg-white px-6 shadow-sm
+              dark:border-slate-800 dark:bg-slate-900
+            "
+          >
+            <AccordionTrigger class="
+              font-bold text-slate-900
+              hover:no-underline
+              dark:text-white
+            "
+            >
+              {faq.question}
+            </AccordionTrigger>
+            <AccordionContent class="pb-6">
+              <TiptapContent
+                content={faq.answer}
+                class="
+                  text-sm text-slate-600
+                  dark:text-slate-400
+                "
+              />
+            </AccordionContent>
+          </AccordionItem>
+        ))
+      }
+    </Accordion>
+  </div>
+</section>

@@ -1,0 +1,155 @@
+---
+import { Alert } from "@/components/starwind/alert";
+import { Badge } from "@/components/starwind/badge";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { fetchStrapiData } from "@services/strapi";
+import type { TLang } from "@i18n/ui";
+import {
+  getUrgentAlertFallback,
+  type TAlertBannerItem,
+} from "@utils/inbox-mocks";
+
+/**
+ * @component UrgentAlertBanner
+ * @title Urgent Community Alert Banner
+ * @description Top-of-page dismissible alert bar (`inbox/alerts`) for Friday Jumu'ah notices, Ramadan moon-sighting statements, or urgent Janazah announcements.
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `banner`: optional preloaded `TAlertBannerItem` (bypasses Strapi network call when provided)
+ *
+ * @preview
+ *
+ * <UrgentAlertBanner lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import UrgentAlertBanner from "@components/data/display/UrgentAlertBanner/UrgentAlertBanner.astro";
+ * ---
+ *
+ * <UrgentAlertBanner lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Optional preloaded alert banner item (skips Strapi network call when provided).
+   */
+  banner?: TAlertBannerItem;
+}
+
+const { lang, banner: propBanner } = Astro.props;
+
+let banner: TAlertBannerItem = propBanner ?? getUrgentAlertFallback(lang);
+
+if (!propBanner) {
+  try {
+    const cmsAlerts = await fetchStrapiData<TAlertBannerItem[]>(
+      "inbox/alerts",
+      { locale: lang }
+    );
+    if (
+      Array.isArray(cmsAlerts)
+      && cmsAlerts.length > 0
+      && cmsAlerts[0]?.title
+    ) {
+      banner = cmsAlerts[0];
+    }
+  }
+  catch {
+    // Use localized fallback banner when Strapi server is offline
+  }
+}
+
+const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
+  info: "bg-slate-900 text-white border-b border-slate-800",
+  warning: "bg-amber-600 text-white border-b border-amber-500",
+  urgent: "bg-red-700 text-white border-b border-red-600",
+  celebration: "bg-emerald-900 text-emerald-50 border-b border-emerald-800",
+};
+---
+
+<Alert
+  id="mosque-urgent-alert-banner"
+  data-alert-code={banner.code}
+  aria-label={banner.title}
+  class={`
+    w-full rounded-none border-x-0 border-t-0 px-4 py-2.5 text-xs transition-all
+    sm:text-sm
+    ${SEVERITY_STYLES[banner.severity] || SEVERITY_STYLES.info}
+  `}
+>
+  <div
+    class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3"
+  >
+    <div class="flex flex-wrap items-center gap-2">
+      <Badge
+        class="
+          inline-flex items-center gap-1 rounded-full border-none bg-white/15
+          px-2.5 py-0.5 text-[11px] font-bold tracking-wide text-white uppercase
+        "
+      >
+        <Icon name="campaign" class="text-xs" />
+        <span>{banner.title}</span>
+      </Badge>
+      <span class="font-medium opacity-95">{banner.message}</span>
+      {
+        banner.secondaryDateLabel && (
+          <span class="
+            hidden rounded-md bg-black/20 px-2 py-0.5 text-[11px] opacity-85
+            lg:inline-block
+          "
+          >
+            {banner.secondaryDateLabel}
+          </span>
+        )
+      }
+    </div>
+
+    <div class="flex items-center gap-3">
+      {
+        banner.ctaLabel && banner.ctaUrl && (
+          <a
+            href={banner.ctaUrl}
+            class="
+              inline-flex items-center gap-1 rounded-lg bg-white/15 px-3 py-1
+              text-xs font-bold text-white transition
+              hover:bg-white/25
+            "
+          >
+            <span>{banner.ctaLabel}</span>
+            <Icon name="arrow_forward" class="text-xs" />
+          </a>
+        )
+      }
+      {
+        banner.dismissible && (
+          <button
+            type="button"
+            id="mosque-alert-dismiss-btn"
+            aria-label="Cerrar aviso"
+            class="
+              inline-flex size-6 items-center justify-center rounded-full
+              bg-white/10 text-white transition
+              hover:bg-white/20
+            "
+          >
+            ✕
+          </button>
+        )
+      }
+    </div>
+  </div>
+</Alert>
+
+<script>
+  import { initAlertBanner } from "./urgent-alert-banner.controller";
+
+  initAlertBanner();
+  document.addEventListener("astro:after-swap", initAlertBanner);
+</script>

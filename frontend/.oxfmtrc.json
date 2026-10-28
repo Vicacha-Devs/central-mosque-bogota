@@ -28,7 +28,9 @@
     "internalPattern": ["^@(.*)$"]
   },
   "ignorePatterns": [
+    "coverage",
     "dist",
+    "storybook-static",
     "node_modules",
     "yarn.lock",
     "package-lock.json",

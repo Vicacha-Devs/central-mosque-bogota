@@ -222,9 +222,10 @@ function getCrossAxisShift(
  * available viewport space and returns the one with the least overflow and
  * displacement from the preferred placement.
  */
-export function resolvePlacement(
-  options: ResolvePlacementOptions
-): ResolvePlacementResult {
+type TPlacementOpts = ResolvePlacementOptions;
+type TPlacementRes = ResolvePlacementResult;
+
+export function resolvePlacement(options: TPlacementOpts): TPlacementRes {
   const {
     side,
     align,

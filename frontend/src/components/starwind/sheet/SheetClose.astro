@@ -1,0 +1,15 @@
+---
+import type { ComponentProps } from "astro/types";
+
+import { DialogClose } from "@/components/starwind/dialog";
+
+import { sheetClose } from "./variants";
+
+type Props = ComponentProps<typeof DialogClose>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<DialogClose class={sheetClose({ class: className })} {...rest}>
+  <slot />
+</DialogClose>

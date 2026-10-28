@@ -1,0 +1,522 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+import { NativeSelect, NativeSelectOption } from "@/components/starwind/native-select";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/starwind/tabs";
+import type { TLang } from "@i18n/ui";
+import { getDonatePageStrings } from "@utils/donation-mocks";
+import { getIslamSuiteCopy } from "@utils/islam-suite-mocks";
+
+/**
+ * @component ZakatCalculatorSection
+ * @title Zakat al-Mal & Zakat al-Fitr Calculator Section
+ * @description Interactive tabbed calculator for annual Zakat al-Mal (2.5% above Gold/Silver Nisab threshold) and Ramadan Zakat al-Fitr, Fidyah, and Kaffarah in COP (`@vicacha-devs/strapi-plugin-islam`).
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `goldWeightGrams`: Gold Nisab weight in grams (typically `85`)
+ * - `goldNisabAmount`: Gold Nisab threshold in COP
+ * - `silverWeightGrams`: Silver Nisab weight in grams (typically `595`)
+ * - `silverNisabAmount`: Silver Nisab threshold in COP
+ * - `fitranaPerPersonCop`: optional Zakat al-Fitr rate per person in COP
+ * - `fidyahPerDayCop`: optional Fidyah rate per missed fast day in COP
+ * - `kaffarahFastCop`: optional Kaffarah rate in COP
+ *
+ * @preview
+ *
+ * <ZakatCalculatorSection
+ *   lang="es"
+ *   goldWeightGrams={85}
+ *   goldNisabAmount={29500000}
+ *   silverWeightGrams={595}
+ *   silverNisabAmount={2650000}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import ZakatCalculatorSection from "@components/data/display/Donations/ZakatCalculatorSection/ZakatCalculatorSection.astro";
+ * ---
+ *
+ * <ZakatCalculatorSection
+ *   lang="es"
+ *   goldWeightGrams={85}
+ *   goldNisabAmount={29500000}
+ *   silverWeightGrams={595}
+ *   silverNisabAmount={2650000}
+ * />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Gold Nisab standard weight in grams (85g).
+   */
+  goldWeightGrams: number;
+  /**
+   * Gold Nisab monetary threshold in COP.
+   */
+  goldNisabAmount: number;
+  /**
+   * Silver Nisab standard weight in grams (595g).
+   */
+  silverWeightGrams: number;
+  /**
+   * Silver Nisab monetary threshold in COP.
+   */
+  silverNisabAmount: number;
+  /**
+   * Zakat al-Fitr (Fitrana) amount per household member in COP.
+   */
+  fitranaPerPersonCop?: number;
+  /**
+   * Fidyah compensation per missed fast day in COP.
+   */
+  fidyahPerDayCop?: number;
+  /**
+   * Kaffarah expiation amount in COP.
+   */
+  kaffarahFastCop?: number;
+}
+
+const {
+  lang,
+  goldWeightGrams,
+  goldNisabAmount,
+  silverWeightGrams,
+  silverNisabAmount,
+  fitranaPerPersonCop = 25000,
+  fidyahPerDayCop = 20000,
+  kaffarahFastCop = 1200000,
+} = Astro.props;
+
+const t = getDonatePageStrings(lang);
+const islamCopy = getIslamSuiteCopy(lang);
+
+const formatCop = (value: number) =>
+  new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(value);
+---
+
+<section
+  class="
+    rounded-3xl border border-slate-200 bg-white p-8 shadow-sm
+    sm:p-12
+    dark:border-slate-800 dark:bg-slate-900
+  "
+  data-fiqh-calculators-section
+>
+  <div
+    class="
+      mb-8 flex flex-col justify-between gap-4 border-b border-slate-100 pb-6
+      md:flex-row md:items-center
+      dark:border-slate-800
+    "
+  >
+    <div>
+      <span class="text-xs font-bold tracking-wider text-primary uppercase">
+        {t.zakatBadge}
+      </span>
+      <h2 class="
+        mt-1 text-2xl font-extrabold text-slate-900
+        sm:text-3xl
+        dark:text-white
+      "
+      >
+        {t.zakatTitle}
+      </h2>
+    </div>
+    <div class="flex flex-wrap gap-3 text-xs font-semibold">
+      <Badge
+        variant="warning"
+        class="rounded-xl px-4 py-2 text-xs font-semibold"
+      >
+        {t.goldNisabLabel}
+        {" "}
+        (
+        {goldWeightGrams}
+        g):
+        {formatCop(goldNisabAmount)}
+      </Badge>
+      <Badge
+        variant="outline"
+        class="rounded-xl px-4 py-2 text-xs font-semibold"
+      >
+        {t.silverNisabLabel}
+        {" "}
+        (
+        {silverWeightGrams}
+        g):
+        {formatCop(silverNisabAmount)}
+      </Badge>
+    </div>
+  </div>
+
+  <Tabs defaultValue="zakat-mal" class="w-full">
+    <TabsList class="
+      mb-8 flex h-auto flex-wrap gap-2 rounded-2xl bg-slate-100 p-1.5
+      dark:bg-slate-800/80
+    "
+    >
+      <TabsTrigger
+        value="zakat-mal"
+        class="
+          rounded-xl px-5 py-2.5 text-xs font-bold
+          sm:text-sm
+        "
+      >
+        {islamCopy.zakatMalTabLabel}
+      </TabsTrigger>
+      <TabsTrigger
+        value="fitrana-fidyah"
+        class="
+          rounded-xl px-5 py-2.5 text-xs font-bold
+          sm:text-sm
+        "
+      >
+        {islamCopy.fitranaTabLabel}
+      </TabsTrigger>
+    </TabsList>
+
+    <!-- Tab 1: Zakat al-Mal (2.5% Wealth) -->
+    <TabsContent value="zakat-mal" class="mt-0">
+      <div
+        id="zakat-calculator"
+        data-gold-nisab={String(goldNisabAmount)}
+        data-silver-nisab={String(silverNisabAmount)}
+        data-below-text={t.belowNisabText}
+        data-above-text={t.aboveNisabText}
+        class="
+          grid grid-cols-1 gap-8
+          lg:grid-cols-2
+        "
+      >
+        <div class="space-y-4">
+          <div>
+            <Label
+              for="zakat-standard-select"
+              class="
+                mb-1.5 block text-sm font-bold text-slate-700
+                dark:text-slate-200
+              "
+            >
+              {t.standardSelectLabel}
+            </Label>
+            <NativeSelect
+              id="zakat-standard-select"
+              class="w-full rounded-xl"
+            >
+              <NativeSelectOption value="gold">
+                {t.goldOptionLabel}
+                {" "}
+                —
+                {formatCop(goldNisabAmount)}
+              </NativeSelectOption>
+              <NativeSelectOption value="silver">
+                {t.silverOptionLabel}
+                {" "}
+                —
+                {formatCop(silverNisabAmount)}
+              </NativeSelectOption>
+            </NativeSelect>
+          </div>
+
+          <div>
+            <Label
+              for="zakat-cash"
+              class="
+                mb-1.5 block text-sm font-semibold text-slate-700
+                dark:text-slate-300
+              "
+            >
+              {t.cashLabel}
+            </Label>
+            <Input
+              id="zakat-cash"
+              type="number"
+              min="0"
+              step="50000"
+              value="0"
+              class="rounded-xl"
+            />
+          </div>
+
+          <div>
+            <Label
+              for="zakat-investments"
+              class="
+                mb-1.5 block text-sm font-semibold text-slate-700
+                dark:text-slate-300
+              "
+            >
+              {t.investmentsLabel}
+            </Label>
+            <Input
+              id="zakat-investments"
+              type="number"
+              min="0"
+              step="50000"
+              value="0"
+              class="rounded-xl"
+            />
+          </div>
+
+          <div>
+            <Label
+              for="zakat-debts"
+              class="
+                mb-1.5 block text-sm font-semibold text-slate-700
+                dark:text-slate-300
+              "
+            >
+              {t.debtsLabel}
+            </Label>
+            <Input
+              id="zakat-debts"
+              type="number"
+              min="0"
+              step="50000"
+              value="0"
+              class="rounded-xl"
+            />
+          </div>
+        </div>
+
+        <div class="
+          flex flex-col justify-between rounded-2xl bg-secondary p-8 text-white
+        "
+        >
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-blue-100">
+              {t.summaryTitle}
+            </h3>
+            <div class="
+              flex justify-between border-b border-white/10 pb-3 text-sm
+            "
+            >
+              <span class="text-blue-100/80">{t.netWorthLabel}</span>
+              <span id="zakat-net-worth" class="font-bold">$ 0 COP</span>
+            </div>
+            <div class="
+              flex justify-between border-b border-white/10 pb-3 text-sm
+            "
+            >
+              <span class="text-blue-100/80">{t.nisabStatusLabel}</span>
+              <span id="zakat-status" class="font-bold text-amber-300">
+                {t.belowNisabText}
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-8 space-y-4">
+            <div class="rounded-xl bg-white/10 p-6 text-center">
+              <span class="
+                block text-xs font-bold tracking-wider text-blue-200 uppercase
+              "
+              >
+                {t.totalZakatDueLabel}
+              </span>
+              <span
+                id="zakat-due-amount"
+                data-raw-zakat="0"
+                class="
+                  mt-2 block text-3xl font-extrabold text-white
+                  sm:text-4xl
+                "
+              >
+                $ 0 COP
+              </span>
+            </div>
+
+            <Button
+              id="apply-zakat-to-form-btn"
+              type="button"
+              variant="primary"
+              class="
+                w-full cursor-pointer rounded-xl py-3 text-xs font-extrabold
+              "
+            >
+              {t.useZakatInFormBtn}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </TabsContent>
+
+    <!-- Tab 2: Zakat al-Fitr (Fitrana), Fidyah & Kaffarah -->
+    <TabsContent value="fitrana-fidyah" class="mt-0">
+      <div
+        id="fitrana-fidyah-calculator"
+        data-fitrana-rate={String(fitranaPerPersonCop)}
+        data-fidyah-rate={String(fidyahPerDayCop)}
+        data-kaffarah-rate={String(kaffarahFastCop)}
+        class="
+          grid grid-cols-1 gap-8
+          lg:grid-cols-2
+        "
+      >
+        <div class="space-y-4">
+          <div>
+            <Label
+              for="fitrana-members"
+              class="
+                mb-1.5 block text-sm font-semibold text-slate-700
+                dark:text-slate-300
+              "
+            >
+              {islamCopy.fitranaMembersLabel}
+            </Label>
+            <Input
+              id="fitrana-members"
+              type="number"
+              min="0"
+              step="1"
+              value="1"
+              class="rounded-xl"
+            />
+            <p class="
+              mt-1 text-xs text-slate-500
+              dark:text-slate-400
+            "
+            >
+              {islamCopy.fitranaPerPersonNote}
+            </p>
+          </div>
+
+          <div>
+            <Label
+              for="fidyah-days"
+              class="
+                mb-1.5 block text-sm font-semibold text-slate-700
+                dark:text-slate-300
+              "
+            >
+              {islamCopy.fidyahDaysLabel}
+            </Label>
+            <Input
+              id="fidyah-days"
+              type="number"
+              min="0"
+              step="1"
+              value="0"
+              class="rounded-xl"
+            />
+            <p class="
+              mt-1 text-xs text-slate-500
+              dark:text-slate-400
+            "
+            >
+              {islamCopy.fidyahPerDayNote}
+            </p>
+          </div>
+
+          <div>
+            <Label
+              for="kaffarah-count"
+              class="
+                mb-1.5 block text-sm font-semibold text-slate-700
+                dark:text-slate-300
+              "
+            >
+              {islamCopy.kaffarahFastLabel}
+            </Label>
+            <Input
+              id="kaffarah-count"
+              type="number"
+              min="0"
+              step="1"
+              value="0"
+              class="rounded-xl"
+            />
+          </div>
+        </div>
+
+        <div class="
+          flex flex-col justify-between rounded-2xl bg-secondary p-8 text-white
+        "
+        >
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-blue-100">
+              {islamCopy.fitranaTabLabel}
+            </h3>
+            <div class="
+              flex justify-between border-b border-white/10 pb-3 text-sm
+            "
+            >
+              <span class="text-blue-100/80">Zakat al-Fitr (Fitrana)</span>
+              <span id="fitrana-subtotal" class="font-bold">
+                {formatCop(fitranaPerPersonCop)}
+                {" "}
+                COP
+              </span>
+            </div>
+            <div class="
+              flex justify-between border-b border-white/10 pb-3 text-sm
+            "
+            >
+              <span class="text-blue-100/80">Fidyah & Kaffarah</span>
+              <span id="fidyah-kaffarah-subtotal" class="font-bold">
+                $ 0 COP
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-8 space-y-4">
+            <div class="rounded-xl bg-white/10 p-6 text-center">
+              <span class="
+                block text-xs font-bold tracking-wider text-blue-200 uppercase
+              "
+              >
+                {islamCopy.totalFitranaFidyahDueLabel}
+              </span>
+              <span
+                id="fitrana-total-due"
+                data-raw-fitrana={String(fitranaPerPersonCop)}
+                class="
+                  mt-2 block text-3xl font-extrabold text-white
+                  sm:text-4xl
+                "
+              >
+                {formatCop(fitranaPerPersonCop)}
+                {" "}
+                COP
+              </span>
+            </div>
+
+            <Button
+              id="apply-fitrana-to-form-btn"
+              type="button"
+              variant="primary"
+              class="
+                w-full cursor-pointer rounded-xl py-3 text-xs font-extrabold
+              "
+            >
+              {islamCopy.useFitranaInFormBtn}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </TabsContent>
+  </Tabs>
+</section>
+
+<script>
+  import { initZakatCalculator } from "./zakat-calculator.controller";
+
+  initZakatCalculator();
+  document.addEventListener("astro:after-swap", initZakatCalculator);
+</script>

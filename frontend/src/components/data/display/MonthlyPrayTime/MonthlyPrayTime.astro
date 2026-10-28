@@ -1,5 +1,11 @@
 ---
-import Icon from "@components/data/display/Icons/Icon.astro";
+import { Button } from "@/components/starwind/button";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "@/components/starwind/dropdown";
 import {
   Table,
   TableBody,
@@ -7,7 +13,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/layout/Table";
+} from "@/components/starwind/table";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import type { TDailyPrayerSchedule } from "@utils/models/types";
 import {
@@ -18,15 +26,9 @@ import {
   buildMonthHref,
 } from "@utils/time.utils";
 import { cn } from "@utils/styles.utils";
-import Button from "@components/actions/Button/Button.astro";
 import DownloadPDF from "@components/actions/DownloadPDF/DownloadPDF.astro";
-import {
-  Dropdown,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
-} from "@components/actions/Dropdown";
 import { BOGOTA_LOCATION, getClientLocation } from "@utils/location.utils";
+import { getIslamSuiteCopy } from "@utils/islam-suite-mocks";
 import type { TIslamicApiDateYm } from "@utils/models/islamic";
 import { getLiveCollection } from "astro:content";
 
@@ -95,31 +97,11 @@ const PRAYER_HIGHLIGHTS: Partial<Record<keyof TDailyPrayerSchedule, string>> = {
  * ```
  */
 
-type MonthlyRow = {
-  /**
-   * Gregorian date for the row, e.g. `"2024-03-01"`.
-   */
-  currentDate: string;
-  /**
-   * Hijri (Islamic) date label for the row.
-   */
-  hijriDate: string;
-  /**
-   * Prayer times for the day.
-   */
-  times: TDailyPrayerSchedule;
-  /**
-   * Whether this row represents the current day.
-   * @default false
-   */
-  isToday?: boolean;
-  /**
-   * Prayer key whose time is currently active for this row.
-   */
-  activePray?: keyof TDailyPrayerSchedule;
-};
-
 interface Props {
+  /**
+   * Optional language override. Falls back to Referer/URL locale.
+   */
+  lang?: TLang;
   /**
    * Optional title override.
    * @default t("pray-calendar.title")
@@ -151,6 +133,7 @@ interface Props {
 }
 
 const {
+  lang: langProp,
   title,
   description: descriptionProp,
   dateHeaderLabel,
@@ -171,7 +154,7 @@ const requestedYm: TIslamicApiDateYm | null
 
 const selectedYm = requestedYm ?? formatYm(new Date(), timeZone);
 
-const lang = getLangFromUrl(url);
+const lang = langProp ?? getLangFromUrl(url);
 const t = useTranslations(lang);
 
 const live = await getLiveCollection("prayerTimes", {
@@ -287,8 +270,7 @@ const getCellClasses = (
         <Dropdown>
           <DropdownTrigger asChild>
             <Button
-              color="secondary"
-              variant="soft"
+              variant="secondary"
               aria-label={t("actions.filter-month")}
             >
               <Icon name="filter_list" />
@@ -320,9 +302,17 @@ const getCellClasses = (
             }
           </DropdownContent>
         </Dropdown>
+        <Button
+          href={`/api/prayer-calendar.ics?ym=${encodeURIComponent(selectedYm)}&lang=${encodeURIComponent(lang)}`}
+          variant="outline"
+          aria-label={getIslamSuiteCopy(lang).downloadIcsLabel}
+        >
+          <Icon name="calendar_add_on" />
+          <span>{getIslamSuiteCopy(lang).downloadIcsLabel}</span>
+        </Button>
         <DownloadPDF
           documentTitle={`calendar-prayer-${monthLabel}`}
-          label={{
+          labels={{
             aria: t("download.download-pdf"),
             button: t("download.download-pdf"),
             loading: t("download.preparing"),
@@ -333,7 +323,7 @@ const getCellClasses = (
     </header>
 
     <div class="overflow-x-auto" data-monthly-table-clip>
-      <Table class="w-full border-collapse text-left">
+      <Table class="w-full border-collapse text-start">
         <TableHeader
           class="
             bg-secondary/80 text-xs font-bold tracking-widest uppercase
@@ -345,8 +335,8 @@ const getCellClasses = (
             <TableHead
               scope="col"
               class="
-                px-8 py-4 text-left text-xs font-bold tracking-widest text-white
-                uppercase
+                px-8 py-4 text-start text-xs font-bold tracking-widest
+                text-white uppercase
               "
             >
               {resolved.dateHeader}
@@ -406,7 +396,7 @@ const getCellClasses = (
                     {row.isToday && (
                       <span
                         class="
-                          ml-2 inline-flex items-center rounded-full
+                          ms-2 inline-flex items-center rounded-full
                           bg-secondary px-2 py-0.5 text-[10px] font-bold
                           tracking-widest text-white uppercase
                           dark:bg-primary
@@ -439,11 +429,9 @@ const getCellClasses = (
     </div>
 
     <Button
-      variant="soft"
-      color="secondary"
+      variant="secondary"
       size="lg"
-      fullWidth
-      class="rounded-t-none"
+      class="w-full rounded-t-none"
       aria-expanded="false"
       aria-controls="full-month-table"
       data-action="show-more"
@@ -455,36 +443,6 @@ const getCellClasses = (
 </section>
 
 <style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   [data-action="show-more"] [data-monthly-toggle-less] {
     display: none;
   }
@@ -517,49 +475,9 @@ const getCellClasses = (
       transition: none;
     }
   }
-
-
-
-
-
-
-
-
-
-
 </style>
 
 <script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   import { initMonthlyPrayTimes } from "./monthly-pray-time.controller";
 
   // This component is rendered as a server island (`server:defer`), so its
@@ -572,54 +490,4 @@ const getCellClasses = (
     initMonthlyPrayTimes();
   }
   document.addEventListener("astro:after-swap", initMonthlyPrayTimes);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>

@@ -89,14 +89,36 @@ describe("positioning.utils", () => {
   });
 
   describe("getTransformOrigin", () => {
-    it("should map to the nearest edge when the placement is vertical", () => {
+    it("should map to the nearest edge when the placement is vertical or horizontal", () => {
       expect(getTransformOrigin("bottom", "start")).toBe("left top");
+      expect(getTransformOrigin("bottom", "center")).toBe("center top");
       expect(getTransformOrigin("top", "end")).toBe("right bottom");
+      expect(getTransformOrigin("right", "center")).toBe("left center");
+      expect(getTransformOrigin("right", "end")).toBe("left bottom");
+      expect(getTransformOrigin("left", "start")).toBe("right top");
     });
 
-    it("should map to the nearest edge when the placement is horizontal", () => {
-      expect(getTransformOrigin("right", "center")).toBe("left center");
-      expect(getTransformOrigin("left", "start")).toBe("right top");
+    it("should evaluate left, right, top, center, and end candidates when resolving placement", () => {
+      const triggerRect = makeRect({
+        top: 100,
+        left: 100,
+        width: 100,
+        height: 20,
+      });
+
+      expect(triggerRect.toJSON()).toEqual({});
+
+      for (const side of ["top", "bottom", "left", "right"] as const) {
+        for (const align of ["start", "center", "end"] as const) {
+          const res = resolvePlacement({
+            ...baseOptions,
+            side,
+            align,
+            triggerRect,
+          });
+          expect(res.top).toBeGreaterThanOrEqual(0);
+        }
+      }
     });
   });
 });

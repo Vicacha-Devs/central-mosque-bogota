@@ -1,0 +1,453 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Checkbox } from "@/components/starwind/checkbox";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+import { NativeSelect, NativeSelectOption } from "@/components/starwind/native-select";
+import type { TLang } from "@i18n/ui";
+import {
+  getDonatePageStrings,
+  getLocalizedUtilityInvoices,
+  type UtilityInvoiceMock,
+} from "@utils/donation-mocks";
+
+/**
+ * @component DonationSubmissionForm
+ * @title Donation & DIAN Tax Certificate Submission Form
+ * @description Renders the verified donation pledge and payment report form (`POST /api/donate`) with support for major campaigns, specific utility invoice sponsorship, and Colombian DIAN tax deduction certificates.
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `invoices`: optional list of utility invoices (`UtilityInvoiceMock[]`)
+ * - `campaigns`: optional list of major donation campaigns
+ *
+ * @preview
+ *
+ * <DonationSubmissionForm lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import DonationSubmissionForm from "@components/actions/DonationSubmissionForm/DonationSubmissionForm.astro";
+ * ---
+ *
+ * <DonationSubmissionForm lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Optional list of utility bills selectable in the form.
+   */
+  invoices?: UtilityInvoiceMock[];
+  /**
+   * Optional list of major fundraising campaigns selectable in the form.
+   */
+  campaigns?: Array<{ slug?: string; title: string }>;
+}
+
+const { lang, invoices, campaigns = [] } = Astro.props;
+const t = getDonatePageStrings(lang);
+const invoiceItems
+  = invoices && invoices.length > 0
+    ? invoices
+    : getLocalizedUtilityInvoices(lang);
+---
+
+<section
+  id="donation-form-section"
+  class="
+    rounded-3xl border border-slate-200 bg-white p-8 shadow-sm
+    sm:p-12
+    dark:border-slate-800 dark:bg-slate-900
+  "
+>
+  <div class="mx-auto max-w-3xl">
+    <div class="mb-8 text-center">
+      <span class="text-xs font-bold tracking-wider text-primary uppercase">
+        {t.formBadge}
+      </span>
+      <h2 class="
+        mt-1 text-2xl font-extrabold text-slate-900
+        sm:text-3xl
+        dark:text-white
+      "
+      >
+        {t.formTitle}
+      </h2>
+      <p class="
+        mt-2 text-sm text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {t.formSub}
+      </p>
+    </div>
+
+    <div
+      id="selected-invoice-banner"
+      class="
+        mb-6 hidden items-center justify-between gap-4 rounded-2xl border
+        border-emerald-300 bg-emerald-50 px-5 py-3.5 text-sm font-semibold
+        text-emerald-950
+        dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-200
+      "
+    >
+      <div>
+        <span class="text-xs font-bold uppercase opacity-75">{t.selectedTargetBanner}</span>
+        <p id="selected-invoice-title" class="font-extrabold"></p>
+      </div>
+      <Button
+        id="clear-selected-invoice"
+        type="button"
+        variant="outline"
+        size="sm"
+        class="rounded-lg text-xs font-bold"
+      >
+        {t.clearTargetBtn}
+      </Button>
+    </div>
+
+    <form
+      id="donation-form"
+      data-locale={lang}
+      data-submitting-text={t.submittingText}
+      data-success-text={t.successText}
+      data-error-text={t.errorText}
+      class="space-y-5"
+    >
+      <div class="hidden" aria-hidden="true">
+        <label for="donation-website">Website</label>
+        <input
+          id="donation-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <input id="donation-campaign-kind" name="campaignKind" type="hidden" value="major_campaign" />
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        <div>
+          <Label
+            for="donor-name"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.nameLabel}
+          </Label>
+          <Input
+            id="donor-name"
+            name="donorName"
+            type="text"
+            required
+            maxlength={140}
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="donor-email"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.emailLabel}
+          </Label>
+          <Input
+            id="donor-email"
+            name="donorEmail"
+            type="email"
+            required
+            maxlength={160}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-3
+      "
+      >
+        <div>
+          <Label
+            for="donor-doc-type"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.docTypeLabel}
+          </Label>
+          <NativeSelect
+            id="donor-doc-type"
+            name="documentType"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="CC">CC (Cédula)</NativeSelectOption>
+            <NativeSelectOption value="NIT">NIT</NativeSelectOption>
+            <NativeSelectOption value="CE">CE</NativeSelectOption>
+            <NativeSelectOption value="PASSPORT">Passport</NativeSelectOption>
+            <NativeSelectOption value="OTHER">Other</NativeSelectOption>
+          </NativeSelect>
+        </div>
+        <div>
+          <Label
+            for="donor-doc-number"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.docNumberLabel}
+          </Label>
+          <Input
+            id="donor-doc-number"
+            name="documentNumber"
+            type="text"
+            maxlength={40}
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="donor-phone"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.phoneLabel}
+          </Label>
+          <Input
+            id="donor-phone"
+            name="donorPhone"
+            type="tel"
+            maxlength={40}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-3
+      "
+      >
+        <div>
+          <Label
+            for="donation-amount"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.amountLabel}
+          </Label>
+          <Input
+            id="donation-amount"
+            name="amount"
+            type="number"
+            min="1"
+            step="any"
+            required
+            class="rounded-xl"
+          />
+        </div>
+        <div>
+          <Label
+            for="donation-currency"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.currencyLabel}
+          </Label>
+          <NativeSelect
+            id="donation-currency"
+            name="currency"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="COP">COP ($)</NativeSelectOption>
+            <NativeSelectOption value="USD">USD ($)</NativeSelectOption>
+            <NativeSelectOption value="EUR">EUR (€)</NativeSelectOption>
+            <NativeSelectOption value="TRY">TRY (₺)</NativeSelectOption>
+          </NativeSelect>
+        </div>
+        <div>
+          <Label
+            for="donation-type"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.typeLabel}
+          </Label>
+          <NativeSelect
+            id="donation-type"
+            name="donationType"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="utility_bills">
+              Facturas / Mosque Utility Bills (Luz, Gas, Internet, Agua)
+            </NativeSelectOption>
+            <NativeSelectOption value="zakat">Zakat Al-Mal (2.5%)</NativeSelectOption>
+            <NativeSelectOption value="sadaqah">Sadaqah (Caridad / Charity)</NativeSelectOption>
+            <NativeSelectOption value="waqf">Waqf (Sostenimiento / Endowment)</NativeSelectOption>
+            <NativeSelectOption value="iftar">Iftar Comunitario</NativeSelectOption>
+            <NativeSelectOption value="general">Fondo General / General</NativeSelectOption>
+          </NativeSelect>
+        </div>
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-3
+      "
+      >
+        <div>
+          <Label
+            for="donation-campaign-slug"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.targetInvoiceLabel}
+          </Label>
+          <NativeSelect
+            id="donation-campaign-slug"
+            name="campaignSlug"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="">{t.noSpecificTargetOption}</NativeSelectOption>
+            {
+              invoiceItems.map((inv) => (
+                <NativeSelectOption value={inv.slug}>
+                  [Factura]
+                  {" "}
+                  {inv.title}
+                  {" "}
+                  (
+                  {inv.billingPeriod}
+                  )
+                </NativeSelectOption>
+              ))
+            }
+            {
+              campaigns.map((camp) => (
+                <NativeSelectOption value={camp.slug || camp.title}>
+                  [Campaña]
+                  {" "}
+                  {camp.title}
+                </NativeSelectOption>
+              ))
+            }
+          </NativeSelect>
+        </div>
+        <div>
+          <Label
+            for="donation-method"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.methodLabel}
+          </Label>
+          <NativeSelect
+            id="donation-method"
+            name="paymentMethodUsed"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="bancolombia">Bancolombia</NativeSelectOption>
+            <NativeSelectOption value="nequi">Nequi</NativeSelectOption>
+            <NativeSelectOption value="daviplata">Daviplata</NativeSelectOption>
+            <NativeSelectOption value="wompi">Wompi / PSE / Tarjetas</NativeSelectOption>
+            <NativeSelectOption value="paypal">PayPal / Internacional</NativeSelectOption>
+            <NativeSelectOption value="other">Otro / Other</NativeSelectOption>
+          </NativeSelect>
+        </div>
+        <div>
+          <Label
+            for="donation-ref"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {t.refLabel}
+          </Label>
+          <Input
+            id="donation-ref"
+            name="transactionReference"
+            type="text"
+            maxlength={120}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div class="
+        space-y-3 rounded-xl bg-slate-50 p-4
+        dark:bg-slate-800/60
+      "
+      >
+        <Checkbox
+          id="donation-covers-remaining"
+          name="coversRemainingBalance"
+          variant="secondary"
+          label={t.coversRemainingCheck}
+        />
+
+        <Checkbox
+          id="donation-tax-cert"
+          name="requestsTaxCertificate"
+          variant="secondary"
+          checked
+          label={t.taxCertCheck}
+        />
+      </div>
+
+      <p
+        id="donation-status"
+        role="status"
+        class="hidden rounded-xl px-4 py-2.5 text-sm font-semibold"
+      >
+      </p>
+
+      <Button
+        type="submit"
+        variant="primary"
+        class="w-full cursor-pointer rounded-xl py-3.5 text-sm font-bold"
+      >
+        {t.submitBtn}
+      </Button>
+    </form>
+  </div>
+</section>
+
+<script>
+  import {
+    initDonationSubmissionForm,
+  } from "./donation-submission-form.controller";
+
+  initDonationSubmissionForm();
+  document.addEventListener("astro:after-swap", initDonationSubmissionForm);
+</script>

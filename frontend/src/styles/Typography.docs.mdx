@@ -1,0 +1,131 @@
+import { Meta, Typeset } from "@storybook/addon-docs/blocks";
+
+<Meta title="Typography" />
+
+export const DISPLAY =
+  '"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+
+export const SANS =
+  '"Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+
+export const SAMPLE = "Mezquita Central";
+
+export const SAMPLE_BODY =
+  "Bienvenidos a la comunidad. Las puertas están abiertas para todos.";
+
+export const SAMPLE_AR = "المسجد المركزي أبو بكر الصديق";
+
+# Typography
+
+The site uses two text families and one icon font, all registered in
+[`astro.config.ts`](https://github.com/Vicacha-Devs/central-mosque-bogota/blob/main/frontend/astro.config.ts)
+through the Astro Fonts API (Fontsource provider).
+
+| Role    | Family                    | CSS variable     | Tailwind class | Weights                    |
+| :------ | :------------------------ | :--------------- | :------------- | :------------------------- |
+| Display | Plus Jakarta Sans         | `--font-display` | `font-display` | 400, 500, 600, 700, 800    |
+| Sans    | Public Sans               | `--font-sans`    | `font-sans`    | Fontsource defaults        |
+| Symbols | Material Symbols Outlined | `--font-symbols` | n/a            | Variable (see Iconography) |
+
+`font-display` is applied to `<body>` in `Layout.astro`, so it is the default for all
+text. Use `font-sans` only where Public Sans is wanted explicitly.
+
+## Display: Plus Jakarta Sans
+
+Headings, navigation, buttons and body copy.
+
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={800}
+  fontSizes={[60, 48, 36, 30]}
+  sampleText={SAMPLE}
+/>
+
+### Weights
+
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={400}
+  fontSizes={[24]}
+  sampleText={`400 · ${SAMPLE}`}
+/>
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={500}
+  fontSizes={[24]}
+  sampleText={`500 · ${SAMPLE}`}
+/>
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={600}
+  fontSizes={[24]}
+  sampleText={`600 · ${SAMPLE}`}
+/>
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={700}
+  fontSizes={[24]}
+  sampleText={`700 · ${SAMPLE}`}
+/>
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={800}
+  fontSizes={[24]}
+  sampleText={`800 · ${SAMPLE}`}
+/>
+
+## Body sizes
+
+Tailwind's default type scale, shown at the regular weight.
+
+| Class       | Size (px) |
+| :---------- | :-------- |
+| `text-xs`   | 12        |
+| `text-sm`   | 14        |
+| `text-base` | 16        |
+| `text-lg`   | 18        |
+| `text-xl`   | 20        |
+| `text-2xl`  | 24        |
+| `text-3xl`  | 30        |
+| `text-4xl`  | 36        |
+| `text-5xl`  | 48        |
+| `text-6xl`  | 60        |
+
+<Typeset
+  fontFamily={DISPLAY}
+  fontWeight={400}
+  fontSizes={[12, 14, 16, 18, 20, 24, 30, 36]}
+  sampleText={SAMPLE_BODY}
+/>
+
+## Sans: Public Sans
+
+<Typeset
+  fontFamily={SANS}
+  fontWeight={400}
+  fontSizes={[14, 16, 20, 24]}
+  sampleText={SAMPLE_BODY}
+/>
+
+## Arabic (RTL)
+
+The Arabic locale renders right to left. Use logical utilities (`text-start`, `ps-*`,
+`ms-*`) so layouts mirror automatically, and check Arabic copy on real pages: it falls
+back to the platform font when the web font has no matching glyphs.
+
+<div dir="rtl" lang="ar">
+  <Typeset
+    fontFamily={DISPLAY}
+    fontWeight={700}
+    fontSizes={[24, 36]}
+    sampleText={SAMPLE_AR}
+  />
+</div>
+
+## Guidelines
+
+- Prefer the Tailwind scale (`text-base`, `text-xl`, …). Avoid arbitrary pixel sizes.
+- Keep body copy at `text-base` or larger, with `leading-relaxed` for long paragraphs.
+- Use weight, not extra sizes, for hierarchy inside a component: `font-medium` for
+  labels, `font-semibold` for headings, `font-extrabold` only for hero titles.
+- Cap long-form line length near 65 characters (the `Prose` component already does).

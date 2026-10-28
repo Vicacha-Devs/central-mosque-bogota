@@ -1,6 +1,8 @@
 ---
-import Button from "@components/actions/Button/Button.astro";
+import { Button } from "@/components/starwind/button";
+import { Progress } from "@/components/starwind/progress";
 import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { calculateProgress } from "@utils/maths.utils";
 import { Image } from "astro:assets";
@@ -53,6 +55,10 @@ import { Image } from "astro:assets";
  */
 interface Props {
   /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
    * Project title used in the progress label (prefixed with `donations.project`).
    */
   title: string;
@@ -82,10 +88,18 @@ interface Props {
   imageAlt: string;
 }
 
-const { title, description, goal, raised, ctaHref, imageUrl, imageAlt }
-  = Astro.props as Props;
+const {
+  lang: langProp,
+  title,
+  description,
+  goal,
+  raised,
+  ctaHref,
+  imageUrl,
+  imageAlt,
+} = Astro.props as Props;
 
-const lang = getLangFromUrl(Astro.url);
+const lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const goalLabel = `${t("donations.goal")} ${goal} • ${t("donations.raised")} ${raised}`;
@@ -119,30 +133,20 @@ const progress = calculateProgress(goal, raised);
               %
             </span>
           </div>
-          <progress
-            class="
-              h-3 w-full overflow-hidden rounded-full bg-white/20
-              [&::-moz-progress-bar]:bg-primary
-              [&::-webkit-progress-bar]:rounded-full
-              [&::-webkit-progress-bar]:bg-white/20
-              [&::-webkit-progress-value]:rounded-full
-              [&::-webkit-progress-value]:bg-primary
-            "
+          <Progress
             value={progress}
-            max="100"
+            max={100}
+            variant="primary"
             aria-label={projectLabel}
-          >
-            {progress}
-            %
-          </progress>
+            class="h-3 bg-white/20"
+          />
         </div>
         <p class="text-xs text-white/70">{goalLabel}</p>
       </div>
 
       <Button
         href={ctaHref}
-        as="a"
-        size="xl"
+        size="lg"
         class="
           gap-3 rounded-xl bg-white text-secondary
           hover:bg-slate-100
