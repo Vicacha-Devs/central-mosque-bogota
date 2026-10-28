@@ -1,0 +1,25 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "../frontend/src/i18n/ui.ts",
+    "../frontend/src/i18n/utils.ts",
+    "../frontend/src/utils/islamic.utils.ts",
+    "../frontend/src/utils/location.utils.ts",
+    "../frontend/src/utils/maths.utils.ts",
+    "../frontend/src/utils/positioning.utils.ts",
+    "../frontend/src/utils/string.utils.ts",
+    "../frontend/src/utils/styles.utils.ts",
+    "../frontend/src/utils/time.utils.ts",
+    "../frontend/src/services/strapi/tiptap-sanitizer.ts"
+  ],
+  "tsconfig": "../frontend/tsconfig.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "out": "./.typedoc-out",
+  "readme": "none",
+  "skipErrorChecking": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "hidePageHeader": true,
+  "hideBreadcrumbs": true,
+  "outputFileStrategy": "modules"
+}
