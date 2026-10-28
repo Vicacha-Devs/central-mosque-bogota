@@ -140,7 +140,13 @@ const clampedValue = Math.min(100, Math.max(0, rawValue));
             {resolvedBeforeAlt}
           </figcaption>
         </figure>
-        <figure slot="second" class="relative m-0 h-full">
+        {/* `.second` stays in normal flow inside the slider, so it needs its own
+            definite height instead of `h-full` */}
+        <figure
+          slot="second"
+          class="relative m-0 w-full"
+          style={`aspect-ratio: ${resolvedAspectRatio}`}
+        >
           <img
             src={safeAfterUrl}
             alt={resolvedAfterAlt}

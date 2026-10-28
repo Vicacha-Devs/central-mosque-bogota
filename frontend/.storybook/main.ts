@@ -30,6 +30,9 @@ export default defineMain({
   framework: {
     name: "@storybook-astro/framework",
   },
+  core: {
+    disableTelemetry: true,
+  },
   viteFinal: (config) => {
     config.optimizeDeps ??= {};
     config.optimizeDeps.include = [

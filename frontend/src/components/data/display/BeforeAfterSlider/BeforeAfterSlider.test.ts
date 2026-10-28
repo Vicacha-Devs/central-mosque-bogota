@@ -64,6 +64,9 @@ describe("BeforeAfterSlider", () => {
     try {
       const style = (r: HTMLElement): string | null => r.querySelector("img-comparison-slider")?.getAttribute("style") ?? null;
       expect(style(custom.root)).toBe("aspect-ratio: 4 / 3");
+      expect(custom.root
+        .querySelector("figure[slot=\"second\"]")
+        ?.getAttribute("style")).toBe("aspect-ratio: 4 / 3");
       expect(style(invalid.root)).toBe("aspect-ratio: 16 / 9");
     } finally {
       await custom.close();

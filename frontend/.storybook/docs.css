@@ -1,0 +1,81 @@
+/*
+ * Storybook code blocks are always dark. The preview <body> carries the site's
+ * text color (see BODY_CLASSES in preview.ts), so pin a light default here:
+ * without it any code the highlighter leaves unstyled inherits a dark text color
+ * and disappears into the block background.
+ */
+pre.prismjs {
+  color: #ededed;
+}
+
+/*
+ * Docs pages follow the dark theme. The docs theme is the light website theme
+ * (see preview.ts), so in dark mode the docs wrapper, tables, color swatches and
+ * type samples keep dark text on a dark page. Text inside them inherits the
+ * themed color instead. Story output (.docs-story) and code blocks keep their own
+ * colors.
+ */
+[data-theme="dark"] .sbdocs.sbdocs-wrapper,
+[data-theme="dark"] .docs-story {
+  background-color: var(--background, #0f172a);
+  color: var(--foreground, #fafafa);
+}
+
+[data-theme="dark"] .sbdocs-preview {
+  background-color: var(--card, #1e293b);
+  border-color: var(--border, #1e293b);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .sbdocs-preview > :first-child:not(.docs-story) {
+  background-color: var(--card, #1e293b);
+  border-color: var(--border, #1e293b);
+}
+
+[data-theme="dark"] .sbdocs :not(.docs-story, .docs-story *, pre, pre *) {
+  color: inherit;
+}
+
+/* Storybook's table cells set their own white background; match its selector depth. */
+[data-theme="dark"] .sbdocs .docblock-argstable,
+[data-theme="dark"]
+  .sbdocs
+  .docblock-argstable
+  :is(thead, tbody)
+  :is(tr, th, td) {
+  background-color: transparent;
+  border-color: var(--border, #1e293b);
+}
+
+[data-theme="dark"] .sbdocs :not(pre) > code {
+  background-color: var(--muted, #262626);
+  border-color: var(--border, #1e293b);
+}
+
+[data-theme="dark"] .sbdocs :is(input, textarea, select) {
+  background-color: var(--input, #334155);
+  border-color: var(--border, #1e293b);
+}
+
+/* The docs theme uses the brand navy for links, which disappears on dark. */
+[data-theme="dark"] .sbdocs a:not(.docs-story a),
+[data-theme="dark"] .toc-wrapper .toc-link.is-active-link {
+  color: var(--secondary-accent, #93c5fd);
+}
+
+[data-theme="dark"] .toc-wrapper .toc-link:not(.is-active-link) {
+  color: var(--muted-foreground, #a1a1a1);
+}
+
+/* Typeset samples and Markdown tables set their own light backgrounds. */
+[data-theme="dark"] .sbdocs .docblock-typeset {
+  background-color: var(--card, #1e293b);
+}
+
+[data-theme="dark"] .sbdocs table:not(.docblock-argstable) tr {
+  background-color: transparent;
+}
+
+[data-theme="dark"] .sbdocs table:not(.docblock-argstable) tr:nth-of-type(2n) {
+  background-color: var(--muted, #262626);
+}

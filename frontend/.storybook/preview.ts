@@ -14,8 +14,10 @@ import { addons } from "storybook/preview-api";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
 
 import { CUSTOM_VIEW_PORTS } from "./constants";
+import { websiteThemeLight } from "./theme";
 
 import "@/styles/global.css";
+import "./docs.css";
 
 const REGISTER_THEMES_EVENT = "storybook/themes/REGISTER_THEMES";
 
@@ -91,6 +93,8 @@ export default definePreview({
     }),
   ],
   parameters: {
+    // The theme toggle owns the canvas color; a second background switch only conflicts with it.
+    backgrounds: { disable: true },
     controls: {
       expanded: true,
       matchers: {
@@ -99,6 +103,7 @@ export default definePreview({
       },
     },
     docs: {
+      theme: websiteThemeLight,
       codePanel: true,
       toc: true,
       source: {
