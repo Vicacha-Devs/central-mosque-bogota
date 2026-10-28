@@ -1,0 +1,142 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donation_campaigns",
+  "info": {
+    "singularName": "donation-campaign",
+    "pluralName": "donation-campaigns",
+    "displayName": "Donation Campaign & Mosque Invoice",
+    "description": "Waqf, Zakat, Sadaqah, Mosque infrastructure campaigns, and monthly operational utility invoices (electricity, gas, internet, water)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "campaignKind": {
+      "type": "enumeration",
+      "enum": ["major_campaign", "utility_invoice", "micro_need"],
+      "default": "major_campaign",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["zakat", "sadaqah", "waqf", "iftar", "utility_bills", "general"],
+      "default": "sadaqah",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "goalAmount": {
+      "type": "decimal",
+      "required": true,
+      "default": 50000,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "raisedAmount": {
+      "type": "decimal",
+      "required": true,
+      "default": 32450,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": ["COP", "USD", "EUR", "TRY"],
+      "default": "COP",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "donorCount": {
+      "type": "integer",
+      "default": 0,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "dueDate": {
+      "type": "date",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "billingPeriod": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "invoiceReference": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "invoiceProvider": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "invoiceStatus": {
+      "type": "enumeration",
+      "enum": ["open", "partially_funded", "paid", "overdue"],
+      "default": "open",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "suggestedAmounts": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "allowCustomAmount": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "allowFullBalancePayoff": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "icon": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "ctaLabel": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "ctaHref": {
+      "type": "string",
+      "default": "/es/donate",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "imageUrl": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    }
+  }
+}
