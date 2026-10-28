@@ -34,6 +34,7 @@ flowchart LR
 - `function getRouteFromUrl(url: URL): string | undefined`
 - `function useTranslatedPath(lang: TLang): unknown`
 - `function isSupportedLang(value: string | undefined): value is TLang`
+- `function buildAlternateLangHref(url: URL, targetLang: TLang, currentLang: TLang = getLangFromUrl(url)): string`
 
 ### `src/utils/islamic.utils.ts`
 
@@ -56,7 +57,7 @@ flowchart LR
 
 - `type ResolvePlacementOptions`
 - `type ResolvePlacementResult`
-- `function resolvePlacement(options: ResolvePlacementOptions): ResolvePlacementResult`
+- `function resolvePlacement(options: TPlacementOpts): TPlacementRes`
 - `function getTransformOrigin(side: TDropdownPosition, align: TDropdownAlign): string`
 
 ### `src/utils/string.utils.ts`
@@ -82,6 +83,11 @@ flowchart LR
 - `const getMonthAnchorDate`
 - `const buildMonthLabel`
 - `const buildMonthHref`
+
+### `src/services/strapi/tiptap-sanitizer.ts`
+
+- `type TTiptapRichContent`
+- `function sanitizeTiptapHtml(input: TTiptapRichContent): string`
 
 ### `src/services/islamicAPI/api.ts`
 
