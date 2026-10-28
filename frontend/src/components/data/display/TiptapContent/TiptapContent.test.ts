@@ -22,9 +22,7 @@ describe("TiptapContent (astro-tiptap-blocks integration)", () => {
       });
       expect(heading).toBeInTheDocument();
 
-      expect(
-        root.querySelector("[data-slot=\u0022prose\u0022]")
-      ).toBeInTheDocument();
+      expect(root.querySelector("[data-slot=\u0022prose\u0022]")).toBeInTheDocument();
 
       const strongText = getByText(root, "comunidad musulmana");
       expect(strongText).toHaveClass("font-bold");
@@ -71,12 +69,39 @@ describe("TiptapContent (astro-tiptap-blocks integration)", () => {
     });
 
     try {
-      expect(
-        getByRole(root, "heading", { level: 3, name: "Servicios Comunitarios" })
-      ).toBeInTheDocument();
+      expect(getByRole(root, "heading", { level: 3, name: "Servicios Comunitarios" })).toBeInTheDocument();
 
       const link = getByRole(root, "link", { name: "Enlace seguro" });
       expect(link.getAttribute("href")).toBe("#");
+    } finally {
+      await close();
+    }
+  });
+
+  it("should render BeforeAfterSlider when beforeAfterSlider custom block is present", async () => {
+    const doc = {
+      type: "doc" as const,
+      content: [
+        {
+          type: "beforeAfterSlider",
+          attrs: {
+            beforeUrl: "https://cms.mezquitabogota.org/uploads/before.jpg",
+            afterUrl: "https://cms.mezquitabogota.org/uploads/after.jpg",
+            beforeAlt: "Antes (2011)",
+            afterAlt: "Después (2026)",
+            caption: "Comparación de la fachada principal",
+          },
+        },
+      ],
+    };
+
+    const { root, close } = await renderAstroComponentToDom(TiptapContent, {
+      props: { content: doc },
+    });
+
+    try {
+      expect(root.querySelector("img-comparison-slider")).toBeInTheDocument();
+      expect(getByText(root, "Comparación de la fachada principal")).toBeInTheDocument();
     } finally {
       await close();
     }

@@ -1,0 +1,181 @@
+---
+/* eslint-disable @stylistic/jsx-one-expression-per-line -- --fix corrupts <script> blocks, see eslint.config.ts */
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import type { TLang } from "@i18n/ui";
+import "img-comparison-slider/dist/styles.css";
+
+/**
+ * @component BeforeAfterSlider
+ * @title Before / After Image Comparison Slider
+ * @description Web Component (`<img-comparison-slider>`) wrapped in semantic `<figure>` and `<figcaption>` for interactive before/after image comparison with caption and badge support. Works standalone or as a custom `beforeAfterSlider` block in `<TiptapContent />`.
+ *
+ * @preview
+ *
+ * <BeforeAfterSlider
+ *   beforeUrl="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&q=80"
+ *   afterUrl="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&q=80"
+ *   beforeAlt="Construcción (2011)"
+ *   afterAlt="Actualidad (2026)"
+ *   caption="Evolución arquitectónica de la Mezquita Central Abou Bakr Al-Siddiq en Bogotá."
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import BeforeAfterSlider from "@components/data/display/BeforeAfterSlider/BeforeAfterSlider.astro";
+ * ---
+ *
+ * <BeforeAfterSlider
+ *   beforeUrl="/uploads/mosque-before.jpg"
+ *   afterUrl="/uploads/mosque-after.jpg"
+ *   beforeAlt="Antes"
+ *   afterAlt="Después"
+ *   caption="Restauración de la cúpula principal"
+ * />
+ * ```
+ */
+export interface BeforeAfterSliderAttrs {
+  beforeUrl?: string;
+  afterUrl?: string;
+  beforeAlt?: string | null;
+  afterAlt?: string | null;
+  caption?: string | null;
+}
+
+export interface Props {
+  /** Optional language override. Falls back to the URL locale. */
+  lang?: TLang;
+  /** Direct URL for the "Before" image (used when rendered standalone). */
+  beforeUrl?: string;
+  /** Direct URL for the "After" image (used when rendered standalone). */
+  afterUrl?: string;
+  /** Accessible alt text and badge label for the "Before" image. */
+  beforeAlt?: string | null;
+  /** Accessible alt text and badge label for the "After" image. */
+  afterAlt?: string | null;
+  /** Optional caption rendered in `<figcaption>` below the comparison slider. */
+  caption?: string | null;
+  /** CSS aspect ratio reserved for the images to avoid layout shift. Defaults to `16 / 9`. */
+  aspectRatio?: string;
+  /** Initial slider split percentage (0–100). Defaults to 50. */
+  value?: number;
+  /** Slider orientation (`"horizontal"` or `"vertical"`). Defaults to `"horizontal"`. */
+  direction?: "horizontal" | "vertical";
+  /** AST node attributes forwarded when used as a custom block in `<TiptapBlocks />`. */
+  attrs?: BeforeAfterSliderAttrs;
+  /** Optional CSS classes for the outer `<figure>`. */
+  class?: string;
+}
+
+const SAFE_URL_RE = /^(https?:\/\/|\/(?![/\\]))/i;
+
+const sanitizeUrl = (raw?: string | null): string | null => {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  return SAFE_URL_RE.test(trimmed) ? trimmed : null;
+};
+
+const {
+  lang: langProp,
+  beforeUrl,
+  afterUrl,
+  beforeAlt,
+  afterAlt,
+  caption,
+  aspectRatio = "16 / 9",
+  value = 50,
+  direction = "horizontal",
+  attrs,
+  class: className = "",
+} = Astro.props;
+
+const t = useTranslations(langProp ?? getLangFromUrl(Astro.url));
+
+const safeBeforeUrl = sanitizeUrl(beforeUrl ?? attrs?.beforeUrl);
+const safeAfterUrl = sanitizeUrl(afterUrl ?? attrs?.afterUrl);
+const rawBeforeAlt = (beforeAlt ?? attrs?.beforeAlt ?? "").trim();
+const resolvedBeforeAlt = rawBeforeAlt || t("before-after.before");
+const rawAfterAlt = (afterAlt ?? attrs?.afterAlt ?? "").trim();
+const resolvedAfterAlt = rawAfterAlt || t("before-after.after");
+const resolvedCaption = (caption ?? attrs?.caption ?? "").trim();
+const ASPECT_RATIO_RE = /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/;
+const resolvedAspectRatio = ASPECT_RATIO_RE.test(aspectRatio.trim())
+  ? aspectRatio.trim()
+  : "16 / 9";
+const rawValue = Number.isFinite(value) ? value : 50;
+const clampedValue = Math.min(100, Math.max(0, rawValue));
+---
+
+{
+  safeBeforeUrl && safeAfterUrl && (
+    <figure
+      data-before-after="true"
+      class:list={["my-6", className]}
+    >
+      <img-comparison-slider
+        value={String(clampedValue)}
+        direction={direction}
+        style={`aspect-ratio: ${resolvedAspectRatio}`}
+        class="
+          block w-full overflow-hidden rounded-2xl shadow-sm
+          focus:outline-none
+        "
+      >
+        <figure slot="first" class="relative m-0 h-full">
+          <img
+            src={safeBeforeUrl}
+            alt={resolvedBeforeAlt}
+            class="block size-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption
+            class="
+              pointer-events-none absolute inset-s-3 bottom-3 rounded-md
+              bg-slate-900/75 px-2.5 py-1 text-xs font-semibold text-white
+              backdrop-blur-xs
+            "
+          >
+            {resolvedBeforeAlt}
+          </figcaption>
+        </figure>
+        <figure slot="second" class="relative m-0 h-full">
+          <img
+            src={safeAfterUrl}
+            alt={resolvedAfterAlt}
+            class="block size-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption
+            class="
+              pointer-events-none absolute inset-e-3 bottom-3 rounded-md
+              bg-slate-900/75 px-2.5 py-1 text-xs font-semibold text-white
+              backdrop-blur-xs
+            "
+          >
+            {resolvedAfterAlt}
+          </figcaption>
+        </figure>
+      </img-comparison-slider>
+      {resolvedCaption && (
+        <figcaption
+          data-slot="caption"
+          class="
+            mt-2 text-center text-sm text-slate-500
+            dark:text-slate-400
+          "
+        >
+          {resolvedCaption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+<script>
+  import { registerSlider } from "./slider.controller";
+
+  void registerSlider();
+</script>

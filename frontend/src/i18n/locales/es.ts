@@ -476,4 +476,6 @@ export const es = {
     "¡Suscrito! Revisa tu correo para confirmar tu suscripción.",
   "footer.newsletter-invalid-email": "Correo electrónico inválido.",
   "footer.newsletter-error": "Error de conexión. Inténtalo de nuevo.",
+  "before-after.before": "Antes",
+  "before-after.after": "Después",
 };

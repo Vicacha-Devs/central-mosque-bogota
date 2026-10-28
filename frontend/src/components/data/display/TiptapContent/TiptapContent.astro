@@ -1,4 +1,5 @@
 ---
+import BeforeAfterSlider from "@/components/data/display/BeforeAfterSlider/BeforeAfterSlider.astro";
 import { Prose } from "@/components/starwind/prose";
 import {
   TiptapBlocks,
@@ -10,7 +11,7 @@ import {
 /**
  * @component TiptapContent
  * @title Tiptap Rich Text Content
- * @description Renders sanitized Tiptap HTML or ProseMirror JSON AST into native Astro block elements wrapped in Starwind `Prose` typography (`@vicacha-devs/astro-tiptap-blocks`).
+ * @description Renders sanitized Tiptap HTML or ProseMirror JSON AST into native Astro block elements wrapped in Starwind `Prose` typography (`@vicacha-devs/astro-tiptap-blocks`), including the custom `beforeAfterSlider` Web Component.
  *
  * Props
  * - `content`: HTML string or ProseMirror JSON document (`TiptapContentInput`)
@@ -52,6 +53,13 @@ interface Props {
 }
 
 const { content, theme, blocks, class: className = "" } = Astro.props;
+
+// The library's DeepPartial built-in keys conflict with its custom-block index
+// signature, so the merged map needs a cast.
+const mergedBlocks = {
+  beforeAfterSlider: BeforeAfterSlider,
+  ...blocks,
+} as unknown as TiptapBlockUserComponents;
 
 const mosqueTheme: TiptapBlockUserTheme = {
   overwrite: {
@@ -108,7 +116,7 @@ const mosqueTheme: TiptapBlockUserTheme = {
   <TiptapBlocks
     data={content}
     theme={mosqueTheme}
-    blocks={blocks}
+    blocks={mergedBlocks}
     class={className}
   />
 </Prose>

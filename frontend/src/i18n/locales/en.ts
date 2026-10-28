@@ -465,4 +465,6 @@ export const en = {
     "Subscribed! Please check your email to confirm (double opt-in).",
   "footer.newsletter-invalid-email": "Invalid email address.",
   "footer.newsletter-error": "Connection error. Please try again.",
+  "before-after.before": "Before",
+  "before-after.after": "After",
 };

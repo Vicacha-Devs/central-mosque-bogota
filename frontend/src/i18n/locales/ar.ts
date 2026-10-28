@@ -446,4 +446,6 @@ export const ar = {
   "footer.newsletter-success": "تم الاشتراك! يرجى تأكيد بريدك الإلكتروني.",
   "footer.newsletter-invalid-email": "البريد الإلكتروني غير صالح.",
   "footer.newsletter-error": "خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
+  "before-after.before": "قبل",
+  "before-after.after": "بعد",
 };

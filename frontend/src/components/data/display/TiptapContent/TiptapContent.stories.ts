@@ -42,6 +42,19 @@ export const ProseMirrorJSON = meta.story({
             },
           ],
         },
+        {
+          type: "beforeAfterSlider",
+          attrs: {
+            beforeUrl:
+              "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=900&q=80",
+            afterUrl:
+              "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=900&q=80",
+            beforeAlt: "Construcción (2011)",
+            afterAlt: "Actualidad (2026)",
+            caption:
+              "Evolución arquitectónica de la Mezquita Central Abou Bakr Al-Siddiq.",
+          },
+        },
       ],
     },
   },

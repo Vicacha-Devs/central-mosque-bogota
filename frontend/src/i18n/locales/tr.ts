@@ -454,4 +454,6 @@ export const tr = {
   "footer.newsletter-success": "Abone olundu! Lütfen e-postanızı onaylayın.",
   "footer.newsletter-invalid-email": "Geçersiz e-posta adresi.",
   "footer.newsletter-error": "Bağlantı hatası. Lütfen tekrar deneyin.",
+  "before-after.before": "Önce",
+  "before-after.after": "Sonra",
 };
