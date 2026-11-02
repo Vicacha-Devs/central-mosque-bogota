@@ -60,9 +60,7 @@ describe("DailyPrayTime", () => {
       const helpLink = getByRole(root, "link", {
         name: "Sobre los Horarios de Oración",
       });
-      expect(helpLink.getAttribute("href")).toBe(
-        "/how-to-calculate-pray-times"
-      );
+      expect(helpLink.getAttribute("href")).toBe("/es/informacion-oraciones");
 
       const scheduleRoot = root.querySelector<HTMLElement>(
         "[data-prayer-schedule]"
@@ -81,7 +79,7 @@ describe("DailyPrayTime", () => {
       expect(items.length).toBe(6);
 
       const fajr = scheduleRoot.querySelector<HTMLElement>(
-        "[data-prayer-item][data-prayer=\"fajr\"]"
+        "[data-prayer-item][data-prayer=\u0022fajr\u0022]"
       );
       if (!fajr) {
         throw new Error("Expected DailyPrayTime to render a fajr item");
@@ -125,7 +123,7 @@ describe("DailyPrayTime", () => {
       await vi.runOnlyPendingTimersAsync();
 
       const active = root.querySelector<HTMLElement>(
-        "[data-prayer-item][data-prayer=\"dhuhr\"]"
+        "[data-prayer-item][data-prayer=\u0022dhuhr\u0022]"
       );
       if (!active) {
         throw new Error("Expected a dhuhr item to exist");
@@ -143,7 +141,7 @@ describe("DailyPrayTime", () => {
       expect(label.hasAttribute("data-prayer-label-active")).toBe(true);
 
       const fajr = root.querySelector<HTMLElement>(
-        "[data-prayer-item][data-prayer=\"fajr\"]"
+        "[data-prayer-item][data-prayer=\u0022fajr\u0022]"
       );
       if (!fajr) {
         throw new Error("Expected a fajr item to exist");

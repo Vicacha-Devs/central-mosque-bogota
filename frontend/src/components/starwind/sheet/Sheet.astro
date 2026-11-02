@@ -1,0 +1,15 @@
+---
+import type { ComponentProps } from "astro/types";
+
+import { Dialog } from "@/components/starwind/dialog";
+
+import { sheet } from "./variants";
+
+type Props = ComponentProps<typeof Dialog>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<Dialog class={sheet({ class: className })} {...rest} data-slot="sheet">
+  <slot />
+</Dialog>

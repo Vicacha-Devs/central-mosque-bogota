@@ -46,8 +46,9 @@ export function initMonthlyPrayTimeTable(root: HTMLElement): void {
     return Math.ceil(collapsedRow.getBoundingClientRect().bottom - clipTop);
   };
 
-  const computeExpandedHeight = (): number =>
-    Math.ceil(table.getBoundingClientRect().height);
+  const computeExpandedHeight = (): number => {
+    return Math.ceil(table.getBoundingClientRect().height);
+  };
 
   const setClipHeight = (
     height: number,

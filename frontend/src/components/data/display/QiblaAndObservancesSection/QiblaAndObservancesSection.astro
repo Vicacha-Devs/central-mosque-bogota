@@ -1,0 +1,518 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl } from "@i18n/utils";
+import { fetchIslamSuiteFromStrapi } from "@services/strapi";
+import {
+  DEFAULT_BOGOTA_QIBLA,
+  getFallbackObservances,
+  getIslamSuiteCopy,
+  type THijriObservanceCard,
+  type TQiblaSummary,
+} from "@utils/islam-suite-mocks";
+
+import HijriObservanceCard from "./HijriObservanceCard.astro";
+
+/**
+ * @component QiblaAndObservancesSection
+ * @title Qibla Compass & Hijri Observances Section
+ * @description Displays the spherical-trigonometry Qibla compass and distance to the Kaaba from Bogotá alongside the Umm al-Qura Hijri observances calendar (`@vicacha-devs/strapi-plugin-islam`).
+ *
+ * Props
+ * - `lang`: optional active locale (`es`, `en`, `ar`, `tr`)
+ * - `qiblaOverride`: optional Qibla telemetry override (`TQiblaSummary`)
+ * - `observancesOverride`: optional list of Hijri observances (`THijriObservanceCard[]`)
+ *
+ * @preview
+ *
+ * <QiblaAndObservancesSection lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import QiblaAndObservancesSection from "@components/data/display/QiblaAndObservancesSection/QiblaAndObservancesSection.astro";
+ * ---
+ *
+ * <QiblaAndObservancesSection lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang?: TLang;
+  /**
+   * Optional override for Qibla bearing and distance telemetry.
+   */
+  qiblaOverride?: TQiblaSummary;
+  /**
+   * Optional override for upcoming Hijri observances.
+   */
+  observancesOverride?: Array<THijriObservanceCard>;
+}
+
+const {
+  lang: langProp,
+  qiblaOverride,
+  observancesOverride,
+} = Astro.props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const copy = getIslamSuiteCopy(lang);
+
+interface TStrapiQiblaResponse {
+  origin?: {
+    lat?: number;
+    lon?: number;
+    city?: string;
+    country?: string;
+  };
+  direction?: {
+    degrees?: number;
+    cardinal?: string;
+  };
+  distance?: {
+    kilometers?: number;
+    miles?: number;
+  };
+}
+
+interface TStrapiHijriResponse {
+  observances?: Array<{
+    id: string;
+    hijriFormatted: string;
+    estimatedGregorianDate: string;
+    daysUntil: number;
+    category: THijriObservanceCard["category"];
+    fastingRecommendedOrObligatory: THijriObservanceCard["fastingStatus"];
+    titles?: Record<string, string>;
+    descriptions?: Record<string, string>;
+  }>;
+}
+
+let qibla: TQiblaSummary = qiblaOverride ?? { ...DEFAULT_BOGOTA_QIBLA };
+let observances: Array<THijriObservanceCard>
+  = observancesOverride ?? getFallbackObservances(lang);
+
+if (!qiblaOverride || !observancesOverride) {
+  const [liveQibla, liveHijri] = await Promise.all([
+    qiblaOverride
+      ? Promise.resolve(null)
+      : fetchIslamSuiteFromStrapi<TStrapiQiblaResponse>("qibla", {
+          locale: lang,
+        }),
+    observancesOverride
+      ? Promise.resolve(null)
+      : fetchIslamSuiteFromStrapi<TStrapiHijriResponse>("hijri", {
+          locale: lang,
+        }),
+  ]);
+
+  if (liveQibla?.direction?.degrees !== undefined) {
+    qibla = {
+      ...qibla,
+      degrees: Number(liveQibla.direction.degrees.toFixed(2)),
+      cardinal: liveQibla.direction.cardinal ?? qibla.cardinal,
+      kilometers: Math.round(
+        liveQibla.distance?.kilometers ?? qibla.kilometers
+      ),
+      miles: Math.round(liveQibla.distance?.miles ?? qibla.miles),
+      originCity: liveQibla.origin?.city ?? qibla.originCity,
+      originCountry: liveQibla.origin?.country ?? qibla.originCountry,
+      originLat: liveQibla.origin?.lat ?? qibla.originLat,
+      originLon: liveQibla.origin?.lon ?? qibla.originLon,
+    };
+  }
+
+  if (liveHijri?.observances?.length) {
+    observances = liveHijri.observances.slice(0, 4).map((obs) => ({
+      id: obs.id,
+      hijriFormatted: obs.hijriFormatted,
+      estimatedGregorianDate: obs.estimatedGregorianDate,
+      daysUntil: obs.daysUntil,
+      category: obs.category,
+      fastingStatus: obs.fastingRecommendedOrObligatory,
+      title: obs.titles?.[lang] ?? obs.titles?.es ?? obs.id,
+      description: obs.descriptions?.[lang] ?? obs.descriptions?.es ?? "",
+    }));
+  }
+}
+
+const formatNumber = (num: number) =>
+  new Intl.NumberFormat(lang === "ar" ? "ar-SA" : "es-CO").format(num);
+---
+
+<section
+  class="mx-auto w-full max-w-5xl space-y-10 px-4"
+  data-qibla-observances-section
+>
+  <!-- Qibla Compass & Liturgical Windows -->
+  <Card
+    class="
+      overflow-hidden rounded-3xl border border-slate-200 bg-white p-0 shadow-xl
+      dark:border-slate-800 dark:bg-slate-900
+    "
+  >
+    <div class="
+      grid grid-cols-1
+      lg:grid-cols-12
+    "
+    >
+      <!-- Left Column: Visual Compass & Geodesic Telemetry -->
+      <div
+        class="
+          flex flex-col items-center justify-center bg-secondary p-8 text-center
+          text-white
+          lg:col-span-5
+        "
+      >
+        <Badge
+          variant="outline"
+          class="
+            mb-4 gap-1.5 rounded-full border-0 bg-white/10 px-3.5 py-1 text-xs
+            font-bold tracking-wider text-amber-300 uppercase
+          "
+        >
+          <Icon name="explore" class="text-sm" />
+          <span>{copy.qiblaBadge}</span>
+        </Badge>
+
+        <!-- SVG Qibla Compass Dial -->
+        <div
+          class="
+            relative my-4 flex size-44 items-center justify-center rounded-full
+            border-4 border-white/20 bg-slate-950/35 shadow-inner
+          "
+          role="img"
+          aria-label={`${copy.bearingLabel}: ${String(qibla.degrees)}° ${qibla.cardinal}`}
+        >
+          <span class="absolute top-2 text-[11px] font-extrabold text-amber-300">
+            N
+          </span>
+          <span class="absolute right-3 text-[11px] font-bold text-white/60">
+            E
+          </span>
+          <span class="absolute bottom-2 text-[11px] font-bold text-white/60">
+            S
+          </span>
+          <span class="absolute left-3 text-[11px] font-bold text-white/60">
+            W
+          </span>
+
+          <div
+            class="
+              flex size-32 items-center justify-center rounded-full border
+              border-dashed border-white/20
+            "
+            style={`transform: rotate(${String(qibla.degrees)}deg);`}
+          >
+            <div class="flex flex-col items-center">
+              <span
+                class="
+                  inline-block size-0 border-x-8 border-b-24
+                  border-x-transparent border-b-amber-400
+                "
+              >
+              </span>
+              <span
+                class="inline-block h-10 w-1.5 rounded-b-full bg-white/30"
+              >
+              </span>
+            </div>
+          </div>
+
+          <div
+            class="
+              absolute flex size-10 items-center justify-center rounded-full
+              bg-primary text-slate-950 shadow-md
+            "
+          >
+            <Icon name="mosque" class="text-lg" />
+          </div>
+        </div>
+
+        <p class="mt-2 text-3xl font-extrabold tracking-tight text-amber-300">
+          {`${String(qibla.degrees)}° ${qibla.cardinal}`}
+        </p>
+        <p class="text-xs font-medium text-blue-100/80">
+          {copy.bearingLabel}
+        </p>
+
+        <div class="mt-6 grid w-full grid-cols-2 gap-3 text-start">
+          <div class="rounded-2xl bg-white/10 p-3.5">
+            <span class="block text-[11px] font-semibold text-blue-100/75">
+              {copy.distanceLabel}
+            </span>
+            <span class="mt-1 block text-sm font-extrabold text-white">
+              {formatNumber(qibla.kilometers)}
+              {" "}
+              km (
+              {formatNumber(qibla.miles)}
+              {" "}
+              mi)
+            </span>
+          </div>
+          <div class="rounded-2xl bg-white/10 p-3.5">
+            <span class="block text-[11px] font-semibold text-blue-100/75">
+              {copy.coordinatesLabel}
+            </span>
+            <span class="mt-1 block text-sm font-extrabold text-white">
+              {qibla.originLat}
+              ° N,
+              {qibla.originLon}
+              ° W
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Jumu'ah Congregation & Prohibited/Makruh Windows -->
+      <CardContent
+        class="
+          flex flex-col justify-between space-y-6 p-8
+          sm:p-10
+          lg:col-span-7
+        "
+      >
+        <div>
+          <h2
+            class="
+              text-2xl font-extrabold tracking-tight text-slate-900
+              sm:text-3xl
+              dark:text-white
+            "
+          >
+            {copy.qiblaTitle}
+          </h2>
+          <p class="
+            mt-2 text-sm/relaxed text-slate-600
+            dark:text-slate-400
+          "
+          >
+            {copy.qiblaSubtitle}
+          </p>
+        </div>
+
+        <!-- Friday Jumu'ah Schedule -->
+        <div
+          class="
+            rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-5
+            dark:bg-emerald-950/20
+          "
+        >
+          <div class="mb-3 flex items-center gap-2.5">
+            <div
+              class="
+                flex size-9 items-center justify-center rounded-xl bg-secondary
+                text-white
+              "
+            >
+              <Icon name="groups" class="text-lg" />
+            </div>
+            <h3 class="
+              text-base font-extrabold text-slate-900
+              dark:text-white
+            "
+            >
+              {copy.jumuahTitle}
+            </h3>
+          </div>
+          <div class="
+            grid grid-cols-1 gap-3
+            sm:grid-cols-2
+          "
+          >
+            <div
+              class="
+                flex items-center justify-between rounded-xl bg-white px-4
+                py-2.5 shadow-2xs
+                dark:bg-slate-900
+              "
+            >
+              <span class="
+                text-xs font-semibold text-slate-500
+                dark:text-slate-400
+              "
+              >
+                {copy.khutbahLabel}
+              </span>
+              <span class="
+                text-sm font-extrabold text-secondary
+                dark:text-primary
+              "
+              >
+                {qibla.jumuahPrimaryKhutbah}
+              </span>
+            </div>
+            <div
+              class="
+                flex items-center justify-between rounded-xl bg-white px-4
+                py-2.5 shadow-2xs
+                dark:bg-slate-900
+              "
+            >
+              <span class="
+                text-xs font-semibold text-slate-500
+                dark:text-slate-400
+              "
+              >
+                {copy.salahLabel}
+              </span>
+              <span class="
+                text-sm font-extrabold text-secondary
+                dark:text-primary
+              "
+              >
+                {qibla.jumuahPrimaryPrayer}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <Separator class="
+          bg-slate-100
+          dark:bg-slate-800
+        "
+        />
+
+        <!-- Prohibited / Makruh Solar Prayer Windows -->
+        <div class="space-y-3">
+          <div>
+            <h3 class="
+              text-sm font-extrabold text-slate-900
+              dark:text-white
+            "
+            >
+              {copy.prohibitedTitle}
+            </h3>
+            <p class="
+              text-xs text-slate-500
+              dark:text-slate-400
+            "
+            >
+              {copy.prohibitedDesc}
+            </p>
+          </div>
+          <div class="
+            grid grid-cols-1 gap-3
+            sm:grid-cols-3
+          "
+          >
+            <div
+              class="
+                rounded-xl border border-amber-500/25 bg-amber-500/5 p-3
+                dark:bg-amber-950/20
+              "
+            >
+              <span class="
+                block text-[11px] font-bold text-amber-800
+                dark:text-amber-300
+              "
+              >
+                {copy.sunriseWindowLabel}
+              </span>
+              <span class="
+                mt-1 block text-sm font-extrabold text-slate-900
+                dark:text-white
+              "
+              >
+                {qibla.prohibitedWindows.sunrise}
+              </span>
+            </div>
+            <div
+              class="
+                rounded-xl border border-amber-500/25 bg-amber-500/5 p-3
+                dark:bg-amber-950/20
+              "
+            >
+              <span class="
+                block text-[11px] font-bold text-amber-800
+                dark:text-amber-300
+              "
+              >
+                {copy.zawalWindowLabel}
+              </span>
+              <span class="
+                mt-1 block text-sm font-extrabold text-slate-900
+                dark:text-white
+              "
+              >
+                {qibla.prohibitedWindows.zawal}
+              </span>
+            </div>
+            <div
+              class="
+                rounded-xl border border-amber-500/25 bg-amber-500/5 p-3
+                dark:bg-amber-950/20
+              "
+            >
+              <span class="
+                block text-[11px] font-bold text-amber-800
+                dark:text-amber-300
+              "
+              >
+                {copy.sunsetWindowLabel}
+              </span>
+              <span class="
+                mt-1 block text-sm font-extrabold text-slate-900
+                dark:text-white
+              "
+              >
+                {qibla.prohibitedWindows.sunset}
+              </span>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </div>
+  </Card>
+
+  <!-- Upcoming Hijri Observances & Moon-Sighting Calendar -->
+  <div class="space-y-6">
+    <div class="
+      flex flex-col justify-between gap-3
+      md:flex-row md:items-end
+    "
+    >
+      <div>
+        <span class="
+          text-xs font-extrabold tracking-wider text-primary uppercase
+        "
+        >
+          {copy.observancesBadge}
+        </span>
+        <h2 class="
+          mt-1 text-2xl font-extrabold text-slate-900
+          sm:text-3xl
+          dark:text-white
+        "
+        >
+          {copy.observancesTitle}
+        </h2>
+        <p class="
+          mt-1 text-sm text-slate-600
+          dark:text-slate-400
+        "
+        >
+          {copy.observancesSubtitle}
+        </p>
+      </div>
+    </div>
+
+    <div class="
+      grid grid-cols-1 gap-6
+      md:grid-cols-2
+    "
+    >
+      {
+        observances.map((obs) => (
+          <HijriObservanceCard observance={obs} copy={copy} />
+        ))
+      }
+    </div>
+  </div>
+</section>

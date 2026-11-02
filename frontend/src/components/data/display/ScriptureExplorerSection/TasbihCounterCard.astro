@@ -1,0 +1,164 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Progress } from "@/components/starwind/progress";
+import type { TTasbihPresetCard } from "@utils/islam-suite-mocks";
+
+/**
+ * @component TasbihCounterCard
+ * @title Digital Tasbih & Adhkar Counter Card
+ * @description Renders an interactive Digital Tasbih counter card with virtue badge, Arabic dhikr, transliteration, progress bar, and increment/reset controls.
+ *
+ * Props
+ * - `preset`: Tasbih dhikr preset model (`TTasbihPresetCard`)
+ * - `completedLabel`: localized completion message
+ * - `incrementLabel`: localized increment button label
+ * - `resetLabel`: localized reset button label
+ *
+ * @preview
+ *
+ * <TasbihCounterCard
+ *   preset={{
+ *     id: "subhanallah",
+ *     arabic: "سُبْحَانَ اللَّهِ",
+ *     transliteration: "SubḥānAllāh",
+ *     translation: "Glorificado sea Allah",
+ *     targetCount: 33,
+ *     virtue: "Sunnah tras la oración"
+ *   }}
+ *   completedLabel="¡Serie completada!"
+ *   incrementLabel="+1 Contar Dhikr"
+ *   resetLabel="Reiniciar"
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import TasbihCounterCard from "@components/data/display/ScriptureExplorerSection/TasbihCounterCard.astro";
+ * ---
+ *
+ * <TasbihCounterCard
+ *   preset={presetItem}
+ *   completedLabel="¡Serie completada!"
+ *   incrementLabel="+1 Contar Dhikr"
+ *   resetLabel="Reiniciar"
+ * />
+ * ```
+ */
+interface Props {
+  /**
+   * Tasbih dhikr preset configuration.
+   */
+  preset: TTasbihPresetCard;
+  /**
+   * Localized completion banner label.
+   */
+  completedLabel: string;
+  /**
+   * Localized increment button label.
+   */
+  incrementLabel: string;
+  /**
+   * Localized reset button label.
+   */
+  resetLabel: string;
+}
+
+const { preset, completedLabel, incrementLabel, resetLabel } = Astro.props;
+---
+
+<Card
+  class="
+    rounded-2xl border border-slate-200 bg-white p-0 shadow-sm
+    dark:border-slate-800 dark:bg-slate-900
+  "
+  data-tasbih-card
+  data-tasbih-target={String(preset.targetCount)}
+>
+  <CardContent class="space-y-4 p-6">
+    <div class="flex items-center justify-between">
+      <Badge
+        variant="outline"
+        class="rounded-full px-3 py-1 text-xs font-bold"
+      >
+        {preset.virtue}
+      </Badge>
+      <span
+        class="
+          text-lg font-extrabold text-secondary
+          dark:text-primary
+        "
+        data-tasbih-counter-label
+      >
+        0 /
+        {" "}
+        {preset.targetCount}
+      </span>
+    </div>
+
+    <div class="text-center">
+      <p
+        class="
+          text-2xl font-bold text-slate-900
+          dark:text-white
+        "
+        dir="rtl"
+        lang="ar"
+      >
+        {preset.arabic}
+      </p>
+      <p class="mt-1 text-sm font-bold text-primary">
+        {preset.transliteration}
+      </p>
+      <p class="
+        mt-1 text-xs text-slate-500
+        dark:text-slate-400
+      "
+      >
+        {preset.translation}
+      </p>
+    </div>
+
+    <Progress
+      value={0}
+      max={100}
+      variant="primary"
+      aria-label={preset.transliteration}
+      class="h-2"
+      data-tasbih-progress
+    />
+
+    <p
+      class="
+        hidden text-center text-xs font-bold text-emerald-600
+        dark:text-emerald-400
+      "
+      data-tasbih-done-msg
+    >
+      {completedLabel}
+    </p>
+
+    <div class="flex items-center gap-3 pt-2">
+      <Button
+        type="button"
+        variant="primary"
+        class="
+          flex-1 cursor-pointer justify-center rounded-xl text-xs font-extrabold
+        "
+        data-tasbih-increment
+      >
+        {incrementLabel}
+      </Button>
+      <Button
+        type="button"
+        variant="outline"
+        class="cursor-pointer rounded-xl text-xs font-bold"
+        data-tasbih-reset
+      >
+        {resetLabel}
+      </Button>
+    </div>
+  </CardContent>
+</Card>

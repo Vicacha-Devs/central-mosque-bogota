@@ -1,0 +1,80 @@
+---
+import { getCollection } from "astro:content";
+import { Button } from "@/components/starwind/button";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import CommunityServicesSection from "@components/data/display/CommunityServicesSection/CommunityServicesSection.astro";
+import ServiceDeskIntakeSection from "@components/actions/ServiceDeskIntakeSection/ServiceDeskIntakeSection.astro";
+import CommunityBroadcastChannelsSection from "@components/data/display/CommunityBroadcastChannelsSection/CommunityBroadcastChannelsSection.astro";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useTranslatedPath,
+} from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { getLocalizedMocks } from "@utils/data.mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const localizedMocks = getLocalizedMocks(lang);
+const serviceEntries = await getCollection(
+  "communityServices",
+  (entry) => entry.data.locale === lang
+);
+const defaultServices
+  = serviceEntries.length > 0
+    ? serviceEntries.map((entry) => entry.data)
+    : localizedMocks.defaultServices;
+---
+
+<Layout
+  title={t("services.community-services")}
+  description={t("services-page.subtitle")}
+>
+  <PageHeroBanner
+    badgeIcon="volunteer_activism"
+    badgeLabel={t("services-page.badge")}
+    title={t("services.community-services")}
+    subtitle={t("services-page.subtitle")}
+  />
+
+  <CommunityServicesSection
+    title={t("services.community-services")}
+    services={defaultServices}
+  />
+
+  <ServiceDeskIntakeSection lang={lang} />
+
+  <CommunityBroadcastChannelsSection lang={lang} />
+
+  <section
+    class="
+      rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm
+      dark:border-slate-800 dark:bg-slate-900
+    "
+  >
+    <h2 class="
+      mb-3 text-2xl font-bold text-slate-900
+      dark:text-white
+    "
+    >
+      {t("services-page.cta-title")}
+    </h2>
+    <p class="
+      mx-auto mb-6 max-w-xl text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {t("services-page.cta-desc")}
+    </p>
+    <Button href={translatePath("/contact-and-visit")} variant="primary">
+      {t("services-page.cta-button")}
+    </Button>
+  </section>
+</Layout>

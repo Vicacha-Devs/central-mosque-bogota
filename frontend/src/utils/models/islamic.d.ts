@@ -176,3 +176,28 @@ export type TIslamicResponse = {
   isToday?: boolean;
   times: TDailyPrayerSchedule;
 };
+
+export type TIslamicApiZakatThresholdItem = {
+  weight: number;
+  unit_price: number;
+  nisab_amount: number;
+};
+
+export type TIslamicApiZakatNisabData = {
+  nisab_thresholds: {
+    gold: TIslamicApiZakatThresholdItem;
+    silver: TIslamicApiZakatThresholdItem;
+  };
+  zakat_rate: string;
+  notes?: string;
+};
+
+export type TIslamicApiZakatNisabResponse = {
+  code: number;
+  status: "success";
+  calculation_standard: "classical" | "common";
+  currency: string;
+  weight_unit: string;
+  updated_at: string;
+  data: TIslamicApiZakatNisabData;
+};

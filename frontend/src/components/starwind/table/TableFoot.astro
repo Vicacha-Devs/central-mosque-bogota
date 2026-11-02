@@ -1,0 +1,13 @@
+---
+import { tableFoot } from "./variants";
+import type { HTMLAttributes } from "astro/types";
+import type { VariantProps } from "tailwind-variants";
+
+type Props = HTMLAttributes<"tfoot"> & VariantProps<typeof tableFoot>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<tfoot class={tableFoot({ class: className })} {...rest} data-slot="table-foot">
+  <slot />
+</tfoot>
