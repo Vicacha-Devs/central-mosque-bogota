@@ -7,10 +7,6 @@ Welcome! This roadmap is designed to take junior developers from **foundational 
 
 ---
 
-> **Note on links:** The direct YouTube video links below have not been re-verified. If one is dead, use the channel or search links in the same row.
-
----
-
 ## Architecture & Competency Progression Overview
 
 ```mermaid
@@ -26,8 +22,8 @@ flowchart LR
 
 Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is gated by automated checks and must follow these 6 team rules:
 
-1. **Documentation `<= 500` Lines Per File**:
-   - Every markdown file in `docs/src/content/docs/` must stay at **500 lines or fewer** (enforced by `pnpm verify`). For source files there is no hard limit, but keep them small and focused: split large components into sub-components, helpers, or `*.controller.ts` modules.
+1. **Strict `< 500` Lines Per File Limit**:
+   - No source file (`.ts`, `.tsx`, `.astro`, `.md`) may exceed **500 lines**. Split large components into sub-components, helpers, or `*.controller.ts` modules.
 2. **80-Column Line Width & Automated Formatting**:
    - In `central-mosque-bogota/frontend`, `oxfmt` (`.oxfmtrc.json`) and ESLint enforce an **80-character line width**. Always run `./node_modules/.bin/oxfmt` before committing.
 3. **Multilingual i18n & Arabic RTL Parity**:
@@ -82,7 +78,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 | **Vitest, Happy DOM & Testing Library** | **Midudev** — [Testing en JavaScript y TypeScript con Vitest](https://www.youtube.com/@midudev/search?query=vitest) | **Net Ninja** — [Vitest Crash Course / Unit Testing](https://www.youtube.com/@NetNinja/search?query=vitest) |
 
 ### Codebase Reading List (Tier 2)
-1. `frontend/src/pages/[lang]/index.astro` & `frontend/src/pages/[lang]/events-and-programs.astro` — See how localized SSR routes resolve `lang`, load CMS/mock data, and render components.
+1. `frontend/src/pages/[lang]/index.astro` & `frontend/src/pages/[lang]/events/index.astro` — See how localized SSR routes resolve `lang`, load CMS/mock data, and render components.
 2. `frontend/src/i18n/ui.ts` & `frontend/src/i18n/locales/{es,en,ar,tr}.ts` — Study how `useTranslations(lang)` and `useTranslatedPath(lang)` work.
 3. `frontend/src/components/data/display/` — Inspect how `.astro` markup pairs with a dedicated `*.controller.ts` script, `*.stories.ts` (Storybook 10), and `*.test.ts` (`renderAstroComponentToDom`).
 4. `astro-tiptap-blocks/src/` — Understand how `<TiptapContent />` safely renders Strapi Tiptap JSON/HTML without `set:html` XSS risks.
@@ -97,7 +93,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 
 ## Tier 3: Backend & Headless CMS (Strapi v5, Document Service API, i18n & Resilient Loaders)
 
-**Goal**: Understand Strapi v5's Content-Types, Components, Document Service API (`strapi.documents(uid)`), 4-locale i18n (`es`, `en`, `ar`, `tr`), first-boot seeding (`backend/src/bootstrap/` and `backend/src/seed/`, orchestrated by `backend/src/index.ts`), `strapi-cache`, and how the Astro frontend consumes Strapi with automatic offline mock fallbacks.
+**Goal**: Understand Strapi v5's Content-Types, Components, Document Service API (`strapi.documents(uid)`), 4-locale i18n (`es`, `en`, `ar`, `tr`), first-boot seeding (`backend/src/index.ts`), `strapi-cache`, and how the Astro frontend consumes Strapi with automatic offline mock fallbacks.
 
 ### Curated YouTube Tutorials (Spanish & English)
 
@@ -110,13 +106,13 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 ### Codebase Reading List (Tier 3)
 1. `backend/src/api/` — Inspect the 17 Content-Type schemas (`schema.json`) such as `event`, `article`, `service`, `donation-campaign`, `visit-booking`, and `prayer-setting`.
 2. `backend/config/plugins.ts` — Review how all Strapi v5 plugins (`i18n`, `strapi-cache` v1.13.0, `typesense`, `seo`, `tiptap-editor`, and our 10 `@vicacha-devs/*` plugins) are configured.
-3. `backend/src/index.ts`, `backend/src/bootstrap/`, and `backend/src/seed/` — `index.ts` only orchestrates. Study how the bootstrap modules provision locales (`es`, `en`, `ar`, `tr`) and set public permissions, and how the seed modules create the initial multilingual records.
+3. `backend/src/index.ts` — Study how `bootstrap()` provisions locales (`es`, `en`, `ar`, `tr`), sets public permissions, and seeds initial bilingual/multilingual records.
 4. `frontend/src/services/strapi/api.ts`, `loader.ts`, & `frontend/src/utils/localized-mocks.ts` — Trace how the frontend queries Strapi v5 and falls back to offline mocks when Strapi is unreachable.
 
 ### Tier 3 Hands-On Graduation PR Challenge
 - **Deliverable PR**:
-  1. Add or extend a field on a Strapi Content-Type in `backend/src/api/`, update the matching seed data in `backend/src/seed/`, and add a backend test in `backend/tests/`.
-  2. Map the field in the matching `mapStrapiEntry` in `frontend/src/content.config.ts`, provide 4-locale offline fallback data in `frontend/src/utils/localized-mocks.ts`, and display it on an Astro page with a unit test.
+  1. Add or extend a field on a Strapi Content-Type in `backend/src/api/`, update the seed data in `backend/src/index.ts`, and add a backend test in `backend/tests/`.
+  2. Map the field in `frontend/src/services/strapi/mappers.ts`, provide 4-locale offline fallback data in `frontend/src/utils/localized-mocks.ts`, and display it on an Astro page with a unit test.
 
 ---
 
@@ -146,7 +142,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 ### Tier 4 Hands-On Graduation PR Challenge
 - **Deliverable PR**:
   1. Pick a plugin in `strapi-v5-extensions/packages/` (e.g., `strapi-plugin-events`, `strapi-plugin-bookings`, or `strapi-plugin-certificates`).
-  2. Add an enhancement or filter to its Admin UI (`admin/src/`) or Server Service (`server/src/services/`), keeping files small and focused.
+  2. Add an enhancement or filter to its Admin UI (`admin/src/`) or Server Service (`server/src/services/`), keeping all files `< 500` lines.
   3. Add translation keys across all locale JSON files in `admin/src/translations/*.json`.
   4. Add unit test assertions in `tests/services-and-i18n.test.ts`, run `pnpm test`, and verify that no `dist/` folders are left in the working tree.
 
@@ -156,7 +152,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 
 Before requesting code review on any Pull Request, verify every box below:
 
-- [ ] **Docs Size Limit**: Every markdown file you touch under `docs/src/content/docs/` has `<= 500` lines (`wc -l <file>`), and source files you add stay small and focused.
+- [ ] **File Size Limit**: Every created or modified file has `< 500` lines (`wc -l <file>`).
 - [ ] **Formatting & Linting**: Ran `./node_modules/.bin/oxfmt --check` and `./node_modules/.bin/eslint . --quiet` with zero warnings or errors.
 - [ ] **i18n & RTL Parity**: All user-facing strings exist in `es`, `en`, `ar`, and `tr` (plus all plugin locale JSON files if touching a Strapi plugin), and all spacing/borders use logical CSS properties (`ps-*`, `pe-*`, `ms-*`, `me-*`).
 - [ ] **Security**: Zero `set:html` or `innerHTML` with untrusted content; external URLs sanitized.
