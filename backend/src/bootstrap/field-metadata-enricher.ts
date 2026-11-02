@@ -177,6 +177,8 @@ const AUTHOR_LAYOUT_GROUPS: Array<{
   { nameField: 'author', relationField: 'authorProfile', slugField: 'authorSlug' },
   { nameField: 'authorName', relationField: 'authorProfile', slugField: 'authorSlug' },
   { nameField: 'speaker', relationField: 'speakerProfile', slugField: 'speakerSlug' },
+  { nameField: 'rsvpEnabled', relationField: 'featured', slugField: 'waitlistEnabled' },
+  { nameField: 'maxGuestsPerRegistration', relationField: 'capacity', slugField: 'registrationDeadline' },
 ];
 
 /**
@@ -248,6 +250,44 @@ export function normalizeAuthorLayoutRows(
 
     currentLayout = nextLayout;
     anyChanged = true;
+  }
+
+  // Ensure `transcript` (RichText) is placed as a full-width (size: 12) row immediately after `description`
+  const hasDescription = currentLayout.some(
+    (row) => Array.isArray(row) && row.some((c) => c?.name === 'description')
+  );
+  const hasTranscript = currentLayout.some(
+    (row) => Array.isArray(row) && row.some((c) => c?.name === 'transcript')
+  );
+  if (hasDescription && hasTranscript) {
+    const descRowIdx = currentLayout.findIndex(
+      (row) => Array.isArray(row) && row.some((c) => c?.name === 'description')
+    );
+    const transRowIdx = currentLayout.findIndex(
+      (row) => Array.isArray(row) && row.some((c) => c?.name === 'transcript')
+    );
+    const transRow = currentLayout[transRowIdx];
+    const isAlreadyFullWidthBelowDesc =
+      transRowIdx === descRowIdx + 1 &&
+      transRow?.length === 1 &&
+      transRow[0]?.name === 'transcript' &&
+      transRow[0]?.size === 12;
+
+    if (!isAlreadyFullWidthBelowDesc) {
+      const nextLayout: EditLayoutCell[][] = [];
+      for (const row of currentLayout) {
+        if (!Array.isArray(row)) continue;
+        const withoutTranscript = row.filter((c) => c?.name && c.name !== 'transcript');
+        if (withoutTranscript.length > 0) {
+          nextLayout.push(withoutTranscript);
+        }
+        if (row.some((c) => c?.name === 'description')) {
+          nextLayout.push([{ name: 'transcript', size: 12 }]);
+        }
+      }
+      currentLayout = nextLayout;
+      anyChanged = true;
+    }
   }
 
   return { layout: currentLayout, changed: anyChanged };

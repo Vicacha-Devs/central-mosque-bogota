@@ -21,6 +21,7 @@ import { seedNavigationPluginConfig } from './seed/navigation-seed';
 import { seedSitemapPluginConfig } from './seed/sitemap-seed';
 import { seedTiptapEditorConfig } from './seed/tiptap-seed';
 
+// Strapi v5 application lifecycle hooks
 export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     syncContentStructureGroupsFile(strapi);

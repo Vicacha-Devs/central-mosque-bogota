@@ -80,6 +80,18 @@ export function buildMosqueMediaFeedsPluginConfig(env: any, hijriCalendar: any) 
       ],
       schemaExtensions: {
         'media-item': {
+          transcript: {
+            type: 'customField',
+            customField: 'plugin::tiptap-editor.RichText',
+            options: {
+              preset: 'editorial',
+            },
+            pluginOptions: {
+              i18n: {
+                localized: true,
+              },
+            },
+          },
           hijriDate: {
             type: 'string',
             pluginOptions: {

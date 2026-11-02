@@ -464,6 +464,9 @@ export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
     i18n: {
       localized: true;
     };
+    'preview-button': {
+      listViewColumn: true;
+    };
   };
   attributes: {
     architectureDescription: Schema.Attribute.Text &
@@ -587,6 +590,9 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     };
     i18n: {
       localized: true;
+    };
+    'preview-button': {
+      listViewColumn: true;
     };
   };
   attributes: {
@@ -725,6 +731,9 @@ export interface ApiCommunityServiceCommunityService
     i18n: {
       localized: true;
     };
+    'preview-button': {
+      listViewColumn: true;
+    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -824,6 +833,9 @@ export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
     i18n: {
       localized: true;
     };
+    'preview-button': {
+      listViewColumn: true;
+    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -903,6 +915,9 @@ export interface ApiDonationsPageDonationsPage extends Struct.SingleTypeSchema {
     };
     i18n: {
       localized: true;
+    };
+    'preview-button': {
+      listViewColumn: true;
     };
   };
   attributes: {
@@ -1122,6 +1137,9 @@ export interface ApiIslamFaithPageIslamFaithPage
     };
     i18n: {
       localized: true;
+    };
+    'preview-button': {
+      listViewColumn: true;
     };
   };
   attributes: {
@@ -1780,6 +1798,7 @@ export interface PluginBroadcastsCampaign extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'draft'>;
     subject: Schema.Attribute.String & Schema.Attribute.Required;
+    telegramChatId: Schema.Attribute.String;
     telegramThreadId: Schema.Attribute.Integer;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     topic: Schema.Attribute.String &
@@ -1789,6 +1808,7 @@ export interface PluginBroadcastsCampaign extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    whatsappGroupIds: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
     whatsappTemplateName: Schema.Attribute.String;
   };
 }
@@ -2257,6 +2277,9 @@ export interface PluginDonationsCampaign extends Struct.CollectionTypeSchema {
     i18n: {
       localized: true;
     };
+    'preview-button': {
+      listViewColumn: true;
+    };
   };
   attributes: {
     allowCustomAmount: Schema.Attribute.Boolean &
@@ -2307,6 +2330,7 @@ export interface PluginDonationsCampaign extends Struct.CollectionTypeSchema {
       }>;
     currency: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'plugin::donations.currency'> &
       Schema.Attribute.DefaultTo<'COP'>;
     description: Schema.Attribute.Text &
       Schema.Attribute.Required &
@@ -2440,6 +2464,7 @@ export interface PluginDonationsPledge extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     currency: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'plugin::donations.currency'> &
       Schema.Attribute.DefaultTo<'COP'>;
     donorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
     donorName: Schema.Attribute.String & Schema.Attribute.Required;
@@ -2587,46 +2612,6 @@ export interface PluginEmailDesigner5EmailDesignerTemplateVersion
   };
 }
 
-export interface PluginEntityNotesNote extends Struct.CollectionTypeSchema {
-  collectionName: 'notes';
-  info: {
-    displayName: 'notes';
-    pluralName: 'notes';
-    singularName: 'note';
-  };
-  options: {
-    comment: '';
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    content: Schema.Attribute.Text;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    entityId: Schema.Attribute.String;
-    entitySlug: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::entity-notes.note'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface PluginEventsEvent extends Struct.CollectionTypeSchema {
   collectionName: 'plugin_events_items';
   info: {
@@ -2647,6 +2632,9 @@ export interface PluginEventsEvent extends Struct.CollectionTypeSchema {
     };
     i18n: {
       localized: true;
+    };
+    'preview-button': {
+      listViewColumn: true;
     };
   };
   attributes: {
@@ -2681,7 +2669,9 @@ export interface PluginEventsEvent extends Struct.CollectionTypeSchema {
         },
         number
       >;
-    category: Schema.Attribute.String &
+    category: Schema.Attribute.Enumeration<
+      ['general', 'education', 'community', 'youth', 'spiritual', 'ramadan']
+    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
@@ -3074,72 +3064,6 @@ export interface PluginInboxAlertBanner extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface PluginInboxForm extends Struct.CollectionTypeSchema {
-  collectionName: 'inbox_forms';
-  info: {
-    description: 'Visual Form Builder & Service-Desk Casework definition';
-    displayName: 'Inbox Form';
-    pluralName: 'forms';
-    singularName: 'form';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: true;
-    };
-    'content-type-builder': {
-      visible: true;
-    };
-  };
-  attributes: {
-    active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    category: Schema.Attribute.Enumeration<
-      [
-        'contact',
-        'service_desk',
-        'inquiry',
-        'application',
-        'volunteer',
-        'custom',
-      ]
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'contact'>;
-    checklistTemplate: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    fields: Schema.Attribute.JSON &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<[]>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::inbox.form'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    settings: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    submissionCount: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    translations: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface PluginInboxSubmission extends Struct.CollectionTypeSchema {
   collectionName: 'inbox_submissions';
   info: {
@@ -3183,6 +3107,7 @@ export interface PluginInboxSubmission extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<{}>;
     department: Schema.Attribute.String & Schema.Attribute.DefaultTo<'general'>;
+    formBuilderSubmissionId: Schema.Attribute.Integer;
     formSlug: Schema.Attribute.String & Schema.Attribute.Required;
     formTitle: Schema.Attribute.String;
     ipAddress: Schema.Attribute.String & Schema.Attribute.Private;
@@ -3405,6 +3330,9 @@ export interface PluginMediaFeedsMediaItem extends Struct.CollectionTypeSchema {
     i18n: {
       localized: true;
     };
+    'preview-button': {
+      listViewColumn: true;
+    };
   };
   attributes: {
     audioFile: Schema.Attribute.Media<'audios'> &
@@ -3503,6 +3431,18 @@ export interface PluginMediaFeedsMediaItem extends Struct.CollectionTypeSchema {
     thumbnail: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    transcript: Schema.Attribute.Text &
+      Schema.Attribute.CustomField<
+        'plugin::tiptap-editor.RichText',
+        {
+          preset: 'editorial';
+        }
+      > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -3747,6 +3687,76 @@ export interface PluginNavigationNavigationItem
   };
 }
 
+export interface PluginNotesNote extends Struct.CollectionTypeSchema {
+  collectionName: 'notes';
+  info: {
+    description: 'Editorial notes attached to Content Manager entity records';
+    displayName: 'Notes';
+    pluralName: 'notes';
+    singularName: 'note';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      ['general', 'todo', 'blocker', 'idea']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'general'>;
+    content: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    createdByName: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    entityDocumentId: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+      }>;
+    entityId: Schema.Attribute.Integer;
+    entityLocale: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 32;
+      }>;
+    entitySlug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+    isPinned: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::notes.note'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedByName: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+  };
+}
+
 export interface PluginPublisherAction extends Struct.CollectionTypeSchema {
   collectionName: 'actions';
   info: {
@@ -3838,7 +3848,6 @@ export interface PluginResourcesGalleryAlbum
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text &
-      Schema.Attribute.Required &
       Schema.Attribute.CustomField<
         'plugin::tiptap-editor.RichText',
         {
@@ -4095,6 +4104,9 @@ export interface PluginResourcesPublication
     i18n: {
       localized: true;
     };
+    'preview-button': {
+      listViewColumn: true;
+    };
   };
   attributes: {
     allowPublicDownload: Schema.Attribute.Boolean &
@@ -4246,7 +4258,6 @@ export interface PluginResourcesPublication
         };
       }>;
     summary: Schema.Attribute.Text &
-      Schema.Attribute.Required &
       Schema.Attribute.CustomField<
         'plugin::tiptap-editor.RichText',
         {
@@ -4372,13 +4383,13 @@ export interface PluginReviewWorkflowsWorkflowStage
   };
 }
 
-export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginContentType
+export interface PluginSitemapSitemapContentType
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_5_sitemap_plugin_content_types';
   info: {
-    displayName: 'strapi-5-sitemap-plugin-content-type';
-    pluralName: 'strapi-5-sitemap-plugin-content-types';
-    singularName: 'strapi-5-sitemap-plugin-content-type';
+    displayName: 'Sitemap Content Type';
+    pluralName: 'sitemap-content-types';
+    singularName: 'sitemap-content-type';
   };
   options: {
     comment: '';
@@ -4402,7 +4413,7 @@ export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginContentType
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type'
+      'plugin::sitemap.sitemap-content-type'
     > &
       Schema.Attribute.Private;
     pattern: Schema.Attribute.String;
@@ -4417,13 +4428,13 @@ export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginContentType
   };
 }
 
-export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginContentTypeSingleUrl
+export interface PluginSitemapSitemapContentTypeSingleUrl
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_5_sitemap_plugin_content_type_single_urls';
   info: {
-    displayName: 'strapi-5-sitemap-plugin-content-type-single-url';
-    pluralName: 'strapi-5-sitemap-plugin-content-type-single-urls';
-    singularName: 'strapi-5-sitemap-plugin-content-type-single-url';
+    displayName: 'Sitemap Single URL';
+    pluralName: 'sitemap-content-type-single-urls';
+    singularName: 'sitemap-content-type-single-url';
   };
   options: {
     comment: '';
@@ -4445,7 +4456,7 @@ export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginContentTypeSingle
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type-single-url'
+      'plugin::sitemap.sitemap-content-type-single-url'
     > &
       Schema.Attribute.Private;
     priority: Schema.Attribute.Float;
@@ -4457,13 +4468,12 @@ export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginContentTypeSingle
   };
 }
 
-export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginOption
-  extends Struct.SingleTypeSchema {
+export interface PluginSitemapSitemapOption extends Struct.SingleTypeSchema {
   collectionName: 'strapi_5_sitemap_plugin_options';
   info: {
-    displayName: 'strapi-5-sitemap-plugin-options';
-    pluralName: 'strapi-5-sitemap-plugin-options';
-    singularName: 'strapi-5-sitemap-plugin-option';
+    displayName: 'Sitemap Options';
+    pluralName: 'sitemap-options';
+    singularName: 'sitemap-option';
   };
   options: {
     comment: '';
@@ -4486,7 +4496,7 @@ export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginOption
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-option'
+      'plugin::sitemap.sitemap-option'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
@@ -4496,6 +4506,123 @@ export interface PluginStrapi5SitemapPluginStrapi5SitemapPluginOption
       Schema.Attribute.Private;
     useSitemapIndex: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+  };
+}
+
+export interface PluginStrapiPluginFormBuilderCmsForm
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'formcraft_forms';
+  info: {
+    description: 'Dynamic form definitions';
+    displayName: 'Form';
+    pluralName: 'forms';
+    singularName: 'form';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    conditionalLogic: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    fields: Schema.Attribute.JSON &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<[]>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::strapi-plugin-form-builder-cms.form'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    publishedData: Schema.Attribute.JSON;
+    settings: Schema.Attribute.JSON &
+      Schema.Attribute.DefaultTo<{
+        captcha: {
+          provider: 'none';
+          secretKey: '';
+          siteKey: '';
+        };
+        customCss: '';
+        enableHoneypot: true;
+        enableRateLimit: true;
+        maxSubmissionsPerHour: 60;
+        notificationEmails: [];
+        redirectUrl: '';
+        submitButtonText: 'Submit';
+        successMessage: 'Form submitted successfully';
+      }>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    submissions: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::strapi-plugin-form-builder-cms.form-submission'
+    >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface PluginStrapiPluginFormBuilderCmsFormSubmission
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'formcraft_submissions';
+  info: {
+    description: 'Submitted form data';
+    displayName: 'Form Submission';
+    pluralName: 'form-submissions';
+    singularName: 'form-submission';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    data: Schema.Attribute.JSON & Schema.Attribute.Required;
+    fields: Schema.Attribute.JSON;
+    form: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::strapi-plugin-form-builder-cms.form'
+    >;
+    ipAddress: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::strapi-plugin-form-builder-cms.form-submission'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<['new', 'read', 'archived']> &
+      Schema.Attribute.DefaultTo<'new'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userAgent: Schema.Attribute.String;
   };
 }
 
@@ -4796,12 +4923,10 @@ declare module '@strapi/strapi' {
       'plugin::donations.pledge': PluginDonationsPledge;
       'plugin::email-designer-5.email-designer-template': PluginEmailDesigner5EmailDesignerTemplate;
       'plugin::email-designer-5.email-designer-template-version': PluginEmailDesigner5EmailDesignerTemplateVersion;
-      'plugin::entity-notes.note': PluginEntityNotesNote;
       'plugin::events.event': PluginEventsEvent;
       'plugin::events.registration': PluginEventsRegistration;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::inbox.alert-banner': PluginInboxAlertBanner;
-      'plugin::inbox.form': PluginInboxForm;
       'plugin::inbox.submission': PluginInboxSubmission;
       'plugin::inbox.subscriber': PluginInboxSubscriber;
       'plugin::islam.hilal-announcement': PluginIslamHilalAnnouncement;
@@ -4811,15 +4936,18 @@ declare module '@strapi/strapi' {
       'plugin::navigation.audience': PluginNavigationAudience;
       'plugin::navigation.navigation': PluginNavigationNavigation;
       'plugin::navigation.navigation-item': PluginNavigationNavigationItem;
+      'plugin::notes.note': PluginNotesNote;
       'plugin::publisher.action': PluginPublisherAction;
       'plugin::resources.gallery-album': PluginResourcesGalleryAlbum;
       'plugin::resources.glossary-term': PluginResourcesGlossaryTerm;
       'plugin::resources.publication': PluginResourcesPublication;
       'plugin::review-workflows.workflow': PluginReviewWorkflowsWorkflow;
       'plugin::review-workflows.workflow-stage': PluginReviewWorkflowsWorkflowStage;
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type': PluginStrapi5SitemapPluginStrapi5SitemapPluginContentType;
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type-single-url': PluginStrapi5SitemapPluginStrapi5SitemapPluginContentTypeSingleUrl;
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-option': PluginStrapi5SitemapPluginStrapi5SitemapPluginOption;
+      'plugin::sitemap.sitemap-content-type': PluginSitemapSitemapContentType;
+      'plugin::sitemap.sitemap-content-type-single-url': PluginSitemapSitemapContentTypeSingleUrl;
+      'plugin::sitemap.sitemap-option': PluginSitemapSitemapOption;
+      'plugin::strapi-plugin-form-builder-cms.form': PluginStrapiPluginFormBuilderCmsForm;
+      'plugin::strapi-plugin-form-builder-cms.form-submission': PluginStrapiPluginFormBuilderCmsFormSubmission;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;

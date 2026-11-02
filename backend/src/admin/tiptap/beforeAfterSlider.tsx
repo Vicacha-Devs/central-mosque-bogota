@@ -8,9 +8,6 @@ import {
   type StrapiFile,
 } from '@notum-cz/strapi-plugin-tiptap-editor/strapi-admin';
 
-const DEFAULT_BEFORE_ALT = 'Before';
-const DEFAULT_AFTER_ALT = 'After';
-
 const SAFE_URL_PATTERN = /^(https?:\/\/|\/(?![/\\]))/i;
 
 const sanitizeMediaUrl = (raw: unknown): string => {
@@ -47,8 +44,8 @@ export const BeforeAfterNode = Node.create({
     return {
       beforeUrl: { default: '' },
       afterUrl: { default: '' },
-      beforeAlt: { default: DEFAULT_BEFORE_ALT },
-      afterAlt: { default: DEFAULT_AFTER_ALT },
+      beforeAlt: { default: 'Before' },
+      afterAlt: { default: 'After' },
       caption: { default: '' },
     };
   },
@@ -69,9 +66,9 @@ export const BeforeAfterNode = Node.create({
               el.getAttribute('data-after-url') || imgs[1]?.getAttribute('src')
             ),
             beforeAlt:
-              el.getAttribute('data-before-alt') || imgs[0]?.getAttribute('alt') || DEFAULT_BEFORE_ALT,
+              el.getAttribute('data-before-alt') || imgs[0]?.getAttribute('alt') || 'Before',
             afterAlt:
-              el.getAttribute('data-after-alt') || imgs[1]?.getAttribute('alt') || DEFAULT_AFTER_ALT,
+              el.getAttribute('data-after-alt') || imgs[1]?.getAttribute('alt') || 'After',
             caption: el.getAttribute('data-caption') || figcap?.textContent || '',
           };
         },
@@ -82,8 +79,8 @@ export const BeforeAfterNode = Node.create({
   renderHTML({ HTMLAttributes }) {
     const beforeUrl = sanitizeMediaUrl(HTMLAttributes.beforeUrl);
     const afterUrl = sanitizeMediaUrl(HTMLAttributes.afterUrl);
-    const beforeAlt = String(HTMLAttributes.beforeAlt || DEFAULT_BEFORE_ALT);
-    const afterAlt = String(HTMLAttributes.afterAlt || DEFAULT_AFTER_ALT);
+    const beforeAlt = String(HTMLAttributes.beforeAlt || 'Before');
+    const afterAlt = String(HTMLAttributes.afterAlt || 'After');
     const caption = String(HTMLAttributes.caption || '');
 
     return [
@@ -109,7 +106,7 @@ export function BeforeAfterDialog({ editor, open, onClose }: CustomExtensionDial
   const [step, setStep] = useState<'before' | 'after'>('before');
   const [beforeAsset, setBeforeAsset] = useState<{ url: string; alt: string; caption: string }>({
     url: '',
-    alt: DEFAULT_BEFORE_ALT,
+    alt: 'Before',
     caption: '',
   });
 
@@ -127,7 +124,7 @@ export function BeforeAfterDialog({ editor, open, onClose }: CustomExtensionDial
     if (step === 'before') {
       setBeforeAsset({
         url: file.url,
-        alt: file.alternativeText || file.name || DEFAULT_BEFORE_ALT,
+        alt: file.alternativeText || file.name || 'Before',
         caption: file.caption || '',
       });
       setStep('after');
@@ -141,7 +138,7 @@ export function BeforeAfterDialog({ editor, open, onClose }: CustomExtensionDial
             beforeUrl: beforeAsset.url,
             afterUrl: file.url,
             beforeAlt: beforeAsset.alt,
-            afterAlt: file.alternativeText || file.name || DEFAULT_AFTER_ALT,
+            afterAlt: file.alternativeText || file.name || 'After',
             caption: file.caption || beforeAsset.caption || '',
           },
         })

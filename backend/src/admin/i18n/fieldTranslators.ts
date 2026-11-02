@@ -1,4 +1,8 @@
-import { EXACT_FIELD_LABELS, WORD_DICTIONARY } from './fieldDictionaries';
+import {
+  ENUM_VALUE_LABELS,
+  EXACT_FIELD_LABELS,
+  WORD_DICTIONARY,
+} from './fieldDictionaries';
 import type { SupportedAdminLocale } from './types';
 
 function splitFieldWords(fieldName: string): string[] {
@@ -29,6 +33,26 @@ export function translateFieldLabel(
     })
     .filter(Boolean);
   return translated.join(' ') || fieldName;
+}
+
+export function translateEnumValue(
+  enumValue: string,
+  locale: SupportedAdminLocale
+): string {
+  if (ENUM_VALUE_LABELS[enumValue]?.[locale]) {
+    return ENUM_VALUE_LABELS[enumValue][locale];
+  }
+  const words = splitFieldWords(enumValue);
+  const translated = words
+    .map((w) => {
+      const lower = w.toLowerCase();
+      if (WORD_DICTIONARY[lower]?.[locale]) {
+        return WORD_DICTIONARY[lower][locale];
+      }
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .filter(Boolean);
+  return translated.join(' ') || enumValue;
 }
 
 export function translateFieldPlaceholder(
@@ -143,3 +167,4 @@ export function translateFieldPlaceholder(
   }
   return `Enter ${label.toLowerCase()}...`;
 }
+

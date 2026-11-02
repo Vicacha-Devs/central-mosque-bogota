@@ -35,6 +35,13 @@ export function buildMosqueBroadcastsPluginConfig(env: EnvFn) {
         'TELEGRAM_DEFAULT_CHAT_ID',
         '@MezquitaCentralBogota'
       ),
+      telegramTopicChatMap: {
+        announcements: env('TELEGRAM_CHAT_ANNOUNCEMENTS', ''),
+        events: env('TELEGRAM_CHAT_EVENTS', ''),
+        courses: env('TELEGRAM_CHAT_COURSES', ''),
+        ramadan_eid: env('TELEGRAM_CHAT_RAMADAN', ''),
+        urgent_janazah: env('TELEGRAM_CHAT_JANAZAH', ''),
+      },
       telegramTopicThreadMap: {
         announcements: env.int('TELEGRAM_THREAD_ANNOUNCEMENTS', 0),
         events: env.int('TELEGRAM_THREAD_EVENTS', 0),
@@ -49,6 +56,17 @@ export function buildMosqueBroadcastsPluginConfig(env: EnvFn) {
       whatsappGatewayUrl: env('WHATSAPP_GATEWAY_URL', ''),
       whatsappGatewaySession: env('WHATSAPP_GATEWAY_SESSION', 'default'),
       whatsappGatewayApiKey: env('WHATSAPP_GATEWAY_API_KEY', ''),
+      whatsappDefaultRecipients: env('WHATSAPP_DEFAULT_GROUPS', '')
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean),
+      whatsappTopicGroupMap: {
+        announcements: env('WHATSAPP_GROUP_ANNOUNCEMENTS', ''),
+        events: env('WHATSAPP_GROUP_EVENTS', ''),
+        courses: env('WHATSAPP_GROUP_COURSES', ''),
+        ramadan_eid: env('WHATSAPP_GROUP_RAMADAN', ''),
+        urgent_janazah: env('WHATSAPP_GROUP_JANAZAH', ''),
+      },
       publicChannelLinks: [
         {
           id: 'telegram-main',

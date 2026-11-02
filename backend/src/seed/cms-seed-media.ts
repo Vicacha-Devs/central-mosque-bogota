@@ -8,6 +8,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'jumuah-khutbah-misericordia-convivencia',
       description:
         'Reflexión del viernes en árabe y español sobre el ejemplo profético de compasión, justicia y servicio al prójimo.',
+      transcript:
+        '<h3>Primera Khutbah: La Misericordia como Pilar de la Fe</h3><p>Alabado sea Allah, Señor de los mundos. Atestiguamos que no hay divinidad sino Allah y que Muhammad (la paz y las bendiciones sean con él) fue enviado como misericordia para toda la creación: <em>«Y no te enviamos sino como misericordia para los mundos»</em> (Corán 21:107).</p><p>Queridos hermanos y hermanas en Bogotá: la verdadera piedad se manifiesta en cómo tratamos a nuestros vecinos, colegas y familias con justicia, honestidad y compasión.</p><h3>Segunda Khutbah: Convivencia y Servicio Comunitario</h3><p>El Profeta (ﷺ) enseñó que el mejor de las personas es quien más beneficia a los demás. Pidamos a Allah que bendiga a nuestra comunidad y fortalezca los lazos de fraternidad y paz.</p>',
       type: 'khutbah',
       provider: 'youtube',
       externalId: 'M7lc1UVf-VE',
@@ -58,6 +60,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'valor-cinco-oraciones-diarias',
       description:
         'Episodio de podcast espiritual con consejos prácticos para preservar la concentración (Khushu) y organizar la jornada laboral en torno al Salah.',
+      transcript:
+        '<h3>Transcripción del Episodio</h3><p>En el ritmo acelerado de la vida moderna, las cinco oraciones diarias (Salah) son estaciones de paz y renovación espiritual que devuelven el equilibrio al corazón.</p>',
       type: 'podcast',
       provider: 'spotify',
       externalId: '4rOoJ6Egrf8K2IrywzwOMk',
@@ -83,6 +87,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'virtud-buscar-conocimiento',
       description:
         'Conferencia especial en video de YouTube sobre la ética del estudiante en el Islam y la solidaridad social en Bogotá.',
+      transcript:
+        '<h3>Resumen y Transcripción de la Conferencia</h3><p>Buscar el conocimiento beneficioso en el Islam está íntimamente ligado a la humildad (Adab) y al compromiso activo con el bienestar de la sociedad.</p>',
       type: 'video',
       provider: 'youtube',
       externalId: 'aqz-KE-bpKQ',
@@ -104,6 +110,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'jumuah-khutbah-mercy-coexistence',
       description:
         'Bilingual Friday sermon reflecting on the Prophetic example of compassion, justice, and service to neighbors.',
+      transcript:
+        '<h3>First Khutbah: Mercy as a Pillar of Faith</h3><p>All praise is due to Allah, Lord of the worlds. We bear witness that there is no deity worthy of worship except Allah, and that Muhammad (peace and blessings be upon him) was sent as a mercy to all creation: <em>"And We have not sent you except as a mercy to the worlds"</em> (Qur’an 21:107).</p><p>Dear brothers and sisters: true piety shines through how we treat our neighbors, colleagues, and families with fairness, honesty, and compassion.</p><h3>Second Khutbah: Coexistence and Community Service</h3><p>The Prophet (ﷺ) taught that the best of people are those who bring the most benefit to others. May Allah bless our community and strengthen the bonds of peace and brotherhood.</p>',
       type: 'khutbah',
       provider: 'youtube',
       externalId: 'M7lc1UVf-VE',
@@ -123,6 +131,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'value-five-daily-prayers-podcast',
       description:
         'Spiritual podcast episode on cultivating mindfulness (Khushu) and structuring your workday around Salah.',
+      transcript:
+        '<h3>Episode Transcript</h3><p>In the fast pace of modern life, the five daily prayers (Salah) serve as anchors of tranquility and spiritual renewal for the heart.</p>',
       type: 'podcast',
       provider: 'spotify',
       externalId: '4rOoJ6Egrf8K2IrywzwOMk',
@@ -142,6 +152,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'virtue-seeking-knowledge-video',
       description:
         'YouTube video lecture on the ethics of seeking sacred knowledge and supporting community welfare.',
+      transcript:
+        '<h3>Lecture Transcript</h3><p>Seeking beneficial knowledge in Islam is inseparable from prophetic character (Adab) and sincere service to humanity.</p>',
       type: 'video',
       provider: 'youtube',
       externalId: 'aqz-KE-bpKQ',
@@ -163,6 +175,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'jumuah-khutbah-mercy-coexistence-ar',
       description:
         'خطبة الجمعة حول الهدي النبوي في الرحمة والعدل والإحسان إلى الجار مع الترجمة المتعددة اللغات.',
+      transcript:
+        '<h3>الخطبة الأولى: الرحمة أساس الإيمان</h3><p>إن الحمد لله نحمده ونستعينه ونستغفره، ونشهد أن لا إله إلا الله وحده لا شريك له، وأن محمداً عبده ورسوله الذي أرسله الله رحمة للعالمين: <em>﴿وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ﴾</em> (الأنبياء: 107).</p><p>عباد الله: إن حقيقة التقوى تظهر في حسن الخلق والعدل والإحسان إلى الجار وخدمة المجتمع بصدق وأمانة.</p><h3>الخطبة الثانية: التعايش وخدمة المجتمع</h3><p>قال النبي ﷺ: «خير الناس أنفعهم للناس». نسأل الله أن يبارك في مجتمعنا وأن يديم علينا نعمة الأخوة والسكينة والسلام.</p>',
       type: 'khutbah',
       provider: 'youtube',
       externalId: 'M7lc1UVf-VE',
@@ -182,6 +196,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'value-five-daily-prayers-ar',
       description:
         'حلقة بودكاست إيماني لتحقيق الخشوع في الصلاة والمحافظة على أوقاتها في ظل انشغالات الحياة المعاصرة.',
+      transcript:
+        '<h3>التفريغ النصي للحلقة</h3><p>تمثل الصلوات الخمس محطات يومية للسكينة وتجديد الإيمان وحفظ توازن القلب في خضم الحياة المعاصرة.</p>',
       type: 'podcast',
       provider: 'spotify',
       externalId: '4rOoJ6Egrf8K2IrywzwOMk',
@@ -203,6 +219,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'cuma-hutbesi-merhamet-birlikte-yasama',
       description:
         'Peygamber Efendimizin şefkat, adalet ve komşuluk hukuku üzerindeki örnekliğini ele alan Cuma hutbesi.',
+      transcript:
+        '<h3>Birinci Hutbe: İmanın Temeli Olarak Merhamet</h3><p>Hamd, âlemlerin Rabbi olan Allah’a mahsustur. Şehadet ederiz ki Allah’tan başka ilah yoktur ve Muhammed (s.a.v.) tüm âlemlere rahmet olarak gönderilmiştir: <em>"Biz seni ancak âlemlere rahmet olarak gönderdik"</em> (Enbiyâ, 21/107).</p><p>Aziz kardeşlerim: Gerçek takva; komşularımıza, çalışma arkadaşlarımıza ve ailemize karşı adalet, dürüstlük ve şefkatle muamele etmemizde tezahür eder.</p><h3>İkinci Hutbe: Birlikte Yaşama ve Topluma Hizmet</h3><p>Peygamber Efendimiz (s.a.v.) şöyle buyurmuştur: "İnsanların en hayırlısı, insanlara en faydalı olandır." Yüce Allah’tan toplumumuza huzur, kardeşlik ve bereket ihsan etmesini niyaz ederiz.</p>',
       type: 'khutbah',
       provider: 'youtube',
       externalId: 'M7lc1UVf-VE',
@@ -222,6 +240,8 @@ export const MEDIA_HIGHLIGHTS_BY_LOCALE: Record<
       slug: 'modern-hayatta-bes-vakit-namaz-podcast',
       description:
         'Günlük iş temposu içinde namaz vakitlerini korumak ve huşuyu yakalamak için pratik tavsiyeler.',
+      transcript:
+        '<h3>Bölüm Transkripti</h3><p>Modern hayatın yoğun temposunda beş vakit namaz, kalbe huzur ve manevi yenilenme kazandıran en önemli sığınaktır.</p>',
       type: 'podcast',
       provider: 'spotify',
       externalId: '4rOoJ6Egrf8K2IrywzwOMk',

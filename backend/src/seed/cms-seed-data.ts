@@ -448,16 +448,51 @@ export async function seedAdditionalCmsContent(
   ];
 
   for (const { uid, byLocale, transform } of collectionTypeSeeds) {
+    const locales = Object.keys(byLocale);
+    const baseLocale = locales[0];
+    if (!baseLocale) continue;
+    const baseExisting = await (strapi.documents as any)(uid).findMany({ locale: baseLocale });
+    const docIdsByIndex: string[] = baseExisting.map((d: any) => String(d.documentId));
+
     for (const [locale, items] of Object.entries(byLocale)) {
       const existing = await (strapi.documents as any)(uid).findMany({ locale });
       if (existing.length === 0) {
-        for (const item of items) {
+        for (let idx = 0; idx < items.length; idx++) {
+          const item = items[idx];
           const payload = transform ? transform(item) : item;
-          await (strapi.documents as any)(uid).create({
-            locale,
-            status: 'published',
-            data: payload as any,
-          });
+          const targetDocId = docIdsByIndex[idx];
+          if (targetDocId && locale !== baseLocale) {
+            await (strapi.documents as any)(uid).update({
+              documentId: targetDocId,
+              locale,
+              status: 'published',
+              data: payload as any,
+            });
+          } else {
+            const created = await (strapi.documents as any)(uid).create({
+              locale,
+              status: 'published',
+              data: payload as any,
+            });
+            if (locale === baseLocale && created?.documentId) {
+              docIdsByIndex[idx] = String(created.documentId);
+            }
+          }
+        }
+      } else if (uid === 'plugin::media-feeds.media-item') {
+        for (const item of items) {
+          if (!item.transcript) continue;
+          const match = existing.find(
+            (e: any) => e.slug === item.slug || e.title === item.title
+          );
+          if (match && !match.transcript) {
+            await (strapi.documents as any)(uid).update({
+              documentId: String(match.documentId),
+              locale,
+              status: 'published',
+              data: { transcript: item.transcript } as any,
+            });
+          }
         }
       }
     }
@@ -782,7 +817,7 @@ export async function seedAdditionalCmsContent(
 
   // Ensure default Inbox Forms are seeded and published
   try {
-    if (strapi.contentTypes?.['plugin::inbox.form' as keyof typeof strapi.contentTypes]) {
+    if (strapi.contentTypes?.['plugin::strapi-plugin-form-builder-cms.form' as keyof typeof strapi.contentTypes]) {
       const formService = strapi.plugin('inbox')?.service?.('formService') as
         | {
             listForms?: (opts?: Record<string, unknown>) => Promise<Array<Record<string, unknown>>>;

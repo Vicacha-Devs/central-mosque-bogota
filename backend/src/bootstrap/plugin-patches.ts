@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
 import type { Core } from '@strapi/strapi';
 
 /**
@@ -12,12 +15,12 @@ import type { Core } from '@strapi/strapi';
  * 2. [Patch B2 - @strapi/content-manager placeholder i18n & content-locale lookup]
  *    Remove section 1 (`FormLayout`, `NonRepeatable`, `Repeatable` dist patch) once `@strapi/content-manager`
  *    translates `field.placeholder` via `formatMessage` natively.
- * 3. [Patch B3 - @frameless/preview-button panel title & default locale]
- *    Remove section 2 (`@frameless/preview-button` dist patch) and `THIRD_PARTY_PLUGIN_TRANSLATIONS` in
- *    `src/admin/translations.ts` once `@frameless/preview-button` localizes its panel title via `formatMessage`
- *    and ships `es`, `ar`, and `tr` locale files.
+ * 3. [Patch B3 - strapi-plugin-preview-button `listViewColumn` default & `noBorder` prop]
+ *    Remove the `plugin::preview-button` `listViewColumn: true` bootstrap default (lines 59-83)
+ *    and section 4 (`noBorder: true` dist chunk patch) once `strapi-plugin-preview-button` merges
+ *    the server `bootstrap` default and removes `noBorder` from `ListViewColumn`.
  * 4. [Patch B4 - strapi-plugin-navigation `plugin::*` content-type support]
- *    Remove section 3 (`strapi-plugin-navigation` dist patch) once `strapi-plugin-navigation` includes
+ *    Remove section 2 (`strapi-plugin-navigation` dist patch) once `strapi-plugin-navigation` includes
  *    `plugin::` alongside `api::` for Content Manager shortcut links and selectable content types.
  */
 export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) {
@@ -51,16 +54,55 @@ export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) 
       } catch {
         // Ignore if i18n plugin is unavailable
       }
+
+      // TODO(Patch B3a): Remove when strapi-plugin-preview-button sets pluginOptions['preview-button'].listViewColumn = true in server bootstrap.
+      // Enable strapi-plugin-preview-button listViewColumn (default: true per plugin docs)
+      // for all content types configured in plugin::preview-button.contentTypes.
+      try {
+        const previewCfg = strapi.config.get("plugin::preview-button", { contentTypes: [] }) as {
+          contentTypes?: Array<{ uid?: string }>;
+        };
+        const configuredUids = Array.isArray(previewCfg?.contentTypes)
+          ? previewCfg.contentTypes.map((ct) => ct?.uid).filter((u): u is string => Boolean(u))
+          : [];
+        for (const uid of configuredUids) {
+          const ct = (strapi.contentTypes as Record<string, any>)?.[uid];
+          if (!ct) continue;
+          for (const obj of [ct, ct.__schema__]) {
+            if (!obj || typeof obj !== "object") continue;
+            obj.pluginOptions = obj.pluginOptions || {};
+            const existing = obj.pluginOptions["preview-button"] || {};
+            if (existing.listViewColumn === undefined) {
+              obj.pluginOptions["preview-button"] = {
+                ...existing,
+                listViewColumn: true,
+              };
+            }
+          }
+        }
+      } catch {
+        // Ignore if preview-button config is unavailable
+      }
     }
 
-    const fs = require('node:fs') as typeof import('node:fs');
-    const path = require('node:path') as typeof import('node:path');
+    const nodeRequire =
+      typeof require === 'function'
+        ? require
+        : createRequire(path.join(process.cwd(), 'package.json'));
+    const resolvePaths = [process.cwd()];
+    try {
+      resolvePaths.push(path.dirname(nodeRequire.resolve('@strapi/strapi/package.json')));
+    } catch {
+      // Ignore if @strapi/strapi is not directly resolvable
+    }
 
     // TODO(Patch B2): Remove when @strapi/content-manager localizes `field.placeholder` via formatMessage natively.
     // 1. Patch @strapi/content-manager FormLayout, NonRepeatable, and Repeatable so both
     // labels and placeholders are localized via formatMessage (and respect content locale / admin locale).
     try {
-      const cmPkgPath = require.resolve('@strapi/content-manager/package.json');
+      const cmPkgPath = nodeRequire.resolve('@strapi/content-manager/package.json', {
+        paths: resolvePaths,
+      });
       const cmDist = path.join(path.dirname(cmPkgPath), 'dist/admin/pages/EditView/components');
 
       for (const ext of ['mjs', 'js']) {
@@ -164,28 +206,69 @@ export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) 
             }
           }
         }
-      }
-    } catch {
-      // Ignore if read-only filesystem
-    }
 
-    // TODO(Patch B3): Remove when @frameless/preview-button localizes Panel title via formatMessage and ships es/ar/tr locales.
-    // 2. Patch @frameless/preview-button so PreviewPanel title is localized via formatMessage
-    try {
-      const previewPkgPath = require.resolve('@frameless/preview-button/package.json');
-      const previewAdminDir = path.join(path.dirname(previewPkgPath), 'dist/admin');
-      for (const file of ['index.mjs', 'index.js']) {
-        const p = path.join(previewAdminDir, file);
-        if (fs.existsSync(p)) {
-          const raw = fs.readFileSync(p, 'utf8');
-          const patched = raw
-            .replace(
-              /title: isPreviewSupported\.button_label \?\? "Live Preview",/g,
-              `title: (globalThis.__CM_I18N_MESSAGES__?.[typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("plugins[i18n][locale]") : ""]?.["preview-button.panel.title"]) ?? isPreviewSupported.button_label ?? "Live Preview",`
-            )
-            .replace(/locale: locale \?\? "nl",/g, 'locale: locale ?? "es",');
-          if (patched !== raw) {
-            fs.writeFileSync(p, patched, 'utf8');
+        const inputRendererPath = path.join(cmDist, `InputRenderer.${ext}`);
+        if (fs.existsSync(inputRendererPath)) {
+          const raw = fs.readFileSync(inputRendererPath, 'utf8');
+          if (!raw.includes('__mosqueEnumTranslatedV2')) {
+            const cleaned = raw.replace(
+              /options:\s*props\.attribute\.enum\.map\(\(value\)=>\{[\s\S]*?return \{ value, label: __label \};\s*\}\)/g,
+              'options: props.attribute.enum.map((value)=>({ value }))'
+            );
+            const patched = cleaned.replace(
+              /options:\s*props\.attribute\.enum\.map\(\(value\)=>\(\{\s*value\s*\}\)\)/g,
+              `options: props.attribute.enum.map((value)=>{
+                        const __mosqueEnumTranslatedV2 = true;
+                        const __urlLoc = (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('plugins[i18n][locale]')) || (typeof localeKey === 'string' && localeKey !== 'default' ? localeKey : null);
+                        const __adminLoc = typeof window !== 'undefined' ? (window.localStorage?.getItem('strapi-admin-language') || 'en').replace(/^"|"$/g, '') : 'en';
+                        const __dict = (__urlLoc && globalThis.__CM_I18N_MESSAGES__?.[__urlLoc]) || globalThis.__CM_I18N_MESSAGES__?.[__adminLoc] || null;
+                        const __enumKey = \`content-manager.enum.\${value}\`;
+                        const __fallback = String(value).replace(/[_-]+/g, ' ').replace(/\\b\\w/g, (c) => c.toUpperCase());
+                        const __label = (__dict && (__dict[__enumKey] || __dict[value])) || __fallback;
+                        return { value, label: __label };
+                    })`
+            );
+            if (patched !== raw) {
+              fs.writeFileSync(inputRendererPath, patched, 'utf8');
+              const viteCacheDir = path.join(process.cwd(), 'node_modules', '.strapi', 'vite');
+              if (fs.existsSync(viteCacheDir)) {
+                fs.rmSync(viteCacheDir, { recursive: true, force: true });
+              }
+            }
+          }
+        }
+      }
+
+      const adminPkgPath = nodeRequire.resolve('@strapi/admin/package.json', {
+        paths: resolvePaths,
+      });
+      const adminFormInputsDir = path.join(
+        path.dirname(adminPkgPath),
+        'dist/admin/admin/src/components/FormInputs'
+      );
+      for (const ext of ['mjs', 'js']) {
+        const enumPath = path.join(adminFormInputsDir, `Enumeration.${ext}`);
+        if (fs.existsSync(enumPath)) {
+          const raw = fs.readFileSync(enumPath, 'utf8');
+          if (!raw.includes('__mosqueEnumOptionLabel')) {
+            const patched = raw.replace(
+              /children:\s*label\s*\?\?\s*formatMessage\(\{\s*id:\s*value,\s*defaultMessage:\s*value\s*\}\)/g,
+              `children: label ?? ((() => {
+                                const __mosqueEnumOptionLabel = true;
+                                const __urlLoc = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('plugins[i18n][locale]') : null;
+                                const __dict = __urlLoc && globalThis.__CM_I18N_MESSAGES__?.[__urlLoc] ? globalThis.__CM_I18N_MESSAGES__[__urlLoc] : null;
+                                const __enumKey = \`content-manager.enum.\${value}\`;
+                                const __fallback = String(value).replace(/[_-]+/g, ' ').replace(/\\b\\w/g, (c) => c.toUpperCase());
+                                return (__dict && (__dict[__enumKey] || __dict[value])) || formatMessage({ id: __enumKey, defaultMessage: formatMessage({ id: value, defaultMessage: __fallback }) });
+                            })())`
+            );
+            if (patched !== raw) {
+              fs.writeFileSync(enumPath, patched, 'utf8');
+              const viteCacheDir = path.join(process.cwd(), 'node_modules', '.strapi', 'vite');
+              if (fs.existsSync(viteCacheDir)) {
+                fs.rmSync(viteCacheDir, { recursive: true, force: true });
+              }
+            }
           }
         }
       }
@@ -194,10 +277,12 @@ export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) 
     }
 
     // TODO(Patch B4): Remove when strapi-plugin-navigation supports `plugin::*` UIDs for Content Manager shortcut icons & dropdowns.
-    // 3. Patch strapi-plugin-navigation admin bundle so plugin::* content types also display
+    // 2. Patch strapi-plugin-navigation admin bundle so plugin::* content types also display
     // the Content Manager shortcut icon on navigation item cards and in settings dropdowns.
     try {
-      const navPkgPath = require.resolve('strapi-plugin-navigation/package.json');
+      const navPkgPath = nodeRequire.resolve('strapi-plugin-navigation/package.json', {
+        paths: resolvePaths,
+      });
       const navAdminDir = path.join(path.dirname(navPkgPath), 'dist/admin');
       for (const file of ['index.mjs', 'index.js']) {
         const p = path.join(navAdminDir, file);
@@ -222,10 +307,12 @@ export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) 
     }
 
     // TODO(Patch B1b): Remove dist patch when @strapi/i18n returns 200 { data: null } instead of 404 when AI localizations are disabled.
-    // 4. Patch @strapi/i18n ai-localization-jobs controller so disabled AI localizations return
+    // 3. Patch @strapi/i18n ai-localization-jobs controller so disabled AI localizations return
     // 200 { data: null } instead of 404 Not Found when Content Manager polls on mount.
     try {
-      const i18nPkgPath = require.resolve('@strapi/i18n/package.json');
+      const i18nPkgPath = nodeRequire.resolve('@strapi/i18n/package.json', {
+        paths: resolvePaths,
+      });
       const i18nCtrlDir = path.join(path.dirname(i18nPkgPath), 'dist/server/controllers');
       for (const file of ['ai-localization-jobs.mjs', 'ai-localization-jobs.js']) {
         const p = path.join(i18nCtrlDir, file);
@@ -246,7 +333,32 @@ export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) 
     } catch {
       // Ignore if read-only filesystem
     }
+
+    // 4. Patch strapi-plugin-preview-button admin chunk to remove deprecated Design System v1
+    // `noBorder: true` prop on IconButton in ListViewColumn (eliminating React DOM warnings).
+    try {
+      const previewPkgPath = nodeRequire.resolve('strapi-plugin-preview-button/package.json', {
+        paths: resolvePaths,
+      });
+      const previewChunksDir = path.join(path.dirname(previewPkgPath), 'dist/_chunks');
+      if (fs.existsSync(previewChunksDir)) {
+        for (const file of fs.readdirSync(previewChunksDir)) {
+          if (!file.startsWith('index-') || (!file.endsWith('.mjs') && !file.endsWith('.js'))) {
+            continue;
+          }
+          const chunkPath = path.join(previewChunksDir, file);
+          const raw = fs.readFileSync(chunkPath, 'utf8');
+          const patched = raw.replace(/\bnoBorder:\s*true,\s*/g, '');
+          if (patched !== raw) {
+            fs.writeFileSync(chunkPath, patched, 'utf8');
+          }
+        }
+      }
+    } catch {
+      // Ignore if read-only filesystem
+    }
   } catch {
     // Resilient fallback
   }
 }
+

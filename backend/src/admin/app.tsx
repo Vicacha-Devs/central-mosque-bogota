@@ -10,21 +10,33 @@ export default {
     locales: ['es', 'en', 'ar', 'tr'],
     translations: ALL_ADMIN_TRANSLATIONS,
   },
-  register() {
+  register(app: StrapiApp) {
     (globalThis as any).__CM_I18N_MESSAGES__ = ALL_ADMIN_TRANSLATIONS;
+    const strapiApp = app as any;
+    const origLoadTrads =
+      typeof strapiApp?.loadTrads === 'function'
+        ? strapiApp.loadTrads.bind(strapiApp)
+        : null;
+    if (origLoadTrads) {
+      strapiApp.loadTrads = async (
+        customTranslations?: Record<string, Record<string, string>>
+      ) => {
+        const result = await origLoadTrads(customTranslations);
+        const loaded = strapiApp?.configurations?.translations || {};
+        const merged: Record<string, Record<string, string>> = {};
+        for (const loc of ['en', 'es', 'ar', 'tr'] as const) {
+          merged[loc] = {
+            ...(loaded[loc] || {}),
+            ...(ALL_ADMIN_TRANSLATIONS[loc] || {}),
+          };
+        }
+        (globalThis as any).__CM_I18N_MESSAGES__ = merged;
+        return result;
+      };
+    }
     registerBeforeAfterSliderExtension();
   },
   bootstrap(app: StrapiApp) {
-    const appTrads = (app as any)?.configurations?.translations || {};
-    const merged: Record<string, Record<string, string>> = {};
-    for (const loc of ['en', 'es', 'ar', 'tr'] as const) {
-      merged[loc] = {
-        ...(appTrads[loc] || {}),
-        ...(ALL_ADMIN_TRANSLATIONS[loc] || {}),
-      };
-    }
-    (globalThis as any).__CM_I18N_MESSAGES__ = merged;
-
     try {
       app
         .getPlugin('content-manager')

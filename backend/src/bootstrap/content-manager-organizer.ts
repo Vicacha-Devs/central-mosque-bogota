@@ -93,6 +93,7 @@ export const HIDDEN_CMO_PLUGIN_PREFIXES = new Set([
   'notes',
   'content-manager-organizer',
   'seo',
+  'sitemap',
   'cloud',
   'strapi-5-sitemap-plugin',
 ]);

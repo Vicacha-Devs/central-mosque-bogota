@@ -22,6 +22,12 @@ export const EMAIL_TEMPLATE_IDS = {
     ar: 303,
     tr: 304,
   },
+  broadcastNewsletter: {
+    es: 401,
+    en: 402,
+    ar: 403,
+    tr: 404,
+  },
   adminAlerts: {
     contact: 901,
     visit: 902,
@@ -496,6 +502,94 @@ const INITIAL_EMAIL_TEMPLATES: SeedEmailTemplateRecord[] = [
     ),
     design: buildUnlayerDesign(
       `<h2 style="color:#1b4332;margin-top:0">New Donation Notification</h2><p><strong>Donor:</strong> {{donation.donorName}}<br /><strong>Amount:</strong> {{donation.amount}} {{donation.currency}}<br /><strong>Category:</strong> {{donation.donationType}}<br /><strong>Payment Method:</strong> {{donation.paymentMethodUsed}}<br /><strong>Transaction Ref:</strong> {{donation.transactionReference}}<br /><strong>DIAN Tax Certificate Requested:</strong> {{donation.requestsTaxCertificate}}</p>`,
+      'ltr'
+    ),
+  },
+
+  // ============================================================================
+  // 401–404: Omnichannel Broadcast & Community Newsletter Templates (es, en, ar, tr)
+  // ============================================================================
+  {
+    templateReferenceId: EMAIL_TEMPLATE_IDS.broadcastNewsletter.es,
+    name: '[ES] Boletín Comunitario y Difusión — Mezquita Central (broadcastNewsletter_es)',
+    subject: '{{subject}}',
+    tags: ['broadcast-newsletter', 'es', 'community'],
+    bodyText:
+      '{{subject}}\n\n{{bodyText}}\n\nCalendario Hijri: {{secondaryDate}}\n{{organizationName}} • {{ctaUrl}}\nCancelar suscripción: {{unsubscribeUrl}}',
+    bodyHtml: wrapHtmlCard(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2>
+      <p style="font-size:13px;color:#52796f;margin-top:-8px">📅 {{secondaryDate}} • {{organizationName}}</p>
+      <div style="margin:20px 0;line-height:1.6">{{bodyHtml}}</div>
+      <p style="margin:24px 0"><a href="{{ctaUrl}}" style="background:#1b4332;color:#ffffff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">{{ctaLabel}}</a></p>
+      <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
+      <p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}" style="color:#52796f">Cancelar suscripción</a></p>`,
+      'ltr'
+    ),
+    design: buildUnlayerDesign(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2><p style="font-size:13px;color:#52796f">📅 {{secondaryDate}} • {{organizationName}}</p><div>{{bodyHtml}}</div><p><a href="{{ctaUrl}}">{{ctaLabel}}</a></p><hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" /><p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}">Cancelar suscripción</a></p>`,
+      'ltr'
+    ),
+  },
+  {
+    templateReferenceId: EMAIL_TEMPLATE_IDS.broadcastNewsletter.en,
+    name: '[EN] Community Broadcast & Newsletter — Central Mosque (broadcastNewsletter_en)',
+    subject: '{{subject}}',
+    tags: ['broadcast-newsletter', 'en', 'community'],
+    bodyText:
+      '{{subject}}\n\n{{bodyText}}\n\nHijri Date: {{secondaryDate}}\n{{organizationName}} • {{ctaUrl}}\nUnsubscribe: {{unsubscribeUrl}}',
+    bodyHtml: wrapHtmlCard(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2>
+      <p style="font-size:13px;color:#52796f;margin-top:-8px">📅 {{secondaryDate}} • {{organizationName}}</p>
+      <div style="margin:20px 0;line-height:1.6">{{bodyHtml}}</div>
+      <p style="margin:24px 0"><a href="{{ctaUrl}}" style="background:#1b4332;color:#ffffff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">{{ctaLabel}}</a></p>
+      <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
+      <p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}" style="color:#52796f">Unsubscribe</a></p>`,
+      'ltr'
+    ),
+    design: buildUnlayerDesign(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2><p style="font-size:13px;color:#52796f">📅 {{secondaryDate}} • {{organizationName}}</p><div>{{bodyHtml}}</div><p><a href="{{ctaUrl}}">{{ctaLabel}}</a></p><hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" /><p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}">Unsubscribe</a></p>`,
+      'ltr'
+    ),
+  },
+  {
+    templateReferenceId: EMAIL_TEMPLATE_IDS.broadcastNewsletter.ar,
+    name: '[AR] النشرة المجتمعية والإعلانات — المسجد المركزي (broadcastNewsletter_ar)',
+    subject: '{{subject}}',
+    tags: ['broadcast-newsletter', 'ar', 'community'],
+    bodyText:
+      '{{subject}}\n\n{{bodyText}}\n\nالتاريخ الهجري: {{secondaryDate}}\n{{organizationName}} • {{ctaUrl}}\nإلغاء الاشتراك: {{unsubscribeUrl}}',
+    bodyHtml: wrapHtmlCard(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2>
+      <p style="font-size:13px;color:#52796f;margin-top:-8px">📅 {{secondaryDate}} • {{organizationName}}</p>
+      <div style="margin:20px 0;line-height:1.6">{{bodyHtml}}</div>
+      <p style="margin:24px 0"><a href="{{ctaUrl}}" style="background:#1b4332;color:#ffffff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">{{ctaLabel}}</a></p>
+      <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
+      <p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}" style="color:#52796f">إلغاء الاشتراك</a></p>`,
+      'rtl'
+    ),
+    design: buildUnlayerDesign(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2><p style="font-size:13px;color:#52796f">📅 {{secondaryDate}} • {{organizationName}}</p><div>{{bodyHtml}}</div><p><a href="{{ctaUrl}}">{{ctaLabel}}</a></p><hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" /><p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}">إلغاء الاشتراك</a></p>`,
+      'rtl'
+    ),
+  },
+  {
+    templateReferenceId: EMAIL_TEMPLATE_IDS.broadcastNewsletter.tr,
+    name: '[TR] Topluluk Bülteni ve Duyurular — Merkez Camii (broadcastNewsletter_tr)',
+    subject: '{{subject}}',
+    tags: ['broadcast-newsletter', 'tr', 'community'],
+    bodyText:
+      '{{subject}}\n\n{{bodyText}}\n\nHicri Tarih: {{secondaryDate}}\n{{organizationName}} • {{ctaUrl}}\nAbonelikten çık: {{unsubscribeUrl}}',
+    bodyHtml: wrapHtmlCard(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2>
+      <p style="font-size:13px;color:#52796f;margin-top:-8px">📅 {{secondaryDate}} • {{organizationName}}</p>
+      <div style="margin:20px 0;line-height:1.6">{{bodyHtml}}</div>
+      <p style="margin:24px 0"><a href="{{ctaUrl}}" style="background:#1b4332;color:#ffffff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">{{ctaLabel}}</a></p>
+      <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
+      <p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}" style="color:#52796f">Abonelikten çık</a></p>`,
+      'ltr'
+    ),
+    design: buildUnlayerDesign(
+      `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2><p style="font-size:13px;color:#52796f">📅 {{secondaryDate}} • {{organizationName}}</p><div>{{bodyHtml}}</div><p><a href="{{ctaUrl}}">{{ctaLabel}}</a></p><hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" /><p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}">Abonelikten çık</a></p>`,
       'ltr'
     ),
   },

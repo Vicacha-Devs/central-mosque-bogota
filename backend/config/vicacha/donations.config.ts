@@ -270,6 +270,7 @@ export function buildMosqueDonationsPluginConfig(env: EnvFn) {
       enableCertificatesBridge: true,
       taxCertificateTemplateSlug: 'dian-donation-certificate',
       autoIssueCertificateOnVerify: true,
+      richTextCustomField: 'plugin::tiptap-editor.RichText',
       secondaryCalendars: ['islamic-umalqura'],
       campaignMapping: {
         enabled: false,

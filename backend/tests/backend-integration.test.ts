@@ -61,7 +61,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
     }
   });
 
-  it('configures all 10 @vicacha-devs plugins with Hijri Umm al-Qura secondary calendar and field mappings', () => {
+  it('configures all 11 @vicacha-devs plugins with Hijri Umm al-Qura secondary calendar and field mappings', () => {
     const env = createMockEnv({
       FRONTEND_URL: 'https://mezquitabogota.org',
       TYPESENSE_API_KEY: 'ts-test-key',
@@ -79,6 +79,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
       'inbox',
       'broadcasts',
       'resources',
+      'notes',
     ] as const;
 
     for (const pluginKey of expectedPlugins) {
@@ -91,6 +92,20 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
 
     const fullPlugins = buildPluginsConfig({ env });
     assert.equal(fullPlugins.typesense.enabled, true);
+    assert.equal(fullPlugins.notes.enabled, true);
+    assert.equal(fullPlugins['preview-button'].enabled, true);
+    assert.ok(
+      Array.isArray(fullPlugins['preview-button'].config.contentTypes) &&
+        fullPlugins['preview-button'].config.contentTypes.length === 10
+    );
+    assert.ok(
+      fullPlugins['preview-button'].config.contentTypes.every(
+        (ct: any) =>
+          typeof ct.uid === 'string' &&
+          typeof ct.draft?.url === 'string' &&
+          typeof ct.published?.url === 'string'
+      )
+    );
     assert.ok(
       fullPlugins['strapi-cache'].config.cacheableRoutes.includes(
         '/api/events/spotlights'
@@ -233,7 +248,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
     assert.equal(createdDocsByUid['plugin::events.event']?.length, 20); // 5 events (2 spotlights + 3 community events) * 4 locales
     assert.equal(createdDocsByUid['plugin::donations.campaign']?.length, 20); // 5 campaigns (1 Waqf + 4 utility invoices) * 4 locales
     assert.equal(createdDocsByUid['plugin::media-feeds.media-item']?.length, 10); // 3 es + 3 en + 2 ar + 2 tr
-    assert.equal(createdEmailTemplates.length, 15); // 12 multilingual (es/en/ar/tr) + 3 admin alerts
+    assert.equal(createdEmailTemplates.length, 19); // 16 multilingual (4 types * es/en/ar/tr) + 3 admin alerts
 
     // 4. Verify idempotency: running bootstrap a second time must not duplicate documents or permissions
     const prevPermissionCount = createdPermissions.length;
@@ -242,7 +257,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
     assert.equal(createdDocsByUid['api::article.article']?.length, 12);
     assert.equal(createdDocsByUid['plugin::events.event']?.length, 20);
     assert.equal(createdDocsByUid['plugin::donations.campaign']?.length, 20);
-    assert.equal(createdEmailTemplates.length, 15);
+    assert.equal(createdEmailTemplates.length, 19);
   });
 
   it('verifies that every @vicacha-devs plugin controller action in backend/src/index.ts exists on the plugin server module', async () => {
@@ -257,6 +272,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
       inbox: 'strapi-plugin-inbox',
       broadcasts: 'strapi-plugin-broadcasts',
       resources: 'strapi-plugin-resources',
+      notes: 'strapi-plugin-notes',
     };
 
     for (const [pluginName, folderName] of Object.entries(pluginServerDirs)) {

@@ -23,6 +23,7 @@ const PLUGIN_FOLDERS: Record<string, string> = {
   inbox: 'strapi-plugin-inbox',
   broadcasts: 'strapi-plugin-broadcasts',
   resources: 'strapi-plugin-resources',
+  notes: 'strapi-plugin-notes',
 };
 
 function createMockEnv(overrides: Record<string, unknown> = {}) {

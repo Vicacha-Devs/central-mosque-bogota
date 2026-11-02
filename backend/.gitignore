@@ -10,6 +10,3 @@ build/
 public/uploads/*
 !public/uploads/.gitkeep
 *.log
-.strapi-updater.json
-coverage/
-/favicon.png

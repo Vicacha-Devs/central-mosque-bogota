@@ -12,7 +12,7 @@ export const SITEMAP_PUBLIC_PLUGIN_UIDS = new Set([
   'plugin::resources.publication',
   'plugin::resources.gallery-album',
   'plugin::resources.glossary-term',
-  'plugin::inbox.form',
+  'plugin::strapi-plugin-form-builder-cms.form',
 ]);
 
 export interface SitemapCollectionConfig {
@@ -233,15 +233,6 @@ export const SITEMAP_CORE_ROUTES: Array<{
   { suffix: '/search', priority: 0.6, frequency: 'weekly' },
 ];
 
-function escapeXml(value: string): string {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
 export function resolveSitemapContentTypeUid(
   strapi: Core.Strapi,
   typeOrUid: string
@@ -274,22 +265,24 @@ export function resolveSitemapContentTypeUid(
 
 export async function seedSitemapPluginConfig(strapi: Core.Strapi) {
   try {
-    const optionUid = 'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-option';
-    const ctUid = 'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type';
-    const singleUrlUid =
-      'plugin::strapi-5-sitemap-plugin.strapi-5-sitemap-plugin-content-type-single-url';
+    const optionUid = 'plugin::sitemap.sitemap-option';
+    const ctUid = 'plugin::sitemap.sitemap-content-type';
+    const singleUrlUid = 'plugin::sitemap.sitemap-content-type-single-url';
 
     if (!strapi.contentTypes?.[optionUid as keyof typeof strapi.contentTypes]) {
       return;
     }
 
-    // 1. Enhance strapi-5-sitemap-plugin service so getContentTypes(), getAllowedFields(),
-    // getSitemap(), and buildAndReturnSitemapXml() support all 16 public api::* and plugin::* collection types.
-    const sitemapPlugin = strapi.plugin('strapi-5-sitemap-plugin') as unknown as {
+    // 1. Configure @vicacha-devs/strapi-plugin-sitemap service so getContentTypes() and
+    // resolveContentTypeUid() scope to the 16 public api::* and plugin::* collection types.
+    const sitemapPlugin = strapi.plugin('sitemap') as unknown as {
       service?: (name: string) => Record<string, any> | undefined;
     };
     const sitemapSvc = sitemapPlugin?.service?.('service');
     if (sitemapSvc && typeof sitemapSvc === 'object') {
+      sitemapSvc.resolveContentTypeUid = (typeName: string) =>
+        resolveSitemapContentTypeUid(strapi, typeName);
+
       sitemapSvc.getContentTypes = async () => {
         const allCts = (strapi.contentTypes || {}) as Record<string, any>;
         const collectionTypes = Object.keys(allCts)
@@ -298,301 +291,26 @@ export async function seedSitemapPluginConfig(strapi: Core.Strapi) {
               allCts[key]?.kind === 'collectionType' &&
               (key.startsWith('api::') || SITEMAP_PUBLIC_PLUGIN_UIDS.has(key))
           )
-          .map((key) => ({
-            uid: key,
-            singularName: allCts[key].info?.singularName || key,
-            pluralName: allCts[key].info?.pluralName || key,
-            displayName: String(allCts[key].info?.displayName || key).replace(/^\d{1,3}\s+/, ''),
-          }));
-        return { collectionTypes };
-      };
-
-      sitemapSvc.getAllowedFields = async (contentTypeSingularName: string) => {
-        const systemFields = [
-          'createdAt',
-          'updatedAt',
-          'publishedAt',
-          'createdBy',
-          'updatedBy',
-          'locale',
-        ];
-        const uid = resolveSitemapContentTypeUid(strapi, contentTypeSingularName);
-        const contentType = uid
-          ? (strapi.contentTypes as Record<string, any>)[uid]
-          : undefined;
-        if (!contentType) {
-          return { allowedFields: ['id', 'slug'], slug: contentTypeSingularName };
-        }
-        const fields: string[] = [];
-        Object.entries(contentType.attributes || {}).forEach(
-          ([fieldName, field]: [string, any]) => {
-            if (
-              !systemFields.includes(fieldName) &&
-              field?.type !== 'relation' &&
-              field?.type !== 'component'
-            ) {
-              fields.push(fieldName);
-            } else if (
-              field?.type === 'relation' &&
-              typeof field?.relation === 'string' &&
-              field.relation.endsWith('ToOne') &&
-              !['createdBy', 'updatedBy'].includes(fieldName)
-            ) {
-              fields.push(`${fieldName}.id`);
-            } else if (field?.type === 'component' && !field?.repeatable) {
-              const component = (strapi.components as Record<string, any>)?.[
-                field.component
-              ];
-              if (component?.attributes) {
-                Object.keys(component.attributes).forEach((subFieldName) => {
-                  fields.push(`${fieldName}.${subFieldName}`);
-                });
-              }
-            }
-          }
-        );
-        if (!fields.includes('id')) {
-          fields.push('id');
-        }
-        return {
-          allowedFields: fields,
-          slug: contentType.info?.pluralName || contentTypeSingularName,
-        };
-      };
-
-      sitemapSvc.getSitemap = async function (slug?: string) {
-        const baseURLObject = await (strapi.documents as any)(optionUid).findFirst();
-        if (!baseURLObject) return this.generateUrlsetXml([]);
-        const baseURL = baseURLObject.baseUrl || '';
-        const excludedUrls = Array.isArray(baseURLObject.excludedUrls)
-          ? baseURLObject.excludedUrls
-          : [];
-        const useSitemapIndex = Boolean(baseURLObject.useSitemapIndex);
-        const sitemapDefinitions = Array.isArray(baseURLObject.sitemapDefinitions)
-          ? baseURLObject.sitemapDefinitions
-          : [];
-        const allSitemapEntries =
-          (await strapi.db?.query?.(ctUid)?.findMany()) || [];
-        const allCustomURLs =
-          (await strapi.db?.query?.(singleUrlUid)?.findMany()) || [];
-
-        if (slug !== undefined && sitemapDefinitions.length > 0) {
-          const def = sitemapDefinitions.find(
-            (d: Record<string, any>) =>
-              String(d.name || '').trim() === String(slug).trim()
-          );
-          if (!def) return this.generateUrlsetXml([]);
-          const configIds = Array.isArray(def.collectionTypeConfigIds)
-            ? def.collectionTypeConfigIds
-            : [];
-          const sitemapEntries = allSitemapEntries.filter(
-            (e: Record<string, any>) => configIds.includes(e.id)
-          );
-          const customURLs = def.includeCustomUrls ? allCustomURLs : [];
-          return this.buildAndReturnSitemapXml(
-            baseURL,
-            excludedUrls,
-            sitemapEntries,
-            customURLs
-          );
-        }
-
-        if (useSitemapIndex && sitemapDefinitions.length > 0) {
-          return this.generateSitemapIndexXml(baseURL, sitemapDefinitions);
-        }
-
-        return this.buildAndReturnSitemapXml(
-          baseURL,
-          excludedUrls,
-          allSitemapEntries,
-          allCustomURLs
-        );
-      };
-
-      sitemapSvc.buildAndReturnSitemapXml = async function (
-        baseURL: string,
-        excludedUrls: string[],
-        sitemapEntries: Array<Record<string, any>>,
-        customURLs: Array<Record<string, any>>
-      ) {
-        try {
-          const collections: Array<Record<string, any>> = [];
-          const sitemap: Array<Record<string, any>> = [];
-          const normalizedBase = String(baseURL || '').replace(/\/$/, '');
-
-          for (const sitemapEntry of sitemapEntries) {
-            const uid = resolveSitemapContentTypeUid(strapi, sitemapEntry.type);
-            if (!uid) continue;
-
-            const ctSchema = (strapi.contentTypes as Record<string, any>)?.[uid];
-            const isLocalized = Boolean(ctSchema?.pluginOptions?.i18n?.localized);
-            const hasMediaAttr = Boolean(
-              sitemapEntry.thumbnail &&
-                sitemapEntry.thumbnail !== '-' &&
-                ctSchema?.attributes?.[sitemapEntry.thumbnail]?.type === 'media'
+          .map((key) => {
+            const displayName = String(allCts[key].info?.displayName || key).replace(
+              /^\d{1,3}\s+/,
+              ''
             );
-
-            let populate: Record<string, any> | undefined = hasMediaAttr
-              ? { [sitemapEntry.thumbnail]: true }
-              : undefined;
-
-            if (sitemapEntry.populateLinkedModels === 'true') {
-              const linkedModels = this.parseTableReferences(sitemapEntry.pattern);
-              if (linkedModels?.populate) {
-                populate = {
-                  ...(populate || {}),
-                  ...linkedModels.populate,
-                };
-              }
-            }
-
-            let entries: Array<Record<string, any>> = [];
-            try {
-              entries =
-                (await (strapi.documents as any)(uid).findMany({
-                  locale:
-                    isLocalized && sitemapEntry.langcode !== '-'
-                      ? sitemapEntry.langcode
-                      : undefined,
-                  status: 'published',
-                  populate,
-                })) || [];
-            } catch {
-              entries = [];
-            }
-
-            if (entries.length === 0 && strapi.db?.query) {
-              try {
-                const where: Record<string, any> = {};
-                if (isLocalized && sitemapEntry.langcode !== '-') {
-                  where.locale = sitemapEntry.langcode;
-                }
-                entries = (await strapi.db.query(uid).findMany({ where })) || [];
-              } catch {
-                entries = [];
-              }
-            }
-
-            collections.push({ ...sitemapEntry, entries });
-          }
-
-          for (const collection of collections) {
-            const {
-              pattern,
-              priority,
-              frequency,
-              entries,
-              lastModified,
-              thumbnail,
-              populateLinkedModels,
-            } = collection;
-
-            for (const entry of entries || []) {
-              let url = String(pattern || '');
-              const placeholders = url.match(/\[([^\]]+)]/g) || [];
-              let hasInvalidPlaceholder = false;
-
-              for (const placeholder of placeholders) {
-                const key = placeholder.replace(/[\[\]]/g, '');
-                const value = key.includes('.')
-                  ? this.getNestedValue(entry, key)
-                  : entry[key];
-
-                if (value !== null && value !== undefined && String(value) !== '') {
-                  url = url.replace(placeholder, String(value));
-                } else if (key.includes('.')) {
-                  url = url.replace(placeholder, '');
-                } else {
-                  hasInvalidPlaceholder = true;
-                  break;
-                }
-              }
-
-              if (hasInvalidPlaceholder) continue;
-
-              url = url.replace(/\/+/g, '/');
-              const fullUrl = `${normalizedBase}${url.startsWith('/') ? url : `/${url}`}`;
-
-              const item: Record<string, any> = {
-                url: escapeXml(fullUrl),
-                priority,
-                frequency,
-                lastmod:
-                  lastModified === 'true' && entry.updatedAt
-                    ? escapeXml(String(entry.updatedAt))
-                    : undefined,
-                thumbnail: undefined,
-                thumbnailTitle: undefined,
-                populateLinkedModels:
-                  populateLinkedModels === 'true' ? true : undefined,
-              };
-
-              if (thumbnail && thumbnail !== '-') {
-                const media = Array.isArray(entry[thumbnail])
-                  ? entry[thumbnail][0]
-                  : entry[thumbnail];
-                const rawMediaUrl =
-                  media?.url ||
-                  entry.imageUrl ||
-                  entry.coverUrl ||
-                  entry.photoUrl ||
-                  entry.coverImageUrl ||
-                  entry.posterUrl ||
-                  entry.thumbnailUrl;
-                if (typeof rawMediaUrl === 'string' && rawMediaUrl.trim()) {
-                  const resolvedThumbUrl = rawMediaUrl.startsWith('http')
-                    ? rawMediaUrl.trim()
-                    : `${normalizedBase}${rawMediaUrl.startsWith('/') ? '' : '/'}${rawMediaUrl.trim()}`;
-                  item.thumbnail = escapeXml(resolvedThumbUrl);
-                  const rawTitle =
-                    media?.name ||
-                    entry.title ||
-                    entry.name ||
-                    entry.term ||
-                    entry.slug ||
-                    '';
-                  item.thumbnailTitle = escapeXml(String(rawTitle));
-                }
-              }
-
-              sitemap.push(item);
-            }
-          }
-
-          for (const customURL of customURLs || []) {
-            const slugPath = String(customURL.slug || '');
-            const fullUrl = `${normalizedBase}${slugPath.startsWith('/') ? slugPath : `/${slugPath}`}`;
-            sitemap.push({
-              url: escapeXml(fullUrl),
-              priority: customURL.priority,
-              frequency: customURL.frequency,
-            });
-          }
-
-          const normalizedExcluded = (excludedUrls || [])
-            .map((path) => String(path).trim())
-            .filter(Boolean)
-            .map((p) => (p.startsWith('/') ? p : `/${p}`).replace(/\/$/, '') || '/');
-
-          const getPathFromUrl = (rawUrl: string) => {
-            try {
-              const pathname = new URL(rawUrl).pathname;
-              return pathname.replace(/\/$/, '') || '/';
-            } catch {
-              return '/';
-            }
-          };
-
-          const filteredSitemap = sitemap.filter((entry) => {
-            const path = getPathFromUrl(entry.url);
-            return !normalizedExcluded.some((ex) => path === ex);
+            const singularName = allCts[key].info?.singularName || key;
+            const pluralName = allCts[key].info?.pluralName || key;
+            return {
+              uid: key,
+              singularName,
+              pluralName,
+              displayName,
+              info: {
+                singularName,
+                pluralName,
+                displayName,
+              },
+            };
           });
-
-          return this.generateUrlsetXml(filteredSitemap);
-        } catch (error) {
-          strapi.log?.error?.('Error fetching entries:', error);
-          throw new Error('Failed to fetch entries for types');
-        }
+        return { collectionTypes };
       };
     }
 
@@ -609,7 +327,7 @@ export async function seedSitemapPluginConfig(strapi: Core.Strapi) {
     const locales = ['es', 'en', 'ar', 'tr'];
     const ctQuery = strapi.db?.query?.(ctUid);
 
-    // 2. Seed and normalize all 49 collection type mappings in strapi_5_sitemap_plugin_content_types
+    // 2. Seed and normalize all 49 collection type mappings in sitemap_content_types
     if (ctQuery) {
       const existingCtMappings: Array<Record<string, any>> =
         (await ctQuery.findMany()) || [];

@@ -62,7 +62,6 @@
           "name": "Inbox & Omnichannel Broadcasts",
           "parent": null,
           "children": [
-            { "type": "contentType", "uid": "plugin::inbox.form" },
             { "type": "contentType", "uid": "plugin::inbox.submission" },
             { "type": "contentType", "uid": "plugin::inbox.subscriber" },
             { "type": "contentType", "uid": "plugin::inbox.alert-banner" },

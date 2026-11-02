@@ -404,9 +404,15 @@ describe('Central Mosque Backend — Public Submission Guard, Email Sanitization
     const { normalizeAuthorLayoutRows } = await import(
       '../src/bootstrap/field-metadata-enricher'
     );
-    const { ALL_ADMIN_TRANSLATIONS, translateFieldLabel } = await import(
-      '../src/admin/translations'
+    const {
+      ALL_ADMIN_TRANSLATIONS,
+      translateEnumValue,
+      translateFieldLabel,
+    } = await import('../src/admin/translations');
+    const { patchContentManagerAndPreviewLocalization } = await import(
+      '../src/bootstrap/plugin-patches'
     );
+    patchContentManagerAndPreviewLocalization();
 
     const initialLayout = [
       [
@@ -458,6 +464,26 @@ describe('Central Mosque Backend — Public Submission Guard, Email Sanitization
         'content-manager.content-types.api::article.article.authorSlug'
       ],
       'Slug del Autor'
+    );
+
+    // Enumeration values are capitalized and localized across en, es, ar, tr
+    assert.equal(translateEnumValue('scheduled', 'en'), 'Scheduled');
+    assert.equal(translateEnumValue('scheduled', 'es'), 'Programado');
+    assert.equal(translateEnumValue('in_person', 'en'), 'In Person');
+    assert.equal(translateEnumValue('in_person', 'es'), 'Presencial');
+    assert.equal(translateEnumValue('education', 'en'), 'Education');
+    assert.equal(translateEnumValue('education', 'es'), 'Educación');
+    assert.equal(
+      ALL_ADMIN_TRANSLATIONS.es['content-manager.enum.scheduled'],
+      'Programado'
+    );
+    assert.equal(
+      ALL_ADMIN_TRANSLATIONS.es['content-manager.enum.in_person'],
+      'Presencial'
+    );
+    assert.equal(
+      ALL_ADMIN_TRANSLATIONS.es['content-manager.enum.education'],
+      'Educación'
     );
   });
 });

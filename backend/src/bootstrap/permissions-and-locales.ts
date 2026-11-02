@@ -56,8 +56,8 @@ export async function ensurePublicPermissions(strapi: Core.Strapi) {
     if (!publicRole) return;
 
     const actionsToEnable: string[] = [
-      'plugin::strapi-5-sitemap-plugin.controller.getSitemap',
-      'plugin::strapi-5-sitemap-plugin.controller.getSitemapBySlug',
+      'plugin::sitemap.controller.getSitemap',
+      'plugin::sitemap.controller.getSitemapBySlug',
       'plugin::navigation.navigation.render',
       'plugin::navigation.navigation.renderChild',
       'plugin::navigation.client.render',
