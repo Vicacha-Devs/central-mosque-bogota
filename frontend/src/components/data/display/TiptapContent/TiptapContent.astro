@@ -54,12 +54,10 @@ interface Props {
 
 const { content, theme, blocks, class: className = "" } = Astro.props;
 
-// The library's DeepPartial built-in keys conflict with its custom-block index
-// signature, so the merged map needs a cast.
-const mergedBlocks = {
+const mergedBlocks: TiptapBlockUserComponents = {
   beforeAfterSlider: BeforeAfterSlider,
   ...blocks,
-} as unknown as TiptapBlockUserComponents;
+};
 
 const mosqueTheme: TiptapBlockUserTheme = {
   overwrite: {

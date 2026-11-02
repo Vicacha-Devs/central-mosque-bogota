@@ -324,7 +324,8 @@ export const en = {
   "islam-suite.asmaOfDayLabel": "Name of Allah of the Day",
   "islam-suite.reflectionLabel": "Spiritual reflection",
   "islam-suite.takeawayLabel": "Key takeaway",
-  "islam-suite.listenRecitationLabel": "Listen to recitation (Mishary Alafasy)",
+  "islam-suite.listenRecitationLabel":
+    "Listen to recitation (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Reset",
   "islam-suite.tasbihIncrementLabel": "Count Dhikr (+1)",
   "islam-suite.tasbihCompletedLabel": "Target reached! Alhamdulillah",
@@ -465,6 +466,4 @@ export const en = {
     "Subscribed! Please check your email to confirm (double opt-in).",
   "footer.newsletter-invalid-email": "Invalid email address.",
   "footer.newsletter-error": "Connection error. Please try again.",
-  "before-after.before": "Before",
-  "before-after.after": "After",
 };

@@ -122,7 +122,9 @@ export const fetchStrapiData = async <
  * Fetches Mosque prayer calculation parameters from `@vicacha-devs/strapi-plugin-islam`
  * (`/api/islam/prayer-times`), with resilient fallback if Strapi is offline.
  */
-export async function fetchPrayerSettingsFromStrapi(locale = "es"): Promise<TStrapiPrayerSettings> {
+export async function fetchPrayerSettingsFromStrapi(
+  locale = "es"
+): Promise<TStrapiPrayerSettings> {
   try {
     const response = await fetchStrapiData<{
       data?: Partial<TStrapiPrayerSettings>;
@@ -140,11 +142,11 @@ export async function fetchPrayerSettingsFromStrapi(locale = "es"): Promise<TStr
       defaultLon:
         response.data.defaultLon ?? DEFAULT_PRAYER_SETTINGS.defaultLon,
       jumuahKhutbahTime:
-        response.data.jumuahKhutbahTime
-        ?? DEFAULT_PRAYER_SETTINGS.jumuahKhutbahTime,
+        response.data.jumuahKhutbahTime ??
+        DEFAULT_PRAYER_SETTINGS.jumuahKhutbahTime,
       jumuahPrayerTime:
-        response.data.jumuahPrayerTime
-        ?? DEFAULT_PRAYER_SETTINGS.jumuahPrayerTime,
+        response.data.jumuahPrayerTime ??
+        DEFAULT_PRAYER_SETTINGS.jumuahPrayerTime,
     };
   } catch {
     return DEFAULT_PRAYER_SETTINGS;

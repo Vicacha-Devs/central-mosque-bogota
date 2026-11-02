@@ -10,6 +10,26 @@ const { class: className, ...rest } = Astro.props;
 <div class:list={[prose({ class: className })]} {...rest} data-slot="prose"><slot /></div>
 
 <style is:global>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* ==========================================================================
    * Starwind Prose - Typography styles for markdown content
    * Inspired by Tailwind Typography and Astro Starlight
@@ -636,4 +656,24 @@ const { class: className, ...rest } = Astro.props;
   .sw-prose :is(sub, sup):not(:where(.not-sw-prose *)) {
     font-size: 0.75em;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>

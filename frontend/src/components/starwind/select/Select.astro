@@ -35,6 +35,26 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 </div>
 
 <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   import type { SelectChangeEvent, SelectEvent } from "./SelectTypes";
 
   class SelectHandler {
@@ -772,9 +792,49 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
   initSelects();
   document.addEventListener("astro:after-swap", initSelects);
   document.addEventListener("starwind:init", initSelects);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 <style is:global>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .starwind-sr-only {
     position: absolute;
     width: 1px;
@@ -786,4 +846,24 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
     white-space: nowrap;
     border-width: 0;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>

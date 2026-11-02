@@ -329,7 +329,8 @@ export const es = {
   "islam-suite.asmaOfDayLabel": "Nombre de Allah del Día",
   "islam-suite.reflectionLabel": "Reflexión espiritual",
   "islam-suite.takeawayLabel": "Enseñanza práctica",
-  "islam-suite.listenRecitationLabel": "Escuchar recitación (Mishary Alafasy)",
+  "islam-suite.listenRecitationLabel":
+    "Escuchar recitación (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Reiniciar",
   "islam-suite.tasbihIncrementLabel": "Contar Dhikr (+1)",
   "islam-suite.tasbihCompletedLabel": "¡Meta alcanzada! Alhamdulillah",
@@ -476,6 +477,4 @@ export const es = {
     "¡Suscrito! Revisa tu correo para confirmar tu suscripción.",
   "footer.newsletter-invalid-email": "Correo electrónico inválido.",
   "footer.newsletter-error": "Error de conexión. Inténtalo de nuevo.",
-  "before-after.before": "Antes",
-  "before-after.after": "Después",
 };

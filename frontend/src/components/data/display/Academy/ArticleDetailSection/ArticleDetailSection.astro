@@ -24,15 +24,15 @@ import {
   type TDetailedArticle,
 } from "@utils/localized-mocks";
 
-type TArticleWithAuthor = TDetailedArticle & {
+type TArticleDetail = TDetailedArticle & {
   content?: string;
   authorSlug?: string;
 };
 
 interface Props {
   lang?: TLang;
-  article?: TArticleWithAuthor;
-  relatedArticles?: Array<TArticleWithAuthor>;
+  article?: TArticleDetail;
+  relatedArticles?: Array<TArticleDetail>;
 }
 
 const {
@@ -45,7 +45,7 @@ const lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const fallbackArticles = getDetailedArticles(lang);
-const article: TArticleWithAuthor = articleProp ?? fallbackArticles[0];
+const article = articleProp ?? fallbackArticles[0];
 const relatedArticles
   = relatedArticlesProp
     ?? fallbackArticles.filter((a) => a.slug !== article.slug);

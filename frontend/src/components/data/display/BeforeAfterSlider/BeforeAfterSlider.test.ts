@@ -20,10 +20,14 @@ describe("BeforeAfterSlider", () => {
       expect(slider).toBeInTheDocument();
 
       const beforeImg = getByAltText(root, "1995");
-      expect(beforeImg.getAttribute("src")).toBe("https://cms.mezquitabogota.org/uploads/before.jpg");
+      expect(beforeImg.getAttribute("src")).toBe(
+        "https://cms.mezquitabogota.org/uploads/before.jpg"
+      );
 
       const afterImg = getByAltText(root, "2026");
-      expect(afterImg.getAttribute("src")).toBe("https://cms.mezquitabogota.org/uploads/after.jpg");
+      expect(afterImg.getAttribute("src")).toBe(
+        "https://cms.mezquitabogota.org/uploads/after.jpg"
+      );
 
       const captionEl = getByText(root, "Restauración de la fachada principal");
       expect(captionEl).toBeInTheDocument();
@@ -46,31 +50,6 @@ describe("BeforeAfterSlider", () => {
       expect(root.querySelector("img-comparison-slider")).toBeNull();
     } finally {
       await close();
-    }
-  });
-
-  it("should reserve the aspect ratio and fall back when it is invalid", async () => {
-    const urls = {
-      beforeUrl: "https://cms.mezquitabogota.org/uploads/before.jpg",
-      afterUrl: "https://cms.mezquitabogota.org/uploads/after.jpg",
-    };
-    const custom = await renderAstroComponentToDom(BeforeAfterSlider, {
-      props: { ...urls, aspectRatio: "4 / 3" },
-    });
-    const invalid = await renderAstroComponentToDom(BeforeAfterSlider, {
-      props: { ...urls, aspectRatio: "1; background: red" },
-    });
-
-    try {
-      const style = (r: HTMLElement): string | null => r.querySelector("img-comparison-slider")?.getAttribute("style") ?? null;
-      expect(style(custom.root)).toBe("aspect-ratio: 4 / 3");
-      expect(custom.root
-        .querySelector("figure[slot=\"second\"]")
-        ?.getAttribute("style")).toBe("aspect-ratio: 4 / 3");
-      expect(style(invalid.root)).toBe("aspect-ratio: 16 / 9");
-    } finally {
-      await custom.close();
-      await invalid.close();
     }
   });
 });

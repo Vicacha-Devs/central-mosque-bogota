@@ -324,7 +324,8 @@ export const tr = {
   "islam-suite.asmaOfDayLabel": "Günün Esmaü'l-Hüsnası",
   "islam-suite.reflectionLabel": "Tefekkür Notu",
   "islam-suite.takeawayLabel": "Pratik Hikmet",
-  "islam-suite.listenRecitationLabel": "Tilaveti Dinle (Mishary Alafasy)",
+  "islam-suite.listenRecitationLabel":
+    "Tilaveti Dinle (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Sıfırla",
   "islam-suite.tasbihIncrementLabel": "Zikir Çek (+1)",
   "islam-suite.tasbihCompletedLabel": "Hedefe ulaşıldı! Elhamdülillah",
@@ -454,6 +455,4 @@ export const tr = {
   "footer.newsletter-success": "Abone olundu! Lütfen e-postanızı onaylayın.",
   "footer.newsletter-invalid-email": "Geçersiz e-posta adresi.",
   "footer.newsletter-error": "Bağlantı hatası. Lütfen tekrar deneyin.",
-  "before-after.before": "Önce",
-  "before-after.after": "Sonra",
 };

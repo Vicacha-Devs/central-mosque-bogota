@@ -22,7 +22,9 @@ describe("TiptapContent (astro-tiptap-blocks integration)", () => {
       });
       expect(heading).toBeInTheDocument();
 
-      expect(root.querySelector("[data-slot=\u0022prose\u0022]")).toBeInTheDocument();
+      expect(
+        root.querySelector("[data-slot=\u0022prose\u0022]")
+      ).toBeInTheDocument();
 
       const strongText = getByText(root, "comunidad musulmana");
       expect(strongText).toHaveClass("font-bold");
@@ -69,7 +71,9 @@ describe("TiptapContent (astro-tiptap-blocks integration)", () => {
     });
 
     try {
-      expect(getByRole(root, "heading", { level: 3, name: "Servicios Comunitarios" })).toBeInTheDocument();
+      expect(
+        getByRole(root, "heading", { level: 3, name: "Servicios Comunitarios" })
+      ).toBeInTheDocument();
 
       const link = getByRole(root, "link", { name: "Enlace seguro" });
       expect(link.getAttribute("href")).toBe("#");
@@ -101,7 +105,9 @@ describe("TiptapContent (astro-tiptap-blocks integration)", () => {
 
     try {
       expect(root.querySelector("img-comparison-slider")).toBeInTheDocument();
-      expect(getByText(root, "Comparación de la fachada principal")).toBeInTheDocument();
+      expect(
+        getByText(root, "Comparación de la fachada principal")
+      ).toBeInTheDocument();
     } finally {
       await close();
     }

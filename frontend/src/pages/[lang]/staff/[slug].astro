@@ -45,7 +45,7 @@ export async function getStaticPaths() {
   if (leaderEntries.length > 0) {
     return leaderEntries
       .filter(
-        (entry) => entry.data.hasDedicatedPage !== false && entry.data.slug,
+        (entry) => entry.data.hasDedicatedPage !== false && entry.data.slug
       )
       .map((entry) => ({
         params: { lang: entry.data.locale, slug: entry.data.slug },
@@ -65,7 +65,7 @@ export async function getStaticPaths() {
       if (member.slug && member.hasDedicatedPage !== false) {
         paths.push({
           params: { lang, slug: member.slug },
-          props: { member: { ...member, slug: member.slug } },
+          props: { member },
         });
       }
     }
@@ -81,7 +81,7 @@ interface Props {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-const { member } = Astro.props as Props;
+const { member } = Astro.props;
 
 const [allArticles, allMedia, allEvents, allLeaders] = await Promise.all([
   getCollection("articles", (entry) => entry.data.locale === lang),

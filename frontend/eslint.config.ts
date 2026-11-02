@@ -128,6 +128,10 @@ export default defineConfig([
     rules: {
       // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
       "@stylistic/jsx-one-expression-per-line": "warn",
+      // The Astro processor blanks out <script>/<style> bodies, which trips this rule
+      "@stylistic/no-multiple-empty-lines": "off",
+      "@stylistic/jsx-closing-tag-location": "off",
+      "@stylistic/indent": "off",
     },
   },
   {
@@ -169,6 +173,10 @@ export default defineConfig([
         },
       ],
       "no-trailing-spaces": ["error"],
+      // Layout of operators/ternaries is owned by oxfmt; these rules fight it
+      "@stylistic/operator-linebreak": "off",
+      "@stylistic/multiline-ternary": "off",
+      "@stylistic/indent-binary-ops": "off",
     },
   },
   {
@@ -200,6 +208,7 @@ export default defineConfig([
     ...vitest.configs.recommended,
     rules: {
       ...vitest.configs.recommended.rules,
+      "max-len": "off",
       "vitest/valid-title": [
         "error",
         {

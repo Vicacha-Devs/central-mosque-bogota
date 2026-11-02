@@ -7,18 +7,7 @@ import {
   paymentMethods,
 } from "./data.mocks";
 
-type TAboutPageSource = typeof aboutPageData;
-
-type TAboutLeader = TAboutPageSource["leaders"][number];
-type TAboutLeaderRequired = "name" | "roleTitle" | "bio" | "languagesSpoken";
-
-// CMS-sourced leaders only guarantee the core fields; the rest are optional
-export type TAboutPageData = Omit<TAboutPageSource, "leaders"> & {
-  leaders: Array<
-    Pick<TAboutLeader, TAboutLeaderRequired>
-    & Partial<Omit<TAboutLeader, TAboutLeaderRequired>>
-  >;
-};
+export type TAboutPageData = typeof aboutPageData;
 export type TIslamFaithData = typeof islamFaithData;
 export type TDonationCampaign = (typeof donationCampaigns)[number];
 export type TPaymentMethod = (typeof paymentMethods)[number];
@@ -26,8 +15,8 @@ export type TPaymentMethod = (typeof paymentMethods)[number];
 type TNonDefaultLang = Exclude<TLang, "es">;
 
 const SHAHADA_ARABIC = "أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ ٱللَّٰهِ";
-const SHAHADA_TRANSLITERATION
-  = "Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan Rasulu Allah";
+const SHAHADA_TRANSLITERATION =
+  "Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan Rasulu Allah";
 
 const ABOUT_PAGE_BY_LANG: Record<TNonDefaultLang, TAboutPageData> = {
   en: {

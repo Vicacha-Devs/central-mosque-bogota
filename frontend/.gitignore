@@ -26,7 +26,3 @@ pnpm-debug.log*
 *storybook.log
 storybook-static
 coverage/
-
-.claude
-.understand-anything
-.impeccable
