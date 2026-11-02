@@ -37,6 +37,7 @@ flowchart TB
 | `@vicacha-devs/strapi-plugin-broadcasts` | `broadcasts` | `/api/broadcasts/*` | `fetchBroadcastsFromStrapi`, `POST /api/submissions` (`newsletter-subscription`) |
 | `@vicacha-devs/strapi-plugin-calendar` | `calendar` | `/api/calendar/*` | Sincronización de efemérides Hijri (`islamic-umalqura`) con `QiblaAndObservancesSection` |
 | `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Emisión y verificación de certificados firmados con Ed25519 (Shahada, Nikah y Donaciones) |
+| `@vicacha-devs/strapi-plugin-notes` | `notes` | `/api/notes/*` | Notas editoriales (`plugin::notes.note`) con metadatos de autor/fecha tipo Audit Logs, notas fijadas, categorías y Hub Global (10 idiomas) |
 
 ---
 
@@ -45,14 +46,14 @@ flowchart TB
 | Paquete | Versión | Función y Soporte de Idiomas (`en`, `es`, `ar`, `tr`) |
 | :--- | :--- | :--- |
 | `strapi-cache` | `^1.13.0` | Caché REST LRU / Redis / Valkey con invalidación automática al publicar y traducciones nativas del Admin en `en`, `es`, `ar`, `tr` y `de` |
-| `strapi-global-search` | `2.x` (`file:`) | Búsqueda global tipo Spotlight (`Cmd/Ctrl + K`) en todos los tipos `api::*` y `plugin::*` (`en`, `es`, `ar`, `tr`, `fr`) |
+| `@vicacha-devs/strapi-plugin-global-search` | `file:` | Búsqueda global tipo Spotlight (`Cmd/Ctrl + K`) en todos los tipos `api::*` y `plugin::*` (`en`, `es`, `ar`, `tr`, `fr`) |
 | `@notum-cz/strapi-plugin-tiptap-editor` | `file:` | Editor TipTap v3 + Edifice IO con 48 funciones y sincronización relacional de medios/enlaces (`en`, `es`, `ar`, `tr` +7 idiomas) |
-| `@notum-cz/strapi-plugin-seo` | `file:` | Componente SEO y analizador SERP en vivo (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
+| `@vicacha-devs/strapi-plugin-seo` | `file:` | Componente SEO y analizador SERP en vivo (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Indexación en tiempo real hacia Typesense |
 | `strapi-plugin-navigation` | `^3.3.7` | Constructor de menús jerárquicos compatible con modelos `api::*` y `plugin::*` |
 | `strapi-plugin-content-manager-organizer` | `^2.0.3` | Organiza los 28 modelos visibles en 8 carpetas temáticas en la barra lateral |
 | `strapi-plugin-email-designer-5` | `^0.0.10` | Diseñador visual Unlayer para plantillas de correo transaccional |
-| `strapi-5-sitemap-plugin` | `^1.0.8` | Generación dinámica de sitemap XML multilingüe |
+| `@vicacha-devs/strapi-plugin-sitemap` | `file:` | Generador dinámico de sitemap e índice de sitemaps XML multilingüe (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `strapi-plugin-publisher` | `^2.0.9` | Publicación y despublicación programada |
 | `strapi-plugin-config-sync` | `^3.2.0` | Sincronización de configuración entre entornos (`en`, `es`, `ar`, `tr` +18 idiomas) |
-| `@frameless/preview-button` y `@frameless/strapi-plugin-notes` | `^2.2.2` / `^1.1.2` | Botón de vista previa en vivo y notas editoriales (`es`, `ar`, `tr` inyectados vía `src/admin/translations.ts`) |
+| `strapi-plugin-preview-button` | `^3.0.2` | Botones de vista previa de borrador y vista en vivo en Content Manager (`en`, `es`, `tr`, `fr`, `ru`, `ja` nativos + `ar` en `src/admin/translations.ts`) |

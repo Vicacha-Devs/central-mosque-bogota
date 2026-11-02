@@ -84,6 +84,33 @@ flowchart LR
 - `const buildMonthLabel`
 - `const buildMonthHref`
 
+### `src/services/strapi/loader.ts`
+
+- `type TResilientStrapiLoaderOptions`
+- `type TStrapiSingleTypeLoaderOptions`
+- `function createResilientStrapiLoader(options: TResilientStrapiLoaderOptions<TItem>): Loader`
+- `const createStrapiCollectionLoader`
+- `function createStrapiSingleTypeLoader(options: TStrapiSingleTypeLoaderOptions<TItem>): Loader`
+
+### `src/services/strapi/api.ts`
+
+- `type TStrapiQueryValue`
+- `type TStrapiQueryParams`
+- `type TStrapiPrayerSettings`
+- `function optimizeCloudinaryUrl(rawUrl: string | undefined | null, width?: number): string`
+- `const fetchStrapiData`
+- `function fetchPrayerSettingsFromStrapi(locale = "es"): Promise<TStrapiPrayerSettings>`
+- `function fetchIslamSuiteFromStrapi(subpath: string, params: TParams = {} as TParams): Promise<TData | null>`
+- `function fetchQuranChapterVersesFromStrapi(chapterNumber: number, options?: {
+    locale?: string;
+    page?: number;
+    perPage?: number;
+    script?: "uthmani" | "uthmani_tajweed" | "imlaei" | "indopak_nastaleeq";
+    words?: boolean;
+    reciterId?: number;
+  }): unknown`
+- `function fetchQuranAyahHadithsFromStrapi(verseKey: string, options?: { locale?: string; page?: number; limit?: number }): unknown`
+
 ### `src/services/strapi/tiptap-sanitizer.ts`
 
 - `type TTiptapRichContent`

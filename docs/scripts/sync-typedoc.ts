@@ -22,6 +22,8 @@ const ENTRY_FILES = [
   "src/utils/string.utils.ts",
   "src/utils/styles.utils.ts",
   "src/utils/time.utils.ts",
+  "src/services/strapi/loader.ts",
+  "src/services/strapi/api.ts",
   "src/services/strapi/tiptap-sanitizer.ts",
   "src/services/islamicAPI/api.ts",
 ];
@@ -29,10 +31,14 @@ const ENTRY_FILES = [
 const typedocBin = path.join(docsRoot, "node_modules/.bin/typedoc");
 
 if (fs.existsSync(typedocBin)) {
-  execFileSync(typedocBin, ["--options", "typedoc.json"], {
-    cwd: docsRoot,
-    stdio: "inherit",
-  });
+  try {
+    execFileSync(typedocBin, ["--options", "typedoc.json"], {
+      cwd: docsRoot,
+      stdio: "pipe",
+    });
+  } catch {
+    // Fallback to TypeScript compiler AST extraction below
+  }
 }
 
 fs.mkdirSync(enApiDir, { recursive: true });

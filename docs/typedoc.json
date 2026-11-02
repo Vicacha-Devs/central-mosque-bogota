@@ -16,7 +16,6 @@
   "plugin": ["typedoc-plugin-markdown"],
   "out": "./.typedoc-out",
   "readme": "none",
-  "skipErrorChecking": true,
   "excludePrivate": true,
   "excludeInternal": true,
   "hidePageHeader": true,

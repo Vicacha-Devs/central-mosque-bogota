@@ -23,17 +23,38 @@ flowchart TD
 
 ---
 
-## 2. How `createResilientStrapiLoader` Works
+## 2. How `@sensinum/astro-strapi-loader` (`VirtusLab-Open-Source/astro-strapi-loader`) Is Integrated
 
-In `frontend/src/content.config.ts`, each collection declares:
-- `contentType`: The Strapi v5 singular/plural API name (e.g. `"event"`).
-- `params`: Deep population query parameters (`populate: "*"`).
-- `fallbackByLang`: A function `(lang: TLang) => Array<Record<string, unknown>>` supplying offline entries per locale.
+Our Astro frontend uses [`VirtusLab-Open-Source/astro-strapi-loader`](https://github.com/VirtusLab-Open-Source/astro-strapi-loader) (`"@sensinum/astro-strapi-loader": "^1.0.7"` in [`frontend/package.json`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/frontend/package.json#L29)), wrapped by [`frontend/src/services/strapi/loader.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/frontend/src/services/strapi/loader.ts).
 
-During `astro sync` / `astro build`:
-1. For each locale (`es`, `en`, `ar`, `tr`), it creates ascoped proxy store that prefixes entry IDs with `${lang}:` (e.g. `es:event-0`, `ar:event-0`).
-2. It invokes `@sensinum/astro-strapi-loader`.
-3. If Strapi is offline or returns 0 entries for that locale, it validates and inserts the `fallbackByLang(lang)` entries using `parseData` so Astro's Zod schema validation always runs identically on both live and mock data.
+Out of the box, `strapiLoader` fetches a single locale from a Strapi REST endpoint and throws an unhandled error if Strapi is unreachable during `astro build` or `astro dev`. Our wrapper functions [`createResilientStrapiLoader`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/frontend/src/services/strapi/loader.ts#L38-L160) (aliased as `createStrapiCollectionLoader`) and [`createStrapiSingleTypeLoader`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/frontend/src/services/strapi/loader.ts#L168-L196) add **four production capabilities**:
+
+1. **Multi-Locale Fetching (`es`, `en`, `ar`, `tr`)**:
+   - Loops through `DEFAULT_LOCALES = ["es", "en", "ar", "tr"]` and invokes `strapiLoader(contentType, { url, token }, { ...query, locale: lang })`.
+   - Stores each record in Astro's Content Layer store with a composite key `documentId: "${lang}:${slugOrId}"` so pages can filter `getCollection(...)` by `entry.data.locale === lang`.
+2. **Automatic `populate: "deep"`**:
+   - Defaults `query` to `{ populate: "deep" }` (working alongside `strapi-v5-plugin-populate-deep` on the backend) so nested components, media, and relations are hydrated.
+3. **Custom Entry Mapping (`mapStrapiEntry`)**:
+   - Transforms raw Strapi v5 documents into strictly typed frontend domain objects before running Astro's `parseData` Zod validation.
+4. **Timeout Circuit-Breaker & Offline Mock Fallback (`fallbackByLocale`)**:
+   - Wraps `baseLoader.load(innerContext)` in a `2500ms` timeout and a `10s` circuit-breaker (`offlineEndpoints`). If Strapi is offline or returns 0 entries for a locale, `fallbackByLocale(lang)` supplies localized mocks validated through the exact same Zod schema.
+
+### All 12 Astro Content Layer Collections (`frontend/src/content.config.ts`)
+
+| Astro Collection | Loader Wrapper | Strapi Endpoint (`contentType`) | Kind |
+| :--- | :--- | :--- | :--- |
+| `articles` | `createStrapiCollectionLoader` | `/api/articles` | Collection Type |
+| `events` | `createStrapiCollectionLoader` | `/api/events/occurrences` | Plugin Collection (`@vicacha-devs/strapi-plugin-events`) |
+| `faqs` | `createStrapiCollectionLoader` | `/api/faqs` | Collection Type |
+| `communityServices` | `createStrapiCollectionLoader` | `/api/community-services` | Collection Type |
+| `mediaHighlights` | `createStrapiCollectionLoader` | `/api/media-feeds/episodes` | Plugin Collection (`@vicacha-devs/strapi-plugin-media-feeds`) |
+| `donationCampaigns` | `createStrapiCollectionLoader` | `/api/donations/campaigns` | Plugin Collection (`@vicacha-devs/strapi-plugin-donations`) |
+| `leaders` | `createStrapiCollectionLoader` | `/api/leaders` | Collection Type |
+| `aboutPage` | `createStrapiSingleTypeLoader` | `/api/about-page` | Single Type |
+| `globalSetting` | `createStrapiSingleTypeLoader` | `/api/global-setting` | Single Type |
+| `islamFaithPage` | `createStrapiSingleTypeLoader` | `/api/islam-faith-page` | Single Type |
+| `donationsPage` | `createStrapiSingleTypeLoader` | `/api/donations/calculator` | Plugin Endpoint |
+| `contactPage` | `createStrapiSingleTypeLoader` | `/api/contact-page` | Single Type |
 
 ---
 
