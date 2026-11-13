@@ -92,6 +92,11 @@ const BACKEND_STEPS: VerificationStep[] = [
 
 const FRONTEND_STEPS: VerificationStep[] = [
   {
+    name: "astro sync",
+    bin: path.join(frontendDir, "node_modules/.bin/astro"),
+    args: ["sync"],
+  },
+  {
     name: "oxfmt --check",
     bin: path.join(frontendDir, "node_modules/.bin/oxfmt"),
     args: ["--check"],
