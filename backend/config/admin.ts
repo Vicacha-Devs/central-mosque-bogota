@@ -27,7 +27,7 @@ export default ({ env }) => {
       },
     },
     secrets: {
-      encryptionKey: env("ENCRYPTION_KEY", resolveSecret("ADMIN_JWT_SECRET")),
+      encryptionKey: resolveSecret("ENCRYPTION_KEY"),
     },
     forgotPassword: {
       from: env("EMAIL_DEFAULT_FROM", "no-reply@mezquitabogota.org"),

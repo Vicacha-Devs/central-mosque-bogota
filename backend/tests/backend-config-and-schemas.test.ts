@@ -234,4 +234,42 @@ describe('Central Mosque Backend — Configurations, Providers, and Schema Integ
       }
     }
   });
+
+  it('documents all required production secrets in .env.example with blank default values', () => {
+    const envExamplePath = path.resolve(backendRoot, '.env.example');
+    const raw = fs.readFileSync(envExamplePath, 'utf8');
+    const envEntries = new Map<string, string>();
+    for (const line of raw.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eqIdx = trimmed.indexOf('=');
+      if (eqIdx === -1) continue;
+      envEntries.set(trimmed.slice(0, eqIdx).trim(), trimmed.slice(eqIdx + 1).trim());
+    }
+
+    const secretKeys = [
+      'APP_KEYS',
+      'API_TOKEN_SALT',
+      'ADMIN_JWT_SECRET',
+      'TRANSFER_TOKEN_SALT',
+      'ENCRYPTION_KEY',
+      'JWT_SECRET',
+      'PREVIEW_SECRET',
+      'DONATIONS_WEBHOOK_SECRET',
+      'DATABASE_PASSWORD',
+      'TURNSTILE_SECRET_KEY',
+    ];
+
+    for (const key of secretKeys) {
+      assert.ok(
+        envEntries.has(key),
+        `Expected .env.example to document secret key ${key}`
+      );
+      assert.equal(
+        envEntries.get(key),
+        '',
+        `Expected .env.example secret key ${key} to have an empty value`
+      );
+    }
+  });
 });

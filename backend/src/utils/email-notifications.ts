@@ -158,6 +158,14 @@ function getCopyForLocale(locale: unknown) {
   };
 }
 
+export function isValidSingleEmail(value: unknown): value is string {
+  if (typeof value !== 'string') return false;
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > 254) return false;
+  if (/[\r\n,;<>\s]/.test(trimmed)) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+}
+
 async function safeSendEmail(
   strapi: Core.Strapi,
   options: { to: string; replyTo?: string; subject: string; text: string; html: string }
@@ -173,9 +181,11 @@ async function safeSendEmail(
     const emailService = strapi.plugin('email')?.service('email');
     if (!emailService) return;
     await emailService.send(options);
-  } catch {
-    // Log generic error without exposing credentials or PII
-    strapi.log.warn('Failed to send transactional notification email');
+  } catch (err) {
+    // Log error summary without exposing credentials or PII
+    strapi.log.warn(
+      `Failed to send transactional notification email: ${err instanceof Error ? err.message : String(err)}`
+    );
   }
 }
 
@@ -216,20 +226,37 @@ async function sendDesignerOrFallbackEmail(
           to: options.to,
           ...(options.replyTo ? { replyTo: options.replyTo } : {}),
         },
-        { templateReferenceId },
+        { templateReferenceId, subject: options.subject },
         templateData
       );
-      if (result !== null) {
+      if (result !== null && result !== false) {
         return;
       }
     }
-  } catch {
+  } catch (err) {
     strapi.log.warn(
-      `Falling back to built-in HTML template for templateReferenceId=${templateReferenceId}`
+      `Falling back to built-in HTML template for templateReferenceId=${templateReferenceId}: ${err instanceof Error ? err.message : String(err)}`
     );
   }
 
   await safeSendEmail(strapi, options);
+}
+
+async function settleAndLogDispatches(
+  strapi: Core.Strapi,
+  dispatches: Array<Promise<void>>,
+  contextLabel: string
+): Promise<void> {
+  const results = await Promise.allSettled(dispatches);
+  for (const res of results) {
+    if (res.status === 'rejected') {
+      strapi.log.warn(
+        `Email dispatch failed (${contextLabel}): ${
+          res.reason instanceof Error ? res.reason.message : String(res.reason)
+        }`
+      );
+    }
+  }
 }
 
 export async function notifyContactSubmission(
@@ -268,24 +295,25 @@ export async function notifyContactSubmission(
   const templateData = {
     mosque,
     visitor: {
-      fullName: rawFullName,
-      email,
-      phone: rawPhone,
-      subject: rawSubjectCategory,
-      message: rawMessage,
+      fullName,
+      email: escapeHtml(email),
+      phone,
+      subject: subjectCategory,
+      message,
     },
   };
 
-  await sendDesignerOrFallbackEmail(
-    strapi,
-    {
-      to: adminTo,
-      replyTo: email || undefined,
-      subject: sanitizeHeaderLine(
-        `[Mosque Contact] ${rawSubjectCategory.toUpperCase()} — ${rawFullName}`
-      ),
-      text: `New Contact Inquiry\nName: ${rawFullName}\nEmail: ${email}\nPhone: ${rawPhone}\nSubject: ${rawSubjectCategory}\n\nMessage:\n${rawMessage}`,
-      html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.5;color:#14281d">
+  const dispatches: Array<Promise<void>> = [
+    sendDesignerOrFallbackEmail(
+      strapi,
+      {
+        to: adminTo,
+        replyTo: isValidSingleEmail(email) ? email : undefined,
+        subject: sanitizeHeaderLine(
+          `[Mosque Contact] ${rawSubjectCategory.toUpperCase()} — ${rawFullName}`
+        ),
+        text: `New Contact Inquiry\nName: ${rawFullName}\nEmail: ${email}\nPhone: ${rawPhone}\nSubject: ${rawSubjectCategory}\n\nMessage:\n${rawMessage}`,
+        html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.5;color:#14281d">
         <h2 style="color:#1b4332">New Contact Inquiry</h2>
         <p><strong>Name:</strong> ${fullName}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
@@ -294,29 +322,34 @@ export async function notifyContactSubmission(
         <hr style="border:none;border-top:1px solid #d8e2dc" />
         <p style="white-space:pre-wrap">${message}</p>
       </div>`,
-    },
-    EMAIL_TEMPLATE_IDS.adminAlerts.contact,
-    templateData
-  );
+      },
+      EMAIL_TEMPLATE_IDS.adminAlerts.contact,
+      templateData
+    ),
+  ];
 
-  if (email && email.includes('@')) {
-    await sendDesignerOrFallbackEmail(
-      strapi,
-      {
-        to: email,
-        subject: copy.contactSubject,
-        text: `${copy.contactHeading}\n\n${copy.contactBody}\n\n${copy.footer}`,
-        html: `<div dir="${dir}" style="font-family:sans-serif;max-width:600px;line-height:1.6;color:#14281d">
+  if (isValidSingleEmail(email)) {
+    dispatches.push(
+      sendDesignerOrFallbackEmail(
+        strapi,
+        {
+          to: email,
+          subject: copy.contactSubject,
+          text: `${copy.contactHeading}\n\n${copy.contactBody}\n\n${copy.footer}`,
+          html: `<div dir="${dir}" style="font-family:sans-serif;max-width:600px;line-height:1.6;color:#14281d">
           <h2 style="color:#1b4332">${escapeHtml(copy.contactHeading)} ${fullName}</h2>
           <p>${escapeHtml(copy.contactBody)}</p>
           <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
           <p style="font-size:12px;color:#52796f">${escapeHtml(copy.footer)}</p>
         </div>`,
-      },
-      EMAIL_TEMPLATE_IDS.contactConfirmation[code],
-      templateData
+        },
+        EMAIL_TEMPLATE_IDS.contactConfirmation[code],
+        templateData
+      )
     );
   }
+
+  await settleAndLogDispatches(strapi, dispatches, 'contact');
 }
 
 export async function notifyVisitBooking(
@@ -361,31 +394,32 @@ export async function notifyVisitBooking(
   const templateData = {
     mosque,
     visitor: {
-      fullName: rawVisitorName,
-      email,
-      phone: rawPhone,
+      fullName: visitorName,
+      email: escapeHtml(email),
+      phone,
     },
     booking: {
-      visitorName: rawVisitorName,
-      organizationOrSchool: rawOrganization,
-      preferredDate: rawPreferredDate,
-      preferredTimeSlot: rawPreferredTimeSlot,
-      groupSize: rawGroupSize,
-      preferredGuideLanguage: rawGuideLang,
-      notes: rawNotes,
+      visitorName,
+      organizationOrSchool: organization,
+      preferredDate,
+      preferredTimeSlot,
+      groupSize,
+      preferredGuideLanguage: guideLang,
+      notes,
     },
   };
 
-  await sendDesignerOrFallbackEmail(
-    strapi,
-    {
-      to: adminTo,
-      replyTo: email || undefined,
-      subject: sanitizeHeaderLine(
-        `[Guided Visit] ${rawPreferredDate} (${rawGroupSize} guests) — ${rawVisitorName}`
-      ),
-      text: `New Guided Visit Booking\nVisitor: ${rawVisitorName}\nOrganization: ${rawOrganization}\nDate: ${rawPreferredDate} (${rawPreferredTimeSlot})\nGroup Size: ${rawGroupSize}\nGuide Language: ${rawGuideLang}\nEmail: ${email}\nPhone: ${rawPhone}\nNotes: ${rawNotes}`,
-      html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.5;color:#14281d">
+  const dispatches: Array<Promise<void>> = [
+    sendDesignerOrFallbackEmail(
+      strapi,
+      {
+        to: adminTo,
+        replyTo: isValidSingleEmail(email) ? email : undefined,
+        subject: sanitizeHeaderLine(
+          `[Guided Visit] ${rawPreferredDate} (${rawGroupSize} guests) — ${rawVisitorName}`
+        ),
+        text: `New Guided Visit Booking\nVisitor: ${rawVisitorName}\nOrganization: ${rawOrganization}\nDate: ${rawPreferredDate} (${rawPreferredTimeSlot})\nGroup Size: ${rawGroupSize}\nGuide Language: ${rawGuideLang}\nEmail: ${email}\nPhone: ${rawPhone}\nNotes: ${rawNotes}`,
+        html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.5;color:#14281d">
         <h2 style="color:#1b4332">New Guided Visit Reservation</h2>
         <p><strong>Visitor:</strong> ${visitorName}</p>
         <p><strong>Organization / School:</strong> ${organization}</p>
@@ -396,30 +430,35 @@ export async function notifyVisitBooking(
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>Notes:</strong> ${notes}</p>
       </div>`,
-    },
-    EMAIL_TEMPLATE_IDS.adminAlerts.visit,
-    templateData
-  );
+      },
+      EMAIL_TEMPLATE_IDS.adminAlerts.visit,
+      templateData
+    ),
+  ];
 
-  if (email && email.includes('@')) {
-    await sendDesignerOrFallbackEmail(
-      strapi,
-      {
-        to: email,
-        subject: copy.visitSubject,
-        text: `${copy.visitHeading}\n\n${copy.visitBody}\n\nDate: ${rawPreferredDate} (${rawPreferredTimeSlot})\nGroup Size: ${rawGroupSize}\n\n${copy.footer}`,
-        html: `<div dir="${dir}" style="font-family:sans-serif;max-width:600px;line-height:1.6;color:#14281d">
+  if (isValidSingleEmail(email)) {
+    dispatches.push(
+      sendDesignerOrFallbackEmail(
+        strapi,
+        {
+          to: email,
+          subject: copy.visitSubject,
+          text: `${copy.visitHeading}\n\n${copy.visitBody}\n\nDate: ${rawPreferredDate} (${rawPreferredTimeSlot})\nGroup Size: ${rawGroupSize}\n\n${copy.footer}`,
+          html: `<div dir="${dir}" style="font-family:sans-serif;max-width:600px;line-height:1.6;color:#14281d">
           <h2 style="color:#1b4332">${escapeHtml(copy.visitHeading)} ${visitorName}</h2>
           <p>${escapeHtml(copy.visitBody)}</p>
           <p><strong>${preferredDate}</strong> (${preferredTimeSlot}) • ${groupSize}</p>
           <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
           <p style="font-size:12px;color:#52796f">${escapeHtml(copy.footer)}</p>
         </div>`,
-      },
-      EMAIL_TEMPLATE_IDS.visitConfirmation[code],
-      templateData
+        },
+        EMAIL_TEMPLATE_IDS.visitConfirmation[code],
+        templateData
+      )
     );
   }
+
+  await settleAndLogDispatches(strapi, dispatches, 'visit-booking');
 }
 
 export async function notifyDonationSubmission(
@@ -457,26 +496,27 @@ export async function notifyDonationSubmission(
   const templateData = {
     mosque,
     donation: {
-      donorName: rawDonorName,
-      amount: rawAmount,
-      currency: rawCurrency,
-      donationType: rawDonationType,
-      paymentMethodUsed: rawPaymentMethod,
-      transactionReference: rawReference,
+      donorName,
+      amount,
+      currency,
+      donationType,
+      paymentMethodUsed,
+      transactionReference: reference,
       requestsTaxCertificate: requestsCertificate ? 'Yes' : 'No',
     },
   };
 
-  await sendDesignerOrFallbackEmail(
-    strapi,
-    {
-      to: adminTo,
-      replyTo: email || undefined,
-      subject: sanitizeHeaderLine(
-        `[Donation Report] ${rawAmount} ${rawCurrency} (${rawDonationType})${requestsCertificate ? ' [DIAN Certificate Requested]' : ''}`
-      ),
-      text: `New Donation Submission\nDonor: ${rawDonorName}\nAmount: ${rawAmount} ${rawCurrency}\nType: ${rawDonationType}\nMethod: ${rawPaymentMethod}\nReference: ${rawReference}\nDIAN Tax Certificate Requested: ${requestsCertificate ? 'Yes' : 'No'}`,
-      html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.5;color:#14281d">
+  const dispatches: Array<Promise<void>> = [
+    sendDesignerOrFallbackEmail(
+      strapi,
+      {
+        to: adminTo,
+        replyTo: isValidSingleEmail(email) ? email : undefined,
+        subject: sanitizeHeaderLine(
+          `[Donation Report] ${rawAmount} ${rawCurrency} (${rawDonationType})${requestsCertificate ? ' [DIAN Certificate Requested]' : ''}`
+        ),
+        text: `New Donation Submission\nDonor: ${rawDonorName}\nAmount: ${rawAmount} ${rawCurrency}\nType: ${rawDonationType}\nMethod: ${rawPaymentMethod}\nReference: ${rawReference}\nDIAN Tax Certificate Requested: ${requestsCertificate ? 'Yes' : 'No'}`,
+        html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.5;color:#14281d">
         <h2 style="color:#1b4332">New Donation Notification</h2>
         <p><strong>Donor:</strong> ${donorName}</p>
         <p><strong>Amount:</strong> ${amount} ${currency}</p>
@@ -485,28 +525,33 @@ export async function notifyDonationSubmission(
         <p><strong>Transaction Ref:</strong> ${reference}</p>
         <p><strong>DIAN Tax Certificate Requested:</strong> ${requestsCertificate ? 'Yes' : 'No'}</p>
       </div>`,
-    },
-    EMAIL_TEMPLATE_IDS.adminAlerts.donation,
-    templateData
-  );
+      },
+      EMAIL_TEMPLATE_IDS.adminAlerts.donation,
+      templateData
+    ),
+  ];
 
-  if (email && email.includes('@')) {
-    await sendDesignerOrFallbackEmail(
-      strapi,
-      {
-        to: email,
-        subject: copy.donationSubject,
-        text: `${copy.donationHeading}\n\n${copy.donationBody}\n\n${copy.footer}`,
-        html: `<div dir="${dir}" style="font-family:sans-serif;max-width:600px;line-height:1.6;color:#14281d">
+  if (isValidSingleEmail(email)) {
+    dispatches.push(
+      sendDesignerOrFallbackEmail(
+        strapi,
+        {
+          to: email,
+          subject: copy.donationSubject,
+          text: `${copy.donationHeading}\n\n${copy.donationBody}\n\n${copy.footer}`,
+          html: `<div dir="${dir}" style="font-family:sans-serif;max-width:600px;line-height:1.6;color:#14281d">
           <h2 style="color:#1b4332">${escapeHtml(copy.donationHeading)} ${donorName}</h2>
           <p>${escapeHtml(copy.donationBody)}</p>
           <p><strong>${amount} ${currency}</strong> (${donationType})</p>
           <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
           <p style="font-size:12px;color:#52796f">${escapeHtml(copy.footer)}</p>
         </div>`,
-      },
-      EMAIL_TEMPLATE_IDS.donationConfirmation[code],
-      templateData
+        },
+        EMAIL_TEMPLATE_IDS.donationConfirmation[code],
+        templateData
+      )
     );
   }
+
+  await settleAndLogDispatches(strapi, dispatches, 'donation');
 }

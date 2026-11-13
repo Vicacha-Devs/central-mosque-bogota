@@ -290,8 +290,8 @@ export function patchContentManagerAndPreviewLocalization(strapi?: Core.Strapi) 
           const raw = fs.readFileSync(p, 'utf8');
           const patched = raw
             .replace(
-              /_e = ee\?\.uid\.includes\("api::"\)/g,
-              '_e = Boolean(ee?.uid?.includes("api::") || ee?.uid?.includes("plugin::"))'
+              /\b([A-Za-z_$][\w$]*)\s*=\s*([A-Za-z_$][\w$]*)\?\.uid\.includes\("api::"\)/g,
+              '$1 = Boolean($2?.uid?.includes("api::") || $2?.uid?.includes("plugin::"))'
             )
             .replace(
               /\(r \? \["api::", \.\.\.i\] : a\)/g,

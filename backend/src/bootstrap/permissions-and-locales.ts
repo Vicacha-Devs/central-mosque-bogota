@@ -22,11 +22,12 @@ export const PUBLIC_READ_MODELS = [
   'plugin::media-feeds.media-item',
 ];
 
-// Principle of Least Privilege: inbound plugin submission entities only allow 'create', never 'find' or 'findOne'
-export const PUBLIC_CREATE_ONLY_MODELS = [
-  'plugin::inbox.submission',
-  'plugin::bookings.booking',
-  'plugin::donations.pledge',
+// Principle of Least Privilege: inbound submissions go through dedicated plugin content-api routes
+// (submitForm, createReservation, submitPledge) rather than raw collection .create permissions.
+export const STALE_PUBLIC_CREATE_ACTIONS = [
+  'plugin::inbox.submission.create',
+  'plugin::bookings.booking.create',
+  'plugin::donations.pledge.create',
 ];
 
 export async function ensureLocales(strapi: Core.Strapi) {
@@ -42,8 +43,10 @@ export async function ensureLocales(strapi: Core.Strapi) {
         await localeService.create(loc);
       }
     }
-  } catch {
-    strapi.log.warn('Could not auto-configure i18n locales during bootstrap');
+  } catch (err) {
+    strapi.log.warn(
+      `Could not auto-configure i18n locales during bootstrap: ${err instanceof Error ? err.message : String(err)}`
+    );
   }
 }
 
@@ -69,7 +72,6 @@ export async function ensurePublicPermissions(strapi: Core.Strapi) {
       'plugin::media-feeds.content-api.listSeries',
       'plugin::media-feeds.content-api.getLiveStatus',
       'plugin::media-feeds.content-api.getRssXml',
-      'plugin::media-feeds.content-api.getPodcastRssXml',
       'plugin::donations.content-api.listCampaigns',
       'plugin::donations.content-api.listUtilityInvoices',
       'plugin::donations.content-api.getCampaignBySlug',
@@ -143,30 +145,73 @@ export async function ensurePublicPermissions(strapi: Core.Strapi) {
     for (const uid of PUBLIC_READ_MODELS) {
       actionsToEnable.push(`${uid}.find`, `${uid}.findOne`);
     }
-    for (const uid of PUBLIC_CREATE_ONLY_MODELS) {
-      actionsToEnable.push(`${uid}.create`);
+
+    const permissionQuery = strapi.query('plugin::users-permissions.permission') as {
+      findMany?: (opts: { where: { role: unknown }; select?: string[] }) => Promise<Array<{ id?: unknown; action?: string }>>;
+      findOne: (opts: { where: { role: unknown; action: string } }) => Promise<{ id?: unknown } | null>;
+      create: (opts: { data: { action: string; role: unknown } }) => Promise<unknown>;
+      delete?: (opts: { where: { id?: unknown; role?: unknown; action?: string } }) => Promise<unknown>;
+    };
+
+    if (typeof permissionQuery.delete === 'function') {
+      await Promise.all(
+        STALE_PUBLIC_CREATE_ACTIONS.map((action) =>
+          permissionQuery.delete!({
+            where: { role: publicRole.id, action },
+          }).catch(() => undefined)
+        )
+      );
     }
 
+    const existingActions =
+      typeof permissionQuery.findMany === 'function'
+        ? new Set(
+            (
+              await permissionQuery.findMany({
+                where: { role: publicRole.id },
+                select: ['action'],
+              })
+            )
+              .map((p) => p?.action)
+              .filter((a): a is string => typeof a === 'string')
+          )
+        : null;
+
+    const missingActions: string[] = [];
     for (const action of actionsToEnable) {
-      const exists = await strapi
-        .query('plugin::users-permissions.permission')
-        .findOne({
+      if (existingActions) {
+        if (!existingActions.has(action)) {
+          missingActions.push(action);
+          existingActions.add(action);
+        }
+      } else {
+        const exists = await permissionQuery.findOne({
           where: {
             role: publicRole.id,
             action,
           },
         });
-
-      if (!exists) {
-        await strapi.query('plugin::users-permissions.permission').create({
-          data: {
-            action,
-            role: publicRole.id,
-          },
-        });
+        if (!exists) {
+          missingActions.push(action);
+        }
       }
     }
-  } catch {
-    strapi.log.warn('Could not auto-configure public role permissions');
+
+    if (missingActions.length > 0) {
+      await Promise.all(
+        missingActions.map((action) =>
+          permissionQuery.create({
+            data: {
+              action,
+              role: publicRole.id,
+            },
+          })
+        )
+      );
+    }
+  } catch (err) {
+    strapi.log.warn(
+      `Could not auto-configure public role permissions: ${err instanceof Error ? err.message : String(err)}`
+    );
   }
 }

@@ -208,14 +208,25 @@ async function findMatchingLeaderProfile(
     }
   }
 
+  const localeFilter =
+    typeof data.locale === "string" && data.locale.trim()
+      ? { locale: data.locale.trim() }
+      : {};
+
   // 1. Check if editor explicitly provided nameField or slugField
   const nameCandidate = data[binding.nameField];
   const rawName =
     typeof nameCandidate === "string" ? nameCandidate.trim() : "";
   if (rawName) {
-    const byName = (await leaderQuery.findOne({
-      where: { name: rawName },
-    })) as LeaderProfileRecord | null;
+    const byName =
+      ((await leaderQuery.findOne({
+        where: { name: rawName, ...localeFilter },
+      })) as LeaderProfileRecord | null) ??
+      (localeFilter.locale
+        ? ((await leaderQuery.findOne({
+            where: { name: rawName },
+          })) as LeaderProfileRecord | null)
+        : null);
     if (byName) return byName;
   }
 
@@ -223,9 +234,15 @@ async function findMatchingLeaderProfile(
   const rawSlug =
     typeof slugCandidate === "string" ? slugCandidate.trim() : "";
   if (rawSlug) {
-    const bySlug = (await leaderQuery.findOne({
-      where: { slug: rawSlug },
-    })) as LeaderProfileRecord | null;
+    const bySlug =
+      ((await leaderQuery.findOne({
+        where: { slug: rawSlug, ...localeFilter },
+      })) as LeaderProfileRecord | null) ??
+      (localeFilter.locale
+        ? ((await leaderQuery.findOne({
+            where: { slug: rawSlug },
+          })) as LeaderProfileRecord | null)
+        : null);
     if (bySlug) return bySlug;
   }
 
@@ -234,13 +251,13 @@ async function findMatchingLeaderProfile(
     const adminUser = await resolveAuthenticatedAdminUser(strapi, data);
     if (adminUser?.id) {
       const byAdminId = (await leaderQuery.findOne({
-        where: { adminUserId: adminUser.id },
+        where: { adminUserId: adminUser.id, ...localeFilter },
       })) as LeaderProfileRecord | null;
       if (byAdminId) return byAdminId;
     }
     if (adminUser?.email) {
       const byAdminEmail = (await leaderQuery.findOne({
-        where: { adminUserEmail: adminUser.email },
+        where: { adminUserEmail: adminUser.email, ...localeFilter },
       })) as LeaderProfileRecord | null;
       if (byAdminEmail) return byAdminEmail;
     }
@@ -288,14 +305,14 @@ export function registerAuthorProfileLifecycles(strapi: Core.Strapi) {
       const data = event.params?.data;
       if (!data) return;
 
-      if (
-        typeof data.adminUserEmail === "string" &&
-        data.adminUserEmail.trim() &&
-        strapi.db?.query
-      ) {
-        const normalizedEmail = data.adminUserEmail.trim().toLowerCase();
-        data.adminUserEmail = normalizedEmail;
-        if (!data.adminUserId) {
+      if (Object.prototype.hasOwnProperty.call(data, "adminUserEmail")) {
+        if (
+          typeof data.adminUserEmail === "string" &&
+          data.adminUserEmail.trim() &&
+          strapi.db?.query
+        ) {
+          const normalizedEmail = data.adminUserEmail.trim().toLowerCase();
+          data.adminUserEmail = normalizedEmail;
           const adminUser = (await strapi.db.query("admin::user").findOne({
             where: { email: normalizedEmail },
             select: ["id"],
@@ -303,10 +320,29 @@ export function registerAuthorProfileLifecycles(strapi: Core.Strapi) {
           if (adminUser?.id) {
             data.adminUserId = adminUser.id;
           }
+        } else if (
+          data.adminUserEmail === null ||
+          (typeof data.adminUserEmail === "string" && !data.adminUserEmail.trim())
+        ) {
+          data.adminUserEmail = null;
+          data.adminUserId = null;
         }
       }
     },
   });
+
+  const hasExplicitRelation = (val: unknown): boolean => {
+    if (!val) return false;
+    if (typeof val === "number") return true;
+    if (typeof val !== "object") return false;
+    const obj = val as Record<string, unknown>;
+    return Boolean(
+      (Array.isArray(obj.connect) && obj.connect.length > 0) ||
+        (Array.isArray(obj.set) && obj.set.length > 0) ||
+        obj.id ||
+        obj.documentId,
+    );
+  };
 
   // 2. Auto-link Articles, Khutbahs/Media Items, Events, and Publications to Staff/Author profiles
   strapi.db.lifecycles.subscribe({
@@ -324,16 +360,7 @@ export function registerAuthorProfileLifecycles(strapi: Core.Strapi) {
       );
       if (!binding) return;
 
-      const hasExplicitRelation = Boolean(
-        data[binding.relationField] &&
-          (typeof data[binding.relationField] === "number" ||
-            (Array.isArray((data[binding.relationField] as any)?.connect) &&
-              (data[binding.relationField] as any).connect.length > 0) ||
-            (Array.isArray((data[binding.relationField] as any)?.set) &&
-              (data[binding.relationField] as any).set.length > 0) ||
-            (data[binding.relationField] as any)?.id ||
-            (data[binding.relationField] as any)?.documentId),
-      );
+      const explicitRelation = hasExplicitRelation(data[binding.relationField]);
 
       const profile = await findMatchingLeaderProfile(
         strapi,
@@ -353,7 +380,7 @@ export function registerAuthorProfileLifecycles(strapi: Core.Strapi) {
       }
 
       if (
-        (hasExplicitRelation ||
+        (explicitRelation ||
           !data[binding.nameField] ||
           typeof data[binding.nameField] !== "string" ||
           !(data[binding.nameField] as string).trim()) &&
@@ -383,16 +410,7 @@ export function registerAuthorProfileLifecycles(strapi: Core.Strapi) {
       );
       if (!binding) return;
 
-      const hasExplicitRelation = Boolean(
-        data[binding.relationField] &&
-          (typeof data[binding.relationField] === "number" ||
-            (Array.isArray((data[binding.relationField] as any)?.connect) &&
-              (data[binding.relationField] as any).connect.length > 0) ||
-            (Array.isArray((data[binding.relationField] as any)?.set) &&
-              (data[binding.relationField] as any).set.length > 0) ||
-            (data[binding.relationField] as any)?.id ||
-            (data[binding.relationField] as any)?.documentId),
-      );
+      const explicitRelation = hasExplicitRelation(data[binding.relationField]);
 
       const profile = await findMatchingLeaderProfile(
         strapi,
@@ -403,13 +421,16 @@ export function registerAuthorProfileLifecycles(strapi: Core.Strapi) {
       if (profile?.slug) {
         data[binding.slugField] = profile.slug;
         if (
-          (hasExplicitRelation ||
+          (explicitRelation ||
             !data[binding.nameField] ||
             typeof data[binding.nameField] !== "string" ||
             !(data[binding.nameField] as string).trim()) &&
           profile.name
         ) {
           data[binding.nameField] = profile.name;
+        }
+        if (!explicitRelation && profile.id) {
+          data[binding.relationField] = profile.id;
         }
         return;
       }
@@ -454,58 +475,79 @@ export async function backfillAuthorProfilesAndSlugs(strapi: Core.Strapi) {
         continue;
       }
 
-      const rows = (await strapi.db.query(uid).findMany({
-        populate: [relationField],
-      })) as Array<Record<string, any>>;
+      const BATCH_SIZE = 200;
+      let offset = 0;
 
-      for (const row of rows) {
-        const rawName =
-          typeof row[nameField] === "string" ? row[nameField].trim() : "";
-        const rawSlug =
-          typeof row[slugField] === "string" ? row[slugField].trim() : "";
-        const existingRel = row[relationField];
-        const rowLocale = typeof row.locale === "string" ? row.locale : "es";
+      while (true) {
+        const rows = (await strapi.db.query(uid).findMany({
+          select: ["id", "locale", nameField, slugField],
+          populate: { [relationField]: { select: ["id", "slug"] } },
+          limit: BATCH_SIZE,
+          offset,
+        })) as Array<Record<string, any>>;
 
-        const computedSlug =
-          existingRel?.slug ||
-          rawSlug ||
-          (rawName ? slugifyProfileName(rawName) : "");
+        if (!Array.isArray(rows) || rows.length === 0) break;
 
-        const matchedLeader =
-          leaders.find(
-            (l) =>
-              l.locale === rowLocale &&
-              ((rawName && l.name === rawName) ||
-                (computedSlug && l.slug === computedSlug)),
-          ) ||
-          leaders.find(
-            (l) =>
-              (rawName && l.name === rawName) ||
-              (computedSlug && l.slug === computedSlug),
+        const pendingUpdates: Array<Promise<unknown>> = [];
+
+        for (const row of rows) {
+          const rawName =
+            typeof row[nameField] === "string" ? row[nameField].trim() : "";
+          const rawSlug =
+            typeof row[slugField] === "string" ? row[slugField].trim() : "";
+          const existingRel = row[relationField];
+          const rowLocale = typeof row.locale === "string" ? row.locale : "es";
+
+          const computedSlug =
+            existingRel?.slug ||
+            rawSlug ||
+            (rawName ? slugifyProfileName(rawName) : "");
+
+          const matchedLeader =
+            leaders.find(
+              (l) =>
+                l.locale === rowLocale &&
+                ((rawName && l.name === rawName) ||
+                  (computedSlug && l.slug === computedSlug)),
+            ) ||
+            leaders.find(
+              (l) =>
+                (rawName && l.name === rawName) ||
+                (computedSlug && l.slug === computedSlug),
+            );
+
+          const nextSlug = matchedLeader?.slug || computedSlug;
+          const nextName = rawName || matchedLeader?.name || "";
+          const needsSlugUpdate = Boolean(nextSlug && row[slugField] !== nextSlug);
+          const needsNameUpdate = Boolean(
+            !rawName && nextName && row[nameField] !== nextName,
+          );
+          const needsRelationUpdate = Boolean(
+            matchedLeader?.id && !existingRel?.id,
           );
 
-        const nextSlug = matchedLeader?.slug || computedSlug;
-        const nextName = rawName || matchedLeader?.name || "";
-        const needsSlugUpdate = Boolean(nextSlug && row[slugField] !== nextSlug);
-        const needsNameUpdate = Boolean(
-          !rawName && nextName && row[nameField] !== nextName,
-        );
-        const needsRelationUpdate = Boolean(
-          matchedLeader?.id && !existingRel?.id,
-        );
-
-        if (needsSlugUpdate || needsNameUpdate || needsRelationUpdate) {
-          const updateData: Record<string, unknown> = {};
-          if (needsSlugUpdate) updateData[slugField] = nextSlug;
-          if (needsNameUpdate) updateData[nameField] = nextName;
-          if (needsRelationUpdate && matchedLeader?.id) {
-            updateData[relationField] = matchedLeader.id;
+          if (needsSlugUpdate || needsNameUpdate || needsRelationUpdate) {
+            const updateData: Record<string, unknown> = {};
+            if (needsSlugUpdate) updateData[slugField] = nextSlug;
+            if (needsNameUpdate) updateData[nameField] = nextName;
+            if (needsRelationUpdate && matchedLeader?.id) {
+              updateData[relationField] = matchedLeader.id;
+            }
+            pendingUpdates.push(
+              strapi.db.query(uid).update({
+                where: { id: row.id },
+                data: updateData,
+              }),
+            );
           }
-          await strapi.db.query(uid).update({
-            where: { id: row.id },
-            data: updateData,
-          });
         }
+
+        if (pendingUpdates.length > 0) {
+          await Promise.all(pendingUpdates);
+        }
+
+        if (rows.length < BATCH_SIZE) break;
+        offset += BATCH_SIZE;
       }
     }
   } catch (err) {

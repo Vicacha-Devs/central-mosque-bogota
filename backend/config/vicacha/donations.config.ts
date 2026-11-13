@@ -1,3 +1,5 @@
+import { resolveSecret } from '../security.utils';
+
 type EnvFn = {
   (key: string, defaultValue?: any): any;
   int(key: string, defaultValue?: number): number;
@@ -266,7 +268,9 @@ export function buildMosqueDonationsPluginConfig(env: EnvFn) {
           },
         },
       ],
-      webhookSigningSecret: env('DONATIONS_WEBHOOK_SECRET', ''),
+      webhookSigningSecret:
+        env('DONATIONS_WEBHOOK_SECRET', '') ||
+        resolveSecret('DONATIONS_WEBHOOK_SECRET'),
       enableCertificatesBridge: true,
       taxCertificateTemplateSlug: 'dian-donation-certificate',
       autoIssueCertificateOnVerify: true,

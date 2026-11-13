@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { Core } from '@strapi/strapi';
 
 interface RateLimitBucket {
@@ -6,6 +7,39 @@ interface RateLimitBucket {
 
 const ipBuckets = new Map<string, RateLimitBucket>();
 const MAX_TRACKED_IPS = 5000;
+
+const PUBLIC_SUBMISSION_PATH_PATTERNS = [
+  /^\/api\/inbox\/(?:forms\/[^/]+\/submit|subscribers|submissions)$/i,
+  /^\/api\/bookings\/(?:reserve|reschedule|cancel|bookings)$/i,
+  /^\/api\/donations\/pledges$/i,
+  /^\/api\/certificates\/apply$/i,
+  /^\/api\/events\/registrations\/[^/]+\/cancel$/i,
+  /^\/api\/events\/[^/]+\/(?:register|cancel)$/i,
+];
+
+function normalizeRequestPath(rawPath: string): string | null {
+  try {
+    const decoded = decodeURIComponent(rawPath);
+    const collapsed = decoded.replace(/\/{2,}/g, '/');
+    const dotNormalized = path.posix.normalize(collapsed);
+    const trimmed =
+      dotNormalized.length > 1
+        ? dotNormalized.replace(/\/+$/, '')
+        : dotNormalized;
+    return trimmed.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
+function isProtectedPublicSubmission(
+  ctx: any,
+  normalizedPath: string | null
+): boolean {
+  const method = typeof ctx?.method === 'string' ? ctx.method.toUpperCase() : '';
+  if (method !== 'POST' || !normalizedPath) return false;
+  return PUBLIC_SUBMISSION_PATH_PATTERNS.some((re) => re.test(normalizedPath));
+}
 
 function pruneBuckets(now: number, windowMs: number): void {
   if (ipBuckets.size < MAX_TRACKED_IPS) return;
@@ -16,6 +50,11 @@ function pruneBuckets(now: number, windowMs: number): void {
     } else {
       bucket.timestamps = active;
     }
+  }
+  while (ipBuckets.size >= MAX_TRACKED_IPS) {
+    const oldestKey = ipBuckets.keys().next().value;
+    if (oldestKey === undefined) break;
+    ipBuckets.delete(oldestKey);
   }
 }
 
@@ -28,7 +67,7 @@ async function verifyTurnstileToken(
     const formData = new URLSearchParams();
     formData.set('secret', secretKey);
     formData.set('response', token);
-    if (remoteIp) {
+    if (remoteIp && remoteIp !== 'unknown') {
       formData.set('remoteip', remoteIp);
     }
 
@@ -40,6 +79,7 @@ async function verifyTurnstileToken(
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: formData.toString(),
+        signal: AbortSignal.timeout(5000),
       }
     );
 
@@ -53,16 +93,28 @@ async function verifyTurnstileToken(
 }
 
 /**
- * Middleware protecting public POST submission endpoints (`contact-submission`, `visit-booking`, `donation-submission`):
+ * Middleware protecting public POST submission endpoints (`inbox`, `bookings`, `donations`, `certificates`, `events`):
  * 1. Sliding-window per-IP rate limiting
  * 2. Honeypot field trap (`website` / `_hp`)
- * 3. Optional Cloudflare Turnstile token verification when `TURNSTILE_SECRET_KEY` is configured
+ * 3. Cloudflare Turnstile token verification (fail-closed in production unless `ALLOW_UNPROTECTED_PUBLIC_FORMS=true`)
  */
 export default (
   _config: Record<string, unknown>,
   { strapi }: { strapi: Core.Strapi }
 ) => {
   return async (ctx: any, next: () => Promise<void>) => {
+    const rawPath = typeof ctx?.path === 'string' ? ctx.path : '';
+    const method = typeof ctx?.method === 'string' ? ctx.method.toUpperCase() : '';
+    const normalizedPath = rawPath ? normalizeRequestPath(rawPath) : '';
+
+    if (method === 'POST' && normalizedPath === null) {
+      return ctx.badRequest('Invalid request path.');
+    }
+
+    if (!isProtectedPublicSubmission(ctx, normalizedPath)) {
+      return next();
+    }
+
     const maxRequests = Math.max(
       1,
       Number.parseInt(process.env.PUBLIC_FORM_RATE_LIMIT_MAX || '5', 10) || 5
@@ -107,12 +159,20 @@ export default (
       return ctx.badRequest('Invalid form submission.');
     }
 
-    // Optional Cloudflare Turnstile verification
+    // Cloudflare Turnstile verification
     const turnstileSecret = (process.env.TURNSTILE_SECRET_KEY || '').trim();
+    const allowUnprotected = process.env.ALLOW_UNPROTECTED_PUBLIC_FORMS === 'true';
     const turnstileToken =
       payload?.turnstileToken ??
       rawBody?.turnstileToken ??
       ctx.request?.headers?.['cf-turnstile-response'];
+
+    if (!turnstileSecret && process.env.NODE_ENV === 'production' && !allowUnprotected) {
+      strapi.log.error(
+        'TURNSTILE_SECRET_KEY is not configured in production; blocking public form submission (set ALLOW_UNPROTECTED_PUBLIC_FORMS=true to explicitly opt out).'
+      );
+      return ctx.badRequest('Security verification is not configured.');
+    }
 
     if (turnstileSecret) {
       if (typeof turnstileToken !== 'string' || !turnstileToken.trim()) {

@@ -5,7 +5,19 @@ import { buildSearchAndCachePlugins } from "./plugins/search-cache.plugins";
 import { buildTiptapEditorPluginConfig } from "./plugins/tiptap.plugin";
 import { buildVicachaPluginsConfig } from "./vicachaPlugins";
 
-export default ({ env }: { env: any }) => ({
+export interface StrapiEnvFn {
+  (key: string, defaultValue?: string): string;
+  int: (key: string, defaultValue?: number) => number;
+  bool: (key: string, defaultValue?: boolean) => boolean;
+}
+
+function parseSampleRate(raw: string): number {
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed)) return 1.0;
+  return Math.min(1, Math.max(0, parsed));
+}
+
+export default ({ env }: { env: StrapiEnvFn }) => ({
   // 1-2b. Core Infrastructure Plugins (users-permissions, upload, email)
   ...buildCoreInfrastructurePlugins(env),
 
@@ -14,7 +26,7 @@ export default ({ env }: { env: any }) => ({
     enabled: true,
   },
 
-  // 4. Tiptap Rich Text Editor (@notum-cz/strapi-plugin-tiptap-editor — local fork)
+  // 4. Tiptap Rich Text Editor (@vicacha-devs/strapi-plugin-tiptap-editor)
   "tiptap-editor": buildTiptapEditorPluginConfig(),
 
   // 5. Deep Populate for Strapi v5 (strapi-v5-plugin-populate-deep)
@@ -60,6 +72,11 @@ export default ({ env }: { env: any }) => ({
     enabled: true,
   },
 
+  // 14b. Collapsible & Pinnable Left Navigation (@vicacha-devs/strapi-plugin-collapsible-nav)
+  "collapsible-nav": {
+    enabled: true,
+  },
+
   // 15. Spotlight Global Search Palette (@vicacha-devs/strapi-plugin-global-search)
   "global-search": {
     enabled: true,
@@ -77,4 +94,19 @@ export default ({ env }: { env: any }) => ({
 
   // 17-27. @vicacha-devs Strapi v5 Plugins (notes, calendar, events, bookings, inbox, etc.)
   ...buildVicachaPluginsConfig(env),
+
+  // 28. Vendor-neutral OpenTelemetry Error Tracking & APM (@vicacha-devs/strapi-plugin-opentelemetry)
+  opentelemetry: {
+    enabled: env.bool("OTEL_ENABLED", true),
+    config: {
+      serviceName: env("OTEL_SERVICE_NAME", "central-mosque-bogota-backend"),
+      serviceVersion: env("npm_package_version", "1.0.0"),
+      environment: env("NODE_ENV", "development"),
+      otlpEndpoint: env("OTEL_EXPORTER_OTLP_ENDPOINT", ""),
+      sampleRate: parseSampleRate(env("OTEL_TRACES_SAMPLE_RATE", "1.0")),
+      ignorePaths: ["/_health", "/api/health", "/favicon.ico"],
+      captureDocumentService: true,
+      consoleExporter: env.bool("OTEL_CONSOLE_EXPORTER", false),
+    },
+  },
 });

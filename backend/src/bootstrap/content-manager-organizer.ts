@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import type { Core } from '@strapi/strapi';
 
 export const DEFAULT_MOSQUE_CMO_CONFIG = {
@@ -95,7 +97,6 @@ export const HIDDEN_CMO_PLUGIN_PREFIXES = new Set([
   'seo',
   'sitemap',
   'cloud',
-  'strapi-5-sitemap-plugin',
 ]);
 
 /**
@@ -219,8 +220,6 @@ export async function patchAndSeedContentManagerOrganizer(
 
 export function syncContentStructureGroupsFile(strapi: Core.Strapi) {
   try {
-    const fs = require('node:fs') as typeof import('node:fs');
-    const path = require('node:path') as typeof import('node:path');
     const dirs = (strapi as unknown as {
       dirs?: { app?: { src?: string }; dist?: { src?: string } };
     }).dirs;

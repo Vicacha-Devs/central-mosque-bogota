@@ -177,9 +177,18 @@ const AUTHOR_LAYOUT_GROUPS: Array<{
   { nameField: 'author', relationField: 'authorProfile', slugField: 'authorSlug' },
   { nameField: 'authorName', relationField: 'authorProfile', slugField: 'authorSlug' },
   { nameField: 'speaker', relationField: 'speakerProfile', slugField: 'speakerSlug' },
+];
+
+const EVENT_LAYOUT_GROUPS: Array<{
+  nameField: string;
+  relationField: string;
+  slugField: string;
+}> = [
   { nameField: 'rsvpEnabled', relationField: 'featured', slugField: 'waitlistEnabled' },
   { nameField: 'maxGuestsPerRegistration', relationField: 'capacity', slugField: 'registrationDeadline' },
 ];
+
+const LAYOUT_FIELD_GROUPS = [...AUTHOR_LAYOUT_GROUPS, ...EVENT_LAYOUT_GROUPS];
 
 /**
  * Moves `authorProfile` / `speakerProfile` and `authorSlug` / `speakerSlug` up into
@@ -195,7 +204,7 @@ export function normalizeAuthorLayoutRows(
   let currentLayout = editLayout;
   let anyChanged = false;
 
-  for (const { nameField, relationField, slugField } of AUTHOR_LAYOUT_GROUPS) {
+  for (const { nameField, relationField, slugField } of LAYOUT_FIELD_GROUPS) {
     const presentFields = new Set<string>();
     for (const row of currentLayout) {
       if (!Array.isArray(row)) continue;
@@ -358,11 +367,13 @@ export async function enrichContentManagerFieldMetadata(strapi: Core.Strapi) {
         const placeholder = buildFieldPlaceholder(fieldName, humanLabel, attr);
 
         if (meta.edit) {
-          if (meta.edit.label !== humanLabel) {
-            meta.edit.label = humanLabel;
-            changed = true;
+          if (!meta.edit.label || meta.edit.label === fieldName) {
+            if (meta.edit.label !== humanLabel) {
+              meta.edit.label = humanLabel;
+              changed = true;
+            }
           }
-          if (meta.edit.placeholder !== placeholder) {
+          if (!meta.edit.placeholder) {
             meta.edit.placeholder = placeholder;
             changed = true;
           }
@@ -372,9 +383,11 @@ export async function enrichContentManagerFieldMetadata(strapi: Core.Strapi) {
           }
         }
         if (meta.list) {
-          if (meta.list.label !== humanLabel) {
-            meta.list.label = humanLabel;
-            changed = true;
+          if (!meta.list.label || meta.list.label === fieldName) {
+            if (meta.list.label !== humanLabel) {
+              meta.list.label = humanLabel;
+              changed = true;
+            }
           }
         }
       }

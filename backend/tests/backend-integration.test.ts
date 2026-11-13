@@ -54,8 +54,26 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
       process.env.NODE_ENV = 'test';
       const ephemeral = resolveSecret('TEST_MISSING_SECRET');
       assert.equal(ephemeral.length, 64);
+      assert.equal(
+        resolveSecret('TEST_MISSING_SECRET'),
+        ephemeral,
+        'resolveSecret must return the cached ephemeral secret across calls'
+      );
+
       const keys = resolveAppKeys('TEST_MISSING_APP_KEYS');
       assert.equal(keys.length, 2);
+      const keys2 = resolveAppKeys('TEST_MISSING_APP_KEYS');
+      assert.deepEqual(
+        keys2,
+        keys,
+        'resolveAppKeys must return the same cached ephemeral keys across calls'
+      );
+      keys[0] = 'mutated-caller-copy';
+      assert.notEqual(
+        resolveAppKeys('TEST_MISSING_APP_KEYS')[0],
+        'mutated-caller-copy',
+        'resolveAppKeys must return a defensive copy'
+      );
     } finally {
       process.env.NODE_ENV = prevNodeEnv;
     }
@@ -236,11 +254,14 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
       createdPermissions.includes('plugin::resources.resourcesController.downloadPublication')
     );
     assert.ok(
-      createdPermissions.includes('plugin::bookings.booking.create')
+      !createdPermissions.includes('plugin::bookings.booking.create') &&
+        !createdPermissions.includes('plugin::inbox.submission.create') &&
+        !createdPermissions.includes('plugin::donations.pledge.create'),
+      'Inbound plugin submission collections must use dedicated content-api routes, not raw collection .create'
     );
     assert.ok(
       !createdPermissions.includes('plugin::bookings.booking.find'),
-      'Inbound plugin submission collections must strictly follow least-privilege (create-only)'
+      'Inbound plugin submission collections must never expose .find to the public role'
     );
 
     // 3. Seeded content across all 4 locales (es, en, ar, tr) directly in plugin::* and api::* collections
@@ -296,6 +317,77 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
       assert.ok(
         typeof serverExport.bootstrap === 'function',
         `Expected ${folderName} server entry to export bootstrap()`
+      );
+    }
+  });
+
+  it('validates all 15 @vicacha-devs plugin configs against plugin validators and verifies public permission actions exist', async () => {
+    const env = createMockEnv({
+      FRONTEND_URL: 'https://mezquitabogota.org',
+      TYPESENSE_API_KEY: 'ts-test-key',
+    });
+    const fullPlugins = buildPluginsConfig({ env }) as Record<string, any>;
+
+    const allPluginEntries: Array<[string, string]> = [
+      ['bookings', 'server/src/index.ts'],
+      ['broadcasts', 'server/src/index.ts'],
+      ['calendar', 'server/src/index.ts'],
+      ['certificates', 'server/src/index.ts'],
+      ['donations', 'server/src/index.ts'],
+      ['events', 'server/src/index.ts'],
+      ['global-search', 'server/index.ts'],
+      ['inbox', 'server/src/index.ts'],
+      ['islam', 'server/src/index.ts'],
+      ['media-feeds', 'server/src/index.ts'],
+      ['notes', 'server/src/index.ts'],
+      ['resources', 'server/src/index.ts'],
+      ['seo', 'server/src/index.ts'],
+      ['sitemap', 'server/src/index.ts'],
+      ['tiptap-editor', 'server/src/index.ts'],
+    ];
+
+    const serverExportsByPlugin = new Map<string, any>();
+    for (const [pluginKey, entryRel] of allPluginEntries) {
+      const serverEntryUrl = pathToFileURL(
+        resolvePath(extensionsRoot, `strapi-plugin-${pluginKey}`, entryRel)
+      ).href;
+      const mod = await import(serverEntryUrl);
+      const serverExport = mod.default ?? mod;
+      serverExportsByPlugin.set(pluginKey, serverExport);
+
+      const validator = serverExport.config?.validator;
+      if (typeof validator === 'function') {
+        assert.doesNotThrow(
+          () => validator(fullPlugins[pluginKey]?.config ?? {}),
+          `Expected ${pluginKey} config to pass its plugin validator`
+        );
+      }
+    }
+
+    const fs = await import('node:fs');
+    const permsFile = fs.readFileSync(
+      resolvePath(currentDir, '../src/bootstrap/permissions-and-locales.ts'),
+      'utf8'
+    );
+    const crudActions = new Set(['find', 'findOne', 'create', 'update', 'delete']);
+    const actionMatches = [
+      ...permsFile.matchAll(/'plugin::([^.'\s]+)\.([^.'\s]+)\.([^.'\s]+)'/g),
+    ];
+    for (const [, pluginKey, ctrlName, actionName] of actionMatches) {
+      if (crudActions.has(actionName)) continue;
+      const serverExport = serverExportsByPlugin.get(pluginKey);
+      if (!serverExport) continue;
+      const ctrlFactory = serverExport.controllers?.[ctrlName];
+      assert.ok(
+        ctrlFactory,
+        `Expected plugin::${pluginKey} to export controller "${ctrlName}"`
+      );
+      const ctrl =
+        typeof ctrlFactory === 'function' ? ctrlFactory({ strapi: {} }) : ctrlFactory;
+      assert.equal(
+        typeof ctrl?.[actionName],
+        'function',
+        `Expected plugin::${pluginKey}.${ctrlName}.${actionName} to be a function`
       );
     }
   });

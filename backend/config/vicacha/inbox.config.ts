@@ -17,7 +17,10 @@ export function buildMosqueInboxPluginConfig(env: EnvFn) {
       supportedLocales: ['es', 'en', 'ar', 'tr'],
       defaultRateLimitPerHour: env.int('INBOX_RATE_LIMIT_PER_HOUR', 15),
       defaultHoneypotField: '_website_url',
-      defaultCaptchaProvider: env('INBOX_CAPTCHA_PROVIDER', 'none'),
+      defaultCaptchaProvider: env(
+        'INBOX_CAPTCHA_PROVIDER',
+        env('TURNSTILE_SECRET_KEY', '') ? 'turnstile' : 'none'
+      ),
       turnstileSiteKey: env('TURNSTILE_SITE_KEY', ''),
       turnstileSecretKey: env('TURNSTILE_SECRET_KEY', ''),
       recaptchaSiteKey: env('RECAPTCHA_SITE_KEY', ''),

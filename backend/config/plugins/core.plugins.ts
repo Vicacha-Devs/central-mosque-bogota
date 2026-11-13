@@ -1,3 +1,4 @@
+import type { StrapiEnvFn } from "../plugins";
 import { resolveSecret } from "../security.utils";
 
 // TODO(security): Integrate Cloudinary malware/antivirus moderation add-on (e.g., AWS Rekognition / Metadefender CDR) on uploaded PDFs and media in production.
@@ -17,6 +18,7 @@ const UPLOAD_SECURITY_POLICY = {
     "application/vnd.openxmlformats-officedocument.*",
   ],
   deniedTypes: [
+    "image/svg+xml",
     "application/x-sh",
     "application/x-dosexec",
     "application/x-msdownload",
@@ -26,8 +28,15 @@ const UPLOAD_SECURITY_POLICY = {
   ],
 };
 
-export function buildCoreInfrastructurePlugins(env: any) {
+export function buildCoreInfrastructurePlugins(env: StrapiEnvFn) {
   const cloudinaryName = env("CLOUDINARY_NAME", "");
+  const cloudinaryKey = env("CLOUDINARY_KEY", "");
+  const cloudinarySecret = env("CLOUDINARY_SECRET", "");
+  if (cloudinaryName && (!cloudinaryKey || !cloudinarySecret)) {
+    console.warn(
+      "[CONFIG WARNING] CLOUDINARY_NAME is set without CLOUDINARY_KEY or CLOUDINARY_SECRET; media uploads will fail."
+    );
+  }
   const smtpHost = env("SMTP_HOST", "");
 
   return {

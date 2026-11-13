@@ -3652,6 +3652,7 @@ export interface PluginNavigationNavigationItem
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     externalPath: Schema.Attribute.Text;
+    isManualPath: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -3901,6 +3902,19 @@ export interface PluginResourcesGalleryAlbum
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 160;
       }>;
+    photoCount: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     photographerCredit: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

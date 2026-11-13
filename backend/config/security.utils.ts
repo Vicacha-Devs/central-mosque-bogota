@@ -1,5 +1,8 @@
 import crypto from 'node:crypto';
 
+const ephemeralSecretCache = new Map<string, string>();
+const ephemeralAppKeysCache = new Map<string, string[]>();
+
 /**
  * Multi-tiered secret resolution per secure coding guidelines:
  * 1. Environment variable
@@ -16,30 +19,47 @@ export function resolveSecret(envKey: string): string {
     throw new Error(`Missing required security secret in production: ${envKey}`);
   }
 
+  const cached = ephemeralSecretCache.get(envKey);
+  if (cached) {
+    return cached;
+  }
+
   console.warn(
     `[SECURITY WARNING] ${envKey} not set in environment; generating ephemeral instance-isolated secret for local dev/test.`
   );
-  return crypto.randomBytes(32).toString('hex');
+  const generated = crypto.randomBytes(32).toString('hex');
+  ephemeralSecretCache.set(envKey, generated);
+  return generated;
 }
 
 export function resolveAppKeys(envKey = 'APP_KEYS'): string[] {
   const fromEnv = process.env[envKey];
   if (fromEnv && fromEnv.trim().length > 0) {
-    return fromEnv
+    const parsed = fromEnv
       .split(',')
       .map((k) => k.trim())
       .filter(Boolean);
+    if (parsed.length > 0) {
+      return parsed;
+    }
   }
 
   if (process.env.NODE_ENV === 'production') {
     throw new Error(`Missing required security secret in production: ${envKey}`);
   }
 
+  const cached = ephemeralAppKeysCache.get(envKey);
+  if (cached) {
+    return [...cached];
+  }
+
   console.warn(
     `[SECURITY WARNING] ${envKey} not set in environment; generating ephemeral instance-isolated app keys for local dev/test.`
   );
-  return [
+  const generated = [
     crypto.randomBytes(32).toString('hex'),
     crypto.randomBytes(32).toString('hex'),
   ];
+  ephemeralAppKeysCache.set(envKey, generated);
+  return [...generated];
 }

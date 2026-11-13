@@ -4,18 +4,22 @@ import path from 'node:path';
 
 export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
+  const databaseUrl = env('DATABASE_URL', '');
 
   const connections = {
     postgres: {
       connection: {
-        connectionString: env('DATABASE_URL'),
-        host: env('DATABASE_HOST', '127.0.0.1'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'central_mosque_strapi'),
-        // Least privilege dedicated application user (not root/postgres)
-        user: env('DATABASE_USERNAME', 'mosque_app_user'),
-        password: env('DATABASE_PASSWORD', ''),
-        ssl: env.bool('DATABASE_SSL', false) && {
+        ...(databaseUrl
+          ? { connectionString: databaseUrl }
+          : {
+              host: env('DATABASE_HOST', '127.0.0.1'),
+              port: env.int('DATABASE_PORT', 5432),
+              database: env('DATABASE_NAME', 'central_mosque_strapi'),
+              // Least privilege dedicated application user (not root/postgres)
+              user: env('DATABASE_USERNAME', 'mosque_app_user'),
+              password: env('DATABASE_PASSWORD', ''),
+            }),
+        ssl: env.bool('DATABASE_SSL', process.env.NODE_ENV === 'production') && {
           key: env('DATABASE_SSL_KEY', undefined),
           cert: env('DATABASE_SSL_CERT', undefined),
           ca: env('DATABASE_SSL_CA', undefined),
@@ -28,6 +32,9 @@ export default ({ env }) => {
       pool: {
         min: env.int('DATABASE_POOL_MIN', 2),
         max: env.int('DATABASE_POOL_MAX', 10),
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT_MS', 30000),
+        createTimeoutMillis: env.int('DATABASE_POOL_CREATE_TIMEOUT_MS', 10000),
+        reapIntervalMillis: env.int('DATABASE_POOL_REAP_INTERVAL_MS', 1000),
       },
     },
     sqlite: {
@@ -40,13 +47,34 @@ export default ({ env }) => {
         ),
       },
       useNullAsDefault: true,
+      pool: {
+        afterCreate: (
+          conn: { pragma?: (sql: string) => void },
+          done: (err: Error | null, connection: unknown) => void
+        ) => {
+          try {
+            conn?.pragma?.('journal_mode = WAL');
+            conn?.pragma?.('busy_timeout = 5000');
+            conn?.pragma?.('synchronous = NORMAL');
+            done(null, conn);
+          } catch (err) {
+            done(err instanceof Error ? err : new Error(String(err)), conn);
+          }
+        },
+      },
     },
   };
+
+  if (!(client in connections)) {
+    throw new Error(
+      `Unsupported DATABASE_CLIENT "${client}". Expected one of: ${Object.keys(connections).join(', ')}`
+    );
+  }
 
   return {
     connection: {
       client,
-      ...connections[client],
+      ...connections[client as keyof typeof connections],
       acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
     },
   };

@@ -5,18 +5,26 @@ import backendLifecycle from '../src/index';
 import createPublicSubmissionGuard from '../src/middlewares/public-submission-guard';
 import {
   escapeHtml,
+  isValidSingleEmail,
   notifyContactSubmission,
   notifyDonationSubmission,
   notifyVisitBooking,
   sanitizeHeaderLine,
 } from '../src/utils/email-notifications';
 
-function createMockCtx(ip: string, body: Record<string, unknown> = {}) {
+function createMockCtx(
+  ip: string,
+  body: Record<string, unknown> = {},
+  method = 'POST',
+  path = '/api/inbox/submissions'
+) {
   const headersSent: Record<string, string> = {};
   let status = 200;
   let errorMsg = '';
 
   return {
+    method,
+    path,
     request: {
       ip,
       body,
@@ -485,6 +493,160 @@ describe('Central Mosque Backend — Public Submission Guard, Email Sanitization
       ALL_ADMIN_TRANSLATIONS.es['content-manager.enum.education'],
       'Educación'
     );
+  });
+
+  it('validates single-recipient emails, scopes public-submission-guard to public POST routes, and binds author relations in register()', async () => {
+    // 1. Single-recipient email validation rejects multi-recipient / header injection payloads
+    assert.equal(isValidSingleEmail('omar@mezquitabogota.org'), true);
+    assert.equal(isValidSingleEmail('a@b.com, victim@c.com'), false);
+    assert.equal(isValidSingleEmail('User <a@b.com>'), false);
+    assert.equal(isValidSingleEmail('a@b.com\r\nBcc: evil@x.com'), false);
+    assert.equal(isValidSingleEmail('@invalid'), false);
+
+    // 2. Public submission guard skips GET and non-submission POSTs, but guards submission POSTs
+    const guard = createPublicSubmissionGuard(
+      {},
+      { strapi: { log: { warn: () => {}, info: () => {}, error: () => {} } } as never }
+    );
+    let passed = 0;
+    const getCtx = { ...createMockCtx('198.51.100.77', { data: { website: 'spam' } }), method: 'GET', path: '/api/articles' };
+    await guard(getCtx, async () => {
+      passed += 1;
+    });
+    assert.equal(passed, 1);
+
+    const postProtectedCtx = {
+      ...createMockCtx('198.51.100.78', { data: { website: 'https://bot.example' } }),
+      method: 'POST',
+      path: '/api/inbox/forms/contact/submit',
+    };
+    await guard(postProtectedCtx, async () => {
+      passed += 1;
+    });
+    assert.equal(postProtectedCtx.getStatus(), 400);
+    assert.equal(passed, 1);
+
+    // 3. backendLifecycle.register() binds authorProfile/speakerProfile relations onto plugin content types
+    const eventAttrs: Record<string, unknown> = {};
+    const mediaAttrs: Record<string, unknown> = {};
+    const pubAttrs: Record<string, unknown> = {};
+    await backendLifecycle.register({
+      strapi: {
+        log: { info: () => {}, warn: () => {}, error: () => {} },
+        contentTypes: {
+          'api::leader.leader': { attributes: {} },
+          'plugin::events.event': { attributes: eventAttrs },
+          'plugin::media-feeds.media-item': { attributes: mediaAttrs },
+          'plugin::resources.publication': { attributes: pubAttrs },
+        },
+      } as never,
+    });
+    assert.ok(eventAttrs.speakerProfile, 'Expected register() to bind speakerProfile on plugin::events.event');
+    assert.ok(mediaAttrs.speakerProfile, 'Expected register() to bind speakerProfile on plugin::media-feeds.media-item');
+    assert.ok(pubAttrs.authorProfile, 'Expected register() to bind authorProfile on plugin::resources.publication');
+  });
+
+  it('blocks percent-encoded, duplicate-slash, registration-cancel bypasses and fails closed in production without Turnstile', async () => {
+    const prevEnv = process.env.NODE_ENV;
+    const prevTurnstile = process.env.TURNSTILE_SECRET_KEY;
+    const prevAllow = process.env.ALLOW_UNPROTECTED_PUBLIC_FORMS;
+    try {
+      delete process.env.TURNSTILE_SECRET_KEY;
+      delete process.env.ALLOW_UNPROTECTED_PUBLIC_FORMS;
+      process.env.NODE_ENV = 'development';
+
+      const guard = createPublicSubmissionGuard({}, {
+        strapi: { log: { warn: () => {}, info: () => {}, error: () => {} } } as never,
+      });
+
+      // Percent-encoded path is normalized and still caught by honeypot/rate-limit
+      const encodedCtx = createMockCtx(
+        '198.51.100.201',
+        { data: { website: 'https://spam.example' } },
+        'POST',
+        '/api/donations/pledge%73'
+      );
+      let passed = 0;
+      await guard(encodedCtx, async () => {
+        passed += 1;
+      });
+      assert.equal(encodedCtx.getStatus(), 400);
+      assert.equal(passed, 0);
+
+      // Duplicate slashes are normalized
+      const slashCtx = createMockCtx(
+        '198.51.100.202',
+        { data: { _hp: 'bot' } },
+        'POST',
+        '/api/bookings//reserve/'
+      );
+      await guard(slashCtx, async () => {
+        passed += 1;
+      });
+      assert.equal(slashCtx.getStatus(), 400);
+      assert.equal(passed, 0);
+
+      // 3-segment /api/events/registrations/:token/cancel is protected
+      const cancelCtx = createMockCtx(
+        '198.51.100.203',
+        { data: { website: 'bot' } },
+        'POST',
+        '/api/events/registrations/tok-abc/cancel'
+      );
+      await guard(cancelCtx, async () => {
+        passed += 1;
+      });
+      assert.equal(cancelCtx.getStatus(), 400);
+      assert.equal(passed, 0);
+
+      // Malformed percent-encoding returns 400 (even with encoded /api prefix)
+      const malformedCtx = createMockCtx(
+        '198.51.100.204',
+        { data: { fullName: 'Test' } },
+        'POST',
+        '/%61pi/inbox/%ZZ'
+      );
+      await guard(malformedCtx, async () => {
+        passed += 1;
+      });
+      assert.equal(malformedCtx.getStatus(), 400);
+      assert.equal(passed, 0);
+
+      // Case-insensitive and dot-segment paths are normalized and protected
+      const mixedCaseCtx = createMockCtx(
+        '198.51.100.206',
+        { data: { website: 'bot' } },
+        'POST',
+        '/API/Inbox/./submissions'
+      );
+      await guard(mixedCaseCtx, async () => {
+        passed += 1;
+      });
+      assert.equal(mixedCaseCtx.getStatus(), 400);
+      assert.equal(passed, 0);
+
+      // Production fails closed when TURNSTILE_SECRET_KEY is unset and ALLOW_UNPROTECTED_PUBLIC_FORMS != true
+      process.env.NODE_ENV = 'production';
+      const prodCtx = createMockCtx(
+        '198.51.100.205',
+        { data: { fullName: 'Visitor' } },
+        'POST',
+        '/api/inbox/submissions'
+      );
+      await guard(prodCtx, async () => {
+        passed += 1;
+      });
+      assert.equal(prodCtx.getStatus(), 400);
+      assert.match(prodCtx.getError(), /Security verification is not configured/);
+      assert.equal(passed, 0);
+    } finally {
+      if (prevEnv === undefined) delete process.env.NODE_ENV;
+      else process.env.NODE_ENV = prevEnv;
+      if (prevTurnstile === undefined) delete process.env.TURNSTILE_SECRET_KEY;
+      else process.env.TURNSTILE_SECRET_KEY = prevTurnstile;
+      if (prevAllow === undefined) delete process.env.ALLOW_UNPROTECTED_PUBLIC_FORMS;
+      else process.env.ALLOW_UNPROTECTED_PUBLIC_FORMS = prevAllow;
+    }
   });
 });
 

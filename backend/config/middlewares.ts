@@ -51,7 +51,6 @@ export default ({ env }) => [
       keepHeaderOnError: true,
     },
   },
-  'strapi::poweredBy',
   'strapi::query',
   {
     name: 'strapi::body',
@@ -64,6 +63,7 @@ export default ({ env }) => [
       },
     },
   },
+  'global::public-submission-guard',
   'strapi::session',
   'strapi::favicon',
   'strapi::public',

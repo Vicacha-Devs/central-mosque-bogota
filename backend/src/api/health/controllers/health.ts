@@ -8,7 +8,11 @@ export default {
         database: 'connected',
         timestamp: new Date().toISOString(),
       };
-    } catch {
+    } catch (err) {
+      strapi.log?.error?.(
+        '[health] Database connectivity check failed:',
+        err instanceof Error ? err.message : String(err)
+      );
       // Never expose raw database error messages or stack traces to callers
       ctx.status = 503;
       ctx.body = {

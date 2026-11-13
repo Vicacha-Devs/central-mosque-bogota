@@ -6,7 +6,7 @@ import {
   MediaLibraryWrapper,
   type CustomExtensionDialogProps,
   type StrapiFile,
-} from '@notum-cz/strapi-plugin-tiptap-editor/strapi-admin';
+} from '@vicacha-devs/strapi-plugin-tiptap-editor/strapi-admin';
 
 const SAFE_URL_PATTERN = /^(https?:\/\/|\/(?![/\\]))/i;
 

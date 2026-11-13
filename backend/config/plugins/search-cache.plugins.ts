@@ -10,7 +10,7 @@ export function buildSearchAndCachePlugins(env: any) {
         ),
         max: env.int("CACHE_MAX_ITEMS", 1000),
         ttl: env.int("CACHE_TTL", 3600000), // 1 hour in ms
-        cacheAuthorizedRequests: true,
+        cacheAuthorizedRequests: false,
         cacheGetTimeoutInMs: env.int("CACHE_GET_TIMEOUT_MS", 1000),
         autoPurgeCache: true,
         autoPurgeCacheOnStart: true,
