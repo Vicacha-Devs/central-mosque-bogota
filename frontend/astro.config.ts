@@ -11,7 +11,11 @@ export default defineConfig({
         access: "public",
         default: "https://islamicapi.com/api/v1/",
       }),
-      ISLAMIC_API_KEY: envField.string({ context: "server", access: "secret" }),
+      ISLAMIC_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
       LOCATION_API_URL: envField.string({
         context: "client",
         access: "public",

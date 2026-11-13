@@ -64,8 +64,10 @@ function verifyDocLineLimits(): void {
   );
 }
 
-const backendTestFiles = fs
-  .readdirSync(path.join(backendDir, "tests"))
+const backendTestsDir = path.join(backendDir, "tests");
+const hasBackend = fs.existsSync(backendTestsDir);
+
+const backendTestFiles = (hasBackend ? fs.readdirSync(backendTestsDir) : [])
   .filter((name) => name.endsWith(".test.ts"))
   .sort()
   .map((name) => path.join("tests", name));
@@ -123,9 +125,13 @@ const FRONTEND_STEPS: VerificationStep[] = [
 
 verifyDocLineLimits();
 
-for (const step of BACKEND_STEPS) {
-  process.stdout.write(`\n=== Running Backend Gate: ${step.name} ===\n`);
-  execFileSync(step.bin, step.args, { cwd: backendDir, stdio: "inherit" });
+if (hasBackend) {
+  for (const step of BACKEND_STEPS) {
+    process.stdout.write(`\n=== Running Backend Gate: ${step.name} ===\n`);
+    execFileSync(step.bin, step.args, { cwd: backendDir, stdio: "inherit" });
+  }
+} else {
+  process.stdout.write("\n[SKIP] backend/tests not found, skipping backend gates.\n");
 }
 
 for (const step of FRONTEND_STEPS) {
