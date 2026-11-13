@@ -260,7 +260,9 @@ export async function renderAstroComponentToDom<
     url: "http://localhost:4321",
   });
 
-  window.document.write("<html><head><title>Test page</title></head><body></body></html>");
+  window.document.write(
+    "<html><head><title>Test page</title></head><body></body></html>"
+  );
 
   await window.happyDOM.waitUntilComplete();
 

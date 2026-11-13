@@ -20,8 +20,12 @@ describe("initFooterNewsletter", () => {
     try {
       initFooterNewsletter(root);
 
-      const form = root.querySelector<HTMLFormElement>("#footer-newsletter-form");
-      form?.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+      const form = root.querySelector<HTMLFormElement>(
+        "#footer-newsletter-form"
+      );
+      form?.dispatchEvent(
+        new Event("submit", { bubbles: true, cancelable: true })
+      );
 
       await vi.waitFor(() => {
         expect(fetchMock).toHaveBeenCalledWith(
@@ -30,7 +34,9 @@ describe("initFooterNewsletter", () => {
             method: "POST",
           })
         );
-        expect(root.querySelector("#footer-newsletter-status")?.textContent).toContain("¡Suscrito!");
+        expect(
+          root.querySelector("#footer-newsletter-status")?.textContent
+        ).toContain("¡Suscrito!");
       });
     } finally {
       fetchMock.mockRestore();
@@ -57,11 +63,17 @@ describe("initFooterNewsletter", () => {
 
     try {
       initFooterNewsletter(root);
-      const form = root.querySelector<HTMLFormElement>("#footer-newsletter-form");
-      form?.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+      const form = root.querySelector<HTMLFormElement>(
+        "#footer-newsletter-form"
+      );
+      form?.dispatchEvent(
+        new Event("submit", { bubbles: true, cancelable: true })
+      );
 
       await vi.waitFor(() => {
-        expect(root.querySelector("#footer-newsletter-status")?.textContent).toBe("Invalid email address.");
+        expect(
+          root.querySelector("#footer-newsletter-status")?.textContent
+        ).toBe("Invalid email address.");
       });
     } finally {
       fetchMock.mockRestore();

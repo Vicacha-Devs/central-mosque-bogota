@@ -10,7 +10,9 @@ let nowMinutes = 0;
 
 vi.mock("@utils/time.utils", async () => {
   const actual =
-    await vi.importActual<typeof import("@utils/time.utils")>("@utils/time.utils");
+    await vi.importActual<typeof import("@utils/time.utils")>(
+      "@utils/time.utils"
+    );
 
   return {
     ...actual,
@@ -50,7 +52,9 @@ describe("DailyPrayTime", () => {
 
     try {
       expect(getByText(root, props.location)).toBeInTheDocument();
-      expect(getByText(root, `${props.currentDate} • ${props.hijriDate}`)).toBeInTheDocument();
+      expect(
+        getByText(root, `${props.currentDate} • ${props.hijriDate}`)
+      ).toBeInTheDocument();
       expect(getByText(root, "Horario de Oración")).toBeInTheDocument();
 
       const helpLink = getByRole(root, "link", {
@@ -58,9 +62,13 @@ describe("DailyPrayTime", () => {
       });
       expect(helpLink.getAttribute("href")).toBe("/es/informacion-oraciones");
 
-      const scheduleRoot = root.querySelector<HTMLElement>("[data-prayer-schedule]");
+      const scheduleRoot = root.querySelector<HTMLElement>(
+        "[data-prayer-schedule]"
+      );
       if (!scheduleRoot) {
-        throw new Error("Expected DailyPrayTime to render a root [data-prayer-schedule]");
+        throw new Error(
+          "Expected DailyPrayTime to render a root [data-prayer-schedule]"
+        );
       }
 
       expect(scheduleRoot.dataset.timezone).toBe(props.timeZone);
@@ -70,7 +78,9 @@ describe("DailyPrayTime", () => {
         scheduleRoot.querySelectorAll<HTMLElement>("[data-prayer-item]");
       expect(items.length).toBe(6);
 
-      const fajr = scheduleRoot.querySelector<HTMLElement>("[data-prayer-item][data-prayer=\u0022fajr\u0022]");
+      const fajr = scheduleRoot.querySelector<HTMLElement>(
+        "[data-prayer-item][data-prayer=\u0022fajr\u0022]"
+      );
       if (!fajr) {
         throw new Error("Expected DailyPrayTime to render a fajr item");
       }
@@ -112,7 +122,9 @@ describe("DailyPrayTime", () => {
       initDailyPrayerTimes();
       await vi.runOnlyPendingTimersAsync();
 
-      const active = root.querySelector<HTMLElement>("[data-prayer-item][data-prayer=\u0022dhuhr\u0022]");
+      const active = root.querySelector<HTMLElement>(
+        "[data-prayer-item][data-prayer=\u0022dhuhr\u0022]"
+      );
       if (!active) {
         throw new Error("Expected a dhuhr item to exist");
       }
@@ -122,11 +134,15 @@ describe("DailyPrayTime", () => {
 
       const label = active.querySelector<HTMLElement>("[data-prayer-label]");
       if (!label) {
-        throw new Error("Expected the active prayer item to include a [data-prayer-label]");
+        throw new Error(
+          "Expected the active prayer item to include a [data-prayer-label]"
+        );
       }
       expect(label.hasAttribute("data-prayer-label-active")).toBe(true);
 
-      const fajr = root.querySelector<HTMLElement>("[data-prayer-item][data-prayer=\u0022fajr\u0022]");
+      const fajr = root.querySelector<HTMLElement>(
+        "[data-prayer-item][data-prayer=\u0022fajr\u0022]"
+      );
       if (!fajr) {
         throw new Error("Expected a fajr item to exist");
       }

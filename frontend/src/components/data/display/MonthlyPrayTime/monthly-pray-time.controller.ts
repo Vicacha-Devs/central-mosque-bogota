@@ -14,7 +14,9 @@ const COLLAPSED_ROWS = 7;
  */
 export function initMonthlyPrayTimeTable(root: HTMLElement): void {
   const clip = root.querySelector<HTMLElement>("[data-monthly-table-clip]");
-  const toggle = root.querySelector<HTMLButtonElement>("[data-action=show-more]");
+  const toggle = root.querySelector<HTMLButtonElement>(
+    "[data-action=show-more]"
+  );
   const table = clip?.querySelector<HTMLTableElement>("table");
   const body = root.querySelector<HTMLTableSectionElement>("#full-month-table");
 
@@ -34,7 +36,9 @@ export function initMonthlyPrayTimeTable(root: HTMLElement): void {
 
   toggle.style.display = "";
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
   const computeCollapsedHeight = (): number => {
     const clipTop = clip.getBoundingClientRect().top;
@@ -127,6 +131,8 @@ export function initMonthlyPrayTimeTable(root: HTMLElement): void {
  * Initializes every monthly prayer-times table currently in the document.
  */
 export function initMonthlyPrayTimes(): void {
-  const roots = Array.from(document.querySelectorAll<HTMLElement>("[data-monthly-table-root]"));
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-monthly-table-root]")
+  );
   for (const root of roots) initMonthlyPrayTimeTable(root);
 }

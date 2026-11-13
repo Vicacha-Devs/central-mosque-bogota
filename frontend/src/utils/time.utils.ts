@@ -42,7 +42,9 @@ export const getCurrentMinutes = (timeZone: string): number => {
     if (isNaN(h) || isNaN(m)) throw new Error("Invalid time parts");
     return h * 60 + m;
   } catch (error) {
-    console.warn(`Timezone "${timeZone}" failed, falling back to local time.\n${error instanceof Error ? error.message : String(error)}`);
+    console.warn(
+      `Timezone "${timeZone}" failed, falling back to local time.\n${error instanceof Error ? error.message : String(error)}`
+    );
     const now = new Date();
     return now.getHours() * 60 + now.getMinutes();
   }

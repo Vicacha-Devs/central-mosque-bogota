@@ -48,7 +48,9 @@ describe("AcademyCoursesSection", () => {
     );
 
     try {
-      expect(getByRole(root, "heading", { level: 2, name: props.title })).toBeInTheDocument();
+      expect(
+        getByRole(root, "heading", { level: 2, name: props.title })
+      ).toBeInTheDocument();
       expect(getByText(root, props.description)).toBeInTheDocument();
 
       const cta = getByRole(root, "link", { name: /ver academia/i });
@@ -82,7 +84,9 @@ describe("AcademyCoursesSection", () => {
     );
 
     try {
-      expect(getByRole(root, "heading", { level: 2, name: "Academia" })).toBeInTheDocument();
+      expect(
+        getByRole(root, "heading", { level: 2, name: "Academia" })
+      ).toBeInTheDocument();
       expect(queryAllByRole(root, "heading", { level: 3 }).length).toBe(0);
     } finally {
       await close();

@@ -142,7 +142,9 @@ describe("download-pdf.controller", () => {
     btnNan?.click();
     await new Promise((resolve) => setTimeout(resolve, 30));
     expect(errorSpy).toHaveBeenCalled();
-    expect(alertMock).toHaveBeenCalledWith("Failed to generate PDF. Please try again.");
+    expect(alertMock).toHaveBeenCalledWith(
+      "Failed to generate PDF. Please try again."
+    );
 
     await close();
   });

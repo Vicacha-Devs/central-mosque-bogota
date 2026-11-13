@@ -62,7 +62,9 @@ vi.mock("astro:content", () => ({
 }));
 
 vi.mock("@utils/location.utils", async () => {
-  const actual = await vi.importActual<typeof import("@utils/location.utils")>("@utils/location.utils");
+  const actual = await vi.importActual<typeof import("@utils/location.utils")>(
+    "@utils/location.utils"
+  );
 
   return {
     ...actual,
@@ -112,15 +114,21 @@ describe("MonthlyPrayTime", () => {
 
       expect(getByText(table, "Hoy")).toBeInTheDocument();
 
-      const todayRow = root.querySelector<HTMLElement>("[data-monthly-pray-row='today']");
+      const todayRow = root.querySelector<HTMLElement>(
+        "[data-monthly-pray-row='today']"
+      );
       expect(todayRow).toBeTruthy();
       if (!todayRow)
         throw new Error("Expected MonthlyPrayTime to render a today row");
 
-      const todayCells = todayRow.querySelectorAll<HTMLElement>("[data-monthly-pray-cell='true'][data-prayer][data-time]");
+      const todayCells = todayRow.querySelectorAll<HTMLElement>(
+        "[data-monthly-pray-cell='true'][data-prayer][data-time]"
+      );
       expect(todayCells.length).toBe(6);
 
-      const allTodayCells = root.querySelectorAll<HTMLElement>("[data-monthly-pray-cell='true']");
+      const allTodayCells = root.querySelectorAll<HTMLElement>(
+        "[data-monthly-pray-cell='true']"
+      );
       expect(allTodayCells.length).toBe(6);
     } finally {
       await close();
@@ -144,8 +152,12 @@ describe("MonthlyPrayTime", () => {
         await import("./monthly-pray-time.controller");
       initMonthlyPrayTimes();
 
-      const tableRoot = root.querySelector<HTMLElement>("[data-monthly-table-root]");
-      const toggle = root.querySelector<HTMLButtonElement>("[data-action=show-more]");
+      const tableRoot = root.querySelector<HTMLElement>(
+        "[data-monthly-table-root]"
+      );
+      const toggle = root.querySelector<HTMLButtonElement>(
+        "[data-action=show-more]"
+      );
       if (!tableRoot || !toggle) {
         throw new Error("Expected a table root and a show-more toggle");
       }
@@ -179,7 +191,9 @@ describe("MonthlyPrayTime", () => {
     const { initMonthlyPrayTimes } =
       await import("./monthly-pray-time.controller");
     initMonthlyPrayTimes();
-    const shortRoot = shortDom.root.querySelector<HTMLElement>("[data-monthly-table-root]");
+    const shortRoot = shortDom.root.querySelector<HTMLElement>(
+      "[data-monthly-table-root]"
+    );
     expect(shortRoot?.dataset.monthlyExpanded).toBe("true");
     await shortDom.close();
 
@@ -199,9 +213,15 @@ describe("MonthlyPrayTime", () => {
     initMonthlyPrayTimes();
     initMonthlyPrayTimes();
 
-    const toggle = animDom.root.querySelector<HTMLButtonElement>("[data-action=show-more]");
-    const clip = animDom.root.querySelector<HTMLElement>("[data-monthly-table-clip]");
-    const tableRoot = animDom.root.querySelector<HTMLElement>("[data-monthly-table-root]");
+    const toggle = animDom.root.querySelector<HTMLButtonElement>(
+      "[data-action=show-more]"
+    );
+    const clip = animDom.root.querySelector<HTMLElement>(
+      "[data-monthly-table-clip]"
+    );
+    const tableRoot = animDom.root.querySelector<HTMLElement>(
+      "[data-monthly-table-root]"
+    );
 
     toggle?.click();
     expect(tableRoot?.dataset.monthlyExpanded).toBe("true");

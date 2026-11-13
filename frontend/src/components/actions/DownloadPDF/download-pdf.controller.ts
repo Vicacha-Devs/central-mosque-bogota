@@ -195,7 +195,9 @@ async function handleClick(
     pdf.save(`${filename}.pdf`);
   } catch (error) {
     console.error("PDF generation failed:", error);
-    alert(btn.dataset.errorLabel ?? "Failed to generate PDF. Please try again.");
+    alert(
+      btn.dataset.errorLabel ?? "Failed to generate PDF. Please try again."
+    );
   } finally {
     restoreExpandedLayout?.();
     btn.disabled = false;

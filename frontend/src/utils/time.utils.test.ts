@@ -161,7 +161,9 @@ describe("time.utils", () => {
       expect(fallbackAnchor).toBeInstanceOf(Date);
 
       expect(buildMonthLabel(sample, "es", "UTC").length).toBeGreaterThan(0);
-      expect(buildMonthHref("2026-04", new URL("https://mezquitabogota.org/es/pray"))).toBe("/es/pray?date=2026-04");
+      expect(
+        buildMonthHref("2026-04", new URL("https://mezquitabogota.org/es/pray"))
+      ).toBe("/es/pray?date=2026-04");
     });
 
     it("should handle empty month label and missing formatYm parts when Intl returns empty", () => {
@@ -175,7 +177,9 @@ describe("time.utils", () => {
         });
 
       expect(buildMonthLabel(new Date(), "es", "UTC")).toBe("");
-      expect(() => formatYm(new Date(), "UTC")).toThrow("Could not format current month");
+      expect(() => formatYm(new Date(), "UTC")).toThrow(
+        "Could not format current month"
+      );
 
       dtfSpy.mockRestore();
     });
