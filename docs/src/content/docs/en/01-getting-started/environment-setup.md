@@ -43,6 +43,7 @@ Copy `backend/.env.example` to `backend/.env`:
 | **Database (PostgreSQL)** | `DATABASE_CLIENT=postgres`, `DATABASE_HOST=127.0.0.1`, `DATABASE_PORT=5432`, `DATABASE_NAME=central_mosque_bogota`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` | Staging / production parity database |
 | **Cloudinary CDN** | `CLOUDINARY_NAME`, `CLOUDINARY_KEY`, `CLOUDINARY_SECRET` | Optional media upload provider (uses local `public/uploads` when empty) |
 | **CORS & Preview** | `CORS_ORIGINS=http://localhost:4321`, `CLIENT_FRONTEND_URL=http://localhost:4321`, `CLIENT_PREVIEW_SECRET` | Restricts CORS to the Astro frontend and enables editorial preview links |
+| **Observability (OpenTelemetry)** | `OTEL_ENABLED=true`, `OTEL_SERVICE_NAME`, `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS`, `OTEL_TRACES_SAMPLE_RATE=1.0`, `OTEL_CONSOLE_EXPORTER=false` | Vendor-neutral error tracking & APM via `@vicacha-devs/strapi-plugin-opentelemetry` (SigNoz, Grafana, Sentry OTLP, Datadog) |
 
 ---
 

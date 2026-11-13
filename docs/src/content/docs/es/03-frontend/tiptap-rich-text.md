@@ -5,7 +5,7 @@ description: Cómo se sanitiza y renderiza el contenido enriquecido de Strapi v5
 
 ## 1. Pipeline de Texto Enriquecido Seguro
 
-Los campos de texto enriquecido del CMS (`article.content`, `event.body`, `aboutPage.historyContent`) se editan en Strapi v5 con `@notum-cz/strapi-plugin-tiptap-editor`. Para prevenir vulnerabilidades XSS, el frontend **nunca** inyecta cadenas HTML crudas con `set:html`.
+Los campos de texto enriquecido del CMS (`article.content`, `event.body`, `aboutPage.historyContent`) se editan en Strapi v5 con `@vicacha-devs/strapi-plugin-tiptap-editor`. Para prevenir vulnerabilidades XSS, el frontend **nunca** inyecta cadenas HTML crudas con `set:html`.
 
 ```mermaid
 flowchart LR

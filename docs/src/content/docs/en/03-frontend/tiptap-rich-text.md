@@ -5,7 +5,7 @@ description: How Strapi v5 Tiptap rich text is sanitized and rendered into nativ
 
 ## 1. Security-First Rich Text Pipeline
 
-CMS rich-text fields (`article.content`, `event.body`, `aboutPage.historyContent`) are authored in Strapi v5 using `@notum-cz/strapi-plugin-tiptap-editor`. To prevent XSS vulnerabilities, the frontend **never** injects raw HTML strings with Astro's `set:html`.
+CMS rich-text fields (`article.content`, `event.body`, `aboutPage.historyContent`) are authored in Strapi v5 using `@vicacha-devs/strapi-plugin-tiptap-editor`. To prevent XSS vulnerabilities, the frontend **never** injects raw HTML strings with Astro's `set:html`.
 
 ```mermaid
 flowchart LR

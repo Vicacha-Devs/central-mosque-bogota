@@ -38,6 +38,7 @@ Validadas mediante `astro:env` en `frontend/astro.config.ts`:
 | **Base de Datos (SQLite)** | `DATABASE_CLIENT=sqlite`, `DATABASE_FILENAME=.tmp/data.db` | Base de datos local cero-configuración |
 | **Base de Datos (PostgreSQL)** | `DATABASE_CLIENT=postgres`, `DATABASE_HOST=127.0.0.1`, `DATABASE_PORT=5432`, `DATABASE_NAME=central_mosque_bogota`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` | Paridad con entornos de staging y producción |
 | **Cloudinary CDN** | `CLOUDINARY_NAME`, `CLOUDINARY_KEY`, `CLOUDINARY_SECRET` | Proveedor CDN para imágenes, pósters y documentos |
+| **Observabilidad (OpenTelemetry)** | `OTEL_ENABLED=true`, `OTEL_SERVICE_NAME`, `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS`, `OTEL_TRACES_SAMPLE_RATE=1.0`, `OTEL_CONSOLE_EXPORTER=false` | Monitoreo de errores y APM neutral al proveedor vía `@vicacha-devs/strapi-plugin-opentelemetry` (SigNoz, Grafana, Sentry OTLP, Datadog) |
 
 ---
 

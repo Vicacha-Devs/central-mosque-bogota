@@ -11,12 +11,12 @@ description: Authoritative Architecture Decision Records updated for the Astro 7
 
 | ADR | Area | Selected Decision | Status |
 | :--- | :--- | :--- | :--- |
-| **ADR-001** | Core Stack | **Astro 7 SSR (`@astrojs/node`) + Strapi v5 (`5.59.0`)** full-stack TypeScript monorepo | Accepted |
+| **ADR-001** | Core Stack | **Astro 7 SSR (`@astrojs/node`) + Strapi v5 (`5.61.1`)** full-stack TypeScript monorepo | Accepted |
 | **ADR-002** | Rich Text Security | **`@vicacha-devs/astro-tiptap-blocks`** + `isomorphic-dompurify` (zero `set:html`) | Accepted |
 | **ADR-003** | Content Loading | **`@sensinum/astro-strapi-loader`** + Astro Live Collections + 4-locale offline mocks | Accepted |
 | **ADR-004** | Localization (i18n) | **4 Locales (`es`, `en`, `ar` RTL, `tr`)** in both Strapi `@strapi/i18n` and Astro routes | Accepted |
 | **ADR-005** | Islamic Data Engine | **3-Tier Resolution**: `@vicacha-devs/strapi-plugin-islam` -> `IslamicAPI` -> Bogotá Fallback Mocks | Accepted |
-| **ADR-006** | Domain Extensions | **10 Modular `@vicacha-devs/strapi-plugin-*` packages** for Mosque-specific workflows | Accepted |
+| **ADR-006** | Domain Extensions | **15 Modular `@vicacha-devs/strapi-plugin-*` packages** for Mosque-specific and editorial workflows | Accepted |
 | **ADR-007** | BFF & Form Security | Server-side Astro API routes (`/api/submissions`, `/api/events/feed.ics`, `/api/media-feeds/rss.xml`, `/api/resources/publications/[slug]/download`) | Accepted |
 | **ADR-008** | Database & Media | Dual **SQLite (local) / PostgreSQL 16 (prod)** + **Cloudinary CDN** | Accepted |
 | **ADR-009** | UI Primitives | **Tailwind CSS v4** + **Starwind UI** accessible primitives + logical RTL properties | Accepted |
@@ -30,11 +30,11 @@ description: Authoritative Architecture Decision Records updated for the Astro 7
 
 ### ADR-001: Astro 7 SSR + Strapi v5 Full-Stack TypeScript Monorepo
 - **Context**: Using a unified TypeScript toolchain across frontend, CMS, and plugins eliminates context switching between Python/Django and TypeScript.
-- **Decision**: Adopt Astro 7 (`@astrojs/node` standalone adapter) paired with Strapi v5 (`@strapi/strapi` `5.59.0`).
+- **Decision**: Adopt Astro 7 (`@astrojs/node` standalone adapter) paired with Strapi v5 (`@strapi/strapi` `5.61.1`).
 
 ### ADR-002: Zero-`set:html` Rich Text Rendering
 - **Context**: Rendering raw CMS HTML with `set:html` introduces XSS risks and inconsistent typography.
-- **Decision**: Use `@notum-cz/strapi-plugin-tiptap-editor` in Strapi v5 and render blocks in Astro via `<TiptapContent />` (`@vicacha-devs/astro-tiptap-blocks`) backed by `tiptap-sanitizer.ts` (`isomorphic-dompurify`).
+- **Decision**: Use `@vicacha-devs/strapi-plugin-tiptap-editor` in Strapi v5 and render blocks in Astro via `<TiptapContent />` (`@vicacha-devs/astro-tiptap-blocks`) backed by `tiptap-sanitizer.ts` (`isomorphic-dompurify`).
 
 ### ADR-003: Offline-Resilient Content Layer & Mocks
 - **Context**: Frontend developers and CI pipelines must be able to build, test, and preview all 65 static routes and SSR pages without requiring a live Strapi instance or external API keys.

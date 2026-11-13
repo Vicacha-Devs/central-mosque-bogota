@@ -47,10 +47,10 @@ flowchart TB
 | :--- | :--- | :--- |
 | `strapi-cache` | `^1.13.0` | Caché REST LRU / Redis / Valkey con invalidación automática al publicar y traducciones nativas del Admin en `en`, `es`, `ar`, `tr` y `de` |
 | `@vicacha-devs/strapi-plugin-global-search` | `file:` | Búsqueda global tipo Spotlight (`Cmd/Ctrl + K`) en todos los tipos `api::*` y `plugin::*` (`en`, `es`, `ar`, `tr`, `fr`) |
-| `@notum-cz/strapi-plugin-tiptap-editor` | `file:` | Editor TipTap v3 + Edifice IO con 48 funciones y sincronización relacional de medios/enlaces (`en`, `es`, `ar`, `tr` +7 idiomas) |
+| `@vicacha-devs/strapi-plugin-tiptap-editor` | `file:` | Editor TipTap v3 con presets, tema, field bindings y sincronización relacional de medios/enlaces (`en`, `es`, `ar`, `tr` +7 idiomas) |
 | `@vicacha-devs/strapi-plugin-seo` | `file:` | Componente SEO y analizador SERP en vivo (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Indexación en tiempo real hacia Typesense |
-| `strapi-plugin-navigation` | `^3.3.7` | Constructor de menús jerárquicos compatible con modelos `api::*` y `plugin::*` |
+| `strapi-plugin-navigation` | `^3.4.2` | Constructor de menús jerárquicos compatible con modelos `api::*` y `plugin::*` |
 | `strapi-plugin-content-manager-organizer` | `^2.0.3` | Organiza los 28 modelos visibles en 8 carpetas temáticas en la barra lateral |
 | `strapi-plugin-email-designer-5` | `^0.0.10` | Diseñador visual Unlayer para plantillas de correo transaccional |
 | `@vicacha-devs/strapi-plugin-sitemap` | `file:` | Generador dinámico de sitemap e índice de sitemaps XML multilingüe (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |

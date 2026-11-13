@@ -5,8 +5,8 @@ description: Plan estructurado de competencias en 4 niveles (Tiers) con tutorial
 
 Esta ruta de aprendizaje guía a nuestros desarrolladores junior desde los **fundamentos de TypeScript y monorepos** hasta **entregar funcionalidades en producción** en todo nuestro ecosistema:
 - **`central-mosque-bogota`**: Frontend SSR en Astro 7 (`frontend/`), CMS Headless Strapi v5 (`backend/`), y Documentación Bilingüe en Astro Starlight + TypeDoc (`docs/`).
-- **`strapi-v5-extensions`**: Monorepo con Turborepo + `pnpm` workspaces que aloja nuestros 10 paquetes `@vicacha-devs/strapi-plugin-*` (`calendar`, `events`, `bookings`, `islam`, `donations`, `certificates`, `inbox`, `broadcasts`, `media-feeds`, `resources`) y `@notum-cz/strapi-plugin-seo`.
-- **Paquetes Complementarios**: `@vicacha-devs/astro-tiptap-blocks`, `@notum-cz/strapi-plugin-tiptap-editor`, y `strapi-global-search`.
+- **`strapi-v5-extensions`**: Monorepo con Turborepo + `pnpm` workspaces que aloja nuestros 15 paquetes `@vicacha-devs/strapi-plugin-*` (`calendar`, `events`, `bookings`, `islam`, `donations`, `certificates`, `inbox`, `broadcasts`, `media-feeds`, `resources`, `notes`, `seo`, `sitemap`, `global-search`, `tiptap-editor`).
+- **Paquetes Complementarios**: `@vicacha-devs/astro-tiptap-blocks`.
 
 ---
 

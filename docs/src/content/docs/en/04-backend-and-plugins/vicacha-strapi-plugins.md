@@ -47,10 +47,10 @@ flowchart TB
 | :--- | :--- | :--- |
 | `strapi-cache` | `^1.13.0` | LRU / Redis / Valkey REST API cache with automatic invalidation on content updates and native `en`, `es`, `ar`, `tr`, and `de` Admin UI translations |
 | `@vicacha-devs/strapi-plugin-global-search` | `file:` | Spotlight `Cmd/Ctrl + K` global search across all `api::*` and `plugin::*` content types (`en`, `es`, `ar`, `tr`, `fr`) |
-| `@notum-cz/strapi-plugin-tiptap-editor` | `file:` | TipTap v3 + Edifice IO WYSIWYG editor with 48 features and relational media/link sync (`en`, `es`, `ar`, `tr`, +7 locales) |
+| `@vicacha-devs/strapi-plugin-tiptap-editor` | `file:` | TipTap v3 rich text editor with custom presets, theme, field bindings, and relational media/link sync (`en`, `es`, `ar`, `tr`, +7 locales) |
 | `@vicacha-devs/strapi-plugin-seo` | `file:` | SEO metadata component & live SERP analyzer (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Real-time Typesense search indexing across localized collections |
-| `strapi-plugin-navigation` | `^3.3.7` | Hierarchical header/footer menu builder supporting both `api::*` and `plugin::*` items |
+| `strapi-plugin-navigation` | `^3.4.2` | Hierarchical header/footer menu builder supporting both `api::*` and `plugin::*` items |
 | `strapi-plugin-content-manager-organizer` | `^2.0.3` | Groups the 28 visible collection and single types into 8 logical sidebar folders |
 | `strapi-plugin-email-designer-5` | `^0.0.10` | Visual Unlayer template designer for transactional notification emails |
 | `@vicacha-devs/strapi-plugin-sitemap` | `file:` | Dynamic multilingual XML sitemap & sitemap index generator (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
