@@ -130,10 +130,12 @@ const effectiveLabels = labels ?? label ?? {
 </Button>
 
 <script>
+
   import { initDownloadPdfButtons } from "./download-pdf.controller";
 
   const setup = () => initDownloadPdfButtons();
 
   document.addEventListener("DOMContentLoaded", setup);
   document.addEventListener("astro:after-swap", setup);
+
 </script>

@@ -28,25 +28,6 @@ const { type = "single", defaultValue, class: className, ...rest } = Astro.props
 
 <script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   type AccordionType = "single" | "multiple";
   type AccordionState = "open" | "closed";
 
@@ -288,24 +269,5 @@ const { type = "single", defaultValue, class: className, ...rest } = Astro.props
   setupAccordions();
   document.addEventListener("astro:after-swap", setupAccordions);
   document.addEventListener("starwind:init", setupAccordions);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>

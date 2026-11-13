@@ -22,25 +22,6 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
 
 <script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   type TabValue = string;
 
   interface TabsSyncEventDetail {
@@ -303,24 +284,5 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
   setupTabs();
   document.addEventListener("astro:after-swap", setupTabs);
   document.addEventListener("starwind:init", setupTabs);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>

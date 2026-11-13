@@ -126,8 +126,8 @@ export default defineConfig([
       },
     },
     rules: {
-      // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
-      "@stylistic/jsx-one-expression-per-line": "warn",
+      // Disabled: autofix mangles <script>/<style> text in .astro files, see https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
+      "@stylistic/jsx-one-expression-per-line": "off",
       // The Astro processor blanks out <script>/<style> bodies, which trips this rule
       "@stylistic/no-multiple-empty-lines": "off",
       "@stylistic/jsx-closing-tag-location": "off",
