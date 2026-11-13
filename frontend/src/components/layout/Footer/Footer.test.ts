@@ -173,7 +173,7 @@ describe("Footer", () => {
       const email = getByText(root, contactInfo.email);
       expect(email).toBeInTheDocument();
 
-      const input = getByRole(root, "textbox", { type: "email" });
+      const input = getByRole(root, "textbox");
       expect(input.getAttribute("placeholder")).toBe("Ingresa tu correo");
 
       const subscribeButton = getByRole(root, "button", {

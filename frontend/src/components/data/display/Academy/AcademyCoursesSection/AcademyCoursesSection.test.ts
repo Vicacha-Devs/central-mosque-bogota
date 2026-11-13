@@ -48,18 +48,16 @@ describe("AcademyCoursesSection", () => {
     );
 
     try {
-      expect(
-        getByRole(root, "heading", { level: 2, name: props.title })
-      ).toBeInTheDocument();
+      expect(getByRole(root, "heading", { level: 2, name: props.title })).toBeInTheDocument();
       expect(getByText(root, props.description)).toBeInTheDocument();
 
       const cta = getByRole(root, "link", { name: /ver academia/i });
       expect(cta.getAttribute("href")).toBe(props.academyHref);
 
       const articleHeadings = getAllByRole(root, "heading", { level: 3 });
-      expect(articleHeadings.map((h) => h.textContent.trim())).toEqual(
-        expect.arrayContaining(props.articles.map((a) => a.title))
-      );
+      const renderedTitles = articleHeadings.map((h) => h.textContent.trim());
+      const expectedTitles = props.articles.map((a) => a.title);
+      expect(renderedTitles).toEqual(expect.arrayContaining(expectedTitles));
 
       const articleCtas = getAllByRole(root, "link", { name: /ver curso/i });
       expect(articleCtas.length).toBe(props.articles.length);
@@ -84,9 +82,7 @@ describe("AcademyCoursesSection", () => {
     );
 
     try {
-      expect(
-        getByRole(root, "heading", { level: 2, name: "Academia" })
-      ).toBeInTheDocument();
+      expect(getByRole(root, "heading", { level: 2, name: "Academia" })).toBeInTheDocument();
       expect(queryAllByRole(root, "heading", { level: 3 }).length).toBe(0);
     } finally {
       await close();

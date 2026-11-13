@@ -2,9 +2,9 @@
  * Parses a `HH:mm` string into the number of minutes since midnight.
  * Returns `null` for invalid, missing, or out-of-range values.
  */
-export const parseTimeToMinutes = (
-  value: string | null | undefined
-): number | null => {
+type TNullableStr = string | null | undefined;
+
+export const parseTimeToMinutes = (value: TNullableStr): number | null => {
   if (typeof value !== "string") return null;
   const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
   if (!match) return null;
@@ -32,8 +32,9 @@ export const getCurrentMinutes = (timeZone: string): number => {
     };
 
     const parts = new Intl.DateTimeFormat("en-US", options).formatToParts(now);
-    const getPart = (type: string) =>
-      Number(parts.find((part) => part.type === type)?.value);
+    const getPart = (type: string): number => {
+      return Number(parts.find((part) => part.type === type)?.value);
+    };
 
     const h = getPart("hour");
     const m = getPart("minute");
@@ -41,9 +42,7 @@ export const getCurrentMinutes = (timeZone: string): number => {
     if (isNaN(h) || isNaN(m)) throw new Error("Invalid time parts");
     return h * 60 + m;
   } catch (error) {
-    console.warn(
-      `Timezone "${timeZone}" failed, falling back to local time.\n${error instanceof Error ? error.message : String(error)}`
-    );
+    console.warn(`Timezone "${timeZone}" failed, falling back to local time.\n${error instanceof Error ? error.message : String(error)}`);
     const now = new Date();
     return now.getHours() * 60 + now.getMinutes();
   }
@@ -169,9 +168,8 @@ export const getMonthAnchorDate = (
   const [y, m] = safeYm.split("-").map((part) => Number.parseInt(part, 10));
   const baseYear = Number.isFinite(y) ? y : new Date().getUTCFullYear();
   const baseMonthIndex = Number.isFinite(m) ? m - 1 : new Date().getUTCMonth();
-  return new Date(
-    Date.UTC(baseYear, baseMonthIndex + offsetMonths, 15, 12, 0, 0)
-  );
+  const month = baseMonthIndex + offsetMonths;
+  return new Date(Date.UTC(baseYear, month, 15, 12, 0, 0));
 };
 
 /**

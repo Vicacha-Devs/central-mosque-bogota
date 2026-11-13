@@ -19,6 +19,9 @@ importers:
       '@astrojs/node':
         specifier: 11.0.2
         version: 11.0.2(astro@7.0.6(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@24.19.2)(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1))
+      '@tabler/icons':
+        specifier: ^3.34.0
+        version: 3.51.0
       '@tailwindcss/vite':
         specifier: 4.3.2
         version: 4.3.2(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
@@ -40,6 +43,9 @@ importers:
       tailwind-merge:
         specifier: 3.6.0
         version: 3.6.0
+      tailwind-variants:
+        specifier: ^0.3.0
+        version: 0.3.1(tailwindcss@4.3.2)
       tailwindcss:
         specifier: 4.3.2
         version: 4.3.2
@@ -2075,6 +2081,9 @@ packages:
         optional: true
       oxlint:
         optional: true
+
+  '@tabler/icons@3.51.0':
+    resolution: {integrity: sha512-0pinvPZz7YeX+OSfxuEAbnEPWbocVXW5iU8h5lh41pYG8sZuQfpWECC980lxOT0clGIcNGn8xsBr+zKaRGdA/g==}
 
   '@tailwindcss/forms@0.5.11':
     resolution: {integrity: sha512-h9wegbZDPurxG22xZSoWtdzc41/OlNEUQERNqI/0fOwa2aVlWGu7C35E/x6LDyD3lgtztFSSjKZyuVM0hxhbgA==}
@@ -5347,8 +5356,17 @@ packages:
       '@eslint/css':
         optional: true
 
+  tailwind-merge@2.5.4:
+    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
+
   tailwind-merge@3.6.0:
     resolution: {integrity: sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w==}
+
+  tailwind-variants@0.3.1:
+    resolution: {integrity: sha512-krn67M3FpPwElg4FsZrOQd0U26o7UDH/QOkK8RNaiCCrr052f6YJPBUfNKnPo/s/xRzNPtv1Mldlxsg8Tb46BQ==}
+    engines: {node: '>=16.x', pnpm: '>=7.x'}
+    peerDependencies:
+      tailwindcss: '*'
 
   tailwindcss@4.3.2:
     resolution: {integrity: sha512-WtctNNSH8A9jlMIqxzuYumOHU5uGZyRv0Q5svQl+oEPy5w84YpBxdb7MdqyiSPQge5jTJ6zFQLq0PFygdccSBA==}
@@ -7577,6 +7595,8 @@ snapshots:
       picomatch: 4.0.7
     optionalDependencies:
       eslint: 10.6.0(jiti@2.7.0)
+
+  '@tabler/icons@3.51.0': {}
 
   '@tailwindcss/forms@0.5.11(tailwindcss@4.3.2)':
     dependencies:
@@ -11542,7 +11562,14 @@ snapshots:
     optionalDependencies:
       '@eslint/css': 1.4.0
 
+  tailwind-merge@2.5.4: {}
+
   tailwind-merge@3.6.0: {}
+
+  tailwind-variants@0.3.1(tailwindcss@4.3.2):
+    dependencies:
+      tailwind-merge: 2.5.4
+      tailwindcss: 4.3.2
 
   tailwindcss@4.3.2: {}
 

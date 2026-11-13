@@ -1,8 +1,8 @@
 ---
-import Footer from '@components/layout/Footer/Footer.astro'
-import Header from '@components/layout/Header/Header.astro'
-import { getLangFromUrl } from '@i18n/utils'
-import { Font } from 'astro:assets'
+import Footer from "@components/layout/Footer/Footer.astro";
+import Header from "@components/layout/Header/Header.astro";
+import { getLangFromUrl } from "@i18n/utils";
+import { Font } from "astro:assets";
 import {
   contactInfo,
   fastLinks,
@@ -10,9 +10,9 @@ import {
   navLinks,
   rightsText,
   socialNetworkLinks,
-} from '@utils/data.mocks'
+} from "@utils/data.mocks";
 
-import '@styles/global.css'
+import "@styles/global.css";
 
 const lang = getLangFromUrl(Astro.url);
 ---

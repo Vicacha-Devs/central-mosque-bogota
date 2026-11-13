@@ -94,9 +94,9 @@ type InitDownloadPdfButtonsOptions = {
 
 const initializedButtons = new WeakSet<HTMLButtonElement>();
 
-export function initDownloadPdfButtons(
-  options: InitDownloadPdfButtonsOptions = {}
-): void {
+type TInitPdfOpts = InitDownloadPdfButtonsOptions;
+
+export function initDownloadPdfButtons(options: TInitPdfOpts = {}): void {
   const buttonSelector =
     options.buttonSelector ?? "[data-action='download-pdf']";
 
@@ -195,9 +195,7 @@ async function handleClick(
     pdf.save(`${filename}.pdf`);
   } catch (error) {
     console.error("PDF generation failed:", error);
-    alert(
-      btn.dataset.errorLabel ?? "Failed to generate PDF. Please try again."
-    );
+    alert(btn.dataset.errorLabel ?? "Failed to generate PDF. Please try again.");
   } finally {
     restoreExpandedLayout?.();
     btn.disabled = false;

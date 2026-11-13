@@ -3,9 +3,7 @@ import MonthlyPrayTime from "@components/data/display/MonthlyPrayTime/MonthlyPra
 import Layout from "@layouts/Layout.astro";
 import { routes } from "@i18n/ui";
 
-export async function getStaticPaths({ routePattern }) {
-  console.log("RoutePattern:", routePattern);
-
+export async function getStaticPaths() {
   const paths = Object.entries(routes)
     .map(([lang, slugs]) => ({
       params: {

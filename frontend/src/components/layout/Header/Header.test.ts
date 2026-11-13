@@ -39,12 +39,8 @@ describe("Header", () => {
     });
 
     try {
-      expect(
-        getAllByRole(root, "link", { name: "Inicio", hidden: true }).length
-      ).toBe(2);
-      expect(
-        getAllByRole(root, "link", { name: "Eventos", hidden: true }).length
-      ).toBe(2);
+      expect(getAllByRole(root, "link", { name: "Inicio", hidden: true }).length).toBe(2);
+      expect(getAllByRole(root, "link", { name: "Eventos", hidden: true }).length).toBe(2);
     } finally {
       await close();
     }
@@ -60,6 +56,25 @@ describe("Header", () => {
     try {
       expect(getByText(root, "mosque")).toBeInTheDocument();
       expect(getByText(root, "menu")).toBeInTheDocument();
+    } finally {
+      await close();
+    }
+  });
+
+  it("should render localized English branding and donate CTA when lang is en", async () => {
+    const { root, close } = await renderAstroComponentToDom(Header, {
+      props: {
+        lang: "en",
+        navLinks: [{ label: "Home", href: "/en" }],
+      },
+    });
+
+    try {
+      expect(getByText(root, "Central Mosque")).toBeInTheDocument();
+      expect(getByText(root, "of Bogotá")).toBeInTheDocument();
+      const donateLinks = getAllByRole(root, "link", { name: "Donate" });
+      expect(donateLinks.length).toBe(1);
+      expect(donateLinks[0].getAttribute("href")).toBe("/en/donate");
     } finally {
       await close();
     }

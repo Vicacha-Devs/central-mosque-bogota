@@ -22,12 +22,10 @@ describe("DonationImpactSection", () => {
     );
 
     try {
-      expect(
-        getByRole(root, "heading", {
-          level: 2,
-          name: "Impacto de tus Donaciones",
-        })
-      ).toBeInTheDocument();
+      expect(getByRole(root, "heading", {
+        level: 2,
+        name: "Impacto de tus Donaciones",
+      })).toBeInTheDocument();
 
       expect(getByText(root, props.description)).toBeInTheDocument();
 
@@ -35,12 +33,10 @@ describe("DonationImpactSection", () => {
       const progressBar = getByRole(root, "progressbar", {
         name: projectLabel,
       });
-      expect(progressBar.getAttribute("value")).toBe("75");
+      expect(progressBar.getAttribute("aria-valuenow")).toBe("75");
       expect(getAllByText(root, /75\s*%/).length).toBeGreaterThan(0);
 
-      expect(
-        getByText(root, `Meta: ${props.goal} • Recaudado: ${props.raised}`)
-      ).toBeInTheDocument();
+      expect(getByText(root, `Meta: ${props.goal} • Recaudado: ${props.raised}`)).toBeInTheDocument();
 
       const cta = getByRole(root, "link", { name: "Haz una donación ahora" });
       expect(cta.getAttribute("href")).toBe(props.ctaHref);
@@ -75,7 +71,7 @@ describe("DonationImpactSection", () => {
       const progressBar = getByRole(root, "progressbar", {
         name: projectLabel,
       });
-      expect(progressBar.getAttribute("value")).toBe("100");
+      expect(progressBar.getAttribute("aria-valuenow")).toBe("100");
       expect(getAllByText(root, /100\s*%/).length).toBeGreaterThan(0);
     } finally {
       await close();
@@ -103,7 +99,7 @@ describe("DonationImpactSection", () => {
       const progressBar = getByRole(root, "progressbar", {
         name: projectLabel,
       });
-      expect(progressBar.getAttribute("value")).toBe("0");
+      expect(progressBar.getAttribute("aria-valuenow")).toBe("0");
       expect(getAllByText(root, /0\s*%/).length).toBeGreaterThan(0);
     } finally {
       await close();
