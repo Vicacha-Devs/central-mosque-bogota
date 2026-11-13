@@ -41,9 +41,7 @@ async function setupDialogDom(): Promise<SetupResult> {
   // Ensure native API exists in test env
   ensureDialogApi(dialog);
 
-  const backdrop = document.querySelector<HTMLElement>(
-    "[data-dialog-backdrop]"
-  );
+  const backdrop = document.querySelector<HTMLElement>("[data-dialog-backdrop]");
   if (!backdrop)
     throw new Error("Expected dialog mock to render a backdrop element");
   ensureElementGetAnimations(backdrop);
@@ -108,8 +106,8 @@ describe("Dialog Component", () => {
 
   it("should close the dialog when a close control is clicked", async () => {
     const { initDialogs } = await import("./dialog.controller");
-    const { window, close, trigger, dialog, closeButton } =
-      await setupDialogDom();
+    const { window, close, trigger, dialog, closeButton }
+      = await setupDialogDom();
     const user = await createUser(window);
 
     try {
@@ -228,9 +226,7 @@ describe("Dialog Component", () => {
       const form = dialog.querySelector("form");
       expect(form?.method).toBe("dialog");
 
-      form?.dispatchEvent(
-        new window.Event("submit", { bubbles: true, cancelable: true })
-      );
+      form?.dispatchEvent(new window.Event("submit", { bubbles: true, cancelable: true }));
       await vi.runAllTimersAsync();
 
       expect(dialog.dataset.state).toBe("closed");

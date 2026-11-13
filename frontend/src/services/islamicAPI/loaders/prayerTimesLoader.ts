@@ -1,4 +1,4 @@
-import { getClientLocation } from "@utils/location.utils";
+import { BOGOTA_LOCATION, getClientLocation } from "@utils/location.utils";
 import type {
   TIslamicApiPrayerTimeMonthResponse,
   TIslamicApiPrayerTimeSingleResponse,
@@ -8,6 +8,16 @@ import type { LiveLoader } from "astro/loaders";
 
 import { buildPrayerData } from "../adaptor/buildPrayerData";
 import { fetchIslamicData } from "../api";
+
+// Deterministic times used when IslamicAPI is unreachable (offline dev, CI)
+const BOGOTA_FALLBACK_TIMES = {
+  Fajr: "04:42",
+  Sunrise: "05:56",
+  Dhuhr: "11:59",
+  Asr: "15:18",
+  Maghrib: "18:02",
+  Isha: "19:12",
+};
 
 type FetchPrayerParams = {
   date?: string;
@@ -73,8 +83,8 @@ const fetchPrayerTimes = async ({
     const currentDate = date ? new Date(date) : new Date();
 
     if (isMonthly) {
-      const { data } =
-        await fetchIslamicData<TIslamicApiPrayerTimeMonthResponse>(
+      const { data }
+        = await fetchIslamicData<TIslamicApiPrayerTimeMonthResponse>(
           endpoint,
           params
         );
@@ -93,8 +103,8 @@ const fetchPrayerTimes = async ({
         })),
       };
     } else {
-      const { data } =
-        await fetchIslamicData<TIslamicApiPrayerTimeSingleResponse>(
+      const { data }
+        = await fetchIslamicData<TIslamicApiPrayerTimeSingleResponse>(
           endpoint,
           params
         );
@@ -114,11 +124,24 @@ const fetchPrayerTimes = async ({
       };
     }
   } catch (error) {
+    if (!isMonthly) {
+      const fallbackDate = date ? new Date(date) : new Date();
+      return {
+        type: "entry",
+        result: {
+          id: fallbackDate.toISOString(),
+          data: buildPrayerData({
+            times: BOGOTA_FALLBACK_TIMES,
+            city: BOGOTA_LOCATION.city,
+            country: BOGOTA_LOCATION.country,
+            languageCode,
+            date: fallbackDate,
+          }),
+        },
+      };
+    }
     return {
-      error: new Error(
-        `Failed to load ${isMonthly ? "monthly" : "daily"} prayer times`,
-        { cause: error }
-      ),
+      error: new Error("Failed to load monthly prayer times", { cause: error }),
     };
   }
 };
