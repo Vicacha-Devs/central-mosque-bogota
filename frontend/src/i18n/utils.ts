@@ -135,3 +135,40 @@ export function isSupportedLang(value: string | undefined): value is TLang {
 
   return value in ui;
 }
+
+/**
+ * Resolves the equivalent localized path for `targetLang` from a current `url`,
+ * preserving localized route slugs (e.g. `/es/informacion-oraciones` <-> `/tr/namaz-belgesi`),
+ * nested paths, query parameters, and hash fragments.
+ */
+export function buildAlternateLangHref(
+  url: URL,
+  targetLang: TLang,
+  currentLang: TLang = getLangFromUrl(url)
+): string {
+  const parts = url.pathname.split("/").filter(Boolean);
+  const langFromPath = parts[0];
+  const rest = isSupportedLang(langFromPath) ? parts.slice(1) : parts;
+  const suffix = `${url.search}${url.hash}`;
+
+  if (rest.length === 0) {
+    return `/${targetLang}/${suffix}`;
+  }
+
+  if (rest.length === 1) {
+    const slug = rest[0];
+    const entries = Object.entries(routes[currentLang]);
+    const match = entries.find(([, value]) => value === slug);
+    const fallbackKey = slug in routes[currentLang] ? slug : undefined;
+    const canonicalKey = match?.[0] ?? fallbackKey;
+
+    if (canonicalKey) {
+      const localizedSlug = routes[targetLang][canonicalKey] ?? canonicalKey;
+      return `/${targetLang}/${localizedSlug}${suffix}`;
+    }
+
+    return `/${targetLang}/${slug}${suffix}`;
+  }
+
+  return `/${targetLang}/${rest.join("/")}${suffix}`;
+}

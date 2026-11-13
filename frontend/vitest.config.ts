@@ -25,9 +25,13 @@ export default getViteConfig({
     restoreMocks: true,
     passWithNoTests: true,
     coverage: {
-      exclude: [...coverageConfigDefaults.exclude],
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        "src/components/starwind/**",
+        "src/utils/*-mocks.ts",
+      ],
       provider: "v8",
-      reporter: ["html", "verbose"],
+      reporter: ["html", "text"],
       thresholds: {
         branches: 90,
         functions: 95,

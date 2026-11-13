@@ -6,11 +6,20 @@ import { defineConfig, envField, fontProviders } from "astro/config";
 export default defineConfig({
   env: {
     schema: {
-      ISLAMIC_API_URL: envField.string({ context: "client", access: "public" }),
-      ISLAMIC_API_KEY: envField.string({ context: "server", access: "secret" }),
+      ISLAMIC_API_URL: envField.string({
+        context: "client",
+        access: "public",
+        default: "https://islamicapi.com/api/v1/",
+      }),
+      ISLAMIC_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
       LOCATION_API_URL: envField.string({
         context: "client",
         access: "public",
+        default: "https://ipapi.co/json/",
       }),
     },
   },

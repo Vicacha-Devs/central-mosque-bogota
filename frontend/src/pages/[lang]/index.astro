@@ -31,10 +31,10 @@ const live = await getLiveEntry("prayerTimes", {
   languageCode: lang,
 });
 
-const { entry, error } = live;
+const { entry } = live;
 
 // TODO: refactor to get default values from entry
-const { times, location, hijriDate, currentDate } = entry!.data || {};
+const { times, location, hijriDate, currentDate } = entry!.data;
 ---
 
 <Layout>
