@@ -76,55 +76,6 @@ if (typeof document !== "undefined") {
   }
 }
 
-const REGISTER_THEMES_EVENT = "storybook/themes/REGISTER_THEMES";
-let currentTheme = "light";
-
-type GlobalsPayload = {
-  globals?: {
-    theme?: string;
-  };
-};
-
-const applyDocumentTheme = (themeName?: string): void => {
-  if (typeof document === "undefined") return;
-  const resolved = themeName === "dark" ? "dark" : "light";
-  currentTheme = resolved;
-  document.documentElement.setAttribute("data-theme", resolved);
-  document.documentElement.classList.toggle("dark", resolved === "dark");
-  document.body.setAttribute("data-theme", resolved);
-};
-
-if (typeof document !== "undefined") {
-  applyDocumentTheme(currentTheme);
-  try {
-    const channel = addons.getChannel();
-    const syncChannelTheme = (payload?: GlobalsPayload): void => {
-      const nextTheme = payload?.globals?.theme;
-      if (typeof nextTheme === "string" && nextTheme) {
-        applyDocumentTheme(nextTheme);
-      } else {
-        applyDocumentTheme(currentTheme);
-      }
-      channel.emit(REGISTER_THEMES_EVENT, {
-        defaultTheme: "light",
-        themes: ["light", "dark"],
-      });
-    };
-    syncChannelTheme();
-    channel.on(SET_GLOBALS, syncChannelTheme);
-    channel.on(GLOBALS_UPDATED, syncChannelTheme);
-    channel.on(UPDATE_GLOBALS, syncChannelTheme);
-    channel.on(DOCS_RENDERED, (): void => {
-      syncChannelTheme();
-    });
-    channel.on(STORY_RENDERED, (): void => {
-      syncChannelTheme();
-    });
-  } catch {
-    // Ignore outside browser preview context.
-  }
-}
-
 export default definePreview({
   addons: [addonA11y(), addonDocs(), addonThemes()],
   initialGlobals: {
