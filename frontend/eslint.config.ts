@@ -65,7 +65,7 @@ export default defineConfig([
     rules: {
       "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }],
       "@stylistic/function-paren-newline": ["warn", "consistent"],
-      "@stylistic/implicit-arrow-linebreak": "warn",
+      "@stylistic/implicit-arrow-linebreak": "off",
       "@stylistic/operator-linebreak": "warn",
       "@stylistic/object-curly-newline": [
         "error",

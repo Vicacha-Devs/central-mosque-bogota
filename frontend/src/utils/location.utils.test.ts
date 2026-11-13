@@ -27,11 +27,12 @@ describe("location.utils and location api", () => {
       "fetch",
       vi.fn().mockResolvedValue({
         ok: true,
-        json: () => Promise.resolve({
-          city: "Medellín",
-          country: "Colombia",
-          timeZone: "America/Bogota",
-        }),
+        json: () =>
+          Promise.resolve({
+            city: "Medellín",
+            country: "Colombia",
+            timeZone: "America/Bogota",
+          }),
       })
     );
 
@@ -66,9 +67,10 @@ describe("location.utils and location api", () => {
   it("should fall back to Bogota timezone when Intl timeZone is empty or throws", async () => {
     vi.stubGlobal("navigator", undefined);
     const dtfSpy = vi.spyOn(Intl, "DateTimeFormat").mockImplementation(
-      () => ({
-        resolvedOptions: () => ({ timeZone: "   " }),
-      }) as unknown as Intl.DateTimeFormat
+      () =>
+        ({
+          resolvedOptions: () => ({ timeZone: "   " }),
+        }) as unknown as Intl.DateTimeFormat
     );
 
     const first = await getClientLocation();
@@ -143,11 +145,12 @@ describe("location.utils and location api", () => {
       "fetch",
       vi.fn().mockResolvedValue({
         ok: true,
-        json: () => Promise.resolve({
-          city: "Medellín",
-          country: "Colombia",
-          timeZone: "America/Bogota",
-        }),
+        json: () =>
+          Promise.resolve({
+            city: "Medellín",
+            country: "Colombia",
+            timeZone: "America/Bogota",
+          }),
       })
     );
 
