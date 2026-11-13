@@ -2,14 +2,47 @@
 import {
   Dropdown,
   DropdownContent,
+  DropdownItem,
   DropdownTrigger,
-} from "@components/actions/Dropdown";
+} from "@/components/starwind/dropdown";
 import Icon from "@components/data/display/Icons/Icon.astro";
-import { languages, localeFlags, routes, type TLang } from "@i18n/ui";
-import { getLangFromUrl, isSupportedLang, useTranslations } from "@i18n/utils";
+import { languages, localeFlags, type TLang } from "@i18n/ui";
+import {
+  buildAlternateLangHref,
+  getLangFromUrl,
+  useTranslations,
+} from "@i18n/utils";
 import type { TDropdownAlign, TDropdownPosition } from "@utils/models/types";
 
+/**
+ * @component LanguagePicker
+ * @title Language Picker Dropdown
+ * @description Accessible language switcher dropdown (`es`, `en`, `ar`, `tr`) built on Starwind `Dropdown` that preserves the active route slug across locales.
+ *
+ * Props
+ * - `lang`: optional locale override (`es`, `en`, `ar`, `tr`)
+ * - `side`: dropdown placement side (`top`, `bottom`, `left`, `right`)
+ * - `align`: dropdown alignment (`start`, `center`, `end`)
+ *
+ * @preview
+ *
+ * <LanguagePicker side="bottom" align="end" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import LanguagePicker from "@components/navigation/LanguagePicker/LanguagePicker.astro";
+ * ---
+ *
+ * <LanguagePicker side="bottom" align="end" />
+ * ```
+ */
 interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
   /**
    * Position of the dropdown menu relative to its trigger element.
    * @default bottom
@@ -22,40 +55,13 @@ interface Props {
   align?: TDropdownAlign;
 }
 
-const { side, align } = Astro.props as Props;
+const { lang: langProp, side, align } = Astro.props as Props;
 
-const currentLang = getLangFromUrl(Astro.url);
+const currentLang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-
 const url = Astro.url;
-const parts = url.pathname.split("/").filter(Boolean);
-const langFromPath = parts[0];
-const rest = isSupportedLang(langFromPath) ? parts.slice(1) : parts;
-
-const buildLangHref = (targetLang: TLang): string => {
-  const suffix = `${url.search}${url.hash}`;
-
-  if (rest.length === 0) {
-    return `/${targetLang}/${suffix}`;
-  }
-
-  if (rest.length === 1) {
-    const slug = rest[0];
-    const entries = Object.entries(routes[currentLang]);
-    const match = entries.find(([, value]) => value === slug);
-    const fallbackKey = slug in routes[currentLang] ? slug : undefined;
-    const canonicalKey = match?.[0] ?? fallbackKey;
-
-    if (canonicalKey) {
-      const localizedSlug = routes[targetLang][canonicalKey] ?? canonicalKey;
-      return `/${targetLang}/${localizedSlug}${suffix}`;
-    }
-
-    return `/${targetLang}/${slug}${suffix}`;
-  }
-
-  return `/${targetLang}/${rest.join("/")}${suffix}`;
-};
+const buildLangHref = (targetLang: TLang): string =>
+  buildAlternateLangHref(url, targetLang, currentLang);
 ---
 
 <Dropdown>
@@ -87,14 +93,15 @@ const buildLangHref = (targetLang: TLang): string => {
     side={side}
     sideOffset={8}
     class="
-      w-44 overflow-hidden rounded-xl border border-slate-100 bg-white py-2
+      min-w-44 overflow-hidden rounded-xl border border-slate-100 bg-white py-2
       text-slate-900 shadow-xl
       dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50
     "
   >
     {
       localeFlags.map(({ code, flag }) => (
-        <a
+        <DropdownItem
+          as="a"
           href={buildLangHref(code)}
           class="
             flex cursor-pointer items-center gap-3 px-4 py-2 text-sm
@@ -107,9 +114,6 @@ const buildLangHref = (targetLang: TLang): string => {
             dark:focus-visible:bg-slate-800
           "
           aria-current={code === currentLang ? "page" : undefined}
-          role="menuitem"
-          tabindex="0"
-          data-dropdown-item
         >
           <span
             class="
@@ -121,7 +125,7 @@ const buildLangHref = (targetLang: TLang): string => {
             {flag}
           </span>
           <span>{languages[code]}</span>
-        </a>
+        </DropdownItem>
       ))
     }
   </DropdownContent>

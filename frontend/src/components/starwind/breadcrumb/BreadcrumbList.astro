@@ -1,0 +1,12 @@
+---
+import { breadcrumbList } from "./variants";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"ol">;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<ol class={breadcrumbList({ class: className })} {...rest} data-slot="breadcrumb-list">
+  <slot />
+</ol>

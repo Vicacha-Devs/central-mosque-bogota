@@ -1,0 +1,163 @@
+import { ColorItem, ColorPalette, Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Colors" />
+
+# Colors
+
+Every color in the interface comes from a semantic token defined in
+[`src/styles/global.css`](https://github.com/Vicacha-Devs/central-mosque-bogota/blob/main/frontend/src/styles/global.css).
+Each token is exposed as a Tailwind utility (`bg-primary`, `text-muted-foreground`,
+`border-border`, …), so components never reference raw palette values.
+
+The swatches below read the live CSS variables. Switch between **light** and **dark**
+in the toolbar and they update with the theme.
+
+## Brand
+
+The two brand colors are the same in both themes. Only their accent shade changes.
+
+<ColorPalette>
+  <ColorItem
+    title="primary"
+    subtitle="bg-primary · text-primary · Calls to action and active states"
+    colors={{
+      Base: "var(--primary)",
+      Accent: "var(--primary-accent)",
+      Foreground: "var(--primary-foreground)",
+    }}
+  />
+  <ColorItem
+    title="secondary"
+    subtitle="bg-secondary · text-secondary · Brand blue for accents, links and the focus outline"
+    colors={{
+      Base: "var(--secondary)",
+      Accent: "var(--secondary-accent)",
+      Foreground: "var(--secondary-foreground)",
+    }}
+  />
+  <ColorItem
+    title="neutral-sand"
+    subtitle="bg-neutral-sand · Warm neutral. Defined in the theme but not used by any component yet"
+    colors={["#f6f5f1"]}
+  />
+</ColorPalette>
+
+## Surfaces and text
+
+Pair a surface with its `-foreground` token so contrast holds in both themes.
+
+<ColorPalette>
+  <ColorItem
+    title="background / foreground"
+    subtitle="bg-background · text-foreground · Page canvas and default text"
+    colors={{
+      Background: "var(--background)",
+      Foreground: "var(--foreground)",
+    }}
+  />
+  <ColorItem
+    title="card"
+    subtitle="bg-card · text-card-foreground · Cards, dialogs and popovers share this surface"
+    colors={{
+      Card: "var(--card)",
+      Foreground: "var(--card-foreground)",
+      Popover: "var(--popover)",
+    }}
+  />
+  <ColorItem
+    title="muted"
+    subtitle="bg-muted · text-muted-foreground · Secondary text and quiet backgrounds"
+    colors={{
+      Muted: "var(--muted)",
+      Foreground: "var(--muted-foreground)",
+    }}
+  />
+  <ColorItem
+    title="accent"
+    subtitle="bg-accent · text-accent-foreground · Hover and selected rows"
+    colors={{
+      Accent: "var(--accent)",
+      Foreground: "var(--accent-foreground)",
+    }}
+  />
+</ColorPalette>
+
+## Status
+
+Used for alerts, badges and form validation feedback.
+
+<ColorPalette>
+  <ColorItem
+    title="info"
+    subtitle="bg-info · text-info-foreground"
+    colors={{ Base: "var(--info)", Foreground: "var(--info-foreground)" }}
+  />
+  <ColorItem
+    title="success"
+    subtitle="bg-success · text-success-foreground"
+    colors={{ Base: "var(--success)", Foreground: "var(--success-foreground)" }}
+  />
+  <ColorItem
+    title="warning"
+    subtitle="bg-warning · text-warning-foreground"
+    colors={{ Base: "var(--warning)", Foreground: "var(--warning-foreground)" }}
+  />
+  <ColorItem
+    title="error"
+    subtitle="bg-error · text-error-foreground"
+    colors={{ Base: "var(--error)", Foreground: "var(--error-foreground)" }}
+  />
+</ColorPalette>
+
+## Borders and focus
+
+<ColorPalette>
+  <ColorItem
+    title="border"
+    subtitle="border-border · Dividers and card outlines"
+    colors={{ Border: "var(--border)" }}
+  />
+  <ColorItem
+    title="input"
+    subtitle="border-input · Form control borders"
+    colors={{ Input: "var(--input)" }}
+  />
+  <ColorItem
+    title="outline"
+    subtitle="outline-outline · Keyboard focus ring (brighter in dark mode for contrast)"
+    colors={{ Outline: "var(--outline)" }}
+  />
+</ColorPalette>
+
+## Sidebar
+
+Tokens inherited from the Starwind theme. No sidebar component is in use yet; they mirror the page tokens so one can be restyled independently.
+
+<ColorPalette>
+  <ColorItem
+    title="sidebar"
+    subtitle="bg-sidebar · text-sidebar-foreground · border-sidebar-border"
+    colors={{
+      Background: "var(--sidebar-background)",
+      Foreground: "var(--sidebar-foreground)",
+      Border: "var(--sidebar-border)",
+    }}
+  />
+  <ColorItem
+    title="sidebar-primary / sidebar-accent"
+    subtitle="bg-sidebar-primary · bg-sidebar-accent"
+    colors={{
+      Primary: "var(--sidebar-primary)",
+      Accent: "var(--sidebar-accent)",
+      Outline: "var(--sidebar-outline)",
+    }}
+  />
+</ColorPalette>
+
+## Usage rules
+
+- Use the semantic token, not a Tailwind palette color: `bg-primary`, not `bg-red-700`.
+- Always pair a surface with its foreground (`bg-primary` with `text-primary-foreground`).
+- Dark mode needs no `dark:` color overrides. The tokens already change under
+  `[data-theme="dark"]` / `.dark`. Reserve `dark:` for one-off cases such as images.
+- Do not rely on color alone to convey state. Combine it with an icon or text.

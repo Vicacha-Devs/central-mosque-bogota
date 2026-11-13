@@ -4,7 +4,7 @@ import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import stylistic from "@stylistic/eslint-plugin";
 import vitest from "@vitest/eslint-plugin";
-import parserAstro from "astro-eslint-parser";
+import * as parserAstro from "astro-eslint-parser";
 import astro from "eslint-plugin-astro";
 import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import { importX } from "eslint-plugin-import-x";
@@ -28,6 +28,7 @@ export default defineConfig([
   globalIgnores([
     "coverage",
     "dist",
+    "storybook-static",
     "node_modules",
     ".astro",
     ".github",
@@ -125,8 +126,12 @@ export default defineConfig([
       },
     },
     rules: {
-      // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
-      "@stylistic/jsx-one-expression-per-line": "warn",
+      // Disabled: autofix mangles <script>/<style> text in .astro files, see https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
+      "@stylistic/jsx-one-expression-per-line": "off",
+      // The Astro processor blanks out <script>/<style> bodies, which trips this rule
+      "@stylistic/no-multiple-empty-lines": "off",
+      "@stylistic/jsx-closing-tag-location": "off",
+      "@stylistic/indent": "off",
     },
   },
   {
@@ -168,6 +173,10 @@ export default defineConfig([
         },
       ],
       "no-trailing-spaces": ["error"],
+      // Layout of operators/ternaries is owned by oxfmt; these rules fight it
+      "@stylistic/operator-linebreak": "off",
+      "@stylistic/multiline-ternary": "off",
+      "@stylistic/indent-binary-ops": "off",
     },
   },
   {
@@ -199,6 +208,7 @@ export default defineConfig([
     ...vitest.configs.recommended,
     rules: {
       ...vitest.configs.recommended.rules,
+      "max-len": "off",
       "vitest/valid-title": [
         "error",
         {

@@ -1,0 +1,127 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+
+import RamadanTimeSlotCard from "./RamadanTimeSlotCard.astro";
+
+/**
+ * @component RamadanScheduleBanner
+ * @title Ramadan Suhoor, Iftar & Taraweeh Banner
+ * @description Displays reference Suhoor (Fajr), Iftar (Maghrib), and Taraweeh times along with a community Iftar sponsorship call-to-action.
+ *
+ * i18n keys
+ * - `media-page.ramadan-badge`
+ * - `media-page.ramadan-title`
+ * - `media-page.ramadan-subtitle`
+ * - `media-page.suhoor`
+ * - `media-page.iftar`
+ * - `media-page.taraweeh`
+ * - `media-page.sponsor-iftar`
+ */
+interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * End of Suhoor (Fajr) time string.
+   * @default 04:42 AM
+   */
+  suhoorTime?: string;
+  /**
+   * Iftar (Maghrib) time string.
+   * @default 06:06 PM
+   */
+  iftarTime?: string;
+  /**
+   * Isha & Taraweeh prayer time string.
+   * @default 07:30 PM
+   */
+  taraweehTime?: string;
+}
+
+const {
+  lang: langProp,
+  suhoorTime = "04:42 AM",
+  iftarTime = "06:06 PM",
+  taraweehTime = "07:30 PM",
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<section
+  data-ramadan-schedule
+  class="
+    rounded-3xl border border-amber-500/30 bg-linear-to-br from-emerald-950
+    via-secondary to-slate-950 p-8 text-white shadow-xl
+    sm:p-12
+  "
+>
+  <div class="mx-auto max-w-3xl text-center">
+    <Badge
+      variant="warning"
+      class="
+        inline-flex items-center gap-2 rounded-full border-none bg-amber-400/20
+        px-4 py-1 text-xs font-extrabold tracking-widest text-amber-300
+        uppercase
+      "
+    >
+      <Icon name="dark_mode" class="text-sm" />
+      <span>{t("media-page.ramadan-badge")}</span>
+    </Badge>
+    <h2 class="
+      mt-4 text-2xl font-extrabold
+      sm:text-4xl
+    "
+    >
+      {t("media-page.ramadan-title")}
+    </h2>
+    <p class="
+      mt-3 text-sm text-blue-100/90
+      sm:text-base
+    "
+    >
+      {t("media-page.ramadan-subtitle")}
+    </p>
+  </div>
+
+  <div class="
+    mt-8 grid grid-cols-1 gap-6
+    sm:grid-cols-3
+  "
+  >
+    <RamadanTimeSlotCard
+      icon="wb_twilight"
+      label={t("media-page.suhoor")}
+      time={suhoorTime}
+    />
+    <RamadanTimeSlotCard
+      icon="restaurant"
+      label={t("media-page.iftar")}
+      time={iftarTime}
+      featured={true}
+    />
+    <RamadanTimeSlotCard
+      icon="mosque"
+      label={t("media-page.taraweeh")}
+      time={taraweehTime}
+    />
+  </div>
+
+  <div class="mt-8 text-center">
+    <Button href={translatePath("/donate")} variant="primary">
+      <Icon name="volunteer_activism" />
+      <span>{t("media-page.sponsor-iftar")}</span>
+    </Button>
+  </div>
+</section>

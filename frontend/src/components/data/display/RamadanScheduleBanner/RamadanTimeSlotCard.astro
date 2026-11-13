@@ -1,0 +1,85 @@
+---
+import { Card, CardContent } from "@/components/starwind/card";
+import Icon from "@components/data/display/Icons/Icon.astro";
+
+/**
+ * @component RamadanTimeSlotCard
+ * @title Ramadan Schedule Time Slot Card
+ * @description Displays a single Ramadan liturgical time slot (Suhoor, Iftar, or Taraweeh) with an icon, localized label, and formatted time.
+ *
+ * Props
+ * - `icon`: Material Symbol icon name (`wb_twilight` | `restaurant` | `mosque`)
+ * - `label`: localized slot label
+ * - `time`: formatted time string
+ * - `featured`: optional boolean to highlight the Iftar slot in amber
+ *
+ * @preview
+ *
+ * <RamadanTimeSlotCard
+ *   icon="restaurant"
+ *   label="Iftar (Maghrib)"
+ *   time="06:06 PM"
+ *   featured={true}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import RamadanTimeSlotCard from "@components/data/display/RamadanScheduleBanner/RamadanTimeSlotCard.astro";
+ * ---
+ *
+ * <RamadanTimeSlotCard icon="restaurant" label="Iftar (Maghrib)" time="06:06 PM" featured />
+ * ```
+ */
+interface Props {
+  /**
+   * Material Symbol icon name.
+   */
+  icon: "wb_twilight" | "restaurant" | "mosque";
+  /**
+   * Localized time slot label.
+   */
+  label: string;
+  /**
+   * Formatted time string (e.g. `06:06 PM`).
+   */
+  time: string;
+  /**
+   * Whether to highlight the card with the amber featured styling.
+   */
+  featured?: boolean;
+}
+
+const { icon, label, time, featured = false } = Astro.props;
+---
+
+<Card
+  class:list={[
+    "rounded-2xl p-0 text-center text-white shadow-none backdrop-blur-sm",
+    featured
+      ? "border border-amber-400/40 bg-amber-400/15"
+      : "border border-white/15 bg-white/10",
+  ]}
+  data-ramadan-slot-card={icon}
+>
+  <CardContent class="p-6">
+    <Icon name={icon} class="mx-auto text-3xl text-amber-300" />
+    <p
+      class:list={[
+        "mt-2 text-xs font-bold tracking-wider uppercase",
+        featured ? "text-amber-200" : "text-blue-200",
+      ]}
+    >
+      {label}
+    </p>
+    <p
+      class:list={[
+        "mt-1 text-3xl font-extrabold",
+        featured ? "text-amber-300" : "text-white",
+      ]}
+    >
+      {time}
+    </p>
+  </CardContent>
+</Card>

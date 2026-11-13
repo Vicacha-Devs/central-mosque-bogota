@@ -4,7 +4,7 @@ import CommunityServiceCard from "./CommunityServiceCard.astro";
 
 const meta = preview.meta({
   title: "Components/Data/Display/CommunityServices/CommunityServiceCard",
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
   component: CommunityServiceCard,
   tags: ["autodocs", "version:0.0.1", "new", "alpha"],
   args: {

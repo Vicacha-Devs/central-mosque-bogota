@@ -1,24 +1,32 @@
 ---
 import MonthlyPrayTime from "@components/data/display/MonthlyPrayTime/MonthlyPrayTime.astro";
+import QiblaAndObservancesSection from "@components/data/display/QiblaAndObservancesSection/QiblaAndObservancesSection.astro";
 import Layout from "@layouts/Layout.astro";
 import { routes } from "@i18n/ui";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
-export async function getStaticPaths({ routePattern }) {
-  console.log("RoutePattern:", routePattern);
-
+export async function getStaticPaths() {
   const paths = Object.entries(routes)
     .map(([lang, slugs]) => ({
       params: {
         lang,
-        prayerInformation: slugs.prayerInformation,
+        prayerInformation:
+          slugs["prayer-information"] ?? "prayer-information",
       },
     }))
     .filter(({ params }) => Boolean(params.prayerInformation));
 
   return paths;
 }
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
-<Layout>
-  <MonthlyPrayTime server:defer />
+<Layout
+  title={t("nav.prayer")}
+  description={t("pray-calendar.title")}
+>
+  <MonthlyPrayTime server:defer lang={lang} />
+  <QiblaAndObservancesSection lang={lang} />
 </Layout>

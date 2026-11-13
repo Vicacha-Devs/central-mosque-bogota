@@ -1,0 +1,10 @@
+---
+import { selectSeparator } from "./variants";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={selectSeparator({ class: className })} {...rest} data-slot="select-separator"></div>

@@ -7,3 +7,8 @@ type ImportMetaEnv = {
 type ImportMeta = {
   readonly env: ImportMetaEnv;
 };
+
+declare module "@storybook-astro/renderer/entry-preview-docs" {
+  import type { DecoratorFunction } from "storybook/internal/types";
+  export const decorators: Array<DecoratorFunction>;
+}
