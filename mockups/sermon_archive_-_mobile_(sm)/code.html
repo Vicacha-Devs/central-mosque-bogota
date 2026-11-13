@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sermon Archive - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#212e83",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0d1a",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(33, 46, 131, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0d1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #212e83;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex justify-center">
+<!-- Mobile Container (SM 365px simulated on desktop) -->
+<div class="relative w-full max-w-[365px] bg-background-light dark:bg-background-dark min-h-screen flex flex-col shadow-2xl overflow-hidden border-x border-primary/10">
+<!-- Full-bleed Hero Header -->
+<div class="relative h-64 w-full flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Intricate interior architecture of a grand mosque dome" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8VwZ-U1GCikxWXWhdx08BglJlZIBtS_ZreOe3No0O-oKgNUt5oe0Qfk725eiyidhsHU8AV1RVGAH39b9IMhd7x-E6RTjo1osM1BI25K7uZUILVV7PnoqsFuH4FAFQUFUTiAFgpTSyG_-FN-tIbFMVArfRtOh_UC8VeMHJ8sa4aS4SDIAQh3fI0Wu5RQ3FlhoECQw2kajRDTAO5Kp4nQI6nBhIw2Dwfpgw71Y6rKXsUPY1pZasxKGxokkjVP6Hl7Lf7TJhwOYI80U');">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background-dark/40 to-background-dark"></div>
+</div>
+<!-- Top Navigation Overlay -->
+<header class="relative z-10 flex items-center justify-between px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-white">mosque</span>
+<h1 class="text-white text-sm font-bold tracking-tight uppercase">Central Mosque</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-md text-white">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</button>
+</header>
+<!-- Hero Title Glassmorphism -->
+<div class="absolute bottom-6 left-4 right-4 z-10">
+<div class="glass-effect rounded-xl p-4">
+<h2 class="text-white text-2xl font-bold leading-tight">Sermon Archive</h2>
+<p class="text-white/70 text-xs font-sans mt-1 uppercase tracking-widest">Bogotá, Colombia</p>
+</div>
+</div>
+</div>
+<!-- Sticky Search & Filter Section -->
+<div class="px-4 py-4 space-y-3 sticky top-0 z-20 bg-background-dark/80 backdrop-blur-md">
+<div class="relative flex items-center gap-2">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-primary/10 border-none rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary text-white placeholder-slate-400 font-sans" placeholder="Search sermons..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white rounded-xl px-4 py-2 flex items-center gap-2 text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span class="font-sans">Filter</span>
+</button>
+</div>
+</div>
+<!-- Sermon Feed -->
+<main class="flex-1 px-4 pb-24 space-y-4">
+<div class="flex items-center justify-between pb-2">
+<h3 class="text-lg font-bold">Recent Khutbahs</h3>
+<span class="text-xs font-sans text-primary/60 dark:text-primary/40">Showing 24 results</span>
+</div>
+<!-- Sermon Card 1 -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-xl p-4 flex flex-col gap-3 group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start gap-3">
+<div class="space-y-1">
+<h4 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors">Patience in Adversity</h4>
+<p class="text-xs font-sans text-slate-500 dark:text-slate-400">Imam Julián Zapata • Oct 27, 2023</p>
+</div>
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[24px]">menu_book</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-primary/5">
+<div class="flex gap-3 text-slate-400">
+<span class="material-symbols-outlined text-[18px] text-primary">videocam</span>
+<span class="material-symbols-outlined text-[18px]">headphones</span>
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<button class="text-xs font-sans font-bold text-primary uppercase tracking-wider flex items-center gap-1">
+                        Listen Now <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Sermon Card 2 -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-xl p-4 flex flex-col gap-3 group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start gap-3">
+<div class="space-y-1">
+<h4 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors">Community &amp; Gratitude</h4>
+<p class="text-xs font-sans text-slate-500 dark:text-slate-400">Sheikh Omar Al-Faruq • Oct 20, 2023</p>
+</div>
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[24px]">groups</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-primary/5">
+<div class="flex gap-3 text-slate-400">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+<span class="material-symbols-outlined text-[18px] text-primary">headphones</span>
+<span class="material-symbols-outlined text-[18px] text-primary">description</span>
+</div>
+<button class="text-xs font-sans font-bold text-primary uppercase tracking-wider flex items-center gap-1">
+                        Read Text <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Sermon Card 3 -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-xl p-4 flex flex-col gap-3 group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start gap-3">
+<div class="space-y-1">
+<h4 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors">The Path to Inner Peace</h4>
+<p class="text-xs font-sans text-slate-500 dark:text-slate-400">Imam Julián Zapata • Oct 13, 2023</p>
+</div>
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[24px]">self_improvement</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-primary/5">
+<div class="flex gap-3 text-slate-400">
+<span class="material-symbols-outlined text-[18px] text-primary">videocam</span>
+<span class="material-symbols-outlined text-[18px] text-primary">headphones</span>
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<button class="text-xs font-sans font-bold text-primary uppercase tracking-wider flex items-center gap-1">
+                        Watch Video <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Sermon Card 4 -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-xl p-4 flex flex-col gap-3 group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start gap-3">
+<div class="space-y-1">
+<h4 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors">Justice in Islam</h4>
+<p class="text-xs font-sans text-slate-500 dark:text-slate-400">Guest Speaker Dr. Idris • Oct 06, 2023</p>
+</div>
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[24px]">balance</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-primary/5">
+<div class="flex gap-3 text-slate-400">
+<span class="material-symbols-outlined text-[18px] text-primary">videocam</span>
+<span class="material-symbols-outlined text-[18px] text-primary">headphones</span>
+<span class="material-symbols-outlined text-[18px] text-primary">description</span>
+</div>
+<button class="text-xs font-sans font-bold text-primary uppercase tracking-wider flex items-center gap-1">
+                        Explore <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full max-w-[365px] bg-primary text-white flex justify-around items-center h-16 rounded-t-xl z-50">
+<button class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-sans">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white">
+<span class="material-symbols-outlined text-[24px] fill-[1]">auto_stories</span>
+<span class="text-[10px] font-sans font-bold">Archive</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-[24px]">schedule</span>
+<span class="text-[10px] font-sans">Prayers</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-[24px]">event</span>
+<span class="text-[10px] font-sans">Events</span>
+</button>
+</nav>
+<!-- (Simulated Filter Overlay - hidden by default, can be shown via JS) -->
+<!-- Remove "hidden" to see the overlay design in dev -->
+<div class="hidden absolute inset-0 z-[60] glass-effect flex flex-col p-6 animate-in slide-in-from-bottom duration-300">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-2xl font-bold text-white">Filters</h3>
+<button class="text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-8 flex-1 overflow-y-auto pr-2">
+<!-- Imam Select -->
+<div class="space-y-4">
+<p class="text-white/60 text-sm uppercase tracking-widest font-sans font-semibold">Select Imam</p>
+<div class="grid grid-cols-1 gap-2">
+<label class="flex items-center justify-between bg-white/5 p-4 rounded-xl border border-white/10">
+<span class="text-white">All Imams</span>
+<input checked="" class="text-primary focus:ring-primary bg-transparent border-white/20" name="imam" type="radio"/>
+</label>
+<label class="flex items-center justify-between bg-white/5 p-4 rounded-xl border border-white/10">
+<span class="text-white">Imam Julián Zapata</span>
+<input class="text-primary focus:ring-primary bg-transparent border-white/20" name="imam" type="radio"/>
+</label>
+<label class="flex items-center justify-between bg-white/5 p-4 rounded-xl border border-white/10">
+<span class="text-white">Sheikh Omar Al-Faruq</span>
+<input class="text-primary focus:ring-primary bg-transparent border-white/20" name="imam" type="radio"/>
+</label>
+</div>
+</div>
+<!-- Topic Select -->
+<div class="space-y-4">
+<p class="text-white/60 text-sm uppercase tracking-widest font-sans font-semibold">Popular Topics</p>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full border border-white/20 text-white text-sm bg-primary font-sans">Friday Khutbah</button>
+<button class="px-4 py-2 rounded-full border border-white/20 text-white text-sm font-sans hover:bg-white/10">Ramadan Series</button>
+<button class="px-4 py-2 rounded-full border border-white/20 text-white text-sm font-sans hover:bg-white/10">Youth</button>
+<button class="px-4 py-2 rounded-full border border-white/20 text-white text-sm font-sans hover:bg-white/10">Theology</button>
+<button class="px-4 py-2 rounded-full border border-white/20 text-white text-sm font-sans hover:bg-white/10">History</button>
+</div>
+</div>
+</div>
+<!-- Apply Button -->
+<button class="mt-8 w-full bg-white text-primary font-bold py-4 rounded-xl shadow-lg shadow-black/40 font-sans uppercase tracking-widest">
+                Apply Filters
+            </button>
+</div>
+</div>
+</body></html>

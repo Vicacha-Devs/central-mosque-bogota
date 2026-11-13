@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Video Player - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                        "theater-blue": "#212E80",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Noto Serif', serif;
+        }
+    </style>
+</head>
+<body class="bg-[#212E80] text-white min-h-screen selection:bg-primary selection:text-white">
+<!-- Global Navigation -->
+<header class="sticky top-0 z-50 glass-effect border-b border-white/10 px-6 py-4 xl:px-20">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-8">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-white text-2xl">mosque</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight font-serif hidden lg:block">Central Mosque of Bogotá</h2>
+</div>
+<nav class="hidden xl:flex items-center gap-8 ml-4">
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Prayer Times</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Events</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">About Us</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Videos</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 max-w-64 w-full">
+<div class="flex w-full items-stretch rounded-xl bg-white/10 border border-white/10 focus-within:border-primary/50 transition-all overflow-hidden h-10">
+<div class="text-white/50 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full border-none bg-transparent focus:ring-0 text-white placeholder:text-white/40 text-sm" placeholder="Search sermons..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-10 px-6 bg-primary hover:bg-primary/90 transition-all text-white text-sm font-bold shadow-lg shadow-primary/20">
+<span>Donate</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white/20" data-alt="User profile picture showing a smiling man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDgk5K2Qu5luVhc9oIwjDxD_-W-Ym7_VbxNYZy_OykBifdP7QT9b7kC-oTtJONJ6FqQ_1KZ-719B9LEBCq9-zKxDZvKUqUbVkK6-PnsRZMJmMY3s1hM6cLl87695w6GS2DDijjJOD-TiKvQRWBCyDntxqxohCbXGkWqLEQI-6mf3-G3LVj7H012TL3GP6BvAAPaCso1MzjJHUa6xOqDWtNFqhv5AR6ywe5jvWY3YMd9QqR3T4IdvIhiX_e93-2W9h8h2sJzHEanVA");'></div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto p-6 xl:p-10">
+<div class="flex flex-col xl:flex-row gap-8">
+<!-- Video & Info Area (Left) -->
+<div class="flex-1 space-y-6">
+<!-- Main Theater Player -->
+<div class="relative group aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Cinematic interior view of a beautifully lit mosque dome" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBYsRWZXJldBIvaXODqpV3VlQ-DuEWQOTiVmV1HCMXsAB3aoFZDXJrOi0AdnRw7qZTHml0cfvRYALOj5elIoLIvtQDf0goF8NJwwFYp8JaYeEp9qOSRHrUheVVMM2d4lLMN1Q4qibaAzGJEtU1Z7PK9GsmNz1ylNbYOrD4Cd_jELHolTOGMfDuneeVn1zrsjwWA4wm8E_CU3A1KdtvuUPN0N3C-G2m7qdhZqQMHP21g5QpgFCeA9ZcaRqZ-JNKDuX-uGmxmnYAR3do");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<!-- Play Button Overlay -->
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="size-20 bg-primary/90 hover:bg-primary hover:scale-110 transition-all rounded-full flex items-center justify-center text-white shadow-2xl backdrop-blur-sm">
+<span class="material-symbols-outlined text-5xl fill-1">play_arrow</span>
+</button>
+</div>
+<!-- Custom Player Controls Bar -->
+<div class="absolute bottom-0 inset-x-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="space-y-4">
+<!-- Progress Bar -->
+<div class="relative h-1.5 w-full bg-white/20 rounded-full cursor-pointer group/progress">
+<div class="absolute top-0 left-0 h-full w-1/3 bg-primary rounded-full"></div>
+<div class="absolute top-1/2 left-1/3 -translate-y-1/2 -translate-x-1/2 size-4 bg-white rounded-full shadow-lg scale-0 group-hover/progress:scale-100 transition-transform"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">play_arrow</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">skip_next</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">volume_up</span>
+<span class="text-sm font-medium">12:45 / 45:20</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">subtitles</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">settings</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">fullscreen</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Info Card (Glassmorphism) -->
+<div class="glass-effect rounded-xl p-8 space-y-6">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/60 border border-white/10">Friday Khutbah</span>
+<span class="text-white/40 text-sm">Published on Oct 27, 2023</span>
+</div>
+<h1 class="text-3xl md:text-4xl font-bold leading-tight font-serif">The Importance of Community in Modern Society</h1>
+<div class="flex items-center gap-3 pt-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div>
+<p class="text-white font-semibold leading-none">Imam Ahmed</p>
+<p class="text-white/50 text-xs">Religious Leader &amp; Community Scholar</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center sm:items-end gap-3">
+<button class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 transition-all rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined">favorite</span>
+                                Donate to this Program
+                            </button>
+<p class="text-white/40 text-[10px] uppercase tracking-tighter">Support our local outreach initiatives</p>
+</div>
+</div>
+<div class="h-px bg-white/10 w-full"></div>
+<div class="prose prose-invert max-w-none">
+<p class="text-white/70 text-lg leading-relaxed font-light">
+                            In this week's sermon, Imam Ahmed explores the spiritual and social dimensions of togetherness. As we navigate an increasingly digital and isolated world, the role of physical community spaces and mutual support systems becomes more critical than ever. Join us as we delve into traditional values, community building, and the collective responsibility of the Ummah in Bogotá.
+                        </p>
+</div>
+<div class="flex items-center gap-6 pt-4 text-white/50">
+<button class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined">thumb_up</span>
+<span class="text-sm font-medium">1.2k</span>
+</button>
+<button class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined">share</span>
+<span class="text-sm font-medium">Share</span>
+</button>
+<button class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined">playlist_add</span>
+<span class="text-sm font-medium">Save</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sidebar (Right) -->
+<aside class="w-full xl:w-[400px] space-y-6">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-2xl font-bold font-serif">Up Next</h2>
+<a class="text-primary text-sm font-bold hover:underline" href="#">See all</a>
+</div>
+<div class="space-y-4">
+<!-- Video Tile 1 -->
+<div class="glass-effect p-3 rounded-xl flex gap-4 group cursor-pointer hover:bg-white/10 transition-all border-l-4 border-l-transparent hover:border-l-primary">
+<div class="relative w-32 h-20 shrink-0 rounded-lg overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Prayer mat on a wooden floor inside a mosque" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqP_mO6WySVF3icPSVARNVMeGOODU8p7MhBht_C7LDJ-lFcvf5vI0S9QtqNx-1avhgNzPSc1QetcxptN9l0HPF_epQiSiJlgD_cdbZfUTOCxsFimD3TPL8PrgSEVsXABlsTUDExDzjQ3CwSxWh7xFmi4T9OjANeCt7Mkds270eDoTkEXGGNKlFtImZ3kr8XMl0jFGex_CZMv9xfF1t9gYS4hgLtCYrGUuItW6A1vgcNlrhtzxJlXl8_pShgWpg136LP-khLrYJYw0");'></div>
+<div class="absolute bottom-1 right-1 px-1.5 py-0.5 bg-black/80 rounded text-[10px] font-bold">15:30</div>
+</div>
+<div class="flex flex-col justify-center gap-1 overflow-hidden">
+<h3 class="text-sm font-bold line-clamp-2 group-hover:text-primary transition-colors leading-snug">The Beauty of Patience: Navigating Hardship</h3>
+<p class="text-white/50 text-xs">Imam Yusuf</p>
+<p class="text-white/30 text-[10px]">2.4k views • 2 days ago</p>
+</div>
+</div>
+<!-- Video Tile 2 -->
+<div class="glass-effect p-3 rounded-xl flex gap-4 group cursor-pointer hover:bg-white/10 transition-all border-l-4 border-l-transparent hover:border-l-primary">
+<div class="relative w-32 h-20 shrink-0 rounded-lg overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Hands holding an open book with Arabic script" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCufloL7iDhqoh-JtyKmF5PqAN6N41DURf-A2JzZLkFCaA5sCKs9xrVWV3KdHMiG4QSEsVaOso5VHZ25uDSliWGsEVkH9GFg57qqI3UHIJQLOpgZNrC-bPAak5hFLb3qwiV-FPV2FfXro6qunQvsjwcjLvz7xKNDyEGCkN64reBirm-GSwPZiU1BViBcaevq3Xw-2vRtP7Ckvmzts4UGcjIL7rLnfGGlNE6B6nshv8V0A5JOYhPHB-64PkRpa32lvPabSXALFIr5kc");'></div>
+<div class="absolute bottom-1 right-1 px-1.5 py-0.5 bg-black/80 rounded text-[10px] font-bold">22:15</div>
+</div>
+<div class="flex flex-col justify-center gap-1 overflow-hidden">
+<h3 class="text-sm font-bold line-clamp-2 group-hover:text-primary transition-colors leading-snug">Understanding Zakat: A Pillars Workshop</h3>
+<p class="text-white/50 text-xs">Sheikh Hassan</p>
+<p class="text-white/30 text-[10px]">890 views • 5 days ago</p>
+</div>
+</div>
+<!-- Video Tile 3 -->
+<div class="glass-effect p-3 rounded-xl flex gap-4 group cursor-pointer hover:bg-white/10 transition-all border-l-4 border-l-transparent hover:border-l-primary">
+<div class="relative w-32 h-20 shrink-0 rounded-lg overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Traditional architecture with arches and lanterns" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzH7-15KdKjV_KPiyQz_AGOX4-ccaDhz9P_OtQ-Nf-RNR2q2T9SVdcLkDF6KmIc56i8pli7QtmZZGSSa9JR6Epi-1rziMwORC8EYtg695Z9Yxb4otWBUAE46qtUMhPL37PcJ7HClUHyRnCNCBHm817AlYPX3A4yGtYJ3SAdZ0dGXt8XS8dbWRzZd0SZkqaTs8ZAf4JnZLho9E1OZRaFWv-ekeCxuU-qPtUAQDmDOnnQGymHOyfJRNbUZmwAE7_S_i6V5cLIxY0PP4");'></div>
+<div class="absolute bottom-1 right-1 px-1.5 py-0.5 bg-black/80 rounded text-[10px] font-bold">18:45</div>
+</div>
+<div class="flex flex-col justify-center gap-1 overflow-hidden">
+<h3 class="text-sm font-bold line-clamp-2 group-hover:text-primary transition-colors leading-snug">Living with Purpose in a Fast-Paced World</h3>
+<p class="text-white/50 text-xs">Imam Ahmed</p>
+<p class="text-white/30 text-[10px]">5.1k views • 1 week ago</p>
+</div>
+</div>
+<!-- Video Tile 4 -->
+<div class="glass-effect p-3 rounded-xl flex gap-4 group cursor-pointer hover:bg-white/10 transition-all border-l-4 border-l-transparent hover:border-l-primary">
+<div class="relative w-32 h-20 shrink-0 rounded-lg overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Close up of a mosque dome against the blue hour sky" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBzHOj8PMg_xkm5eu0ZqaVesRJPJ4NS7KC-BU2em8_M1C32TVys14cA3ajqRnf68qia6k6ngjIzbD4esFrh2Hn5PAIjyt6DeQ7WsOVyUpgsQw6L5rvzE7KV2enFp9zMIgKB6dG7ncRLqJm4NnUe_OLiRNlJm8GQjnbVrglLH72F9l5aYEXGcyQrWAvEDyCl34TADujiHXRt1pplDEdMnqVYBvWEgm8hxBoL3HSIe-xsuKy36u_0qHSL_E8UBG_uqOm77_4y8xvIFns");'></div>
+<div class="absolute bottom-1 right-1 px-1.5 py-0.5 bg-black/80 rounded text-[10px] font-bold">30:00</div>
+</div>
+<div class="flex flex-col justify-center gap-1 overflow-hidden">
+<h3 class="text-sm font-bold line-clamp-2 group-hover:text-primary transition-colors leading-snug">History of the Mosque of Bogotá</h3>
+<p class="text-white/50 text-xs">Dr. Omar</p>
+<p class="text-white/30 text-[10px]">1.2k views • 2 weeks ago</p>
+</div>
+</div>
+</div>
+<!-- Newsletter / Call to action in sidebar -->
+<div class="bg-primary/20 rounded-xl p-6 border border-primary/30 mt-8">
+<h3 class="font-serif font-bold text-lg mb-2">Get Updates</h3>
+<p class="text-white/60 text-sm mb-4">Subscribe to receive notifications for live streams and new Friday khutbahs.</p>
+<div class="flex flex-col gap-3">
+<input class="bg-white/10 border-white/20 rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="Your email address" type="email"/>
+<button class="bg-primary hover:bg-primary/90 py-2 rounded-lg font-bold text-sm transition-colors">Subscribe</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="mt-20 border-t border-white/10 py-10 px-6 xl:px-20 text-center text-white/40">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mosque</span>
+<span class="text-sm font-bold text-white/80">Central Mosque of Bogotá</span>
+</div>
+<p class="text-xs">© 2024 Central Mosque of Bogotá. All rights reserved. Located in the heart of Colombia.</p>
+<div class="flex items-center gap-6">
+<a class="hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
+<a class="hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-xl">language</span></a>
+<a class="hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-xl">alternate_email</span></a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UI Components: Forms &amp; Buttons - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#20337e", // Blue
+                        "accent": "#C13026", // Red
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#13151f",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-[1440px] mx-auto px-10 py-8">
+<!-- Header Section -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-8 mb-12">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-primary text-white flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-3xl">mosque</span>
+</div>
+<div>
+<h1 class="text-2xl font-black tracking-tight text-primary">Central Mosque of Bogotá</h1>
+<p class="text-sm font-medium text-slate-500 uppercase tracking-widest">Design System v1.0</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="flex gap-6">
+<a class="text-sm font-bold hover:text-primary transition-colors" href="#">Design System</a>
+<a class="text-sm font-bold hover:text-primary transition-colors text-primary border-b-2 border-primary" href="#">Guidelines</a>
+<a class="text-sm font-bold hover:text-primary transition-colors" href="#">Assets</a>
+</nav>
+<div class="size-10 rounded-full border-2 border-slate-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOmlXhwjv5NEH9daghh3Jdtyk2vzFShLboQR2D5BWyhjXrt_q8KaHXIAUuzeelPCu_DqxDQDxEByYL8MX0UUjAMS8h7ej4S3g0XmVzK_n6LM8eyPyxaFsnQR9AoCvoy8ijJQ7AwFzMQ0oyQ28w0uGnLLoKUWsPwvFJ6KluI0_QskBw-Z2byillPSWP6Ed-DymYSBYrsTsTZ6Q9RnQQbz4fG97z0OAo-bYXh0wAbh62aNrrj8KAs0ZyBLIG_7x13VfjLszaQRbcg2U"/>
+</div>
+</div>
+</header>
+<div class="mb-12">
+<h2 class="text-4xl font-black text-slate-900 mb-2">UI Components: Forms &amp; Buttons</h2>
+<p class="text-lg text-slate-500">Desktop UI Component Sheet - Part 5 (1440px)</p>
+</div>
+<!-- Buttons Grid -->
+<section class="mb-16">
+<h3 class="text-xl font-bold border-l-4 border-primary pl-4 mb-8">01. Buttons</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+<!-- Primary Red -->
+<div class="space-y-4">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Primary (Donate)</p>
+<button class="w-full bg-accent hover:bg-red-800 text-white font-bold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">favorite</span>
+                        Donate Now
+                    </button>
+<div class="flex gap-2">
+<button class="bg-accent/10 text-accent font-bold py-2 px-4 rounded-lg text-sm">Hover State</button>
+<button class="bg-accent opacity-50 text-white font-bold py-2 px-4 rounded-lg text-sm cursor-not-allowed">Disabled</button>
+</div>
+</div>
+<!-- Secondary Blue -->
+<div class="space-y-4">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Secondary (Primary Blue)</p>
+<button class="w-full bg-primary hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2">
+                        Learn More
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<div class="flex gap-2">
+<button class="bg-primary/10 text-primary font-bold py-2 px-4 rounded-lg text-sm">Active</button>
+<button class="bg-primary opacity-50 text-white font-bold py-2 px-4 rounded-lg text-sm cursor-not-allowed">Disabled</button>
+</div>
+</div>
+<!-- Ghost Buttons -->
+<div class="space-y-4">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Ghost &amp; Outline</p>
+<button class="w-full border-2 border-slate-200 hover:border-primary text-slate-700 font-bold py-3 px-6 rounded-lg transition-all">
+                        Outline Button
+                    </button>
+<button class="w-full text-primary hover:bg-primary/5 font-bold py-3 px-6 rounded-lg transition-all">
+                        Ghost Action
+                    </button>
+</div>
+<!-- Icon Buttons -->
+<div class="space-y-4">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Icon Variants</p>
+<div class="flex gap-4">
+<button class="size-12 bg-slate-100 hover:bg-slate-200 rounded-lg flex items-center justify-center text-slate-700">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="size-12 bg-primary text-white rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="size-12 border-2 border-accent text-accent rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Form Inputs Grid -->
+<section class="mb-16">
+<h3 class="text-xl font-bold border-l-4 border-primary pl-4 mb-8">02. Form Inputs</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Text Inputs -->
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700">Full Name</label>
+<input class="w-full border-slate-200 focus:border-primary focus:ring-primary rounded-lg p-3 text-slate-900 bg-white" placeholder="e.g. Omar Khalid" type="text"/>
+<p class="text-xs text-slate-400">Default state</p>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-accent">Email Address</label>
+<input class="w-full border-accent focus:ring-accent rounded-lg p-3 text-slate-900 bg-white" type="email" value="omar.khalid@mail"/>
+<p class="text-xs text-accent font-medium">Please enter a valid email address</p>
+</div>
+</div>
+<!-- Select & Dropdowns -->
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700">Service Category</label>
+<div class="relative">
+<select class="w-full appearance-none border-slate-200 focus:border-primary focus:ring-primary rounded-lg p-3 pr-10 text-slate-900 bg-white">
+<option>Prayer Times</option>
+<option>Education</option>
+<option>Community Events</option>
+<option>Zakat &amp; Charity</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700">Phone Number (Optional)</label>
+<div class="flex gap-2">
+<div class="w-24 relative">
+<select class="w-full border-slate-200 rounded-lg p-3 text-slate-900 bg-white appearance-none">
+<option>+57</option>
+<option>+1</option>
+</select>
+<span class="material-symbols-outlined absolute right-1 top-3 text-xs text-slate-400">expand_more</span>
+</div>
+<input class="flex-1 border-slate-200 rounded-lg p-3 bg-white" placeholder="300 000 0000" type="tel"/>
+</div>
+</div>
+</div>
+<!-- Textarea -->
+<div class="space-y-6">
+<div class="space-y-2 h-full flex flex-col">
+<label class="text-sm font-bold text-slate-700">Your Message</label>
+<textarea class="flex-1 border-slate-200 focus:border-primary focus:ring-primary rounded-lg p-3 text-slate-900 bg-white min-h-[140px]" placeholder="How can we help you today?"></textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- Zakat Calculator Widget Section -->
+<section class="mb-16">
+<h3 class="text-xl font-bold border-l-4 border-primary pl-4 mb-8">03. Zakat Calculator: Amount Selector</h3>
+<div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+<div class="max-w-3xl">
+<h4 class="text-lg font-bold text-slate-900 mb-4">Quick Donation Selection</h4>
+<p class="text-slate-500 mb-6">Demonstrates the toggle behavior for amount selection in the Zakat calculator module.</p>
+<div class="flex flex-wrap gap-4 items-center">
+<button class="px-8 py-4 border-2 border-slate-200 rounded-xl font-black text-xl text-slate-600 hover:border-primary hover:text-primary transition-all">
+                            $10
+                        </button>
+<button class="px-8 py-4 border-2 border-primary bg-primary/5 rounded-xl font-black text-xl text-primary transition-all relative">
+                            $50
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Selected</span>
+</button>
+<button class="px-8 py-4 border-2 border-slate-200 rounded-xl font-black text-xl text-slate-600 hover:border-primary hover:text-primary transition-all">
+                            $100
+                        </button>
+<button class="px-8 py-4 border-2 border-slate-200 rounded-xl font-black text-xl text-slate-600 hover:border-primary hover:text-primary transition-all">
+                            $500
+                        </button>
+<div class="flex-1 min-w-[200px] relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+<input class="w-full pl-8 pr-4 py-4 border-2 border-dashed border-slate-300 rounded-xl focus:border-solid focus:border-primary focus:ring-0 text-xl font-bold" placeholder="Other Amount" type="number"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive States Documentation -->
+<section class="mb-16">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-slate-900 text-white p-10 rounded-2xl">
+<h4 class="text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-accent">info</span>
+                        Accessibility &amp; Logic
+                    </h4>
+<ul class="space-y-4 text-slate-400 text-sm">
+<li class="flex items-start gap-3">
+<span class="size-1.5 bg-accent rounded-full mt-1.5 shrink-0"></span>
+<span>All primary buttons (Red #C13026) use a minimum 16px font size with 700+ weight for contrast.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="size-1.5 bg-accent rounded-full mt-1.5 shrink-0"></span>
+<span>Form error states trigger a 2px red border and assistive text for screen readers.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="size-1.5 bg-accent rounded-full mt-1.5 shrink-0"></span>
+<span>Input focus uses a 4px primary-colored outer ring for keyboard navigation visibility.</span>
+</li>
+</ul>
+</div>
+<div class="relative rounded-2xl overflow-hidden group">
+<img class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="Abstract geometrical patterns in navy and gold" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUCzKD9LI5KgFwGrm37MDDcX5QR_XhvDVX-YuPdprH-qKXJOnT42_GVkigRFTpWKxRxtNdfPnxu5GJurOxErm6ez-r24O-8ibVK-FOQ-LH1G6QHxGDdWw5a6NwtVi1Q_NXh6KX9E4tXFVHU1DeKwxrteFKUkzbetqzQ6aRZ-F2X5WMorXM1ENtR9LbBP4M3lsTQxYMKYNK58hOg5euYB57nLKYMikV41tSH732NY56fBNXfKKhmjXCeg9hMAOc9FGaOJbTL2emho"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-8">
+<span class="text-white/60 text-xs font-bold uppercase tracking-widest mb-2">Contextual Application</span>
+<h4 class="text-2xl font-black text-white">Central Mosque Bogotá Design Language</h4>
+</div>
+</div>
+</div>
+</section>
+<footer class="border-t border-slate-200 pt-8 text-center text-slate-400 text-sm">
+            © 2024 Central Mosque of Bogotá. Internal Use Only - Component Library Part 5.
+        </footer>
+</div>
+</body></html>

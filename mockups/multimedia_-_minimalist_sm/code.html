@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Spline Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#1a100f] dark:text-white antialiased">
+<!-- Top AppBar (iOS Style) -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 ios-blur border-b border-primary/10">
+<div class="flex items-center justify-between px-4 h-16">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-primary/5">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Multimedia</h1>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-primary/5">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</div>
+<!-- Filter Tabs -->
+<div class="flex gap-2 px-4 pb-4 overflow-x-auto no-scrollbar">
+<div class="flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-5 transition-colors">
+<p class="text-white text-sm font-semibold">Todo</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-5 transition-colors">
+<p class="text-zinc-600 dark:text-zinc-300 text-sm font-medium">Video</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-5 transition-colors">
+<p class="text-zinc-600 dark:text-zinc-300 text-sm font-medium">Audio</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-5 transition-colors">
+<p class="text-zinc-600 dark:text-zinc-300 text-sm font-medium">Fotos</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-5 transition-colors">
+<p class="text-zinc-600 dark:text-zinc-300 text-sm font-medium">Lecturas</p>
+</div>
+</div>
+</header>
+<main class="p-4 space-y-6 pb-24">
+<!-- Media Card 1: Video -->
+<div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-sm border border-zinc-100 dark:border-zinc-800 transition-transform active:scale-[0.98]">
+<div class="relative aspect-video w-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Interior architecture of a modern mosque dome" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiWsDmCX4tnEBgNH6xayoWPJ0GiHDtEb0imjYIStDfwZCK3kO2GP7iF4OLAYmdxj9-gs0oCKAI9JRKX1VojHaI6huI3j1QLuQlA1ZH-Ekweku6nl5mOGz9XwsBr1iysFYJHXLgLoDfal8oh6KNgm1s7_QVln9m9B73ijX78YkDsdx1bLXyS7mPTHJzAz-w8IjrQUJeVaXtVIqXCBOW68GrWHlg4WnnFFMQx_Kh1dlQ6TkkLwGBxe431dQHRsVfh3usP-kjljN1BQM"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/40">
+<span class="material-symbols-outlined text-3xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 rounded text-white text-xs font-medium">
+                    24:15
+                </div>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded">Video</span>
+<span class="text-xs text-zinc-500 dark:text-zinc-400">Hace 2 días • Jumu'ah</span>
+</div>
+<h3 class="text-lg font-bold leading-tight mb-2">La importancia de la comunidad en el Islam moderno</h3>
+<p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">Una reflexión profunda sobre cómo fortalecer los lazos comunitarios en la capital.</p>
+</div>
+</div>
+<!-- Media Card 2: Audio -->
+<div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-sm border border-zinc-100 dark:border-zinc-800 transition-transform active:scale-[0.98]">
+<div class="flex p-4 gap-4 items-center">
+<div class="relative size-24 shrink-0 rounded-lg bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+<img class="w-full h-full object-cover opacity-60" data-alt="Close up of Arabic calligraphy on parchment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD59V2zNcf0t-dRCk2s18zlGrjRaTnM7yiB1b_cc8F7A1E6wjKuCjRh9wvWHDRIxGh3AQ8aJKtT8cN919TgWgnl_1uusTXSg8AvTwoNwDdQGHENMlGCXIJXqU9O_xqE2tosjMlnCoP76Alsg_pJxAW3RLWZRu2afvUYYATNXOICtKRiCKp2xuvWYZcW-1wBVnADRzLY_zZmybsqJfsGuwfUHpZ9g25o_aUs_nPYQnOcD0lhOBxrw8ZooTii_lmeiOSd-oLmVWSCxAU"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="size-10 rounded-full bg-primary flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined text-2xl fill-1">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded mb-2 inline-block">Audio</span>
+<h3 class="text-base font-bold leading-tight truncate">Tafsir: Surah Al-Fatiha</h3>
+<p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Dr. Omar Abdulaziz • 45:10</p>
+</div>
+</div>
+</div>
+<!-- Media Card 3: Photo Gallery -->
+<div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-sm border border-zinc-100 dark:border-zinc-800 transition-transform active:scale-[0.98]">
+<div class="relative h-48 w-full bg-zinc-200 dark:bg-zinc-800 grid grid-cols-2 gap-0.5">
+<img class="w-full h-full object-cover" data-alt="People gathering in a courtyard during Eid" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMV6um2WUOS14tHw3Uyf4g2rKHPHe9VLwF00BowJhd8vyBhO-JazTIyWNIRpEb2H_ASJIr8X3r1xjSQRKVk2vRwA1BDJj91a4XZcVY1xaHbVb5kBg9NcfM79b-3kx-CFmC2qkjyj1G-ijcpDDLv4W0pf-61VxGhSkUPGpLXpvVsL26_yhTZa2WS_7U8u6-tw7riCcNLImddDqQIvmhySoeCev5XxJlHJFq8i-_RWbVmm9JeTyH3FLVefSpHPYf2zCj6VbcQFWpgLU"/>
+<div class="grid grid-rows-2 gap-0.5">
+<img class="w-full h-full object-cover" data-alt="Traditional food being served at an event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrnbrPjStEhHVm2ULBOaNX9qx5xA-vG_8caKKKvybFnx5Ix5gX8wVoIsYhLOcLSKCfhY7wNyBWWbUIyS52NocKZVwLC5x_-Pz5Tk-BOjjFMkQuN9TRyJCfZY9FZrO1hi2C_5rlCEinjYqCQhUBLi12EhK8Wky-uUKCs8bUeHDLWJQeu2CTIy0BgcmjSP8e63J6_hEr0lgZ1qTpNkPsW2Xf2bLS0d9yejjnDWQg-9yyflg-ROOG5Vmw-uEVJw0lgkFcHZRmprFXvRk"/>
+<div class="relative">
+<img class="w-full h-full object-cover" data-alt="Children playing in front of a mosque" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXViBweCzKV9crEadq9jTG_E3b50GbBFx1DKiosDM1XU7OCBCVZB1Dwda9md0SZ4SJr7wvXsv3gAY4HFv50qg96HxsfM19QOkEso6i4c12RNfI16bcpCCuYK4p4YMFVLVeFDf8oF28kq7SudoFfuAQc8HCQY14ppGqKxVPCtWiWXq4gugASix7JJSDAWnjTLqh5fJ6D5b1kiiO6Ut1wFt1twruQlpm970AzD0IHwTPa_BA5vxX8O7Vp4n68CMGhsn8ZQrpjySdTb0"/>
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-lg">
+                            +12
+                        </div>
+</div>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded">Galería</span>
+<span class="text-xs text-zinc-500 dark:text-zinc-400">Abril 2024</span>
+</div>
+<h3 class="text-lg font-bold leading-tight">Celebración de Eid Al-Fitr 2024</h3>
+<p class="text-sm text-zinc-600 dark:text-zinc-400">Momentos destacados de la festividad con la comunidad bogotana.</p>
+</div>
+</div>
+<!-- Media Card 4: Video -->
+<div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-sm border border-zinc-100 dark:border-zinc-800 transition-transform active:scale-[0.98]">
+<div class="relative aspect-video w-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Person reading an open book in sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHK0xiXgpwpXKUa-XsRPwYCRpmDyv3Cgagwx4ZxCkX5xkgqSS7ONhXcsA1RaMp2ClCOnP0DKYPv9RhaH68qVpbXPvkHN6w5khqMhSifpCp6YW0XloKoYfqiF0rpf6tmVRWa-Wh_b-F4zYjjoqz2dpoS8lxp2ZDv0vqe8gVytWJz0MRh7IMtDhbdPJHLkdTyT1AcG0grXRpidhObvRQzSy5qPXU4ySIUNx2o8ht-TXrqxaMY371dxlA6Rhfh-SPJegreAdUBmh132s"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/10">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined text-3xl fill-1">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded">Video</span>
+<span class="text-xs text-zinc-500 dark:text-zinc-400">Hace 1 semana • Educación</span>
+</div>
+<h3 class="text-lg font-bold leading-tight mb-1">Conceptos básicos del Ramadán</h3>
+<p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">Una guía para nuevos musulmanes y curiosos sobre el mes sagrado.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-zinc-900/90 ios-blur border-t border-zinc-200 dark:border-zinc-800 px-6 pb-6 pt-2">
+<div class="flex items-center justify-between max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-zinc-400 group-hover:text-primary transition-colors">home</span>
+<span class="text-[10px] font-medium text-zinc-400 group-hover:text-primary">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-primary fill-1">play_circle</span>
+<span class="text-[10px] font-bold text-primary">Media</span>
+</a>
+<div class="relative -mt-8">
+<button class="size-14 bg-primary text-white rounded-full shadow-xl shadow-primary/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">schedule</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-zinc-400 group-hover:text-primary transition-colors">favorite</span>
+<span class="text-[10px] font-medium text-zinc-400 group-hover:text-primary">Donar</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-zinc-400 group-hover:text-primary transition-colors">person</span>
+<span class="text-[10px] font-medium text-zinc-400 group-hover:text-primary">Perfil</span>
+</a>
+</div>
+</nav>
+<!-- Floating Live Indicator -->
+<div class="fixed top-20 right-4 animate-pulse">
+<div class="flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-full shadow-lg">
+<span class="size-2 bg-white rounded-full"></span>
+<span class="text-[10px] font-bold uppercase tracking-widest">En Vivo</span>
+</div>
+</div>
+</body></html>

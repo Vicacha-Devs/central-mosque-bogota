@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Central Mosque of Bogotá - Events &amp; Calendar Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#212e80",
+                        "accent": "#c13026",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f111a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            @apply bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-primary text-white shadow-lg">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="size-10 bg-white rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">mosque</span>
+</div>
+<div>
+<h1 class="text-xl font-extrabold leading-none">Central Mosque</h1>
+<p class="text-[10px] font-bold uppercase tracking-widest text-white/70">Bogotá, Colombia</p>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-bold text-white/80 hover:text-white transition-colors" href="#">Home</a>
+<a class="text-sm font-bold text-white border-b-2 border-accent pb-1" href="#">Calendar</a>
+<a class="text-sm font-bold text-white/80 hover:text-white transition-colors" href="#">Donate</a>
+<a class="text-sm font-bold text-white/80 hover:text-white transition-colors" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="bg-accent hover:bg-red-700 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">volunteer_activism</span>
+                Quick Donate
+            </button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div>
+<nav class="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">
+<a class="hover:text-primary transition-colors" href="#">Events</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary dark:text-blue-400">Monthly Calendar</span>
+</nav>
+<h2 class="text-4xl font-extrabold text-primary dark:text-white">Community &amp; Prayer Calendar</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-2 max-w-2xl">Access all religious services, educational classes, and community gatherings held at the Central Mosque of Bogotá.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 rounded-xl shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary dark:text-blue-400">print</span>
+</button>
+<button class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 rounded-xl shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary dark:text-blue-400">share</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-6 mb-8">
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-800 flex items-center justify-between min-w-[320px]">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="text-center">
+<p class="text-lg font-extrabold text-primary dark:text-white leading-none">October 2023</p>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Select Month</span>
+</div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="flex-1 bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4 overflow-x-auto no-scrollbar">
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-primary text-white px-5 shadow-md cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<p class="text-sm font-semibold">All Events</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-5 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">mosque</span>
+<p class="text-sm font-medium">Prayer Times</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-5 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<p class="text-sm font-medium">Education</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-5 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<p class="text-sm font-medium">Community</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-5 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+<p class="text-sm font-medium">Halal Food</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 space-y-8">
+<section>
+<div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-6">
+<div class="flex items-center gap-3">
+<div class="size-12 bg-accent text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-accent/20">05</div>
+<div>
+<h3 class="text-xl font-bold text-primary dark:text-white leading-none">Thursday, Oct 5</h3>
+<p class="text-sm font-medium text-slate-500 mt-1">Today's Schedule</p>
+</div>
+</div>
+<span class="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">3 Events</span>
+</div>
+<div class="space-y-4">
+<div class="group bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-accent transition-all shadow-sm hover:shadow-xl flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-center justify-center size-16 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0 group-hover:bg-accent/5 group-hover:border-accent/20 transition-colors">
+<span class="text-accent text-3xl material-symbols-outlined">wb_twilight</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-3 mb-1">
+<h4 class="text-primary dark:text-white text-lg font-extrabold leading-none">Fajr Prayer</h4>
+<span class="bg-accent text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest">Live</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<p class="text-slate-600 dark:text-slate-400 text-sm font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">schedule</span> 05:15 AM - 05:45 AM
+                                    </p>
+<p class="text-slate-400 dark:text-slate-500 text-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">location_on</span> Main Prayer Hall
+                                    </p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary/5 hover:bg-primary text-primary hover:text-white size-10 rounded-full flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">notifications_active</span>
+</button>
+<button class="hidden md:flex border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Details</button>
+</div>
+</div>
+<div class="group bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all shadow-sm hover:shadow-xl flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-center justify-center size-16 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-primary dark:text-blue-400 text-3xl material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-primary dark:text-white text-lg font-extrabold leading-none mb-1">Quranic Arabic Class</h4>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<p class="text-slate-600 dark:text-slate-400 text-sm font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">schedule</span> 10:00 AM - 11:30 AM
+                                    </p>
+<p class="text-slate-400 dark:text-slate-500 text-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">location_on</span> Second Floor Classroom
+                                    </p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-300 dark:text-slate-600 hover:text-primary size-10 rounded-full flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hidden md:flex border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Details</button>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-6">
+<div class="flex items-center gap-3">
+<div class="size-12 bg-primary text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-primary/20">06</div>
+<div>
+<h3 class="text-xl font-bold text-primary dark:text-white leading-none">Friday, Oct 6</h3>
+<p class="text-sm font-medium text-slate-500 mt-1">Upcoming Tomorrow</p>
+</div>
+</div>
+<span class="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">2 Events</span>
+</div>
+<div class="space-y-4">
+<div class="group bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-accent transition-all shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-center justify-center size-16 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-accent text-3xl material-symbols-outlined">wb_sunny</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-primary dark:text-white text-lg font-extrabold leading-none mb-1">Jumu'ah Prayer (Main Service)</h4>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+<p class="text-slate-600 dark:text-slate-400 text-sm font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">schedule</span> 01:00 PM - 02:00 PM
+                                    </p>
+<p class="text-slate-400 dark:text-slate-500 text-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">location_on</span> Main Prayer Hall
+                                    </p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary/5 hover:bg-primary text-primary hover:text-white size-10 rounded-full flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hidden md:flex border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Details</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<aside class="lg:col-span-4 space-y-8">
+<div class="relative overflow-hidden rounded-3xl bg-primary p-8 text-white shadow-2xl">
+<div class="absolute -right-16 -top-16 size-48 bg-accent/30 rounded-full blur-3xl"></div>
+<div class="absolute -left-12 -bottom-12 size-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="relative z-10">
+<span class="bg-accent text-[11px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider mb-4 inline-block">Featured Event</span>
+<h4 class="text-2xl font-extrabold mb-2 leading-tight">Mawlid Al-Nabi Celebration 2023</h4>
+<p class="text-white/80 text-sm mb-8 leading-relaxed">Join the entire community for a special evening of reflection, poetry, and a traditional communal dinner in the courtyard.</p>
+<div class="space-y-4 mb-8">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-white/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">event</span>
+</div>
+<div>
+<p class="text-xs text-white/60 font-bold uppercase tracking-widest">Date</p>
+<p class="font-bold">Saturday, Oct 14</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 bg-white/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">timer</span>
+</div>
+<div>
+<p class="text-xs text-white/60 font-bold uppercase tracking-widest">Starts at</p>
+<p class="font-bold">06:30 PM</p>
+</div>
+</div>
+</div>
+<button class="w-full bg-white text-primary hover:bg-slate-100 py-4 rounded-2xl font-extrabold transition-all shadow-lg hover:shadow-xl transform active:scale-[0.98]">Reserve Your Seat</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<h5 class="text-primary dark:text-white font-extrabold">Month Overview</h5>
+<a class="text-accent text-xs font-bold uppercase hover:underline" href="#">Full Grid</a>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center mb-2">
+<div class="text-[10px] font-bold text-slate-400">SU</div>
+<div class="text-[10px] font-bold text-slate-400">MO</div>
+<div class="text-[10px] font-bold text-slate-400">TU</div>
+<div class="text-[10px] font-bold text-slate-400">WE</div>
+<div class="text-[10px] font-bold text-slate-400">TH</div>
+<div class="text-[10px] font-bold text-slate-400">FR</div>
+<div class="text-[10px] font-bold text-slate-400">SA</div>
+<div class="py-2 text-xs text-slate-300">24</div>
+<div class="py-2 text-xs text-slate-300">25</div>
+<div class="py-2 text-xs text-slate-300">26</div>
+<div class="py-2 text-xs text-slate-300">27</div>
+<div class="py-2 text-xs text-slate-300">28</div>
+<div class="py-2 text-xs text-slate-300">29</div>
+<div class="py-2 text-xs text-slate-300">30</div>
+<div class="py-2 text-xs font-bold text-slate-600">1</div>
+<div class="py-2 text-xs font-bold text-slate-600">2</div>
+<div class="py-2 text-xs font-bold text-slate-600">3</div>
+<div class="py-2 text-xs font-bold text-slate-600">4</div>
+<div class="flex items-center justify-center">
+<div class="size-7 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold">5</div>
+</div>
+<div class="py-2 text-xs font-bold text-slate-600">6</div>
+<div class="py-2 text-xs font-bold text-slate-600">7</div>
+<div class="py-2 text-xs font-bold text-slate-600">8</div>
+<div class="py-2 text-xs font-bold text-slate-600">9</div>
+<div class="py-2 text-xs font-bold text-slate-600">10</div>
+<div class="py-2 text-xs font-bold text-slate-600 relative">11 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 size-1 bg-accent rounded-full"></span></div>
+<div class="py-2 text-xs font-bold text-slate-600">12</div>
+<div class="py-2 text-xs font-bold text-slate-600">13</div>
+<div class="py-2 text-xs font-bold text-slate-600">14</div>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-900 rounded-3xl p-6 border border-dashed border-slate-300 dark:border-slate-700">
+<h5 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Quick Announcements</h5>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-accent">info</span>
+<p class="text-sm text-slate-600 dark:text-slate-400">Library will be closed for maintenance on Sunday afternoon.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary">campaign</span>
+<p class="text-sm text-slate-600 dark:text-slate-400">Volunteers needed for the community clean-up next week.</p>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+</main>
+<footer class="bg-slate-900 text-white mt-16 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 bg-white rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">mosque</span>
+</div>
+<h1 class="text-xl font-extrabold leading-none">Central Mosque</h1>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">Serving the spiritual and social needs of the Muslim community in Bogotá with devotion and excellence since 1995.</p>
+</div>
+<div>
+<h6 class="font-bold text-lg mb-6">Quick Links</h6>
+<ul class="space-y-3 text-slate-400 text-sm">
+<li><a class="hover:text-accent transition-colors" href="#">Prayer Timetable</a></li>
+<li><a class="hover:text-accent transition-colors" href="#">Events Calendar</a></li>
+<li><a class="hover:text-accent transition-colors" href="#">Donate Online</a></li>
+<li><a class="hover:text-accent transition-colors" href="#">Community Hall Rental</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-bold text-lg mb-6">Educational</h6>
+<ul class="space-y-3 text-slate-400 text-sm">
+<li><a class="hover:text-accent transition-colors" href="#">Quran Classes</a></li>
+<li><a class="hover:text-accent transition-colors" href="#">Arabic Language</a></li>
+<li><a class="hover:text-accent transition-colors" href="#">Youth Program</a></li>
+<li><a class="hover:text-accent transition-colors" href="#">Sister's Circle</a></li>
+</ul>
+</div>
+<div>
+<h6 class="font-bold text-lg mb-6">Contact Us</h6>
+<ul class="space-y-3 text-slate-400 text-sm">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">location_on</span> Calle 00 #00-00, Bogotá</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">mail</span> info@bogotamosque.org</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">phone</span> +57 (1) 000-0000</li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-slate-500 text-xs">© 2023 Central Mosque of Bogotá. All rights reserved.</p>
+<div class="flex items-center gap-6">
+<a class="text-slate-500 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined">social_leaderboard</span></a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined">grocery</span></a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined">youtube_activity</span></a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

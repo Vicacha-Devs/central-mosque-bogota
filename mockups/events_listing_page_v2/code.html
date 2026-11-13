@@ -1,0 +1,705 @@
+<!doctype html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Eventos - Mezquita Central de Bogotá</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#c02e26", // Deep Red
+              navy: "#212e80", // Navy Blue
+              "background-light": "#f8f6f6",
+              "background-dark": "#201312",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+      }
+    </style>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark text-navy">
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 w-full bg-white border-b border-navy/10">
+      <div
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <div class="bg-primary p-2 rounded-lg text-white">
+            <span class="material-symbols-outlined text-3xl">mosque</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-navy font-bold text-xl leading-tight"
+              >Mezquita Central</span
+            >
+            <span
+              class="text-navy/60 text-xs font-medium tracking-widest uppercase"
+              >Bogotá</span
+            >
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-10">
+          <a
+            class="text-navy/70 hover:text-navy font-semibold transition-colors"
+            href="#"
+            >Inicio</a
+          >
+          <a
+            class="text-primary font-bold transition-colors border-b-2 border-primary pb-1"
+            href="#"
+            >Eventos</a
+          >
+          <a
+            class="text-navy/70 hover:text-navy font-semibold transition-colors"
+            href="#"
+            >Servicios</a
+          >
+          <a
+            class="text-navy/70 hover:text-navy font-semibold transition-colors"
+            href="#"
+            >Contacto</a
+          >
+        </nav>
+        <div class="flex items-center gap-4">
+          <button
+            class="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-all shadow-lg shadow-primary/20"
+          >
+            Donar
+          </button>
+          <button class="md:hidden text-navy">
+            <span class="material-symbols-outlined text-3xl">menu</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="min-h-screen">
+      <!-- Hero Section -->
+      <section class="relative w-full py-20 overflow-hidden bg-navy">
+        <div
+          class="absolute inset-0 opacity-10 pointer-events-none"
+          style="
+            background-image: radial-gradient(#fff 1px, transparent 1px);
+            background-size: 30px 30px;
+          "
+        ></div>
+        <div class="max-w-4xl mx-auto px-6 relative text-center">
+          <span
+            class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block"
+            >Comunidad &amp; Espiritualidad</span
+          >
+          <h1
+            class="text-white text-5xl md:text-6xl font-black mb-6 tracking-tight"
+          >
+            Eventos y Programas
+          </h1>
+          <p
+            class="text-white/80 text-lg md:text-xl font-normal leading-relaxed max-w-2xl mx-auto"
+          >
+            Únete a nuestra comunidad en las próximas actividades educativas,
+            sociales y espirituales de la Mezquita Central de Bogotá.
+          </p>
+        </div>
+      </section>
+      <!-- View Toggle & Filter -->
+      <section class="max-w-7xl mx-auto px-6 -mt-8 relative z-10">
+        <div
+          class="bg-white rounded-xl shadow-xl p-2 flex items-center justify-between"
+        >
+          <div class="flex p-1 bg-background-light rounded-lg">
+            <button
+              class="flex items-center gap-2 bg-white text-navy px-6 py-2 rounded-md shadow-sm font-bold"
+            >
+              <span class="material-symbols-outlined text-sm">grid_view</span>
+              Lista
+            </button>
+            <button
+              class="flex items-center gap-2 text-navy/50 px-6 py-2 rounded-md font-bold hover:text-navy transition-colors"
+            >
+              <span class="material-symbols-outlined text-sm"
+                >calendar_month</span
+              >
+              Calendario
+            </button>
+          </div>
+          <div class="hidden md:flex items-center gap-4 px-4">
+            <span class="text-navy/40 text-sm font-medium">Filtrar por:</span>
+            <select
+              class="border-none bg-transparent text-navy font-bold focus:ring-0 cursor-pointer"
+            >
+              <option>Todos los eventos</option>
+              <option>Educación</option>
+              <option>Oración</option>
+              <option>Comunidad</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      <!-- Events Grid -->
+      <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Event Card 1 -->
+          <div
+            class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-navy/5"
+          >
+            <div class="relative h-56 overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="Traditional Arabic calligraphy class setup"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2BT6Jztlh7ad7MeluINOUNUGLjyMu2cEqolZDsyGhQzx1Y7Qy_DH6J2x7sv0GGqxPYbTrWOFyAov6rSkKrZZKH56b_59Sd9zXRHXyTX-LaaCFZAi3nL2bPb0jDCRp0yAu49PriAhAeafH68l9gwX2RpauMK3gETpCE_DPrVmSxJDWUIe81d1Nlbw82je21kBjFqSP_aPzQwYGVZdvPggzO8vfMdwGADXHfRC98B7VPurzaR1xCwMoGB2e--BHc1BTpVyrU7j932XI"
+              />
+              <div
+                class="absolute top-4 right-4 bg-primary text-white p-3 rounded-lg shadow-lg flex flex-col items-center min-w-[60px]"
+              >
+                <span class="text-xs font-bold uppercase tracking-tighter"
+                  >Oct</span
+                >
+                <span class="text-2xl font-black">15</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <div
+                class="flex items-center gap-2 text-primary text-sm font-bold mb-3"
+              >
+                <span class="material-symbols-outlined text-xs">school</span>
+                Educación
+              </div>
+              <h3
+                class="text-navy text-2xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors"
+              >
+                Clase de Árabe Clásico
+              </h3>
+              <p class="text-navy/60 text-sm leading-relaxed mb-6">
+                Aprende los fundamentos del idioma árabe y la gramática del
+                Corán con instructores certificados.
+              </p>
+              <div
+                class="flex items-center justify-between border-t border-navy/5 pt-4"
+              >
+                <div
+                  class="flex items-center gap-2 text-navy/40 text-xs font-semibold"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >schedule</span
+                  >
+                  18:00 - 20:00
+                </div>
+                <a
+                  class="text-navy font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                  href="#"
+                >
+                  Ver más
+                  <span class="material-symbols-outlined text-sm"
+                    >arrow_forward</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Event Card 2 -->
+          <div
+            class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-navy/5"
+          >
+            <div class="relative h-56 overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="Community dinner sharing meal on long tables"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB46G_zagethWTQbcfv_b0nnGkofgD0uv8Vy3RDuzUE7ThDDCN6MnwLwYTRjVhRPVmK682qGREveowLbtN3NiAxYL6Df7YhJLJ8eqcOueLp6Tw6R6_9qVnKyVC220IR8rWPbK2tepMhlChwpowpubNFcbktMTPUZCP3baqXkz46WNYKkySntbhAXsMqPux48R10WbKOwy-ghJppPZGXKBOZW_DjOkEVnq02GshAR20e7TdT_0nqGTAhR5xi3uIMwvX73wsEcx5gFIt"
+              />
+              <div
+                class="absolute top-4 right-4 bg-primary text-white p-3 rounded-lg shadow-lg flex flex-col items-center min-w-[60px]"
+              >
+                <span class="text-xs font-bold uppercase tracking-tighter"
+                  >Oct</span
+                >
+                <span class="text-2xl font-black">18</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <div
+                class="flex items-center gap-2 text-primary text-sm font-bold mb-3"
+              >
+                <span class="material-symbols-outlined text-xs">group</span>
+                Comunidad
+              </div>
+              <h3
+                class="text-navy text-2xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors"
+              >
+                Cena Comunitaria
+              </h3>
+              <p class="text-navy/60 text-sm leading-relaxed mb-6">
+                Un espacio para compartir alimentos y fortalecer los lazos entre
+                las familias de la comunidad.
+              </p>
+              <div
+                class="flex items-center justify-between border-t border-navy/5 pt-4"
+              >
+                <div
+                  class="flex items-center gap-2 text-navy/40 text-xs font-semibold"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >schedule</span
+                  >
+                  19:30 - 21:30
+                </div>
+                <a
+                  class="text-navy font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                  href="#"
+                >
+                  Ver más
+                  <span class="material-symbols-outlined text-sm"
+                    >arrow_forward</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Event Card 3 -->
+          <div
+            class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-navy/5"
+          >
+            <div class="relative h-56 overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="Young people sitting in a circle discussing"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW42btUFIp07IZZb16JXmVfA_4CMxaoGAfolrWyVo8rRsmqRIqM0vtKIdradMVnr3Qr7F4D1Vtwjl3kbxrUjwwnJfuFvNO21F1_S8p9-bcAOonShZsIR9-EYqaW6bnQkkbzij0wgNREbDiN_HNU9oykbaGS8psymOJ_g1ouNcpCw4_oqGQu9heyCo5tfBLlt4tOQOkZJ02GZkT6Yd-f0Foyvf80e9_HLgYO1WwpX_doLKuiaEVnR3qfdVU2KpAPzy5fIhicG8Hwv8R"
+              />
+              <div
+                class="absolute top-4 right-4 bg-primary text-white p-3 rounded-lg shadow-lg flex flex-col items-center min-w-[60px]"
+              >
+                <span class="text-xs font-bold uppercase tracking-tighter"
+                  >Oct</span
+                >
+                <span class="text-2xl font-black">20</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <div
+                class="flex items-center gap-2 text-primary text-sm font-bold mb-3"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >diversity_3</span
+                >
+                Jóvenes
+              </div>
+              <h3
+                class="text-navy text-2xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors"
+              >
+                Círculo de Jóvenes
+              </h3>
+              <p class="text-navy/60 text-sm leading-relaxed mb-6">
+                Diálogo abierto sobre desafíos contemporáneos y el papel de la
+                juventud en la fe.
+              </p>
+              <div
+                class="flex items-center justify-between border-t border-navy/5 pt-4"
+              >
+                <div
+                  class="flex items-center gap-2 text-navy/40 text-xs font-semibold"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >schedule</span
+                  >
+                  17:00 - 19:00
+                </div>
+                <a
+                  class="text-navy font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                  href="#"
+                >
+                  Ver más
+                  <span class="material-symbols-outlined text-sm"
+                    >arrow_forward</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Interactive Calendar Section -->
+      <section class="max-w-7xl mx-auto px-6 py-12">
+        <div
+          class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4"
+        >
+          <div>
+            <h2 class="text-3xl font-black text-navy mb-2">
+              Calendario de Actividades
+            </h2>
+            <p class="text-navy/60 font-medium">
+              Explora nuestra programación mensual completa.
+            </p>
+          </div>
+          <div class="flex items-center gap-4 text-navy font-bold">
+            <button class="p-2 hover:bg-navy/5 rounded-full">
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <span class="text-xl">Octubre 2024</span>
+            <button class="p-2 hover:bg-navy/5 rounded-full">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-xl shadow-lg border border-navy/10 overflow-hidden"
+        >
+          <div
+            class="calendar-grid bg-navy text-white text-center text-xs font-bold uppercase tracking-widest py-4 border-b border-white/10"
+          >
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mié</div>
+            <div>Jue</div>
+            <div>Vie</div>
+            <div>Sáb</div>
+            <div>Dom</div>
+          </div>
+          <div class="calendar-grid min-h-[600px]">
+            <!-- Placeholder days -->
+            <div
+              class="border-r border-b border-navy/5 p-4 bg-background-light/30 text-navy/20 font-bold"
+            >
+              30
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              1
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              2
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              3
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              4
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              5
+            </div>
+            <div class="border-b border-navy/5 p-4 text-navy/40 font-bold">
+              6
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              7
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              8
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              9
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              10
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              11
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              12
+            </div>
+            <div class="border-b border-navy/5 p-4 text-navy/40 font-bold">
+              13
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              14
+            </div>
+            <!-- Active Event Day -->
+            <div class="border-r border-b border-navy/5 p-2 bg-primary/5">
+              <div class="text-primary font-black mb-2 px-2">15</div>
+              <div
+                class="bg-primary text-white text-[10px] p-2 rounded-md font-bold mb-1 shadow-sm leading-tight"
+              >
+                Clase de Árabe
+              </div>
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              16
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              17
+            </div>
+            <!-- Active Event Day -->
+            <div class="border-r border-b border-navy/5 p-2 bg-primary/5">
+              <div class="text-primary font-black mb-2 px-2">18</div>
+              <div
+                class="bg-primary text-white text-[10px] p-2 rounded-md font-bold mb-1 shadow-sm leading-tight"
+              >
+                Cena Comunitaria
+              </div>
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              19
+            </div>
+            <!-- Active Event Day -->
+            <div class="border-b border-navy/5 p-2 bg-primary/5">
+              <div class="text-primary font-black mb-2 px-2">20</div>
+              <div
+                class="bg-primary text-white text-[10px] p-2 rounded-md font-bold mb-1 shadow-sm leading-tight"
+              >
+                Círculo Jóvenes
+              </div>
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              21
+            </div>
+            <div class="border-r border-b border-navy/5 p-2 bg-navy/5">
+              <div class="text-navy font-black mb-2 px-2">22</div>
+              <div
+                class="bg-navy text-white text-[10px] p-2 rounded-md font-bold mb-1 leading-tight"
+              >
+                Dars: Tafsir
+              </div>
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              23
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              24
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              25
+            </div>
+            <div
+              class="border-r border-b border-navy/5 p-4 text-navy/40 font-bold"
+            >
+              26
+            </div>
+            <div class="border-b border-navy/5 p-4 text-navy/40 font-bold">
+              27
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Call to Action Banner -->
+      <section class="max-w-7xl mx-auto px-6 py-20">
+        <div
+          class="bg-primary rounded-2xl p-10 md:p-16 text-center text-white relative overflow-hidden shadow-2xl shadow-primary/30"
+        >
+          <div class="absolute -right-20 -top-20 opacity-10">
+            <span class="material-symbols-outlined text-[300px]"
+              >volunteer_activism</span
+            >
+          </div>
+          <h2 class="text-4xl md:text-5xl font-black mb-6 relative">
+            Contribuye con la Comunidad
+          </h2>
+          <p
+            class="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 relative"
+          >
+            ¿Tienes una idea para un nuevo programa? ¿Quieres dedicar tu tiempo
+            como voluntario en nuestras actividades?
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4 relative"
+          >
+            <button
+              class="w-full sm:w-auto bg-white text-primary font-black py-4 px-10 rounded-xl hover:bg-white/90 transition-all shadow-xl"
+            >
+              Sugerir un Evento
+            </button>
+            <button
+              class="w-full sm:w-auto bg-navy text-white font-black py-4 px-10 rounded-xl hover:bg-navy/90 transition-all shadow-xl"
+            >
+              Ser Voluntario
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-navy text-white pt-20 pb-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="bg-primary p-2 rounded-lg text-white">
+                <span class="material-symbols-outlined text-2xl">mosque</span>
+              </div>
+              <span class="font-bold text-xl">Mezquita Central</span>
+            </div>
+            <p class="text-white/60 text-sm leading-relaxed mb-6">
+              Un espacio de paz, oración y conocimiento en el corazón de la
+              capital colombiana.
+            </p>
+            <div class="flex items-center gap-4">
+              <a
+                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors"
+                href="#"
+              >
+                <span class="material-symbols-outlined text-lg">public</span>
+              </a>
+              <a
+                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors"
+                href="#"
+              >
+                <span class="material-symbols-outlined text-lg">mail</span>
+              </a>
+              <a
+                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors"
+                href="#"
+              >
+                <span class="material-symbols-outlined text-lg"
+                  >alternate_email</span
+                >
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-6">Navegación</h4>
+            <ul class="space-y-4 text-white/60 text-sm">
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Inicio</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Eventos</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Servicios</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Fundación</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-6">Contacto</h4>
+            <ul class="space-y-4 text-white/60 text-sm">
+              <li class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-sm"
+                  >location_on</span
+                >
+                <span>Barrio La Perseverancia, Bogotá, Colombia</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-sm"
+                  >call</span
+                >
+                <span>+57 (601) 123 4567</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-sm"
+                  >mail</span
+                >
+                <span>info@mezquitabogota.org</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-6">Horarios de Oración</h4>
+            <div class="space-y-3 bg-white/5 p-4 rounded-xl">
+              <div
+                class="flex justify-between text-xs font-bold border-b border-white/10 pb-2"
+              >
+                <span>Fajr</span>
+                <span class="text-primary">04:45</span>
+              </div>
+              <div
+                class="flex justify-between text-xs font-bold border-b border-white/10 pb-2"
+              >
+                <span>Dhuhr</span>
+                <span class="text-primary">12:30</span>
+              </div>
+              <div class="flex justify-between text-xs font-bold">
+                <span>Maghrib</span>
+                <span class="text-primary">18:15</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-white/40 text-xs"
+        >
+          <p>
+            © 2024 Mezquita Central de Bogotá. Todos los derechos reservados.
+          </p>
+          <div class="flex gap-6">
+            <a class="hover:text-white transition-colors" href="#"
+              >Política de Privacidad</a
+            >
+            <a class="hover:text-white transition-colors" href="#"
+              >Términos y Condiciones</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

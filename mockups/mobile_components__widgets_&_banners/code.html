@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Design System: Mosque of Bogotá - Mobile Widgets</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c32a22",
+                        "secondary": "#212E80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#1a0f0f] dark:text-white min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header Section -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-10 py-3 bg-white dark:bg-[#2a1a19]">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_330)">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_330"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-[#1a0f0f] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Design System: Mosque of Bogotá</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-[#1a0f0f] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Guidelines</a>
+<a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary" href="#">Components</a>
+<a class="text-[#1a0f0f] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Tokens</a>
+</nav>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-all">
+<span class="truncate">Download Kit</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-4 md:px-20 lg:px-40 py-10">
+<!-- Title and Meta -->
+<div class="flex flex-col gap-3 mb-12">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary w-fit text-xs font-bold uppercase tracking-wider">
+                        Component Library
+                    </div>
+<h1 class="text-[#1a0f0f] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Mobile Components: Widgets &amp; Banners</h1>
+<p class="text-[#935653] dark:text-[#ccadaa] text-lg font-normal leading-normal max-w-2xl">
+                        UI Component Sheet - Part 2: Information Widgets (SM 365px). Focused on readability, high contrast, and structural consistency for the Bogotá Muslim community.
+                    </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Component Showcase -->
+<div class="lg:col-span-8 space-y-16">
+<!-- Section: Information Widgets -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+<h2 class="text-secondary dark:text-white text-[22px] font-bold leading-tight">Information Widgets</h2>
+</div>
+<div class="flex flex-wrap gap-8">
+<!-- Compact Prayer Times Card (SM 365px) -->
+<div class="flex flex-col gap-2">
+<span class="text-[10px] font-bold text-[#935653] uppercase tracking-[0.1em]">Default State (365px)</span>
+<div class="w-[365px] bg-white dark:bg-[#2d1b1a] rounded-xl shadow-xl overflow-hidden border border-primary/5">
+<div class="bg-secondary p-4 flex items-center justify-between">
+<div class="text-white">
+<p class="text-[10px] opacity-80 uppercase font-bold tracking-widest">Today in Bogotá</p>
+<h3 class="text-lg font-bold">Prayer Schedule</h3>
+</div>
+<span class="material-symbols-outlined text-white/40">mosque</span>
+</div>
+<div class="p-0">
+<div class="flex items-center justify-between px-6 py-4 border-b border-primary/5 hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl">wb_twilight</span>
+<span class="font-bold text-sm">Fajr</span>
+</div>
+<span class="font-black text-secondary dark:text-white">04:52 AM</span>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-primary/5 bg-primary/5">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl">sunny</span>
+<span class="font-bold text-sm">Dhuhr</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-black text-primary">12:15 PM</span>
+<span class="text-[10px] text-primary font-bold uppercase">Current</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-primary/5 hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl">wb_sunny</span>
+<span class="font-bold text-sm">Asr</span>
+</div>
+<span class="font-black text-secondary dark:text-white">03:30 PM</span>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-primary/5 hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl">nights_stay</span>
+<span class="font-bold text-sm">Maghrib</span>
+</div>
+<span class="font-black text-secondary dark:text-white">06:10 PM</span>
+</div>
+<div class="flex items-center justify-between px-6 py-4 hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl">dark_mode</span>
+<span class="font-bold text-sm">Isha</span>
+</div>
+<span class="font-black text-secondary dark:text-white">07:25 PM</span>
+</div>
+</div>
+<div class="p-4 bg-background-light dark:bg-[#1a0f0f]">
+<button class="w-full bg-white dark:bg-[#2d1b1a] border-2 border-primary text-primary font-bold py-2 rounded-lg hover:bg-primary hover:text-white transition-all text-sm">
+                                                Monthly Calendar
+                                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: High-Impact Banners -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">campaign</span>
+<h2 class="text-secondary dark:text-white text-[22px] font-bold leading-tight">High-Impact Banners</h2>
+</div>
+<div class="flex flex-col gap-10">
+<!-- Next Prayer Banner -->
+<div class="flex flex-col gap-2">
+<span class="text-[10px] font-bold text-[#935653] uppercase tracking-[0.1em]">Alert State (365px)</span>
+<div class="w-[365px] h-[160px] bg-primary rounded-xl p-6 text-white relative overflow-hidden shadow-2xl flex flex-col justify-between">
+<div class="relative z-10">
+<p class="text-xs font-bold opacity-80 uppercase tracking-widest">Next Prayer</p>
+<h3 class="text-3xl font-black tracking-tight">Asr In 01:12:05</h3>
+</div>
+<div class="relative z-10 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined">alarm</span>
+<span class="text-sm font-medium">03:30 PM Today</span>
+</div>
+<button class="bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold hover:bg-white/30 transition-all">
+                                                Set Alert
+                                            </button>
+</div>
+<!-- Decorative Background Pattern -->
+<div class="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
+<span class="material-symbols-outlined text-[160px]">mosque</span>
+</div>
+</div>
+</div>
+<!-- Iftar Countdown Card -->
+<div class="flex flex-col gap-2">
+<span class="text-[10px] font-bold text-[#935653] uppercase tracking-[0.1em]">Seasonal / Ramadan State (365px)</span>
+<div class="w-[365px] bg-white dark:bg-[#2d1b1a] rounded-xl shadow-xl overflow-hidden border-t-4 border-primary">
+<div class="p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="text-secondary dark:text-white font-black text-xl">Iftar Countdown</h4>
+<p class="text-xs text-[#935653] dark:text-[#ccadaa] font-medium">Ramadan Day 14 • Bogotá</p>
+</div>
+<div class="bg-primary/10 text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+</div>
+<div class="text-center mb-6">
+<p class="text-5xl font-black text-secondary dark:text-white tracking-tighter">02:44:12</p>
+<p class="text-[10px] font-bold text-[#935653] uppercase tracking-widest mt-1">Remaining</p>
+</div>
+<div class="space-y-2">
+<div class="h-2 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]" style="width: 75%;"></div>
+</div>
+<div class="flex justify-between text-[10px] font-bold text-primary uppercase">
+<span>Suhoor</span>
+<span>Iftar (06:10 PM)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Specs & Documentation -->
+<aside class="lg:col-span-4">
+<div class="sticky top-10 flex flex-col gap-6">
+<div class="bg-secondary p-8 rounded-xl text-white">
+<h3 class="text-xl font-black mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">straighten</span>
+                                    Mobile Specs
+                                </h3>
+<ul class="space-y-4 text-sm opacity-90">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>Standard Width: 365px (SM)</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>Corner Radius: rounded-xl (0.75rem)</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>Primary Font: Public Sans (Bold/Black)</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>Min Contrast: 4.5:1 (AA Standards)</span>
+</li>
+</ul>
+<div class="mt-8 pt-6 border-t border-white/10">
+<p class="text-xs opacity-60 italic leading-relaxed">
+                                        These components are optimized for high-glare environments and rapid scanning during daily routines.
+                                    </p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#2d1b1a] p-6 rounded-xl shadow-md border border-primary/5">
+<h4 class="font-bold mb-4 flex items-center gap-2 text-secondary dark:text-white">
+<span class="material-symbols-outlined">palette</span>
+                                    Color Palette
+                                </h4>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-primary"></div>
+<div>
+<p class="text-xs font-bold">Primary Red</p>
+<p class="text-[10px] font-mono opacity-60">#C32A22</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-secondary"></div>
+<div>
+<p class="text-xs font-bold">Deep Navy</p>
+<p class="text-[10px] font-mono opacity-60">#212E80</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-[#935653]"></div>
+<div>
+<p class="text-xs font-bold">Muted Neutral</p>
+<p class="text-[10px] font-mono opacity-60">#935653</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-[#1a0f0f] border-t border-primary/10 py-10 px-10 mt-20 text-center">
+<p class="text-[#935653] text-sm font-medium">
+                    © 2024 Mosque of Bogotá Design System. Built with Colombian-Islamic architectural influences.
+                </p>
+</footer>
+</div>
+</div>
+</body></html>

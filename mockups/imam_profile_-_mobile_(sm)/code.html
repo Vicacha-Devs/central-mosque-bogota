@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Imam Profile - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-overlay {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .mobile-container {
+            width: 365px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="bg-slate-200 dark:bg-background-dark font-display">
+<div class="mobile-container bg-background-light dark:bg-background-dark shadow-2xl overflow-x-hidden pb-24">
+<!-- Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+<div class="flex items-center gap-2">
+<div class="text-primary">
+<svg class="w-7 h-7" fill="currentColor" viewbox="0 0 48 48">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h1 class="text-sm font-bold tracking-tight text-background-dark dark:text-white uppercase">Central Mosque</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<button class="p-2 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[420px] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Portrait of a dignified Imam in traditional robes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFoA9CXglTmZ5qZYJVIHfrOQzfyskK97tIRtgxWvI6AOzAfr4CQDLs2RSXcndHIk8EMCcW2bHFFwtg7NFFTPLkscZJ-56Rdju_H3yFU6RvhMhgjwKCcadfVPUIqlHTPDciZemyJljc8xzkGNeAgnLkJ2RFvaUEID1Ft0T5Usf-UPBUWSkGfiEcoaADz5ObD30L44AHV0iqvL4hzvPwRZRwSvsd16sG8NGJSd1D1wdanDIDdFW5FEoT7vudDgJGSrLhPN4jPgU4Vhk");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<!-- Glassmorphism Name Tag -->
+<div class="absolute bottom-12 left-4 right-4 p-5 rounded-xl glass-overlay">
+<p class="text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-1">Lead Imam</p>
+<h2 class="text-white text-2xl font-bold leading-tight">Sheikh Ahmad Al-Bogotí</h2>
+<div class="flex gap-4 mt-3">
+<div class="flex items-center gap-1 text-white/80 text-xs">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Bogotá, Colombia</span>
+</div>
+<div class="flex items-center gap-1 text-white/80 text-xs">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span>Official Profile</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Biography Section -->
+<section class="relative -mt-6 px-4">
+<div class="bg-white dark:bg-background-dark/50 p-6 rounded-xl shadow-xl border border-primary/5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-background-dark dark:text-white">Biography</h3>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-primary/5 text-primary">
+<span class="material-symbols-outlined text-lg">share</span>
+</button>
+</div>
+</div>
+<div class="space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+<p>
+                        Sheikh Ahmad Al-Bogotí has served the Bogotá community for over a decade. He completed his advanced studies in Islamic Jurisprudence (Fiqh) and Arabic Linguistics at the prestigious Al-Azhar University.
+                    </p>
+<p>
+                        His mission is focused on fostering interfaith dialogue, community growth, and guiding the youth of Colombia towards a balanced spiritual life. He regularly conducts weekly classes on Tafsir and Islamic ethics.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Content Feed -->
+<section class="mt-8 px-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-background-dark dark:text-white">Recent Content</h3>
+<span class="text-xs font-medium text-primary uppercase cursor-pointer">View All</span>
+</div>
+<div class="space-y-3">
+<!-- Content Card 1 -->
+<div class="bg-white dark:bg-background-dark/30 p-4 rounded-xl flex gap-4 border border-primary/5 shadow-sm">
+<div class="h-16 w-16 flex-shrink-0 rounded-lg bg-cover bg-center" data-alt="Close up of Quran pages" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3xHaA7hj2LkGypvcoFNL6_msse49-JEkCGpqSbPw-mGoFAZ7KGKLoNPWJLKb23V7zqBBJLEp0EfsF0nfOhdNG6mYhZ25j-xK5BlvoIc7rzo-YVOLmZJBGWMxicAU8hhRyRhKOia7zs77Nzcrn0AumuvTizj_YnQ6N1D5QM3mQCLVFhuuxLQUlhdRXS8z08hXhugL_O5hHObOuH3nbpSwBSb_j2rmrjwJU9-itdY4B_bMoOMvIYQwp-4FVRKW-ihV5ajQ2pCHU9uc");'></div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="text-[10px] font-bold text-primary uppercase mb-1">Khutbah</p>
+<span class="text-[10px] text-slate-400">Oct 24, 2023</span>
+</div>
+<h4 class="text-sm font-bold text-background-dark dark:text-white mb-2">The Importance of Community Patience</h4>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg">play_circle</span>
+<span class="text-[11px] font-medium text-slate-500">24 mins listen</span>
+</div>
+</div>
+</div>
+<!-- Content Card 2 -->
+<div class="bg-white dark:bg-background-dark/30 p-4 rounded-xl flex gap-4 border border-primary/5 shadow-sm">
+<div class="h-16 w-16 flex-shrink-0 rounded-lg bg-cover bg-center" data-alt="Minimalist mosque archway" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeKtJYrcJ0lCrdG1oZMUqQsx55hkgX6qaO96c6B1xik-SvfuwGcTZJ1KquMAFkP6oeGcE3UtvOCrP10yuI-lSYOuO0WPrW9-7DD9lRmsQ2b21y6tvHy2DYRpwk6UvdUJNd8GfLiIPSNMirMm5Mt5tjy5fCNpagK37-akcHeCnVIb1GWKNKNh4wCNjKtVEyotvZzvVyJD5dcPRqNRClGHTjmwH2m2BnNcwwZBvONZPHPkzI9jpwMdSov1ZgDJNY6qh7Q5eGVYzVwvc");'></div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="text-[10px] font-bold text-primary uppercase mb-1">Weekly Class</p>
+<span class="text-[10px] text-slate-400">Oct 21, 2023</span>
+</div>
+<h4 class="text-sm font-bold text-background-dark dark:text-white mb-2">Tafsir Al-Baqarah: Verses 1-20</h4>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg">article</span>
+<span class="text-[11px] font-medium text-slate-500">Read Summary</span>
+</div>
+</div>
+</div>
+<!-- Content Card 3 -->
+<div class="bg-white dark:bg-background-dark/30 p-4 rounded-xl flex gap-4 border border-primary/5 shadow-sm">
+<div class="h-16 w-16 flex-shrink-0 rounded-lg bg-cover bg-center" data-alt="Night sky over city silhouettes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9qmLqfln6D4KZ9TF-lNY6vBuVXg2lCIFL7pTLc75BK0GUWTWykquFAB7dCFay9I00wJRyc4vRGo18Ep3HuZbUxApRWZQELGU0AehnZu4UiU0vPnVC91wKnwN63X9AAc7i_DlKO-hur7geGuRrfabS-t7tfnBXo8_jnJHwFd4lD8ORVmFG6oImaP4Pu_QxZ1nUNGp_Ny2JMDRHVDOw4MW7iqaHNo2L4NE8YG7zc45cf4SK9H9iMTTMJDISVdrM_n8Jo2S4ukSZ-7s");'></div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<p class="text-[10px] font-bold text-primary uppercase mb-1">Podcast</p>
+<span class="text-[10px] text-slate-400">Oct 15, 2023</span>
+</div>
+<h4 class="text-sm font-bold text-background-dark dark:text-white mb-2">Ethics in the Digital Age</h4>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg">mic</span>
+<span class="text-[11px] font-medium text-slate-500">15 mins audio</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Fixed Footer Action -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-[365px] p-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-primary/10 flex gap-3 z-50">
+<button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+                Follow for Updates
+            </button>
+<button class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</div>
+</body></html>

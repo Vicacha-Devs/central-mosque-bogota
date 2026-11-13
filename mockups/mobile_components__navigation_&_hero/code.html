@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mobile Components: Navigation &amp; Hero - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#202e7e",
+                "background-light": "#f6f6f8",
+                "background-dark": "#13151f",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-overlay {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .artboard-shadow {
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Desktop Container for Showcase -->
+<div class="max-w-7xl mx-auto px-6 py-12">
+<!-- Showcase Header -->
+<header class="mb-12 border-b border-primary/10 pb-8">
+<h1 class="text-4xl font-extrabold tracking-tight text-primary dark:text-white mb-2">Mobile UI Component Library</h1>
+<p class="text-lg text-slate-600 dark:text-slate-400">Part 1: Navigation &amp; Hero for the Central Mosque of Bogotá</p>
+</header>
+<!-- Components Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+<!-- Artboard 1: Primary Header & Hero (Collapsed) -->
+<div class="flex flex-col gap-4">
+<span class="text-xs font-bold uppercase tracking-widest text-primary/60 dark:text-primary/40 ml-1">01. Mobile Landing (Default)</span>
+<div class="w-[365px] h-[700px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden artboard-shadow relative border border-slate-200 dark:border-slate-800">
+<!-- Mobile Header Bar -->
+<header class="bg-primary flex items-center justify-between px-5 h-16 shadow-lg relative z-20">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-white/10 rounded flex items-center justify-center">
+<svg class="size-6 text-white" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-white font-bold text-sm tracking-tight leading-none">Central Mosque<br/><span class="font-normal opacity-80">of Bogotá</span></span>
+</div>
+<button class="text-white hover:bg-white/10 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</header>
+<!-- Hero Section -->
+<div class="relative h-[636px] bg-primary">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Stunning architectural view of a modern mosque dome against a blue sky" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMMZQUjDBXoJDi-gUFftIITpn-cuedc_nSFDKFpNbRJyP7qf8WXPFHrtW7DqJm67s9kvdqmXs0Cqdkf2JyuqidajsjZAaG1Xd8cIy1xU1PgkbpnrXk2DyNJXG9zuIleu373a11uAqytQU7PMSWatxGp1jJ9ZsF23WmMneEVsvZzgC-T1QwlGREkiVv3IALhBW9MZPQ8TdWc_RtS9kCsB3r6qZ4xWM52Qj0PxUw2jCxcaGZqhTh88n0voPOB_lbIOiMYyKNr_ZpVrM');">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
+</div>
+<!-- Hero Content (Glassmorphism Overlay) -->
+<div class="absolute bottom-10 left-5 right-5 glass-overlay p-6 rounded-xl">
+<h2 class="text-white text-3xl font-black leading-tight mb-3">Spiritual Serenity in Bogotá</h2>
+<p class="text-white/90 text-sm font-medium mb-6 leading-relaxed">Join our vibrant community for prayer, reflection, and lifelong learning.</p>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-white text-primary font-bold py-3 rounded-lg text-sm uppercase tracking-wider hover:bg-slate-100 transition-all">Visit Us</button>
+<button class="w-full bg-primary/40 border border-white/20 text-white font-bold py-3 rounded-lg text-sm uppercase tracking-wider hover:bg-primary/50 transition-all">Live Stream</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Artboard 2: Menu Drawer (Expanded) -->
+<div class="flex flex-col gap-4">
+<span class="text-xs font-bold uppercase tracking-widest text-primary/60 dark:text-primary/40 ml-1">02. Navigation Drawer (Open)</span>
+<div class="w-[365px] h-[700px] bg-primary rounded-xl overflow-hidden artboard-shadow relative border border-slate-200 dark:border-slate-800 flex flex-col">
+<!-- Close Header -->
+<div class="flex items-center justify-between px-6 h-20">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-white/20 rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined">mosque</span>
+</div>
+</div>
+<button class="text-white hover:bg-white/10 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+<!-- Menu Links -->
+<nav class="flex-1 px-6 pt-4 flex flex-col gap-1">
+<a class="group flex items-center justify-between p-4 bg-white/10 rounded-xl text-white" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100 transition-opacity">schedule</span>
+<span class="font-bold text-lg">Prayer Times</span>
+</div>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-4 hover:bg-white/5 rounded-xl text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100 transition-opacity">volunteer_activism</span>
+<span class="font-bold text-lg">Donations</span>
+</div>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-4 hover:bg-white/5 rounded-xl text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100 transition-opacity">book_5</span>
+<span class="font-bold text-lg">Education</span>
+</div>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-4 hover:bg-white/5 rounded-xl text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100 transition-opacity">event</span>
+<span class="font-bold text-lg">Events</span>
+</div>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-4 hover:bg-white/5 rounded-xl text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100 transition-opacity">info</span>
+<span class="font-bold text-lg">About Us</span>
+</div>
+<span class="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+</a>
+</nav>
+<!-- Drawer Footer (Language Switcher) -->
+<div class="p-6 border-t border-white/10 bg-black/10">
+<p class="text-white/50 text-xs font-bold uppercase tracking-widest mb-4">Select Language</p>
+<div class="grid grid-cols-4 gap-2">
+<button class="bg-white text-primary font-bold py-2 rounded text-xs">ES</button>
+<button class="bg-white/10 text-white font-bold py-2 rounded text-xs hover:bg-white/20 transition-colors">AR</button>
+<button class="bg-white/10 text-white font-bold py-2 rounded text-xs hover:bg-white/20 transition-colors">EN</button>
+<button class="bg-white/10 text-white font-bold py-2 rounded text-xs hover:bg-white/20 transition-colors">TR</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Artboard 3: State variations & Component details -->
+<div class="flex flex-col gap-10">
+<!-- Language Selector Standalone -->
+<div class="flex flex-col gap-4">
+<span class="text-xs font-bold uppercase tracking-widest text-primary/60 dark:text-primary/40 ml-1">03. Language Selector (Segmented)</span>
+<div class="w-[365px] p-1 bg-primary/10 dark:bg-primary/20 rounded-lg flex border border-primary/10">
+<button class="flex-1 py-2 rounded text-sm font-bold bg-primary text-white shadow-sm">ES</button>
+<button class="flex-1 py-2 rounded text-sm font-medium text-primary/70 dark:text-primary/40 hover:text-primary">AR</button>
+<button class="flex-1 py-2 rounded text-sm font-medium text-primary/70 dark:text-primary/40 hover:text-primary">EN</button>
+<button class="flex-1 py-2 rounded text-sm font-medium text-primary/70 dark:text-primary/40 hover:text-primary">TR</button>
+</div>
+</div>
+<!-- Call to Action Card -->
+<div class="flex flex-col gap-4">
+<span class="text-xs font-bold uppercase tracking-widest text-primary/60 dark:text-primary/40 ml-1">04. CTA Component (Compact)</span>
+<div class="w-[365px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden artboard-shadow">
+<div class="h-32 bg-primary relative" data-alt="Close-up of Islamic geometric pattern on a wall" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNdbSOK9VcX_gjs_i8cX94W7HaJpCNDYNrTPHBmTMTFgK2xGK9PO9oP3Sw_eXVUipelBc84mmxwRYO5jAqy36rnOkSM7-cta-7ZjnO7cGQufqlQ1EryGb9mK-NRvg21i4PZyfOq2SADI8CX7KWjZ7a0xQTneKng1KQuCC86hf0gVj8eLTuBEteeDi0CpwQYh2CLmpQWmGn9hZ9TCAJwVx9SaGoirkCP447Bd_BOmt4pvdLuTmFFDUGmvtTufpC6C_wfzAAo81E3as'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-primary/40"></div>
+</div>
+<div class="p-5">
+<h4 class="text-lg font-bold text-primary dark:text-white mb-2 leading-tight">Support Our Mosque</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Your contributions help us maintain our spiritual home and community programs.</p>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">volunteer_activism</span>
+                                Donate Now
+                            </button>
+</div>
+</div>
+</div>
+<!-- Color Swatches & Icons Used -->
+<div class="flex flex-col gap-4">
+<span class="text-xs font-bold uppercase tracking-widest text-primary/60 dark:text-primary/40 ml-1">05. Style Guide Excerpt</span>
+<div class="w-[365px] grid grid-cols-2 gap-3">
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="size-6 bg-primary rounded"></div>
+<span class="text-xs font-mono">#202e7e</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<span class="text-xs font-mono">Clock Icon</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Note -->
+<footer class="mt-24 pt-10 border-t border-slate-200 dark:border-slate-800 text-center">
+<p class="text-slate-400 text-sm">Central Mosque of Bogotá Design System • Mobile Components Part 1</p>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Homepage - Central Mosque Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "secondary": "#212E80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#171212] dark:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-[#e4dddc] dark:border-white/10 px-4 md:px-10 py-4">
+<div class="max-w-[1200px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 text-secondary dark:text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+</svg>
+</div>
+<h1 class="text-secondary dark:text-white text-lg font-extrabold tracking-tight">Central Mosque Bogotá</h1>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Prayer Times</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">About</a>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm">
+                    Donate
+                </button>
+</nav>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-secondary dark:text-white">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto">
+<!-- Hero Section -->
+<section class="relative h-[400px] md:h-[500px] w-full overflow-hidden md:rounded-xl md:my-6">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Stunning architecture of the Central Mosque of Bogota at sunset" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDmbNE2JOb_6sod70E-fo0jtaLtveDtDCE8xK__FRpvx0ExeqM2DqsGWuGsqK0P1GvX8pTUqQeWCyPxb4Yern9zOEez4_xKdqAKqhyEn31hsOyP62Pkgyp_EETv0cJIad7Dn8S9WMknvSq0k15AXwGTHk598V_SWAL9d3NBOZIE3pBghZd0--e-aIXXoL07GSAHbfSKM4DNp-nmNDKHzK-Oq1UYUlnC2v6j03CUJ6Us-6jv2fIfTJDYI_uN7xQL-rSuEPjQ8Ujseak');"></div>
+<div class="relative h-full flex flex-col items-center justify-center text-center px-6">
+<h2 class="text-white text-3xl md:text-5xl font-black mb-4 max-w-2xl leading-tight">
+                    A Home for the Muslim Community in Bogotá
+                </h2>
+<p class="text-white/90 text-sm md:text-lg mb-8 max-w-xl">
+                    Join us for daily prayers, educational programs, and community service. All are welcome in the house of Allah.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary text-white px-8 py-3 rounded-lg font-bold text-base shadow-lg">
+                        View Prayer Times
+                    </button>
+<button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-3 rounded-lg font-bold text-base hover:bg-white/20 transition-all">
+                        Our Services
+                    </button>
+</div>
+</div>
+</section>
+<!-- Prayer Times Dashboard -->
+<section class="px-4 py-10">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-bold text-secondary dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">schedule</span>
+                    Daily Prayer Times
+                </h3>
+<span class="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">Bogotá, Colombia</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#e4dddc] dark:border-primary/20 flex flex-col items-center text-center shadow-sm">
+<span class="text-secondary dark:text-primary/70 text-sm font-bold uppercase tracking-widest mb-2">Fajr</span>
+<span class="text-2xl font-black text-secondary dark:text-white">04:50 AM</span>
+</div>
+<div class="bg-primary text-white p-6 rounded-xl shadow-xl flex flex-col items-center text-center ring-4 ring-primary/20">
+<span class="text-white/80 text-sm font-bold uppercase tracking-widest mb-2">Dhuhr</span>
+<span class="text-2xl font-black">12:15 PM</span>
+<span class="text-[10px] mt-1 font-bold bg-white/20 px-2 py-0.5 rounded uppercase">Current</span>
+</div>
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#e4dddc] dark:border-primary/20 flex flex-col items-center text-center shadow-sm">
+<span class="text-secondary dark:text-primary/70 text-sm font-bold uppercase tracking-widest mb-2">Asr</span>
+<span class="text-2xl font-black text-secondary dark:text-white">03:30 PM</span>
+</div>
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#e4dddc] dark:border-primary/20 flex flex-col items-center text-center shadow-sm">
+<span class="text-secondary dark:text-primary/70 text-sm font-bold uppercase tracking-widest mb-2">Maghrib</span>
+<span class="text-2xl font-black text-secondary dark:text-white">06:10 PM</span>
+</div>
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#e4dddc] dark:border-primary/20 flex flex-col items-center text-center shadow-sm col-span-2 md:col-span-1">
+<span class="text-secondary dark:text-primary/70 text-sm font-bold uppercase tracking-widest mb-2">Isha</span>
+<span class="text-2xl font-black text-secondary dark:text-white">07:25 PM</span>
+</div>
+</div>
+</section>
+<!-- Events & Services -->
+<section class="px-4 py-10 grid md:grid-cols-2 gap-12">
+<!-- Events -->
+<div>
+<h3 class="text-2xl font-bold text-secondary dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">event_note</span>
+                    Upcoming Events
+                </h3>
+<div class="space-y-4">
+<div class="group bg-white dark:bg-white/5 p-4 rounded-xl border border-[#e4dddc] dark:border-white/10 flex gap-4 hover:border-primary/50 transition-all cursor-pointer">
+<div class="flex-shrink-0 w-16 h-16 bg-primary/10 rounded-lg flex flex-col items-center justify-center text-primary">
+<span class="text-xs font-bold uppercase">Oct</span>
+<span class="text-xl font-black leading-none">27</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-bold text-secondary dark:text-white group-hover:text-primary transition-colors">Friday Khutbah</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">Join us for the weekly congregational prayer and sermon at 1:00 PM.</p>
+</div>
+<span class="material-symbols-outlined text-gray-300 self-center">chevron_right</span>
+</div>
+<div class="group bg-white dark:bg-white/5 p-4 rounded-xl border border-[#e4dddc] dark:border-white/10 flex gap-4 hover:border-primary/50 transition-all cursor-pointer">
+<div class="flex-shrink-0 w-16 h-16 bg-primary/10 rounded-lg flex flex-col items-center justify-center text-primary">
+<span class="text-xs font-bold uppercase">Nov</span>
+<span class="text-xl font-black leading-none">02</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-bold text-secondary dark:text-white group-hover:text-primary transition-colors">Community Youth Night</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">Activities, discussion, and dinner for the youth of our community.</p>
+</div>
+<span class="material-symbols-outlined text-gray-300 self-center">chevron_right</span>
+</div>
+</div>
+<button class="mt-6 text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                    View All Events <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Services -->
+<div>
+<h3 class="text-2xl font-bold text-secondary dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">volunteer_activism</span>
+                    Community Services
+                </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-background-light dark:bg-white/5 p-6 rounded-xl border border-[#e4dddc] dark:border-white/10 hover:shadow-md transition-shadow">
+<div class="bg-secondary/10 dark:bg-primary/20 size-12 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary dark:text-white">school</span>
+</div>
+<h4 class="font-bold mb-1 text-secondary dark:text-white">Quran Classes</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400">Structured learning for children and adults of all levels.</p>
+</div>
+<div class="bg-background-light dark:bg-white/5 p-6 rounded-xl border border-[#e4dddc] dark:border-white/10 hover:shadow-md transition-shadow">
+<div class="bg-secondary/10 dark:bg-primary/20 size-12 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary dark:text-white">favorite</span>
+</div>
+<h4 class="font-bold mb-1 text-secondary dark:text-white">Marriage Services</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400">Nikah ceremonies and family counseling by certified imams.</p>
+</div>
+<div class="bg-background-light dark:bg-white/5 p-6 rounded-xl border border-[#e4dddc] dark:border-white/10 hover:shadow-md transition-shadow">
+<div class="bg-secondary/10 dark:bg-primary/20 size-12 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary dark:text-white">handshake</span>
+</div>
+<h4 class="font-bold mb-1 text-secondary dark:text-white">Zakat &amp; Charity</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400">Distribution of support to those in need within Bogotá.</p>
+</div>
+<div class="bg-background-light dark:bg-white/5 p-6 rounded-xl border border-[#e4dddc] dark:border-white/10 hover:shadow-md transition-shadow">
+<div class="bg-secondary/10 dark:bg-primary/20 size-12 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary dark:text-white">restaurant</span>
+</div>
+<h4 class="font-bold mb-1 text-secondary dark:text-white">Halal Food Bank</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400">Providing meals and groceries to the local community.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Donation Banner -->
+<section class="mx-4 my-10 bg-secondary rounded-2xl p-8 md:p-12 text-white relative overflow-hidden">
+<div class="absolute right-0 top-0 w-1/3 h-full opacity-10 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-[200px]">youtube_giving</span>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+<div class="max-w-xl">
+<h3 class="text-3xl font-black mb-4">Support Your Mosque</h3>
+<p class="text-white/80 leading-relaxed">
+                        Your contributions help us maintain the house of Allah, provide educational programs, and support those in need in our city. Every contribution makes a difference.
+                    </p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-xl font-black text-lg transition-all shadow-xl whitespace-nowrap">
+                    Make a Donation
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-secondary text-white pt-16 pb-8">
+<div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12 mb-8">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+</svg>
+</div>
+<h4 class="text-xl font-black tracking-tight">Central Mosque Bogotá</h4>
+</div>
+<p class="text-white/60 mb-8 max-w-sm">
+                    Dedicated to fostering spiritual growth, community well-being, and mutual understanding in the heart of Colombia.
+                </p>
+<div class="flex gap-4">
+<a class="bg-white/10 hover:bg-primary transition-colors p-2 rounded-lg flex items-center justify-center" href="#">
+<svg class="size-5" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+</a>
+<a class="bg-white/10 hover:bg-primary transition-colors p-2 rounded-lg flex items-center justify-center" href="#">
+<svg class="size-5" fill="currentColor" viewbox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg>
+</a>
+<a class="bg-white/10 hover:bg-primary transition-colors p-2 rounded-lg flex items-center justify-center" href="#">
+<svg class="size-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.266.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+</a>
+</div>
+</div>
+<div>
+<h5 class="font-bold text-lg mb-6">Quick Links</h5>
+<ul class="space-y-4 text-white/60 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Prayer Schedule</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Educational Programs</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Marriage Services</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Join Our Team</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold text-lg mb-6">Contact Us</h5>
+<ul class="space-y-4 text-white/60 text-sm">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl">location_on</span>
+<span>Calle 123 #45-67,<br/>Bogotá, Colombia</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">phone</span>
+<span>+57 (1) 234-5678</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">mail</span>
+<span>info@centralmosquebogota.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40">
+<p>© 2024 Central Mosque of Bogotá. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</body></html>

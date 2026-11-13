@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Course Registration - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;family=Noto+Serif:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#212e82",
+                        "primary-red": "#C13026",
+                        "neutral-sand": "#F5F2ED",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#13151f",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "serif-title": ["Noto Serif", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #F5F2ED;
+        }
+    </style>
+</head>
+<body class="bg-neutral-sand min-h-screen text-[#121317]">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 bg-white/80 backdrop-blur-md px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h2 class="text-primary text-xl font-bold leading-tight tracking-tight">Central Mosque of Bogotá</h2>
+</div>
+<nav class="flex items-center gap-8">
+<a class="text-[#121317] text-sm font-medium hover:text-primary transition-colors" href="#">Prayer Times</a>
+<a class="text-[#121317] text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-[#121317] text-sm font-medium hover:text-primary transition-colors" href="#">Courses</a>
+<a class="text-[#121317] text-sm font-medium hover:text-primary transition-colors" href="#">Donations</a>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide">
+                Login
+            </button>
+</nav>
+</header>
+<main>
+<!-- Split-Screen Hero -->
+<section class="flex flex-col xl:flex-row h-[500px] w-full overflow-hidden">
+<div class="xl:w-1/2 w-full h-full relative">
+<div class="absolute inset-0 bg-black/20 z-10"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="Modern bright classroom with students studying together" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmceVVn6l_icqxVxwQtr0A1Sq7qSfNjChExfFaZWcVXmCUOGiHWh1QqjDe8u_hT9Wh7sBCMKRfuXZNC9gY0GJsVOLsb5LGeUrrEXVWBSQZUV7_xlaX9rT2dQNaxw2r1rP6S26wDFatvE3avX7xYRr07lZnAoNLBv9j3d5RTBf62XWUZT0qEcpjvpsuKS6b_G7unW6-EXZzLrb-Wkdehvtv5rVYBtfq7HlWF1cdHY1RCSQl4JXa6QGkw5yZNR5u7LzCqGTbu8Ah8vI');"></div>
+</div>
+<div class="xl:w-1/2 w-full h-full bg-primary flex flex-col justify-center px-16 xl:px-24 text-white">
+<span class="uppercase tracking-[0.2em] text-sm font-semibold opacity-80 mb-4">Educational Programs</span>
+<h1 class="font-serif-title text-5xl xl:text-7xl leading-[1.1] mb-6">Course<br/>Registration</h1>
+<p class="text-lg opacity-90 max-w-lg leading-relaxed font-light">
+                    Join our vibrant learning community. From Arabic linguistics to deep Quranic studies, we offer paths for every seeker of knowledge.
+                </p>
+</div>
+</section>
+<!-- Multi-Step Form Container -->
+<div class="max-w-5xl mx-auto -mt-24 mb-24 relative z-20 px-4">
+<div class="glass-panel rounded-xl shadow-2xl p-8 xl:p-12 overflow-hidden">
+<!-- Progress Stepper -->
+<div class="flex items-center justify-between mb-16 relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-primary/10 -z-10 -translate-y-1/2"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-3">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-lg shadow-primary/30">1</div>
+<span class="text-sm font-bold text-primary">Personal Info</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-3">
+<div class="size-12 rounded-full bg-white border-2 border-primary/20 text-primary/40 flex items-center justify-center font-bold">2</div>
+<span class="text-sm font-medium text-primary/40">Course Selection</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-3">
+<div class="size-12 rounded-full bg-white border-2 border-primary/20 text-primary/40 flex items-center justify-center font-bold">3</div>
+<span class="text-sm font-medium text-primary/40">Payment</span>
+</div>
+</div>
+<!-- Form Content -->
+<div class="space-y-8">
+<div>
+<h2 class="text-3xl font-bold text-primary mb-2">Student Details</h2>
+<p class="text-[#676b83]">Please provide your basic information to begin your registration process.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary/80 ml-1">Full Name</label>
+<input class="w-full px-5 py-4 rounded-lg border-primary/10 bg-white/50 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="e.g. Abdullah Rahman" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary/80 ml-1">Email Address</label>
+<input class="w-full px-5 py-4 rounded-lg border-primary/10 bg-white/50 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="name@example.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary/80 ml-1">Phone Number</label>
+<div class="flex gap-2">
+<select class="w-24 px-3 py-4 rounded-lg border-primary/10 bg-white/50 focus:ring-2 focus:ring-primary outline-none">
+<option>+57</option>
+<option>+1</option>
+<option>+44</option>
+</select>
+<input class="flex-1 px-5 py-4 rounded-lg border-primary/10 bg-white/50 focus:ring-2 focus:ring-primary outline-none" placeholder="300 123 4567" type="tel"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary/80 ml-1">Age Group</label>
+<select class="w-full px-5 py-4 rounded-lg border-primary/10 bg-white/50 focus:ring-2 focus:ring-primary outline-none">
+<option>Select your age group</option>
+<option>Child (5-12)</option>
+<option>Teen (13-17)</option>
+<option>Adult (18+)</option>
+<option>Senior (60+)</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-primary/80 ml-1">Address (Optional)</label>
+<textarea class="w-full px-5 py-4 rounded-lg border-primary/10 bg-white/50 focus:ring-2 focus:ring-primary outline-none resize-none" placeholder="Street, Neighborhood, Bogotá" rows="3"></textarea>
+</div>
+<div class="flex items-center gap-3 py-4">
+<input class="size-5 rounded border-primary/20 text-primary-red focus:ring-primary-red" id="terms" type="checkbox"/>
+<label class="text-sm text-[#676b83]" for="terms">I agree to the <a class="text-primary underline" href="#">terms and conditions</a> of the Central Mosque Educational Center.</label>
+</div>
+<!-- Navigation Footer -->
+<div class="pt-8 border-t border-primary/5 flex items-center justify-between">
+<button class="flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all px-4 py-2">
+<span class="material-symbols-outlined">arrow_back</span>
+                            Back to Home
+                        </button>
+<button class="flex min-w-[200px] items-center justify-center gap-3 bg-primary-red hover:bg-[#A82A21] text-white px-8 py-4 rounded-lg font-bold text-lg shadow-xl shadow-primary-red/20 transition-all active:scale-95">
+                            Next Step
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Context Helper -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="size-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<div>
+<h4 class="font-bold text-primary">Need Help?</h4>
+<p class="text-sm text-[#676b83]">Our support team is available Mon-Fri, 9am - 5pm. Contact us at education@mezquitabogota.co</p>
+</div>
+</div>
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="size-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<h4 class="font-bold text-primary">Secure Registration</h4>
+<p class="text-sm text-[#676b83]">Your personal information is encrypted and securely stored according to privacy laws.</p>
+</div>
+</div>
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="size-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">event_available</span>
+</div>
+<div>
+<h4 class="font-bold text-primary">Flexible Schedules</h4>
+<p class="text-sm text-[#676b83]">We offer weekend and evening classes to accommodate working professionals.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-primary text-white py-12 px-10">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-8 mb-8">
+<div class="flex items-center gap-4">
+<div class="size-10">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold">Central Mosque of Bogotá</h3>
+</div>
+<div class="flex gap-10">
+<a class="hover:text-primary-red transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary-red transition-colors" href="#">Contact Us</a>
+<a class="hover:text-primary-red transition-colors" href="#">Location</a>
+</div>
+</div>
+<p class="text-center text-sm opacity-60">© 2024 Central Mosque of Bogotá. All rights reserved.</p>
+</footer>
+</body></html>

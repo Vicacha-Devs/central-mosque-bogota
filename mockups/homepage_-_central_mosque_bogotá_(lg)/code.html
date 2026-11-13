@@ -1,0 +1,975 @@
+<!doctype html>
+
+<html class="light" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mezquita Central de Bogotá</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#C13026", // Red for CTA/Donations
+              secondary: "#212E80", // Blue for Nav
+              "background-light": "#FDFBF7",
+              "background-dark": "#0F172A",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      .hero-overlay {
+        background: linear-gradient(
+          rgba(33, 46, 128, 0.4),
+          rgba(33, 46, 128, 0.6)
+        );
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .lang-dropdown:hover .lang-menu {
+        display: block;
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300"
+  >
+    <header class="fixed top-0 left-0 right-0 z-50 bg-secondary shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 lg:px-6 xl:px-8">
+        <div class="flex items-center justify-between h-20">
+          <div class="flex items-center gap-3 shrink-0">
+            <div
+              class="w-10 h-10 bg-white rounded-full flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-secondary text-2xl"
+                >mosque</span
+              >
+            </div>
+            <span
+              class="font-extrabold text-lg lg:text-xl text-white tracking-tight uppercase"
+              >Mezquita Central</span
+            >
+          </div>
+          <nav
+            class="hidden lg:flex items-center space-x-5 xl:space-x-8 text-[13px] xl:text-sm font-semibold text-white/90"
+          >
+            <a class="hover:text-white transition-colors" href="#">Inicio</a>
+            <a class="hover:text-white transition-colors" href="#">Perfil</a>
+            <a class="hover:text-white transition-colors" href="#"
+              >Actividades</a
+            >
+            <a class="hover:text-white transition-colors" href="#"
+              >Instalaciones</a
+            >
+            <a class="hover:text-white transition-colors" href="#">Noticias</a>
+            <a class="hover:text-white transition-colors" href="#">Contacto</a>
+          </nav>
+          <div class="flex items-center gap-2 xl:gap-4">
+            <div class="relative lang-dropdown hidden sm:block">
+              <button
+                class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-all text-sm font-bold"
+              >
+                <span class="material-symbols-outlined text-[18px]"
+                  >language</span
+                >
+                <span>ES</span>
+                <span class="material-symbols-outlined text-[16px] opacity-60"
+                  >expand_more</span
+                >
+              </button>
+              <div
+                class="lang-menu hidden absolute top-full right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 py-2 overflow-hidden animate-in fade-in slide-in-from-top-2"
+              >
+                <a
+                  class="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                  href="#"
+                >
+                  <span
+                    class="w-5 h-4 bg-slate-200 rounded-sm flex-shrink-0 flex items-center justify-center text-[10px]"
+                    >🇪🇸</span
+                  >
+                  ES
+                </a>
+                <a
+                  class="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                  href="#"
+                >
+                  <span
+                    class="w-5 h-4 bg-slate-200 rounded-sm flex-shrink-0 flex items-center justify-center text-[10px]"
+                    >🇸🇦</span
+                  >
+                  AR
+                </a>
+                <a
+                  class="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                  href="#"
+                >
+                  <span
+                    class="w-5 h-4 bg-slate-200 rounded-sm flex-shrink-0 flex items-center justify-center text-[10px]"
+                    >🇺🇸</span
+                  >
+                  EN
+                </a>
+                <a
+                  class="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                  href="#"
+                >
+                  <span
+                    class="w-5 h-4 bg-slate-200 rounded-sm flex-shrink-0 flex items-center justify-center text-[10px]"
+                    >🇹🇷</span
+                  >
+                  TR
+                </a>
+              </div>
+            </div>
+            <button
+              class="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all"
+              onclick="document.documentElement.classList.toggle('dark')"
+            >
+              <span class="material-symbols-outlined text-[20px] dark:hidden"
+                >dark_mode</span
+              >
+              <span
+                class="material-symbols-outlined text-[20px] hidden dark:block"
+                >light_mode</span
+              >
+            </button>
+            <a
+              class="bg-primary hover:bg-red-700 text-white px-4 xl:px-6 py-2.5 rounded-full font-bold text-[13px] xl:text-sm tracking-wide transition-all transform hover:scale-105 shadow-md whitespace-nowrap"
+              href="#"
+            >
+              DONAR AHORA
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="pt-20">
+      <section class="relative h-[600px] overflow-hidden flex items-center">
+        <img
+          alt="Beautiful Mosque Architecture"
+          class="absolute inset-0 w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdlrd8AprY013bVQSvLjSWaOwTysETvmudIyet1ui8bdnFC2mjZ1b5okpi2OJ9rqogESejmF4lJRn8efBrCuCrJcxw9DU7VIr03J1sT4lIhkty48r2AqpqaH069FoNZ5-xcE2ZXPcFDt2HXcaLaHtFY5swEUTuMeikRCAw6RFG_iB1VLOJMmIOLxfFbwudkXDYHFbFajgfAC6WR6QPpMCSmvGVwiv1G7w56_9SUpKGblDJo4l4GYZLxuc-WOiJFjPnUpSaZYKovL4"
+        />
+        <div class="absolute inset-0 hero-overlay"></div>
+        <div class="relative max-w-7xl mx-auto px-4 lg:px-8 w-full text-center">
+          <h1
+            class="text-5xl lg:text-7xl font-extrabold text-white mb-6 drop-shadow-lg"
+          >
+            Ramadán 1445 H
+          </h1>
+          <p
+            class="text-xl text-white/90 max-w-2xl mx-auto font-light leading-relaxed"
+          >
+            Unidos en oración y comunidad. Bienvenidos al corazón de la
+            espiritualidad islámica en Bogotá.
+          </p>
+        </div>
+      </section>
+      <div class="max-w-5xl mx-auto px-4 -mt-24 relative z-10">
+        <div
+          class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-center border border-slate-100 dark:border-slate-700"
+        >
+          <div class="flex-1 w-full">
+            <div class="flex items-center gap-2 mb-4 text-primary">
+              <span class="material-symbols-outlined">location_on</span>
+              <span class="font-bold uppercase tracking-wider text-sm"
+                >Bogotá D.C., Colombia</span
+              >
+            </div>
+            <div
+              class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl"
+            >
+              <img
+                alt="Imam Profile"
+                class="w-16 h-16 rounded-full border-2 border-primary object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUTxh7OvVEuebf-AtXHDTrENTOZxnnWevcYn1amykHaiQ13OV30dV3__CxyzNFG2t1wuC32HAvaL_gqRooPwGOezVkQrxlKosiCP3K5wPwY47-E1S6mhds-Z_Iul_xGj3vqb9obcBycJjCwZFfGnMbljlZ--TVXNoxPUqNLbeAeAK1pAyohsGacjQDaTI0hbZuF3ewyASpjOMqD5FIesguVCQ5NXaSyMO37sCyWv2qqTd77Acl6BU3by8602ENTUYbny9S4ei1Qts"
+              />
+              <div>
+                <p
+                  class="text-xs text-slate-500 dark:text-slate-400 font-medium"
+                >
+                  Khutbah del Viernes
+                </p>
+                <p class="font-bold text-lg dark:text-white">
+                  Sheikh Ahmad Rashid
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-[2] w-full">
+            <div class="grid grid-cols-5 gap-2 text-center mb-4">
+              <span class="text-[10px] font-bold text-slate-400 uppercase"
+                >Fajr</span
+              >
+              <span class="text-[10px] font-bold text-slate-400 uppercase"
+                >Dhuhr</span
+              >
+              <span class="text-[10px] font-bold text-slate-400 uppercase"
+                >Asr</span
+              >
+              <span class="text-[10px] font-bold text-slate-400 uppercase"
+                >Maghrib</span
+              >
+              <span class="text-[10px] font-bold text-slate-400 uppercase"
+                >Isha</span
+              >
+            </div>
+            <div class="space-y-3">
+              <div
+                class="bg-primary/5 dark:bg-primary/10 grid grid-cols-5 gap-2 p-3 rounded-lg border border-primary/10"
+              >
+                <span class="font-bold text-sm">04:35</span>
+                <span class="font-bold text-sm">12:15</span>
+                <span class="font-bold text-sm">15:40</span>
+                <span class="font-bold text-sm text-primary">18:12</span>
+                <span class="font-bold text-sm">19:25</span>
+              </div>
+              <div
+                class="grid grid-cols-5 gap-2 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50"
+              >
+                <span class="text-sm opacity-60">04:36</span>
+                <span class="text-sm opacity-60">12:15</span>
+                <span class="text-sm opacity-60">15:40</span>
+                <span class="text-sm opacity-60">18:13</span>
+                <span class="text-sm opacity-60">19:26</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="py-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4"
+        >
+          <h2
+            class="text-3xl font-extrabold flex items-center gap-3 uppercase tracking-tighter"
+          >
+            <span class="w-8 h-1 bg-primary rounded-full"></span>
+            Servicios a la Comunidad
+          </h2>
+          <a
+            class="text-primary font-bold flex items-center gap-2 hover:gap-4 transition-all uppercase text-sm tracking-widest"
+            href="#"
+          >
+            Ver todos
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            class="group relative h-80 overflow-hidden rounded-2xl cursor-pointer"
+          >
+            <img
+              alt="Arabic Class"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYnUwNCShra66W7pv9v2x0yPLx3xxANAwgdSwGiIHUDiyaZziZQiljpQQe77LtIoyhDlCKmUlEjfpJVWBo6NC2lXlmjNVjyK1RSCp7qYH5r5AqnZDiSnl6LsKP8T8U5XaGybN1Fiiuy7XBOiwS0WEAOhWknkcMRc7aCAiTEr6SuB9IEbJ0SD99_O8aha0WW3TcSrlhv7vEYKN4tpO58ukICaVVT1qGkWWX_qB03tvnQLe4ZGq9G1gxq5sDTC6rFhBVNca2ctGgHXk"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+            ></div>
+            <h3
+              class="absolute bottom-6 left-6 text-2xl font-bold text-white group-hover:text-primary transition-colors"
+            >
+              Escuela Coránica
+            </h3>
+          </div>
+          <div
+            class="group relative h-80 overflow-hidden rounded-2xl cursor-pointer"
+          >
+            <img
+              alt="Saturday Class"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1E5Qlgzl6BVEeDfXTbd4lJd1fnnYN9Zuln_CvMOWdTc3VzmLqXdrzkUHOn_X140mQgNlXhKDuv4k_a29YidwmD1AzlSXBmI7l4PLfapC-OKdmEvKeY6S8flJ5hZsZdcEhZRLooTozERetd_fZpxJkICeU5p_rU7dQS31Bg0DF-Q50hm-6f-pMGDurEQZeBc8mBDqNsAr1v8ZVhaaSwms2UsBTzA6TiQsyZiEZIkatnRerbs-G3mIIifFICNxSxj1yCG29LcuhoKM"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+            ></div>
+            <h3
+              class="absolute bottom-6 left-6 text-2xl font-bold text-white group-hover:text-primary transition-colors"
+            >
+              Conferencias Sabatinas
+            </h3>
+          </div>
+          <div
+            class="group relative h-80 overflow-hidden rounded-2xl cursor-pointer"
+          >
+            <img
+              alt="Waqf"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwJ5LV_rjff76At44h04iYxuU-noLpIY9U_AWr8p3nCAPCT5uGFvKfRt9l5ze9KCQzbNBzXRl89DcCp8bdc41mJG339tnF29DQcwSX4IWXLCkKHxnrmQrLu1oTBWbnMEp_PdJSw1-fwJvFwWWAqxncR0Uggbqu3tOg32wBPQ0tTtjJUVrZHoHe3J5jRjxShkY5dfFjH74pOwYasPGMl_-8qgMynMiK7f6GfPySFgPj95LGki3I5UHkHFXBwPD9wqVyBkOWWJtXVk0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+            ></div>
+            <h3
+              class="absolute bottom-6 left-6 text-2xl font-bold text-white group-hover:text-primary transition-colors"
+            >
+              Fondo Waqf
+            </h3>
+          </div>
+          <div
+            class="group relative h-80 overflow-hidden rounded-2xl cursor-pointer"
+          >
+            <img
+              alt="Tahsin"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4n-w_rDFHv0AEXuUZFu8cKu2MhhKKpp52wmkHGliK4Co_sibYvL0vFn1e-Wpd-0vKzqtOE38WnivS3gRLTFvjthVJmZoCQ6r7xa5XDjX_6bc8bg9-rJxFy4rbRyYnV4sH21bpfHAlVd_c4Texz1Vd3lAOwmTbBfIxXNFCiCHHOtfcbFCNL5VtGuA53ScrX_NoKRReR3NTcSq0GHRBNfHheK-8XN2Pvy-LffCuAJmBhif6zYxe1n4GPFDgOhnTDtcD0jN4Qtt2vzE"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+            ></div>
+            <h3
+              class="absolute bottom-6 left-6 text-2xl font-bold text-white group-hover:text-primary transition-colors"
+            >
+              Tahsin Al-Qur'an
+            </h3>
+          </div>
+        </div>
+      </section>
+      <section class="py-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4"
+        >
+          <div>
+            <h2
+              class="text-3xl font-extrabold flex items-center gap-3 uppercase tracking-tighter mb-2"
+            >
+              Academia de Estudios Islámicos
+            </h2>
+            <p class="text-slate-500 dark:text-slate-400 font-medium">
+              Formación académica y espiritual para todos los niveles.
+            </p>
+          </div>
+          <a
+            class="text-secondary font-bold flex items-center gap-2 hover:gap-4 transition-all uppercase text-sm tracking-widest"
+            href="#"
+          >
+            VER ACADEMIA
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="group relative h-[450px] overflow-hidden rounded-2xl cursor-pointer shadow-lg"
+          >
+            <img
+              alt="Arabic Calligraphy"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAt9kZ47D-IAsOIs8-N5B73lY5Qv1z_X20-0Fv46z-Fk2f2S_u8X9nZ8W-S3V4n2W-0Fv46z-Fk2f2S_u8X9nZ8W-S3V4n2W-0Fv46z-Fk2f2S_u8X9nZ8W-S3V4n2W"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"
+            ></div>
+            <div class="absolute top-6 left-6">
+              <span
+                class="bg-primary text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-widest shadow-lg"
+                >Fundacional</span
+              >
+            </div>
+            <div class="absolute bottom-8 left-8 right-8">
+              <h3
+                class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors"
+              >
+                Introducción al Árabe Coránico
+              </h3>
+              <p class="text-white/70 text-sm mb-6 line-clamp-2">
+                Domina las bases de la lectura y escritura del idioma sagrado
+                del Islam desde cero.
+              </p>
+              <button
+                class="w-full py-3.5 bg-secondary text-white rounded-xl font-bold text-sm tracking-widest uppercase hover:bg-opacity-90 transition-all flex items-center justify-center gap-2"
+              >
+                Ver Curso
+                <span class="material-symbols-outlined text-[18px]"
+                  >menu_book</span
+                >
+              </button>
+            </div>
+          </div>
+          <div
+            class="group relative h-[450px] overflow-hidden rounded-2xl cursor-pointer shadow-lg"
+          >
+            <img
+              alt="Islamic History Manuscript"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9R_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0O"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"
+            ></div>
+            <div class="absolute top-6 left-6">
+              <span
+                class="bg-secondary text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-widest shadow-lg"
+                >Histórico</span
+              >
+            </div>
+            <div class="absolute bottom-8 left-8 right-8">
+              <h3
+                class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors"
+              >
+                Historia del Islam
+              </h3>
+              <p class="text-white/70 text-sm mb-6 line-clamp-2">
+                Un viaje fascinante por los siglos que forjaron una de las
+                civilizaciones más influyentes.
+              </p>
+              <button
+                class="w-full py-3.5 bg-secondary text-white rounded-xl font-bold text-sm tracking-widest uppercase hover:bg-opacity-90 transition-all flex items-center justify-center gap-2"
+              >
+                Ver Curso
+                <span class="material-symbols-outlined text-[18px]"
+                  >history_edu</span
+                >
+              </button>
+            </div>
+          </div>
+          <div
+            class="group relative h-[450px] overflow-hidden rounded-2xl cursor-pointer shadow-lg"
+          >
+            <img
+              alt="Fiqh and Ethics"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY0Oq9_8K7XpY"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"
+            ></div>
+            <div class="absolute top-6 left-6">
+              <span
+                class="bg-primary text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-widest shadow-lg"
+                >Práctico</span
+              >
+            </div>
+            <div class="absolute bottom-8 left-8 right-8">
+              <h3
+                class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors"
+              >
+                Fiqh y Ética
+              </h3>
+              <p class="text-white/70 text-sm mb-6 line-clamp-2">
+                Aplicación de la jurisprudencia islámica y los valores morales
+                en la vida cotidiana moderna.
+              </p>
+              <button
+                class="w-full py-3.5 bg-secondary text-white rounded-xl font-bold text-sm tracking-widest uppercase hover:bg-opacity-90 transition-all flex items-center justify-center gap-2"
+              >
+                Ver Curso
+                <span class="material-symbols-outlined text-[18px]">gavel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="bg-slate-50 dark:bg-slate-900/50 py-24">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+          <div class="flex justify-between items-end mb-12">
+            <div>
+              <h2 class="text-3xl font-extrabold mb-2 uppercase tracking-tight">
+                Donaciones Disponibles
+              </h2>
+              <p class="text-slate-500 dark:text-slate-400">
+                Tu apoyo transforma vidas en nuestra comunidad y el mundo.
+              </p>
+            </div>
+            <a
+              class="text-primary font-bold flex items-center gap-2 hover:gap-4 transition-all"
+              href="#"
+            >
+              Ver todas
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+              class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-shadow"
+            >
+              <img
+                alt="Earthquake relief"
+                class="w-full h-48 object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxAGOD-XmRfydG3csxmrzzdT2f6Iv1XeVvh6ym8qY3ZV30AykjfRf8cx5J4HPoMjDPXdRKEp7O4UTLStIKUrXQbV7bdC2QJTMuURTSEn_oMhTgS9e8OholziyxSAwTHXif5pibLFXJiWs988lCJUFstgkljj56kixwwTEXM8RJjPHTRjj21mjRt2y2tbvDj9hZJpjVvoQuCk_tiF3PAPSwLEeL58HHS1HaD9qhMDfDyb410NPoe2KFQvPOP6fgiFXOYZokRyScwR4"
+              />
+              <div class="p-6">
+                <h3
+                  class="font-bold text-lg mb-2 leading-tight dark:text-white"
+                >
+                  Ayuda Humanitaria: Víctimas Terremoto Siria
+                </h3>
+                <div
+                  class="flex items-center gap-1 text-xs text-green-600 font-bold mb-4"
+                >
+                  <span>Humaniti.org</span>
+                  <span class="material-symbols-outlined text-[14px]"
+                    >verified</span
+                  >
+                </div>
+                <div class="mb-4">
+                  <div
+                    class="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden mb-2"
+                  >
+                    <div class="bg-primary h-full w-[45%]"></div>
+                  </div>
+                  <div class="flex justify-between text-xs font-semibold">
+                    <span class="text-slate-500">Recaudado</span>
+                    <span class="text-primary">45%</span>
+                  </div>
+                </div>
+                <div
+                  class="pt-4 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center"
+                >
+                  <div>
+                    <p class="text-[10px] uppercase text-slate-400 font-bold">
+                      Objetivo
+                    </p>
+                    <p class="font-bold text-sm dark:text-slate-200">
+                      $100.000.000
+                    </p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[10px] uppercase text-slate-400 font-bold">
+                      Días restantes
+                    </p>
+                    <p
+                      class="font-bold text-sm text-slate-600 dark:text-slate-400"
+                    >
+                      98 días
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-shadow"
+            >
+              <img
+                alt="Orphan support"
+                class="w-full h-48 object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU9ZRpVtIURjJc6ob_yI4CqawkNetS9VoE0Gow1xd254u-8P_O8qfAehfd_xa3rlOoj6ixLkhVnpmuu7Ks8gu-pH1csnn55uuSd5kHqLoUt1cTAgGNt4MF6YP0sIbXKOMycpdFi9MrMt2BZbhQdRZjOJqZwafpp4UXWnr_AIDFqkkLPvEKDwvGWoS4GS4ytacVriRjlPtCgPcdMg1iGLnBUajo9Y_okmAlvtvXxe8z9_GhrAxN_UqTI8e0TVKJz0qEmz2-vztZaiE"
+              />
+              <div class="p-6">
+                <h3
+                  class="font-bold text-lg mb-2 leading-tight dark:text-white"
+                >
+                  Fondo de Educación para Huérfanos
+                </h3>
+                <div
+                  class="flex items-center gap-1 text-xs text-green-600 font-bold mb-4"
+                >
+                  <span>Mezquita Central</span>
+                  <span class="material-symbols-outlined text-[14px]"
+                    >verified</span
+                  >
+                </div>
+                <div class="mb-4">
+                  <div
+                    class="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden mb-2"
+                  >
+                    <div class="bg-primary h-full w-[72%]"></div>
+                  </div>
+                  <div class="flex justify-between text-xs font-semibold">
+                    <span class="text-slate-500">Recaudado</span>
+                    <span class="text-primary">72%</span>
+                  </div>
+                </div>
+                <div
+                  class="pt-4 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center"
+                >
+                  <div>
+                    <p class="text-[10px] uppercase text-slate-400 font-bold">
+                      Objetivo
+                    </p>
+                    <p class="font-bold text-sm dark:text-slate-200">
+                      $45.000.000
+                    </p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[10px] uppercase text-slate-400 font-bold">
+                      Días restantes
+                    </p>
+                    <p
+                      class="font-bold text-sm text-slate-600 dark:text-slate-400"
+                    >
+                      12 días
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-shadow"
+            >
+              <img
+                alt="Mosque Renovation"
+                class="w-full h-48 object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4rmBUiIoN3H0nf4Hs9vSa7PoMvdtX8VPP6ALfEoQvGcPMQMfDPKJahBnB_90tdlo4RT_PckdXteE3eON9okPC0agbBEKeFV-fiXCAnudK5q98oJypjECS2xR3wWknKfKDISbRNTp_VF9tBXfK_FQ3WTmWXlaVhrGZZZEWooJjCukk8ZiVU5sxoIJeNWa8MFD0B6psvlvXGJrvL4FtnrpqXpVbvyn4RKluYYOelU1CS55hw2LljATzyQmaQJSd6Z9d8CxvZU4Gaa0"
+              />
+              <div class="p-6">
+                <h3
+                  class="font-bold text-lg mb-2 leading-tight dark:text-white"
+                >
+                  Renovación de Infraestructura Eléctrica
+                </h3>
+                <div
+                  class="flex items-center gap-1 text-xs text-green-600 font-bold mb-4"
+                >
+                  <span>Mezquita Central</span>
+                  <span class="material-symbols-outlined text-[14px]"
+                    >verified</span
+                  >
+                </div>
+                <div class="mb-4">
+                  <div
+                    class="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden mb-2"
+                  >
+                    <div class="bg-primary h-full w-[15%]"></div>
+                  </div>
+                  <div class="flex justify-between text-xs font-semibold">
+                    <span class="text-slate-500">Recaudado</span>
+                    <span class="text-primary">15%</span>
+                  </div>
+                </div>
+                <div
+                  class="pt-4 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center"
+                >
+                  <div>
+                    <p class="text-[10px] uppercase text-slate-400 font-bold">
+                      Objetivo
+                    </p>
+                    <p class="font-bold text-sm dark:text-slate-200">
+                      $120.000.000
+                    </p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[10px] uppercase text-slate-400 font-bold">
+                      Días restantes
+                    </p>
+                    <p
+                      class="font-bold text-sm text-slate-600 dark:text-slate-400"
+                    >
+                      145 días
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <h2 class="text-3xl font-extrabold mb-12 uppercase tracking-tighter">
+          Podcast &amp; Reflexiones
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer shadow-lg"
+          >
+            <img
+              alt="Podcast 1"
+              class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3E7lrQkQB_RaV6iMPDiVK7Ec0b8eW78Mh2I5o4BsWJCrzbT6f6hnB1XnvXU4TVwbUqdt43guoQ-_vgvKiKdn3av2dMJ7Ef3LMWVIBHT4A2QngXs40zKXoHjNgf-4xo8aCk4vZP8P8biIAxgVGOOffolXed8kcxom7JVmDrY0Tj2hJhcwRrXna8-V4MiwE_Xidcu9rVfr6yVGB-BvC-VBETgnnTlcbEYInVl0QnW8u8oCHxPNdIiXBWnx-Epf-T7TqVdRP6HUcutM"
+            />
+            <div
+              class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"
+            ></div>
+            <div class="absolute top-6 left-6 right-6">
+              <h3 class="text-xl font-bold text-white uppercase leading-snug">
+                La importancia de leer el Sagrado Corán
+              </h3>
+            </div>
+            <div class="absolute bottom-6 left-6 flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"
+              >
+                <span class="material-symbols-outlined text-white text-sm"
+                  >play_arrow</span
+                >
+              </div>
+              <span
+                class="text-white text-xs font-bold tracking-widest uppercase"
+                >Escuchar ahora</span
+              >
+            </div>
+          </div>
+          <div
+            class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer shadow-lg"
+          >
+            <img
+              alt="Podcast 2"
+              class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX_pOrlKWaBb21MxbHQoGm8DVBDNLoy0YFSQM6fak9nafsSKqy9AoGdRaiKkvWZ2CWQ9AC9eCFUTTv7BnNuxDRdnszV_KXS1QLDDmEtj62BEAIiJSxxz2svEJyCzDf3Xxn0Vyz_9qWSly4ws4PgmP6P1RSxI89Q2JT99wGy-dniYTJ0nmaIccbIjoseFmHBPs8oUC1mgnBDuDChFsxIv49cBiwt_XDMasu9xx6vWQIlhr9yYtcKm5ghsQ26IongjRMKfVM-jb2y9w"
+            />
+            <div
+              class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"
+            ></div>
+            <div class="absolute top-6 left-6 right-6">
+              <h3 class="text-xl font-bold text-white uppercase leading-snug">
+                El Valor de las 5 Oraciones Diarias
+              </h3>
+            </div>
+            <div class="absolute bottom-6 left-6 flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"
+              >
+                <span class="material-symbols-outlined text-white text-sm"
+                  >play_arrow</span
+                >
+              </div>
+              <span
+                class="text-white text-xs font-bold tracking-widest uppercase"
+                >Escuchar ahora</span
+              >
+            </div>
+          </div>
+          <div
+            class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer shadow-lg"
+          >
+            <img
+              alt="Podcast 3"
+              class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3yTR3f77aCob-ydTr3OKP4s8E0dMaVK3cuIke3la64bFhGAlLd2oe1y7UOtvPDRPE3trAOcnapjXdGggsJN_PWqcMhLg-PMZIZG7nFc_sVDGHhLgYf-F0mj3CuFFasrZGGUQNw-6mQ9p9_nRxrtxAGdg1LLI7fD-aAsmlowlSEac54fgD0GZiCn3p6oxo2ukpFtcFNsTdlLpYZGxDd8DgYgDZqdsmsiP2FpM1NwcUFSPakOA7sXxbx999bOCvSu0bC0k9zQYEJ6Y"
+            />
+            <div
+              class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"
+            ></div>
+            <div class="absolute top-6 left-6 right-6">
+              <h3 class="text-xl font-bold text-white uppercase leading-snug">
+                La Virtud de Buscar el Conocimiento
+              </h3>
+            </div>
+            <div class="absolute bottom-6 left-6 flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"
+              >
+                <span class="material-symbols-outlined text-white text-sm"
+                  >play_arrow</span
+                >
+              </div>
+              <span
+                class="text-white text-xs font-bold tracking-widest uppercase"
+                >Escuchar ahora</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+          <h2 class="text-3xl font-extrabold mb-12 uppercase tracking-tighter">
+            Últimas Noticias
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <article
+              class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden flex flex-col shadow-sm border border-slate-100 dark:border-slate-700"
+            >
+              <img
+                alt="Ramadan event"
+                class="h-64 object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVOCWOEuwCkzwqIsRnYczgH6z5RViOvSUFrwNyrkjiflBtwNP68bAyM0kNUnupi-pZXN6Jx2PprW5Yl68WuZ8SQnBc8XweUKjYLs1dk34aeT2TVV-1A-VLcLqCgrN_fyBQOIa3lnU_dq8rzMze4CVDum4vrTcs7CbTjrZUCcpFCdxvs9kzjRrHiqhGFlV08o2Ypnh4aorgNZ4irKhSvlUL03USCwnu3S7purya8sS59clismy86sT2qikTkl0kz9tNA48v560BCFM"
+              />
+              <div class="p-8">
+                <h3
+                  class="text-2xl font-bold mb-4 dark:text-white leading-tight"
+                >
+                  Preparativos para el Ramadán 1445 H: Faltan 30 días
+                </h3>
+                <p
+                  class="text-slate-500 dark:text-slate-400 mb-8 line-clamp-3 leading-relaxed"
+                >
+                  La comunidad se prepara para el mes más sagrado del año.
+                  Conozca el cronograma de Iftars comunitarios y las actividades
+                  especiales que hemos planeado para este año.
+                </p>
+                <a
+                  class="inline-flex items-center gap-3 bg-secondary text-white px-8 py-3 rounded-xl font-bold hover:bg-opacity-90 transition-all group"
+                  href="#"
+                >
+                  LEER MÁS
+                  <span
+                    class="material-symbols-outlined group-hover:translate-x-1 transition-transform"
+                    >arrow_right_alt</span
+                  >
+                </a>
+              </div>
+            </article>
+            <article
+              class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden flex flex-col shadow-sm border border-slate-100 dark:border-slate-700"
+            >
+              <img
+                alt="Bazaar event"
+                class="h-64 object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAvWR7RwvDGeNsJVi6e6TMcJlVEIXD62LexXeJpGrRAuN1w63hCw3SQRjbDZdmsIkpgbZ3O3EPZ5_vEfn2XihwscurLXKljvWkESg8AFCSVeVmyq1WM2qnFobe1BU6R-tv4EyVAq0068XH-D7dmqnMj4hUq2UipZx3ZwQ6Y7M6RKTe5VXvhm_MCLsz5IPDg_EhpQyGdsQ-9HYrwjcg0fqBugfLkSKire1gT3j4ZIgRAxGLZNSqd_MYntNOPXx_-ShJJSavfHNmYhM"
+              />
+              <div class="p-8">
+                <h3
+                  class="text-2xl font-bold mb-4 dark:text-white leading-tight"
+                >
+                  Exitosa Jornada de Bazar Solidario en la Capital
+                </h3>
+                <p
+                  class="text-slate-500 dark:text-slate-400 mb-8 line-clamp-3 leading-relaxed"
+                >
+                  El pasado fin de semana celebramos nuestro bazar anual.
+                  Gracias a todos los participantes pudimos recaudar fondos
+                  significativos para los programas sociales de la mezquita.
+                </p>
+                <a
+                  class="inline-flex items-center gap-3 bg-secondary text-white px-8 py-3 rounded-xl font-bold hover:bg-opacity-90 transition-all group"
+                  href="#"
+                >
+                  LEER MÁS
+                  <span
+                    class="material-symbols-outlined group-hover:translate-x-1 transition-transform"
+                    >arrow_right_alt</span
+                  >
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="bg-slate-900 text-white pt-24">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 pb-12 text-center">
+        <div
+          class="w-20 h-20 bg-primary/20 backdrop-blur rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-3"
+        >
+          <span
+            class="material-symbols-outlined text-white text-4xl transform -rotate-3"
+            >mosque</span
+          >
+        </div>
+        <h2 class="text-3xl font-extrabold mb-8 tracking-tighter uppercase">
+          Mezquita Central de Bogotá
+        </h2>
+        <div class="flex justify-center gap-6 mb-12">
+          <a
+            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-all"
+            href="#"
+          >
+            <img
+              alt="Facebook"
+              class="w-5 h-5"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnb9VHUHpPmVAf2iCN6KJ4TLMWNR36_N1izTWSykCDImj2l-W3k1xAAQUO7uhzNPbMwKYqids5jQ8l359fjFIHq7fIKBQAFQNhF1P5YFMvRX6PP025tV8w3Fqr3k79kvKxTnZ0Bjz_NpdaIMbQ85HQ5EwqKKegf84_0TYbmlCqqb5sHV9y2RSGsV7iNEpaCQ_d0OjB6I6cLW_E1c0cTcdDL3Dmv9XhthITVpB3DynSV7IxeI8wk687YakFM2Pbd90188xbxw7g0S8"
+            />
+          </a>
+          <a
+            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-all"
+            href="#"
+          >
+            <img
+              alt="Twitter"
+              class="w-5 h-5"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsbnNrfIcAkof7pu_HBCAH16P6M_BRV-SODZch3-swgzOjPiDbpS4gCDSezcUMZZX9OJ6uz7uFS6hgeV-5t30nXlhQtB-K1E7R7xn0jYFg9Ow4IyPEGtPXXxyimLze1EwXLuke-L3jxUrPUegVH-h4fSRIzYHw0vnlL-VFXjdo05wjKf9kn4laTm7NmjKEbQr_MBugA-6O2QD2VbUr9n9qrcpnSPgUClT9d1BJqgYkcphsu704sUffqtL7rXRY2zkxrlZJQd71DsU"
+            />
+          </a>
+          <a
+            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-all"
+            href="#"
+          >
+            <img
+              alt="Instagram"
+              class="w-5 h-5"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAowcZuIhm5NO8VcovhInwYxQHZBaE-PP73FY57ZHga--5QKuv03M_GhuGsIAqBMlVp5sfeV9rhrbUVuzMKu4Pgz_Mm8huRyN0-fMSrOScSYeWulpz-SXootnfkHUbmMjjAlM4nLO3LH-sPKjEYWl4-4MxT_MReOSvYAvZgel_KpBJagguc5WwgF9gzp2-TkxgrR_QmHO8Vx-muzlD9NBa_rW62wvJjJe0HagDhhD4EvIvCcDp0HvhxdttC8_JfGcGN8RGFqoc3UG0"
+            />
+          </a>
+          <a
+            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-all"
+            href="#"
+          >
+            <img
+              alt="YouTube"
+              class="w-5 h-5"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBC0RhCFhIU-UiNJCFWES3LYiKPuJwHaduurYGUGJkDcMnb-CcG3IrganE2d-XKVK4AJuEv_RTS26mK86ZsOGz7aC4ALVKprFsEJDnOE8oJYQ29fqauN6OyQsarHNtOr5JegZ6ketIGw6ZF7BkGflgle5oRss-QcpmcBQgI50DNDisbgBEJaakF7InSzhgXIC9INe6lKgtA9QGyOnlwRaQjrRecW-Hdb4sWUeUrWU9PAT2nAVi6Pd1q0s7GWrZ21DXDlzE81gVzZNA"
+            />
+          </a>
+        </div>
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm text-slate-400 mb-16 border-t border-white/5 pt-16 text-left"
+        >
+          <div>
+            <h4
+              class="text-white font-bold mb-4 uppercase text-xs tracking-widest"
+            >
+              Institución
+            </h4>
+            <ul class="space-y-2">
+              <li><a class="hover:text-white" href="#">Sobre nosotros</a></li>
+              <li><a class="hover:text-white" href="#">Transparencia</a></li>
+              <li><a class="hover:text-white" href="#">Gobierno</a></li>
+              <li><a class="hover:text-white" href="#">Contacto</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-4 uppercase text-xs tracking-widest"
+            >
+              Actividades
+            </h4>
+            <ul class="space-y-2">
+              <li><a class="hover:text-white" href="#">Escuela Coránica</a></li>
+              <li><a class="hover:text-white" href="#">Juventud</a></li>
+              <li><a class="hover:text-white" href="#">Convertidos</a></li>
+              <li><a class="hover:text-white" href="#">Social</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-4 uppercase text-xs tracking-widest"
+            >
+              Ayuda
+            </h4>
+            <ul class="space-y-2">
+              <li>
+                <a class="hover:text-white" href="#">Preguntas Frecuentes</a>
+              </li>
+              <li><a class="hover:text-white" href="#">Donar Zakat</a></li>
+              <li><a class="hover:text-white" href="#">Voluntariado</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-4 uppercase text-xs tracking-widest"
+            >
+              Legal
+            </h4>
+            <ul class="space-y-2">
+              <li><a class="hover:text-white" href="#">Privacidad</a></li>
+              <li><a class="hover:text-white" href="#">Términos de Uso</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-black/50 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+          <p class="text-slate-500 text-xs font-medium">
+            © 2024 Mezquita Central de Bogotá. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

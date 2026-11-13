@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Media Center - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "nav-navy": "#212E80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-overlay {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Simulate mobile frame on desktop */
+        .mobile-frame {
+            width: 365px;
+            height: 812px;
+            margin: 20px auto;
+            border: 8px solid #171212;
+            border-radius: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-slate-200 font-display">
+<!-- Mobile Screen Simulator -->
+<div class="mobile-frame bg-background-light dark:bg-background-dark">
+<div class="h-full flex flex-col overflow-y-auto hide-scrollbar pb-20">
+<!-- Hero Section with Glassmorphism -->
+<div class="relative w-full h-64 flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Grand architectural view of the Central Mosque of Bogota" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACNEx9yFrq8k24zUxvotYL9B45nGcUoon5DF_DVK061uNsAxz8gcVxb8ehqHwjzBumJCP30DU3ZAPSMtIjRgcSsSEp2HhH9uW2Droa4GzsZ-_LSKI_n-MobUQhgbf1UgK-kz4qj1Qb84yme8VGi9dVCAVw3nwreFGOqCoBr_geNlJA-M0hvGC9o452li-ipecqcpmTOpem3kGC7c7yaIPuJVyOwt545zJTO8lCw-9w-XD6PiE-cg8ZSyqQ02e3Jid7rzC251DD2nQ');">
+<div class="absolute inset-0 bg-black/30"></div>
+</div>
+<!-- Status Bar Simulation -->
+<div class="relative flex justify-between px-6 pt-4 text-white text-xs font-bold">
+<span>9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-symbols-outlined text-sm">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-sm">wifi</span>
+<span class="material-symbols-outlined text-sm">battery_full</span>
+</div>
+</div>
+<!-- Glassmorphism Title -->
+<div class="absolute inset-0 flex items-center justify-center px-8">
+<div class="glass-overlay rounded-xl w-full py-6 text-center shadow-lg">
+<h1 class="text-white text-2xl font-bold tracking-tight">Media Center</h1>
+<p class="text-white/80 text-xs mt-1 px-4">Watch sermons and community stories</p>
+</div>
+</div>
+</div>
+<!-- Recent Media Horizontal Carousel -->
+<section class="mt-6">
+<div class="flex items-center justify-between px-5 mb-4">
+<h2 class="text-[#171212] dark:text-white text-lg font-bold">Recent Media</h2>
+<span class="text-primary text-xs font-bold">See All</span>
+</div>
+<div class="flex overflow-x-auto hide-scrollbar gap-4 px-5 pb-2">
+<!-- Carousel Item 1 -->
+<div class="flex-shrink-0 w-64">
+<div class="relative aspect-video rounded-xl overflow-hidden shadow-sm">
+<img alt="" class="w-full h-full object-cover" data-alt="Muslim community gathering for prayer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBClSAreQXfOfXQYe49_fvC5U9lZGrN9DPRVFS2czJh1TZDEE8OV_CJ-Ubr_N1zzCNB5GFWltr7LHSiUtCf26QM_ImBpmpGI-WCoQR2Ah7a1SBk-79fSjTnJp8vMtAy-VCbAPsF2kXPDEQrPVa-qOoix0mT5HLr7lbt3MLjvglgZ48GXAuB8s2t3IFFZVmrppBUkr3dJYgifNp6JyYUb6LkktsTpLNYRlSREy5MCWX_0zmSnqoF2pz6PSHfVvgZw7TK2eqIzkId6ag"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined leading-none ml-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md">12:45</div>
+</div>
+<h3 class="mt-2 text-sm font-bold text-[#171212] dark:text-white line-clamp-1">The Essence of Faith</h3>
+<p class="text-xs text-[#856866] dark:text-gray-400">Friday Khutbah • May 12</p>
+</div>
+<!-- Carousel Item 2 -->
+<div class="flex-shrink-0 w-64">
+<div class="relative aspect-video rounded-xl overflow-hidden shadow-sm">
+<img alt="" class="w-full h-full object-cover" data-alt="Traditional lanterns in a mosque setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBx8HoD93-UHr6TwYzI-GJn1YEQQcMY-TodU8HQfN4jnccqIxc1BEIjA-IrTlaXDqed7iWYfQH76AC3qPa-1fLQ9gfqlFtTw92XyV1fiycvsWAI_zD797i8Rp6kpqGYVkNRuN774Hf8DDDxowI59JIrfxWyQdG_HJY4VYLKZ6nL8018odiCbSfYs52UKAaSlvaNbQ2pONAIqo6ZSBqfMMoOLT3nnuXXfI_TlMMOJxFq8eBGNIWEORmaBb9013YCU2YGzv9LuxoSzU"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<div class="w-10 h-10 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined leading-none ml-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md">08:20</div>
+</div>
+<h3 class="mt-2 text-sm font-bold text-[#171212] dark:text-white line-clamp-1">Community Iftar Highlights</h3>
+<p class="text-xs text-[#856866] dark:text-gray-400">Event Recap • April 30</p>
+</div>
+</div>
+</section>
+<!-- Vertical Media Feed -->
+<section class="mt-8 px-5">
+<h2 class="text-[#171212] dark:text-white text-lg font-bold mb-4">Latest Uploads</h2>
+<div class="space-y-6">
+<!-- Media Card 1 -->
+<div class="group">
+<div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-gray-200">
+<img alt="" class="w-full h-full object-cover" data-alt="Person reading religious scriptures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABLboeb8l4IW8WfB6HwJ7CcLxkNOlxyW7i7hq6C_Y2cVdgPRSZXwYwj31fuDl0ABA0lSisqQigQrJUbNC3aS7vLCfJ9aXnvHuDLLzVDxmpbfnEqVU7koDg63iBwE3wjb5PiVmjefyaVmZpzU025-LZ18uje4Hm4X-tPcmlV_CyzqRscCOxcvAQnjve7hlGNbqAoNMrpKFavCEwvGEARvyY8bqHmEQqutjJ8YbFZa-MyOaFvQfmB6TQ2oLMflPt9Dx0Kcg7JZNAeoY"/>
+<div class="absolute bottom-3 left-3 flex gap-2">
+<div class="bg-primary px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
+<span class="material-symbols-outlined text-white text-xs">volume_up</span>
+<span class="text-white text-[10px] font-bold">LECTURE</span>
+</div>
+</div>
+</div>
+<div class="mt-3 flex justify-between items-start">
+<div class="max-w-[85%]">
+<h3 class="text-base font-bold text-[#171212] dark:text-white leading-tight">Understanding Surah Al-Baqarah: Part 1</h3>
+<p class="text-xs text-[#856866] dark:text-gray-400 mt-1 italic">Dr. Ahmad Al-Zayed • 45 mins</p>
+</div>
+<button class="text-[#171212] dark:text-white">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Media Card 2 -->
+<div class="group">
+<div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-gray-200">
+<img alt="" class="w-full h-full object-cover" data-alt="Aerial view of city landscape at dawn" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfBR7qtj9gE_XTBjkawGa6fttM0HIjWZd6-eOGbrK_Dt9nRymFEdim1mz7BhKc9H04A286GPOkmm5KfvRhlVPJ3pQPUxx0Y1CF_LDiiAUfj5IFt6MWRuQRJszAwSX3GdlkwvLt7MqDGL5X0IQ7Eb2lo20ENd2xZcu8f_lwASkkPLzWKiwP_43iR49qQtnQhHkmQFBGNoSav4pf_-in-nG5xknyUoEGt3Gy2Zu3myQx1PH1uz9q20xJGGGsM6rQpFQlZ5ZdbppkBBs"/>
+<div class="absolute bottom-3 left-3 flex gap-2">
+<div class="bg-primary px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
+<span class="material-symbols-outlined text-white text-xs">videocam</span>
+<span class="text-white text-[10px] font-bold">VLOG</span>
+</div>
+</div>
+</div>
+<div class="mt-3 flex justify-between items-start">
+<div class="max-w-[85%]">
+<h3 class="text-base font-bold text-[#171212] dark:text-white leading-tight">Bogotá Community Outreach Day</h3>
+<p class="text-xs text-[#856866] dark:text-gray-400 mt-1 italic">Volunteer Team • 15 mins</p>
+</div>
+<button class="text-[#171212] dark:text-white">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Media Card 3 (Now Playing State) -->
+<div class="group border-2 border-primary/20 bg-primary/5 p-3 rounded-xl">
+<div class="relative w-full aspect-[16/9] rounded-lg overflow-hidden bg-gray-200">
+<img alt="" class="w-full h-full object-cover" data-alt="Islamic geometric patterns on a wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcmOAB8OMkhxDX_7BqfIO-8jotRu3vajXuZxQEmGn3FoBKgUsCxFK5fFon-YLAybLaBEKQ9X2A7fpFRlZb7DMOghwHfSwtEOwk7GZ249EIZn8UDSJuh4UuimCu8cZTCIAceSOdC9IkMGL5cLuPkX4yBbS1MnMIZQNgMjFQ4ZAo07lbPTtEbG0OiE-6WZMSthz_Bmx6kIT4asCpagmi-aVZgyLv042NsK_5BK4bIbPWlV-pZCsBT5O7xs022FrAggK7LSFfINpiCxI"/>
+<div class="absolute inset-0 bg-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl">pause_circle</span>
+</div>
+<!-- Progress Bar -->
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-white/30">
+<div class="h-full bg-primary w-[65%]"></div>
+</div>
+</div>
+<div class="mt-3 flex justify-between items-center">
+<div>
+<h3 class="text-sm font-bold text-primary">CONTINUE WATCHING</h3>
+<h4 class="text-base font-bold text-[#171212] dark:text-white leading-tight">History of Islam in Colombia</h4>
+</div>
+<span class="material-symbols-outlined text-primary">equalizer</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="absolute bottom-0 left-0 right-0 bg-nav-navy h-20 flex items-center justify-around px-4 rounded-t-xl z-20">
+<div class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+<span class="text-[10px] font-medium">Events</span>
+</div>
+<!-- Active State -->
+<div class="relative -top-2">
+<div class="bg-primary p-4 rounded-full shadow-lg shadow-primary/40 border-4 border-nav-navy">
+<span class="material-symbols-outlined text-white text-3xl">play_circle</span>
+</div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-white text-[10px] font-bold">Media</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-2xl">volunteer_activism</span>
+<span class="text-[10px] font-medium">Donations</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-2xl">menu</span>
+<span class="text-[10px] font-medium">More</span>
+</div>
+</nav>
+<!-- Home Indicator -->
+<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-30"></div>
+</div>
+</body></html>

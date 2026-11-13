@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Events - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "secondary-blue": "#212e80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#1a100f] dark:text-white antialiased">
+<!-- iOS Status Bar Spacer -->
+<div class="h-12 w-full bg-background-light dark:bg-background-dark sticky top-0 z-50"></div>
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark max-w-md mx-auto">
+<!-- TopAppBar -->
+<header class="flex flex-col px-6 pb-4 pt-2 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-12 z-40">
+<div class="flex items-center justify-between mb-4">
+<button class="text-primary flex items-center justify-center p-2 -ml-2">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+</button>
+<button class="text-primary flex items-center justify-center p-2 -mr-2">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</div>
+<h1 class="text-3xl font-bold tracking-tight text-[#1a100f] dark:text-white">Eventos</h1>
+</header>
+<!-- Calendar Month Header -->
+<div class="flex items-center justify-between px-6 py-4">
+<h2 class="text-lg font-semibold text-[#1a100f] dark:text-white">Octubre 2023</h2>
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Agenda List View -->
+<main class="flex-1 px-6 pb-24">
+<div class="space-y-8">
+<!-- Event 1 -->
+<div class="flex gap-4">
+<!-- Blue Date Bubble -->
+<div class="flex flex-col items-center justify-center shrink-0 size-14 rounded-2xl bg-secondary-blue text-white shadow-lg">
+<span class="text-sm font-medium leading-none mb-1">OCT</span>
+<span class="text-xl font-bold leading-none">13</span>
+</div>
+<!-- Event Content -->
+<div class="flex flex-col flex-1 pt-1">
+<h3 class="text-lg font-bold leading-tight text-[#1a100f] dark:text-white mb-1">Khutbah de Viernes</h3>
+<p class="text-sm text-[#1a100f]/60 dark:text-white/60 mb-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                            1:00 PM - 2:00 PM • Salón Principal
+                        </p>
+<button class="flex items-center justify-center gap-2 w-full sm:w-fit px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm">calendar_add_on</span>
+                            Agregar al Calendario
+                        </button>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-[#1a100f]/5 dark:bg-white/5 w-full ml-18"></div>
+<!-- Event 2 -->
+<div class="flex gap-4">
+<!-- Blue Date Bubble -->
+<div class="flex flex-col items-center justify-center shrink-0 size-14 rounded-2xl bg-secondary-blue text-white shadow-lg">
+<span class="text-sm font-medium leading-none mb-1">OCT</span>
+<span class="text-xl font-bold leading-none">15</span>
+</div>
+<!-- Event Content -->
+<div class="flex flex-col flex-1 pt-1">
+<h3 class="text-lg font-bold leading-tight text-[#1a100f] dark:text-white mb-1">Clase de Memorización del Corán</h3>
+<p class="text-sm text-[#1a100f]/60 dark:text-white/60 mb-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                            5:30 PM - 7:00 PM • Aula 2
+                        </p>
+<button class="flex items-center justify-center gap-2 w-full sm:w-fit px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm">calendar_add_on</span>
+                            Agregar al Calendario
+                        </button>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-[#1a100f]/5 dark:bg-white/5 w-full ml-18"></div>
+<!-- Event 3 -->
+<div class="flex gap-4">
+<!-- Blue Date Bubble -->
+<div class="flex flex-col items-center justify-center shrink-0 size-14 rounded-2xl bg-secondary-blue text-white shadow-lg">
+<span class="text-sm font-medium leading-none mb-1">OCT</span>
+<span class="text-xl font-bold leading-none">18</span>
+</div>
+<!-- Event Content -->
+<div class="flex flex-col flex-1 pt-1">
+<h3 class="text-lg font-bold leading-tight text-[#1a100f] dark:text-white mb-1">Cena Comunitaria</h3>
+<p class="text-sm text-[#1a100f]/60 dark:text-white/60 mb-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                            7:00 PM - 9:00 PM • Patio Central
+                        </p>
+<button class="flex items-center justify-center gap-2 w-full sm:w-fit px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm">calendar_add_on</span>
+                            Agregar al Calendario
+                        </button>
+</div>
+</div>
+<!-- Event 4 (Featured Image Item) -->
+<div class="flex flex-col gap-4 mt-4">
+<div class="flex gap-4">
+<div class="flex flex-col items-center justify-center shrink-0 size-14 rounded-2xl bg-secondary-blue text-white shadow-lg">
+<span class="text-sm font-medium leading-none mb-1">OCT</span>
+<span class="text-xl font-bold leading-none">21</span>
+</div>
+<div class="flex flex-col flex-1 pt-1">
+<h3 class="text-lg font-bold leading-tight text-[#1a100f] dark:text-white mb-1">Conferencia: Paz y Unidad</h3>
+<p class="text-sm text-[#1a100f]/60 dark:text-white/60 mb-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                                10:00 AM - 12:00 PM • Auditorio
+                            </p>
+</div>
+</div>
+<div class="w-full h-48 rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+<img class="w-full h-full object-cover" data-alt="Modern interior of a mosque with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9NcwFqgv3tSGJXPbl44AvX2hyTJ8804jKlrCwBPN-cfwXDqRDquVB3Duu1y7iwIfnq3FZWV52N2mK1iQi2MRO6Gm1nGF4WdZFsWwOaXjhayLAMRnnWVlDq4YZJtio-Z0FAoORsXVys1PXMJD27TAkocx3gfCJ59173iJV9_3tekMlWvPGiyMtTq3q9-TDl87cf53payn9eZ9y2EV3gsxW2DF7P3A1O9zm0akePav7ba6kHDwB-5FJ5DrvbU_YK3XuwCkt6SnBuaM"/>
+</div>
+<button class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary text-white rounded-lg text-sm font-semibold transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-sm">calendar_add_on</span>
+                        Agregar al Calendario
+                    </button>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Navigation (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-[#1a100f]/5 dark:border-white/5 px-6 pt-3 pb-8 max-w-md mx-auto z-50">
+<div class="flex justify-between items-center max-w-xs mx-auto">
+<button class="flex flex-col items-center gap-1 text-[#1a100f]/40 dark:text-white/40">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium">Inicio</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl font-bold">calendar_month</span>
+<span class="text-[10px] font-bold">Eventos</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#1a100f]/40 dark:text-white/40">
+<span class="material-symbols-outlined text-2xl">mosque</span>
+<span class="text-[10px] font-medium">Rezos</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#1a100f]/40 dark:text-white/40">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</button>
+</div>
+</nav>
+<!-- iOS Home Indicator -->
+<div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-[#1a100f]/20 dark:bg-white/20 rounded-full z-[60]"></div>
+</div>
+</body></html>

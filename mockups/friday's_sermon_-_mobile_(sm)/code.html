@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Friday's Sermon - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#212e82",
+                        "accent-red": "#C13026",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#13151f",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Newsreader', serif;
+        }
+        .glass-title {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #212e82;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-slate-200 flex justify-center items-center min-h-screen">
+<!-- Mobile Container (SM 365px) -->
+<div class="relative w-[365px] h-[812px] bg-background-light dark:bg-background-dark shadow-2xl overflow-hidden flex flex-col rounded-[3rem] border-[8px] border-slate-800">
+<!-- Header / Status Bar Area -->
+<header class="sticky top-0 z-30 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-primary/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mosque</span>
+<h1 class="text-primary font-bold text-lg tracking-tight">Central Mosque</h1>
+</div>
+<div class="flex gap-3">
+<button class="text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto custom-scrollbar pb-24">
+<!-- Hero Section with Full Bleed Video Player Area -->
+<div class="relative w-full aspect-[9/10] bg-slate-900 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-70" data-alt="Interior of a majestic mosque with sunlight streaming in" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAX7d8ZXW8vqpU0ewzaLwXO_k5GV5WO7ADx7vHyY6_XzGnc-_uMesNe214GUoXIItHxlYXHdWXY7RVTaFNU6zQErALpYEHvJEdo549x57AX-WiaZA_wKgE31ytdnwpJLT3I74rH5dmaglh9cH_rPwq8YBm9kATfJz0VLSf8zXaaG8Gdve28M23ePtnYXaNfzFCupakVcGFvyFkbNJerHD61_a64prPtz8p-77bCUiCGAj5bHcW5Md4s6ad2go6EF0sFBx9c9euswvU');">
+</div>
+<!-- Glassmorphic Title Card -->
+<div class="absolute bottom-6 left-6 right-6 glass-title p-5 rounded-xl text-white">
+<span class="text-xs uppercase tracking-widest font-semibold text-white/80">Khutbah Jumu'ah</span>
+<h2 class="text-2xl font-bold leading-tight mt-1">The Power of Patience in Times of Trials</h2>
+<p class="text-sm mt-2 text-white/90">Sheikh Ibrahim Malik • Bogotá, CO</p>
+</div>
+<!-- Play Overlay for Video -->
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="size-20 bg-primary/90 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform">
+<span class="material-symbols-outlined !text-4xl">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Segmented Control -->
+<div class="px-6 py-6">
+<div class="flex bg-slate-200 dark:bg-slate-800 p-1 rounded-xl">
+<button class="flex-1 py-2 text-sm font-semibold rounded-lg bg-white dark:bg-slate-700 shadow-sm text-primary">
+                        Audio Player
+                    </button>
+<button class="flex-1 py-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                        Read Script
+                    </button>
+</div>
+</div>
+<!-- Audio Player Interface -->
+<div class="px-6 pb-8">
+<div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-primary/5">
+<div class="flex flex-col items-center text-center">
+<div class="size-24 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary !text-5xl">graphic_eq</span>
+</div>
+<h3 class="text-lg font-bold text-slate-800 dark:text-white">Audio Khutbah</h3>
+<p class="text-sm text-slate-500">Duration: 24:15</p>
+</div>
+<!-- Progress Bar -->
+<div class="mt-6">
+<div class="relative w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-primary w-1/3"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] font-bold text-slate-400">08:05</span>
+<span class="text-[10px] font-bold text-slate-400">24:15</span>
+</div>
+</div>
+<!-- Controls -->
+<div class="flex items-center justify-center gap-8 mt-4">
+<button class="text-slate-400"><span class="material-symbols-outlined">replay_10</span></button>
+<button class="size-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined">pause</span>
+</button>
+<button class="text-slate-400"><span class="material-symbols-outlined">forward_10</span></button>
+</div>
+</div>
+</div>
+<!-- Script Content (Teaser) -->
+<div class="px-6 pb-12">
+<h4 class="text-primary font-bold text-lg mb-4 border-b border-primary/10 pb-2">Sermon Summary</h4>
+<div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+<p class="italic text-slate-500 text-base">In the name of Allah, the Most Gracious, the Most Merciful...</p>
+<p>
+                        Patience (Sabr) is not merely waiting; it is how we behave while we are waiting. In today's discourse, we reflect on the trials faced by the prophets and how their steadfastness serves as a beacon for our modern struggles.
+                    </p>
+<p>
+                        The Quran reminds us: "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient." (2:153).
+                    </p>
+</div>
+<button class="mt-6 text-primary font-bold flex items-center gap-1 text-sm group">
+                    Continue reading script 
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Floating Action Button: Donate -->
+<button class="absolute bottom-24 right-6 size-14 bg-accent-red text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-all z-40 border-4 border-white dark:border-slate-900">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="absolute bottom-0 left-0 right-0 h-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 flex items-center justify-around px-4 z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400 transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">HOME</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 transition-colors" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span class="text-[10px] font-bold">PRAYER</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined !fill-1">menu_book</span>
+<span class="text-[10px] font-bold">SERMONS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 transition-colors" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="text-[10px] font-bold">EVENTS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 transition-colors" href="#">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="text-[10px] font-bold">MORE</span>
+</a>
+</nav>
+<!-- Visual "Home Indicator" -->
+<div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-300 dark:bg-slate-700 rounded-full z-[60]"></div>
+</div>
+</body></html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Stream Dashboard | Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c32d22",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                        "spiritual-blue": "#212E80"
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .live-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        body {
+            font-family: 'Spline Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-spiritual-blue text-white min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Live Banner -->
+<div class="w-full bg-primary py-2 px-6 flex items-center justify-between z-50">
+<div class="flex items-center gap-3">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+</span>
+<span class="text-xs font-bold tracking-[0.2em] uppercase">Live from Bogotá: Friday Khutbah</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="text-xs font-medium opacity-80">1,240 Viewers Online</span>
+<span class="text-xs font-medium opacity-80">Imam Abdullah Hassan</span>
+</div>
+</div>
+<!-- Header Navigation -->
+<header class="flex items-center justify-between px-10 py-5 border-b border-white/10 glass-panel">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Central Mosque of Bogotá</h2>
+</div>
+<div class="flex items-center gap-10">
+<nav class="flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Prayer Times</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">About</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg font-bold text-sm transition-all shadow-lg shadow-primary/20">
+                    Donate
+                </button>
+<div class="h-10 w-10 rounded-full border-2 border-primary/30 p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi2W_-snb-GG-ray8XVjWBFrk4np7jC6hg0SviFDxTmtcRPnMGo5XQjZlisHdLfW1sQFZ-09ZIMm4fghaM3QbsH9XT0VP8vat7QWq4HTlLd_OVC6H6awOb7kMkDCn6PDHV4V9gh5c94rDHnCyxe0-8OZZg845q5ylweVdp1WdlH0RthnAh2044uLJhUg4LXjTg9oWA3w5ZiGTqrqVLhrRPReohHlz8tzQcu_ByRtjpHARBqAILHKsDBpBC2MuR-_vAcAIYdNyIgHQ"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<main class="flex-1 flex max-w-[1440px] mx-auto w-full p-6 gap-6 h-[calc(100vh-140px)]">
+<!-- Left Column: Video Player and Donation -->
+<div class="flex-1 flex flex-col gap-6">
+<!-- Video Player -->
+<div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl group">
+<img class="w-full h-full object-cover" data-alt="Cinematic interior view of Bogotá mosque during sermon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzlNGjlca-LaIYpQdVPuf_CbF57CNKpOck0FHyH1doK2IZpv3U7A04auv3bghIBNedETc8w6LZuP7ib1KL48Nc_b7jr2ersDd4PDS_XrNoKOieOK_Ff4CgBWVXfepLB3Lha5wG7ZbpJcn_j7l3uFjk3XZqcMuqoGKVbazxzJzdXm0yfDmLd6Y4w44I-GhtJ8J7bCUsfR-K0858r8bsGiXDwLOu_m7trS533YPDxfLI0SdITXvQqVAtkyTsVNoo37sOfzwx2lbrhrU"/>
+<!-- Player Overlays -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 flex flex-col justify-between p-6">
+<div class="flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="flex items-center gap-3">
+<span class="bg-primary px-3 py-1 rounded text-[10px] font-bold tracking-widest uppercase">HD Live</span>
+<h3 class="font-medium text-lg">Jummah Khutbah: Building a Resilient Ummah</h3>
+</div>
+<button class="material-symbols-outlined hover:text-primary">settings</button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Progress Bar for Video -->
+<div class="w-full h-1 bg-white/20 rounded-full cursor-pointer group/seek">
+<div class="h-full bg-primary w-2/3 relative rounded-full">
+<div class="absolute -right-1.5 -top-1 size-3 bg-white rounded-full shadow-lg scale-0 group-hover/seek:scale-100 transition-transform"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-3xl">play_arrow</button>
+<button class="material-symbols-outlined">volume_up</button>
+<span class="text-sm font-mono tracking-tighter">45:22 / 60:00</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined">subtitles</button>
+<button class="material-symbols-outlined">fullscreen</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Donation Progress Bar -->
+<div class="glass-panel rounded-xl p-6 flex items-center justify-between gap-8">
+<div class="flex-1">
+<div class="flex justify-between items-end mb-3">
+<div>
+<p class="text-xs uppercase tracking-widest text-primary font-bold">Monthly Goal: Mosque Renovation</p>
+<h4 class="text-xl font-bold">75% Supported</h4>
+</div>
+<p class="text-sm opacity-60">$15,000 / $20,000 USD</p>
+</div>
+<div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-bold text-sm transition-all">
+                        View Details
+                    </button>
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-bold text-sm transition-all shadow-lg shadow-primary/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">volunteer_activism</span>
+                        Support Now
+                    </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Digital Khutbah Companion -->
+<aside class="w-[400px] flex flex-col glass-panel rounded-xl overflow-hidden">
+<!-- Header Tabs -->
+<div class="flex border-b border-white/10">
+<button class="flex-1 py-4 text-xs font-bold uppercase tracking-widest border-b-2 border-primary">Takeaways</button>
+<button class="flex-1 py-4 text-xs font-bold uppercase tracking-widest border-b-2 border-transparent opacity-40 hover:opacity-100 transition-all">References</button>
+<button class="flex-1 py-4 text-xs font-bold uppercase tracking-widest border-b-2 border-transparent opacity-40 hover:opacity-100 transition-all">Live Q&amp;A</button>
+</div>
+<!-- Tab Content -->
+<div class="flex-1 flex flex-col p-6 overflow-y-auto">
+<div class="mb-6">
+<h4 class="text-sm font-bold text-primary mb-1 uppercase tracking-wider">Current Topic</h4>
+<p class="text-lg font-medium leading-tight">The historical context of community building in Medina</p>
+</div>
+<div class="space-y-4">
+<h4 class="text-xs font-bold opacity-40 uppercase tracking-widest">Live Summary</h4>
+<div class="flex gap-4 group">
+<div class="h-5 w-5 mt-1 rounded border-2 border-primary bg-primary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<div>
+<p class="text-sm font-medium">Concept of 'Ummah' as a trans-national family</p>
+<p class="text-xs opacity-50 mt-1 italic">Recorded at 13:22</p>
+</div>
+</div>
+<div class="flex gap-4 group">
+<div class="h-5 w-5 mt-1 rounded border-2 border-primary bg-primary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<div>
+<p class="text-sm font-medium">The Constitution of Medina: A blueprint for pluralism</p>
+<p class="text-xs opacity-50 mt-1 italic">Recorded at 13:35</p>
+</div>
+</div>
+<div class="flex gap-4 group">
+<div class="h-5 w-5 mt-1 rounded border-2 border-white/20 flex items-center justify-center shrink-0"></div>
+<div>
+<p class="text-sm font-medium opacity-60">Practical steps for supporting local neighbors in Bogotá</p>
+<p class="text-xs opacity-30 mt-1 italic">Ongoing...</p>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-white/10">
+<h4 class="text-xs font-bold opacity-40 uppercase tracking-widest mb-4">Mentioned Verses</h4>
+<div class="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-4">
+<p class="text-right text-lg font-serif mb-2" dir="rtl">يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ</p>
+<p class="text-xs font-medium text-primary mb-1">Surah Al-Hujurat 49:13</p>
+<p class="text-xs opacity-70 italic leading-relaxed">"O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another."</p>
+</div>
+</div>
+</div>
+<!-- Interaction Bar -->
+<div class="p-4 bg-white/5 border-t border-white/10">
+<div class="relative">
+<input class="w-full bg-white/5 border-none focus:ring-1 focus:ring-primary rounded-lg py-3 px-4 text-sm pr-12" placeholder="Ask a question..." type="text"/>
+<button class="absolute right-3 top-2.5 text-primary">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<p class="text-[10px] text-center mt-3 opacity-40 uppercase tracking-widest">Moderators are online</p>
+</div>
+</aside>
+</main>
+<!-- Footer Summary -->
+<footer class="glass-panel border-t border-white/10 py-4 px-10 flex items-center justify-between text-xs opacity-60">
+<div class="flex gap-8">
+<span>© 2024 Central Mosque of Bogotá</span>
+<a class="hover:text-white" href="#">Terms of Service</a>
+<a class="hover:text-white" href="#">Privacy Policy</a>
+</div>
+<div class="flex gap-6 items-center">
+<span class="flex items-center gap-2">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                Server Status: Optimized
+            </span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-sm">social_leaderboard</span>
+<span class="material-symbols-outlined text-sm">public</span>
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</div>
+</div>
+</footer>
+</body></html>

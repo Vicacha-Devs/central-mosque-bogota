@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Logo Variant 2 - Mezquita Central de Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Montserrat:wght@300;400;600&amp;family=Noto+Sans+Arabic:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#C13026", // Primary Red
+                        secondary: "#212E80", // Deep Blue
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#0F172A",
+                    },
+                    fontFamily: {
+                        display: ["Cinzel", "serif"],
+                        sans: ["Montserrat", "sans-serif"],
+                        arabic: ["Noto Sans Arabic", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .logo-emblem {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .conical-roof {
+            width: 0;
+            height: 0;
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 120px solid #C13026;
+            position: relative;
+            z-index: 10;
+        }
+        .pillar-line {
+            width: 4px;
+            height: 60px;
+            background-color: #212E80;
+            margin: 0 4px;
+        }
+        .circular-border {
+            border: 4px solid #212E80;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300">
+<div class="fixed top-6 right-6 z-50">
+<button class="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700 hover:scale-110 transition-transform" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons text-secondary dark:text-yellow-400">brightness_medium</span>
+</button>
+</div>
+<main class="min-h-screen flex flex-col items-center justify-center p-6 md:p-12">
+<div class="max-w-4xl w-full">
+<div class="text-center mb-16">
+<span class="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-widest uppercase bg-secondary text-white rounded-full">Variant 2 of 3</span>
+<h1 class="font-display text-4xl md:text-5xl lg:text-6xl mb-4 text-secondary dark:text-white">Mezquita Central de Bogotá</h1>
+<p class="font-arabic text-2xl mb-6 text-primary">أبو بكر الصديق</p>
+<div class="h-1 w-24 bg-primary mx-auto rounded-full"></div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-800 grid md:grid-cols-2">
+<div class="p-12 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950/50">
+<div class="relative w-64 h-64 flex flex-col items-center justify-center group">
+<div class="absolute inset-0 border-4 border-secondary/20 dark:border-white/10 rounded-full scale-110"></div>
+<div class="absolute inset-0 border-2 border-secondary dark:border-white/40 rounded-full group-hover:rotate-12 transition-transform duration-700"></div>
+<svg class="w-40 h-40 z-20 mb-[-2px]" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<path class="fill-primary" d="M50 10L10 80H90L50 10Z"></path>
+<path d="M50 10L30 80H70L50 10Z" fill="white" fill-opacity="0.1"></path>
+<circle class="fill-secondary" cx="50" cy="10" r="3"></circle>
+</svg>
+<div class="flex items-end space-x-2 h-16 z-10">
+<div class="w-1.5 h-6 bg-secondary rounded-full opacity-40"></div>
+<div class="w-1.5 h-10 bg-secondary rounded-full opacity-60"></div>
+<div class="w-1.5 h-14 bg-secondary rounded-full"></div>
+<div class="w-1.5 h-14 bg-secondary rounded-full"></div>
+<div class="w-1.5 h-10 bg-secondary rounded-full opacity-60"></div>
+<div class="w-1.5 h-6 bg-secondary rounded-full opacity-40"></div>
+</div>
+<div class="absolute top-12 right-12 transform rotate-12">
+<span class="material-icons text-secondary text-xl">brightness_2</span>
+</div>
+</div>
+<div class="mt-12 flex space-x-4">
+<div class="flex items-center space-x-2">
+<div class="w-4 h-4 rounded-full bg-secondary"></div>
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Deep Blue</span>
+</div>
+<div class="flex items-center space-x-2">
+<div class="w-4 h-4 rounded-full bg-primary"></div>
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Primary Red</span>
+</div>
+</div>
+</div>
+<div class="p-10 md:p-12 flex flex-col justify-center">
+<h2 class="text-2xl font-display mb-6 text-secondary dark:text-white">Design Philosophy</h2>
+<p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                        This variant honors the unique <span class="text-primary font-semibold">conical architecture</span> of the Muisca-influenced structure while seamlessly integrating it into a classic Islamic circular emblem. The geometry of the pillars symbolizes the pillars of faith and the community support.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-0.5">architecture</span>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider dark:text-white">Local Integration</h4>
+<p class="text-sm text-slate-500">The iconic thatch-style cone from the reference image is modernized into a sharp, minimalist geometric triangle.</p>
+</div>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-0.5">palette</span>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider dark:text-white">Heritage Tones</h4>
+<p class="text-sm text-slate-500">Combining the colors of the Colombian flag's spirit with institutional deep blue for a timeless, professional identity.</p>
+</div>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-0.5">history</span>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider dark:text-white">Abu Bakr As-Siddiq</h4>
+<p class="text-sm text-slate-500">Elegant Naskh-style typography ensures the Islamic identity remains central and respected.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="mt-16 text-center grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<div class="text-left">
+<h5 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Inspiration Source</h5>
+<img alt="Colombian indigenous architecture reference" class="w-full h-32 object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcMug0mwl7J9CT1mqMu2RJl_-uO2xeTN__LMdEZavRQDEafRep-87L2S_1oz98sIEqVLHO1UjFB-5jByCGFBfvbgOvxbiZIFf7th8sNEiaXBwBd47fZbS5I0XCgcmmyvjApfpMD7LymXfr-4GZz3fTYAhmUH3uTorPGNB7sTL47Qn8Xi3YL6mC0I5efARZioNFwii0ky2DCBVU4P58QM0Kl_2TvHWYVg2gmciXp9msuzXYXz-dAX7XBvdVGumA7VKdgK2PyhIJSbo"/>
+</div>
+<div class="flex flex-col items-center">
+<p class="text-slate-400 text-sm italic">"Blending Colombian heritage with Islamic values"</p>
+</div>
+<div class="text-right flex justify-end space-x-4">
+<button class="px-6 py-2 border border-slate-200 dark:border-slate-700 rounded-full text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">PREVIOUS</button>
+<button class="px-6 py-2 bg-secondary text-white rounded-full text-xs font-bold hover:bg-opacity-90 transition-colors shadow-lg shadow-secondary/20">NEXT VARIANT</button>
+</div>
+</div>
+</div>
+</main>
+<footer class="py-12 border-t border-slate-100 dark:border-slate-800">
+<div class="container mx-auto px-6 text-center text-slate-400 text-xs">
+            © 2024 Mezquita Central de Bogotá - Brand Guidelines. All rights reserved.
+        </div>
+</footer>
+
+</body></html>

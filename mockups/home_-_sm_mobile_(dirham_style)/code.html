@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home - SM Mobile (Dirham Style)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "secondary": "#212e80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#120b0a", // Deeper neutral derived from primary
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .safe-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Sticky Top Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md safe-top border-b border-white/10">
+<div class="flex items-center justify-between px-6 h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white text-2xl">menu</span>
+</div>
+<div class="flex-1 text-center">
+<h1 class="text-white text-sm font-bold tracking-widest uppercase">Bogotá Mosque</h1>
+</div>
+<div class="flex items-center justify-end">
+<span class="material-symbols-outlined text-white text-2xl">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex flex-col">
+<!-- Full-Height Hero Section -->
+<section class="relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Modern architectural view of Central Mosque dome at dusk" style="background-image: linear-gradient(to bottom, rgba(18, 11, 10, 0.4), rgba(18, 11, 10, 0.9)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDa40F1-FNGJYKlljg0pDjHIUP8VWPD6xwYL_MwP1kZ-d5cjUovF5kYFcDcmfYshBbad_jiiT59t3QrRClJHchde-MwuHjTMLfMgq7yy94FcAgS0mcuaaHFR8lfiHp9VGS2EAYxfSPlkzCMD8myDYalPa0OjxBymQZ3cCOXzfu6lTXAzdmx1tdzXVN5CY_1pzW4F8WfE4g8SSimxb5IFDADM4U5rTdjHVaRdOZviWJ-NORBtMqs8W89FQCVvHN43z2u5juNd5MLZRk');">
+</div>
+<div class="relative z-10 px-8 text-center flex flex-col items-center gap-6">
+<div class="bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-1">
+<span class="text-primary text-xs font-bold uppercase tracking-[0.2em]">Bogotá, Colombia</span>
+</div>
+<h2 class="text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-lg">
+                    Welcome to the Central Mosque
+                </h2>
+<p class="text-white/70 text-sm max-w-[280px] leading-relaxed">
+                    A center of peace, prayer, and community growth for the heart of the city.
+                </p>
+<div class="flex flex-col w-full gap-3 mt-4">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg shadow-lg shadow-primary/20 transition-all active:scale-95">
+                        Join Today's Service
+                    </button>
+<button class="bg-white/10 hover:bg-white/20 text-white font-semibold py-4 rounded-lg backdrop-blur-md border border-white/20 transition-all">
+                        Learn More
+                    </button>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-12 flex flex-col items-center gap-2 opacity-50">
+<span class="text-[10px] uppercase tracking-[0.3em] font-medium text-white">Scroll</span>
+<div class="w-[1px] h-8 bg-white/50"></div>
+</div>
+</section>
+<!-- Prayer Times Section -->
+<section class="px-6 py-12 bg-background-dark">
+<div class="flex items-end justify-between mb-8">
+<div>
+<h3 class="text-2xl font-bold text-white mb-1">Prayer Times</h3>
+<p class="text-slate-400 text-sm">Tuesday, Oct 24 • 12 Rabi' al-Thani</p>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-lg">schedule</span>
+<span class="text-sm font-bold">Next: Asr</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Fajr -->
+<div class="bg-white/5 border border-white/10 p-5 rounded-xl flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-slate-400">brightness_5</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Iqamah 05:15</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Fajr</p>
+<p class="text-white text-xl font-bold">04:45 AM</p>
+</div>
+</div>
+<!-- Dhuhr -->
+<div class="bg-white/5 border border-white/10 p-5 rounded-xl flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-slate-400">light_mode</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Iqamah 12:30</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Dhuhr</p>
+<p class="text-white text-xl font-bold">12:12 PM</p>
+</div>
+</div>
+<!-- Asr - ACTIVE -->
+<div class="bg-primary/10 border-2 border-primary p-5 rounded-xl flex flex-col gap-3 relative overflow-hidden">
+<div class="absolute -right-2 -top-2 w-12 h-12 bg-primary/20 blur-xl rounded-full"></div>
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary">wb_twilight</span>
+<span class="text-[10px] font-bold text-primary uppercase tracking-tighter">Iqamah 03:45</span>
+</div>
+<div>
+<p class="text-primary text-xs font-bold uppercase tracking-wider">Asr</p>
+<p class="text-white text-xl font-bold">03:28 PM</p>
+</div>
+</div>
+<!-- Maghrib -->
+<div class="bg-white/5 border border-white/10 p-5 rounded-xl flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-slate-400">bedtime</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Iqamah 06:20</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Maghrib</p>
+<p class="text-white text-xl font-bold">06:05 PM</p>
+</div>
+</div>
+<!-- Isha -->
+<div class="bg-white/5 border border-white/10 p-5 rounded-xl flex flex-col gap-3 col-span-2">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400">nights_stay</span>
+<div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Isha</p>
+<p class="text-white text-xl font-bold">07:22 PM</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Iqamah 07:45</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions Grid -->
+<section class="px-6 py-6 pb-24 grid grid-cols-3 gap-4 bg-background-dark">
+<button class="flex flex-col items-center gap-3 py-6 bg-secondary/20 rounded-xl border border-secondary/30">
+<span class="material-symbols-outlined text-secondary text-3xl">volunteer_activism</span>
+<span class="text-[11px] font-bold uppercase tracking-tighter">Zakat</span>
+</button>
+<button class="flex flex-col items-center gap-3 py-6 bg-secondary/20 rounded-xl border border-secondary/30">
+<span class="material-symbols-outlined text-secondary text-3xl">location_on</span>
+<span class="text-[11px] font-bold uppercase tracking-tighter">Qibla</span>
+</button>
+<button class="flex flex-col items-center gap-3 py-6 bg-secondary/20 rounded-xl border border-secondary/30">
+<span class="material-symbols-outlined text-secondary text-3xl">menu_book</span>
+<span class="text-[11px] font-bold uppercase tracking-tighter">Classes</span>
+</button>
+</section>
+<!-- Daily Inspiration Card -->
+<section class="px-6 pb-24 -mt-16 relative z-10">
+<div class="bg-gradient-to-br from-secondary to-secondary/80 p-8 rounded-2xl shadow-2xl">
+<span class="material-symbols-outlined text-white/40 text-4xl mb-4">format_quote</span>
+<p class="text-white text-lg font-medium leading-relaxed italic mb-6">
+                    "Truly, in the remembrance of Allah do hearts find rest."
+                </p>
+<div class="flex items-center justify-between">
+<span class="text-white/60 text-xs font-bold uppercase tracking-widest">Surah Ar-Ra'd 13:28</span>
+<span class="material-symbols-outlined text-white">share</span>
+</div>
+</div>
+</section>
+<!-- Donation CTA (Stuck to bottom of viewport logic but flows with page) -->
+<section class="px-6 mb-12">
+<div class="bg-primary p-6 rounded-2xl flex items-center justify-between">
+<div>
+<h4 class="text-white font-bold text-lg leading-tight">Support Our Mosque</h4>
+<p class="text-white/80 text-xs">Help us maintain our community home</p>
+</div>
+<button class="bg-white text-primary font-bold px-6 py-3 rounded-xl active:scale-95 transition-transform">
+                    Donate
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-xl border-t border-white/5 safe-bottom">
+<div class="flex justify-around items-center h-16">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Qibla</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Events</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">info</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Contact</span>
+</a>
+</div>
+</nav>
+</body></html>

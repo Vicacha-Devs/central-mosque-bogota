@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2e2182",
+                        "accent-red": "#c13026",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#15131f",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-primary text-white px-4 py-3 flex items-center justify-between shadow-md">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-white/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">mosque</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-tight tracking-tight uppercase">Central Mosque</h1>
+<p class="text-[10px] opacity-80 uppercase tracking-widest font-semibold">Bogotá, Colombia</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="pb-12">
+<!-- Hero Section -->
+<section class="relative w-full h-[320px] bg-slate-900 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-60" data-alt="Majestic architecture of a modern mosque dome at twilight" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDY5UAwufAw_O85KompZJ2Rf12TnhkpwPeav9W5lh5aALslm4j_V4VlzCuL6HllFxuDsNBVGzHMXYxrnSyg0zA1uYqYGVtkUN-K6gs0mZVX5faG6Mwos3gFGCdX-aeMqkQbkL4zjY0nKBT05WBPij6zI-O2GCrUUauh1UnZuB3Dl2EwrtqcCQo2YjOX7SQ34h8fcCsw2DHYqQeHhkSeOfTkXmebZo-yWU4ulv01R1sNgGcf1nhfukkqeIZagI82c73kcUx1RfZtsk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
+<div class="relative h-full flex flex-col justify-end p-6 gap-3">
+<span class="inline-flex items-center px-2 py-1 bg-accent-red text-[10px] font-bold text-white rounded uppercase tracking-widest w-fit">Live Khutbah</span>
+<h2 class="text-3xl font-extrabold text-white leading-tight">A Sanctuary of Peace in Bogotá</h2>
+<p class="text-slate-200 text-sm max-w-[85%] leading-relaxed font-light">Join our community for prayer, education, and spiritual growth in the heart of the city.</p>
+<div class="flex gap-3 mt-2">
+<button class="bg-primary text-white px-6 py-3 rounded-lg font-bold text-sm shadow-lg active:scale-95 transition-transform">Join Us</button>
+<button class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-lg font-bold text-sm">Tour Mosque</button>
+</div>
+</div>
+</section>
+<!-- Prayer Times Slider (LG Optimized Style for Phone) -->
+<section class="bg-white dark:bg-slate-800/50 py-4 shadow-sm border-y border-slate-200 dark:border-slate-700">
+<div class="px-4 mb-3 flex items-center justify-between">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Prayer Times</h3>
+<div class="flex items-center gap-1 text-accent-red">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs font-bold">Next: Maghrib in 1h 15m</span>
+</div>
+</div>
+<div class="flex overflow-x-auto gap-3 px-4 hide-scrollbar">
+<div class="flex flex-col items-center min-w-[80px] p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-1">wb_twilight</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Fajr</span>
+<span class="text-sm font-bold">5:10 AM</span>
+</div>
+<div class="flex flex-col items-center min-w-[80px] p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-1">sunny</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Dhuhr</span>
+<span class="text-sm font-bold">12:30 PM</span>
+</div>
+<div class="flex flex-col items-center min-w-[80px] p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-1">light_mode</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Asr</span>
+<span class="text-sm font-bold">3:45 PM</span>
+</div>
+<div class="flex flex-col items-center min-w-[80px] p-3 rounded-xl bg-primary text-white border border-primary shadow-md">
+<span class="material-symbols-outlined text-white mb-1">wb_sunny</span>
+<span class="text-[10px] font-bold opacity-80 uppercase">Maghrib</span>
+<span class="text-sm font-bold">6:15 PM</span>
+</div>
+<div class="flex flex-col items-center min-w-[80px] p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-1">bedtime</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Isha</span>
+<span class="text-sm font-bold">7:30 PM</span>
+</div>
+</div>
+</section>
+<!-- About Us Section (2-Column inspiration, stacked for phone) -->
+<section class="p-6 space-y-6">
+<div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="h-56 bg-cover bg-center" data-alt="Community gathered inside a beautifully decorated prayer hall" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCxeEFMB5j_pDf_EVO-IyQsxqW6AtGroXMHEAxAp3l01wcRZRq1mTnTUSTvSWKIBZIpuqEQRcvlSUilqJdpTp0ksfqRNswx8633cwLXTKKPnFqjfAIkIzZM-D-M-xOogEghd7nWAEAsqH8skh5VeYYhPiH31FpadFIN6om-2KWiBsW0g2ZNY9PV92DqYzrJ8iAxV_NRKO3JngLcVn0t5RIrslf6sfBF8FOMVgETcTIrF0KZ2O_FISU5Jm5rDjWsrAQt-8H7KIRUk8k')"></div>
+<div class="p-6">
+<h3 class="text-2xl font-bold text-primary mb-3">About Us</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                        The Central Mosque of Bogotá is more than just a place of worship. We are a cultural and spiritual hub dedicated to promoting peace, understanding, and the rich heritage of Islamic values in Colombia.
+                    </p>
+<button class="text-primary font-bold text-sm flex items-center gap-2">
+                        Read Our History
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Quick Links Grid -->
+<section class="px-6 grid grid-cols-2 gap-4">
+<div class="bg-primary/5 dark:bg-primary/20 p-4 rounded-xl border border-primary/10 flex flex-col items-center text-center">
+<div class="size-10 bg-primary text-white rounded-full flex items-center justify-center mb-3">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</div>
+<h4 class="text-sm font-bold text-primary">Donations</h4>
+<p class="text-[10px] text-slate-500 mt-1">Support our mission</p>
+</div>
+<div class="bg-accent-red/5 dark:bg-accent-red/20 p-4 rounded-xl border border-accent-red/10 flex flex-col items-center text-center">
+<div class="size-10 bg-accent-red text-white rounded-full flex items-center justify-center mb-3">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<h4 class="text-sm font-bold text-accent-red">Zakat</h4>
+<p class="text-[10px] text-slate-500 mt-1">Calculated giving</p>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center text-center">
+<div class="size-10 bg-slate-800 dark:bg-slate-600 text-white rounded-full flex items-center justify-center mb-3">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h4 class="text-sm font-bold">Education</h4>
+<p class="text-[10px] text-slate-500 mt-1">Islamic studies</p>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center text-center">
+<div class="size-10 bg-slate-800 dark:bg-slate-600 text-white rounded-full flex items-center justify-center mb-3">
+<span class="material-symbols-outlined">map</span>
+</div>
+<h4 class="text-sm font-bold">Visit Us</h4>
+<p class="text-[10px] text-slate-500 mt-1">Find directions</p>
+</div>
+</section>
+<!-- Multimedia Slider -->
+<section class="mt-10 py-4">
+<div class="px-6 flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Multimedia</h3>
+<button class="text-primary text-xs font-bold">View All</button>
+</div>
+<div class="flex overflow-x-auto gap-4 px-6 hide-scrollbar">
+<div class="min-w-[240px] group">
+<div class="relative h-36 rounded-xl overflow-hidden mb-3">
+<img alt="Video thumbnail" class="w-full h-full object-cover" data-alt="Spiritual lecture thumbnail with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClg9rwcBXFVKGx6xM0_QwzQUKJwfdDWseelBcgqLuOP1l73uVkVcn7N8w_WgSXxLQkBIu7o65e_OvBZlabo7wExKXNr8pvk6KmLooP02Qn6_ITiwq-hZfSr0Uuevi9OLm0SRbGWmxdM6InLq7Vjm719aD-pq5fCnp3rmQLlRMFjnY7OW-F6inVYqMmc3CX8_UcqHrO-oNQbhglKNQLaE-U0qunenAu9FNyvAFa_zuCs2MNB-XZ8fBIVYhk_pZiwV9As-0mujv92W8"/>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl opacity-90 group-hover:scale-110 transition-transform">play_circle</span>
+</div>
+</div>
+<h4 class="text-sm font-bold line-clamp-1">Friday Khutbah: Importance of Patience</h4>
+<p class="text-[11px] text-slate-500">Oct 27, 2023 • 24 mins</p>
+</div>
+<div class="min-w-[240px] group">
+<div class="relative h-36 rounded-xl overflow-hidden mb-3">
+<img alt="Video thumbnail" class="w-full h-full object-cover" data-alt="Community event highlight reel thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIKjKQyEG6uyZqr5-BaTRcj95r3L7cUZbIvwwlf7H-pWQpSC_ss3sCsgwudJ47gnVyafvtj5MRKtWcQqZK3qtxOq8MvSuBAb0dB3LxQ6_E0qJkf8hx4l9zD352jcQxLXthuYcGxSGxkaCSaORZ7at7cz5Vz2O-v9wx1z9XMGd5h9-utNDnCMyiMlwtptQdk2mhE2P7iY2WUzrZ6eAxb9xvrHlY6N6rWXL2izy4lHXCmMUFXTfTg7uf567p9-6Fb2337BxfEfIGlNo"/>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl opacity-90 group-hover:scale-110 transition-transform">play_circle</span>
+</div>
+</div>
+<h4 class="text-sm font-bold line-clamp-1">Community Gathering Highlights</h4>
+<p class="text-[11px] text-slate-500">Oct 20, 2023 • 12 mins</p>
+</div>
+</div>
+</section>
+<!-- Newsletter / Contact -->
+<section class="p-6 mt-4">
+<div class="bg-primary p-8 rounded-2xl text-white text-center">
+<h3 class="text-xl font-bold mb-2">Stay Connected</h3>
+<p class="text-sm text-primary/30 mb-6 font-light">Get weekly updates on prayer times and events.</p>
+<div class="flex flex-col gap-3">
+<input class="bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white/40 placeholder:text-white/50" placeholder="Enter your email" type="email"/>
+<button class="bg-white text-primary font-bold py-3 rounded-lg shadow-xl active:scale-95 transition-transform">Subscribe</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-around items-center py-3 px-2 z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">event</span>
+<span class="text-[10px] font-medium">Events</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-medium">Quran</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">handshake</span>
+<span class="text-[10px] font-medium">Give</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</nav>
+</body></html>

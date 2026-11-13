@@ -1,0 +1,622 @@
+<!doctype html>
+<html class="light" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Horarios de Oración - Mezquita Central de Bogotá</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@700&amp;family=Material+Icons+Outlined&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#212E80", // Primary Blue
+              secondary: "#C13026", // Primary Red
+              "background-light": "#F9F6F0", // Light Sand
+              "background-dark": "#0F172A",
+              "card-light": "#FFFFFF",
+              "card-dark": "#1E293B",
+            },
+            fontFamily: {
+              display: ["Playfair Display", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              large: "1rem",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .geometric-pattern {
+        background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCvgi2Zl5jcpfjQIy9ckn6KqnhGXVtv7RtTto9xglYR4m4elb2ZCI7cXyN6LDvusVSC7KuEZKNCc-N_G_XbF-OoHdHhOz0MpeSEK83KVn6xs20figT19jHYU89qa7m9B5U0r3ARWQFEtt0RhcKZQz7jIcHg-JUqVIK4bkacwSLZCwcw7FtU-olgIgrOP4wpcPs2WQJy18JH-V-bpAQaxvsT0tvMyeECVlbaMb7Q50N7bZf-1LRNtte1pBim1tUftmfem6wCdbaodTI);
+      }
+      .scroll-hidden::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300"
+  >
+    <header class="bg-primary text-white sticky top-0 z-50 shadow-lg">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-3">
+          <div
+            class="w-10 h-10 bg-white rounded-full flex items-center justify-center"
+          >
+            <span class="material-icons-outlined text-primary">mosque</span>
+          </div>
+          <div>
+            <h1 class="font-display text-xl leading-none">Mezquita Central</h1>
+            <p class="text-[10px] uppercase tracking-widest opacity-80">
+              Bogotá, Colombia
+            </p>
+          </div>
+        </div>
+        <nav
+          class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-wide"
+        >
+          <a class="hover:text-secondary transition-colors" href="#">Inicio</a>
+          <a class="border-b-2 border-secondary" href="#">Horarios</a>
+          <a class="hover:text-secondary transition-colors" href="#">Eventos</a>
+          <a class="hover:text-secondary transition-colors" href="#"
+            >Noticias</a
+          >
+          <a class="hover:text-secondary transition-colors" href="#"
+            >Contacto</a
+          >
+        </nav>
+        <button
+          class="bg-secondary hover:bg-red-700 text-white px-6 py-2 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-md"
+        >
+          DONAR
+        </button>
+      </div>
+    </header>
+    <section class="bg-primary relative overflow-hidden pt-12 pb-24 text-white">
+      <div class="absolute inset-0 geometric-pattern opacity-20"></div>
+      <div class="container mx-auto px-6 relative z-10 text-center">
+        <h2 class="font-display text-5xl md:text-6xl mb-4">Ramadán 1445 H</h2>
+        <p class="text-xl opacity-90 max-w-2xl mx-auto mb-8">
+          Un tiempo de reflexión, devoción y comunidad en el corazón de Bogotá.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <div
+            class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-large border border-white/20 flex items-center space-x-3"
+          >
+            <span class="material-icons-outlined text-secondary"
+              >location_on</span
+            >
+            <span class="text-sm">Bogotá, Cundinamarca</span>
+          </div>
+          <div
+            class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-large border border-white/20 flex items-center space-x-3"
+          >
+            <span class="material-icons-outlined text-secondary">event</span>
+            <span class="text-sm" id="current-date">Marzo 2024</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <main class="container mx-auto px-6 -mt-12 mb-20 relative z-20">
+      <div
+        class="bg-card-light dark:bg-card-dark rounded-large shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800"
+      >
+        <div
+          class="p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-100 dark:border-slate-800"
+        >
+          <div>
+            <h3 class="text-2xl font-display text-primary dark:text-blue-400">
+              Calendario de Oración
+            </h3>
+            <p class="text-slate-500 dark:text-slate-400">
+              Tiempos calculados para Bogotá y alrededores
+            </p>
+          </div>
+          <div class="flex space-x-3">
+            <button
+              class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            >
+              <span class="material-icons-outlined text-sm">filter_list</span>
+              <span class="text-sm font-medium">Marzo 2024</span>
+            </button>
+            <button
+              class="flex items-center space-x-2 bg-secondary text-white px-5 py-2 rounded-lg hover:bg-red-700 transition-colors shadow-md"
+            >
+              <span class="material-icons-outlined text-sm"
+                >picture_as_pdf</span
+              >
+              <span class="text-sm font-bold">Descargar PDF</span>
+            </button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead
+              class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 uppercase text-xs tracking-widest font-bold"
+            >
+              <tr>
+                <th class="px-8 py-4">Fecha</th>
+                <th class="px-6 py-4">Fajr</th>
+                <th class="px-6 py-4">Sunrise</th>
+                <th class="px-6 py-4">Dhuhr</th>
+                <th class="px-6 py-4">Asr</th>
+                <th class="px-6 py-4">Maghrib</th>
+                <th class="px-6 py-4">Isha</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr class="bg-blue-50/50 dark:bg-blue-900/20">
+                <td
+                  class="px-8 py-5 font-semibold text-primary dark:text-blue-300"
+                >
+                  Hoy, 12 Mar
+                  <span
+                    class="ml-2 text-[10px] bg-primary text-white px-2 py-0.5 rounded-full uppercase"
+                    >Hoy</span
+                  >
+                </td>
+                <td class="px-6 py-5 font-medium">04:52 AM</td>
+                <td class="px-6 py-5 opacity-60">06:08 AM</td>
+                <td class="px-6 py-5 font-medium">12:12 PM</td>
+                <td class="px-6 py-5 font-medium">03:24 PM</td>
+                <td class="px-6 py-5 font-bold text-secondary">06:15 PM</td>
+                <td class="px-6 py-5 font-medium">07:28 PM</td>
+              </tr>
+              <tr
+                class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+              >
+                <td class="px-8 py-5 text-slate-600 dark:text-slate-400">
+                  13 Mar, Miércoles
+                </td>
+                <td class="px-6 py-5">04:51 AM</td>
+                <td class="px-6 py-5 opacity-60">06:07 AM</td>
+                <td class="px-6 py-5">12:12 PM</td>
+                <td class="px-6 py-5">03:23 PM</td>
+                <td class="px-6 py-5">06:15 PM</td>
+                <td class="px-6 py-5">07:28 PM</td>
+              </tr>
+              <tr
+                class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+              >
+                <td class="px-8 py-5 text-slate-600 dark:text-slate-400">
+                  14 Mar, Jueves
+                </td>
+                <td class="px-6 py-5">04:51 AM</td>
+                <td class="px-6 py-5 opacity-60">06:07 AM</td>
+                <td class="px-6 py-5">12:12 PM</td>
+                <td class="px-6 py-5">03:23 PM</td>
+                <td class="px-6 py-5">06:15 PM</td>
+                <td class="px-6 py-5">07:28 PM</td>
+              </tr>
+              <tr
+                class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+              >
+                <td class="px-8 py-5 text-slate-600 dark:text-slate-400">
+                  15 Mar, Viernes
+                </td>
+                <td class="px-6 py-5">04:50 AM</td>
+                <td class="px-6 py-5 opacity-60">06:06 AM</td>
+                <td class="px-6 py-5 font-bold text-primary">12:11 PM</td>
+                <td class="px-6 py-5">03:22 PM</td>
+                <td class="px-6 py-5">06:14 PM</td>
+                <td class="px-6 py-5">07:28 PM</td>
+              </tr>
+              <tr
+                class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+              >
+                <td class="px-8 py-5 text-slate-600 dark:text-slate-400">
+                  16 Mar, Sábado
+                </td>
+                <td class="px-6 py-5">04:50 AM</td>
+                <td class="px-6 py-5 opacity-60">06:06 AM</td>
+                <td class="px-6 py-5">12:11 PM</td>
+                <td class="px-6 py-5">03:22 PM</td>
+                <td class="px-6 py-5">06:14 PM</td>
+                <td class="px-6 py-5">07:27 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-6 text-center">
+          <button
+            class="text-primary dark:text-blue-400 font-bold hover:underline"
+          >
+            Ver mes completo
+          </button>
+        </div>
+      </div>
+    </main>
+    <section class="container mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          class="relative group overflow-hidden rounded-large h-64 shadow-lg cursor-pointer"
+        >
+          <img
+            alt="Educación Niños"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuARpH-qdXnCxnzPOn-IbDywu4eWwXRvO91UtY7pL0VtCOVvEO0MkWf4TsA2MSPGmlEUNtsVFuJe_4QmKjXDI77pLF5mjET9vO2ArnWp55RrVPsU4-98ZTk7kitOGmQdicwzo4pcA7ha4eDjVDCZNNic-8AcQD9icVLVxRMLcmb1DF0w9VQczrRrbqBib9kxFZxnhR-LEybzX_bCWn8jhq5-ve0Upe_-1jDfIyajK01U2r-lwm-H-1yOgIncQ_7cUmKx9bmblkktZZo"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 text-white">
+            <h4 class="font-display text-2xl">Escuela Dominical</h4>
+            <p class="text-sm opacity-80">Formación para niños y jóvenes</p>
+          </div>
+        </div>
+        <div
+          class="relative group overflow-hidden rounded-large h-64 shadow-lg cursor-pointer"
+        >
+          <img
+            alt="Clases Corán"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqO5P28R6-uQDV4xeElXsnU1WMzj_1NaF6a8XtkUXtKijtOgid8-5bYMh3g_3RVNM-of5xe76O9nfkOxf-RoczIQLABBH895M3j5ESl5r3V5Z6VY1MFAeLEBfmHVfjBYVY7nPcIM2mBnnaKoRhqYIKQnJWfpW4_tz2hiAo6S1NJz2drvo4LIz3W6afic8LfPbWFVUxIiCuB0rwBs35aEcDgIVC-tKDyHHx1zFeASBy34KyE2NHc6FuExCvt_mcuEn10piSpNS30io"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 text-white">
+            <h4 class="font-display text-2xl">Memorización</h4>
+            <p class="text-sm opacity-80">Estudios profundos del Al-Qur'an</p>
+          </div>
+        </div>
+        <div
+          class="relative group overflow-hidden rounded-large h-64 shadow-lg cursor-pointer"
+        >
+          <img
+            alt="Conferencias"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMmZGjpvdGaM73gS_Tx7p5yZ3cv2KAdSIqItHpAi0GTqq4PSUedjNg_uG8yximTPISsQR96v7tCl_UH6jRtQ6ni2E56lBqIeWpcyME2tdz_gvTI74QQ3LuBgwaYMURhrqq9_h5Af25HoikCd0mEOdhjlZGs37wB_ruWoXgmvpab8Mr1LFH2PzBUnQlscDZBva9N7JtyqcTdM7YAZE8yxpnzFJxmRjU0AzGQFdJuprs3N26D3ntpMokaxAkGA-g3WSFLP4w33ZRgF8"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 text-white">
+            <h4 class="font-display text-2xl">Kutbah Sabatino</h4>
+            <p class="text-sm opacity-80">Conferencias abiertas al público</p>
+          </div>
+        </div>
+        <div
+          class="relative group overflow-hidden rounded-large h-64 shadow-lg cursor-pointer"
+        >
+          <img
+            alt="Arquitectura"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9gBcYyCA1hRCgEDYw_FzKxx-KXM9V2AdXJxVvcdRymtm_5nuTLrJImotoIW6qz3GwfZZ1ZCDgwiv_7lQPqjIOnlLHjcZyeHQdeNI9rEIeUn-nMInjCeUpFPBejb07rp2VXOtszUtnUVLOqkczH4itAOiHWCju9hnMkEgV406GZpMODKH6NpYWLAXC5Ab7WwLUR8dvJtB47BSMpA-nKbTR4ChQXTbpclJfkveMne4pEXpwd21KB-2E2QDkEWzeTZupgKF12jtzIis"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+          ></div>
+          <div class="absolute bottom-6 left-6 text-white">
+            <h4 class="font-display text-2xl">Nuestra Sede</h4>
+            <p class="text-sm opacity-80">Visitas guiadas y arquitectura</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-white dark:bg-slate-900 py-16">
+      <div class="container mx-auto px-6">
+        <div class="flex justify-between items-end mb-10">
+          <div>
+            <h3 class="font-display text-4xl mb-2">Campañas de Donación</h3>
+            <p class="text-slate-500 max-w-lg">
+              Tu generosidad permite que sigamos apoyando a la comunidad local y
+              proyectos internacionales.
+            </p>
+          </div>
+          <button
+            class="hidden md:block text-primary font-bold hover:underline"
+          >
+            Ver todas las campañas →
+          </button>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            class="bg-background-light dark:bg-slate-800 rounded-large overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800"
+          >
+            <img
+              alt="Donación Siria"
+              class="w-full h-48 object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8HoSYNjItr1thpUPaWBRgAKOjmQHswd8IqXwzlc5rCM8o5__laREuHYrppZFELT2IDKPyfOAt2p_0miUjzeHYYQYPo4gMMnhxX5VRNWxcjW3Lha3gZ0i6PrI-P87jL8gW93YZNL7RRUkzkLSV1ATBm0L-ZEMFZkaK-skiDihPNdTCmPl_JQU8j5UanXBvfFB2jD6AOkyFZZOHN1PLrPOQsoI4zV7I4N9xMC8efuyL6H5LGU_lRW-O08mVACDk1fTOBN0nY68xpqA"
+            />
+            <div class="p-6">
+              <span
+                class="text-[10px] bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 px-2 py-1 rounded font-bold uppercase tracking-wider mb-4 inline-block"
+                >Emergencia</span
+              >
+              <h5 class="text-lg font-bold mb-2">Apoyo Víctimas Terremoto</h5>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+                Ayuda humanitaria urgente para las familias afectadas en las
+                zonas de desastre.
+              </p>
+              <div class="space-y-4">
+                <div
+                  class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden"
+                >
+                  <div class="bg-secondary h-full" style="width: 65%"></div>
+                </div>
+                <div class="flex justify-between text-xs font-medium">
+                  <span
+                    >Recaudado:
+                    <b class="text-slate-900 dark:text-white"
+                      >$45.000.000</b
+                    ></span
+                  >
+                  <span>Meta: $100.000.000</span>
+                </div>
+                <button
+                  class="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-blue-900 transition-colors"
+                >
+                  DONAR AHORA
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-background-light dark:bg-slate-800 rounded-large overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800"
+          >
+            <img
+              alt="Educación"
+              class="w-full h-48 object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxC78wve8ytS8NhRQoA12YCeadKVjMiku4vfqpnvalCeu7nmz8MHwem7cBXWm8ABVBeKXAufpFfMOQm73eHx_ElVBPMZcA6sPcGK1TOPxUT_SEii2sco75US5GJ28aTOAo_cnfhqsrS5WC2hRbdtgxMCHiCPVsy3kqoky8jkmt6B4TjPeskfxF3DbnynX0L3NSyShYycPod4scaRdu18cnm_BTRo2uW-ENmd8eDsg4m5WthHlIGW58HsX8VLHAExi5giFcgcWpNIU"
+            />
+            <div class="p-6">
+              <span
+                class="text-[10px] bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded font-bold uppercase tracking-wider mb-4 inline-block"
+                >Educación</span
+              >
+              <h5 class="text-lg font-bold mb-2">Fondo de Becas Iftaar</h5>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+                Cenas comunitarias gratuitas durante todo el mes sagrado de
+                Ramadán.
+              </p>
+              <div class="space-y-4">
+                <div
+                  class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden"
+                >
+                  <div class="bg-secondary h-full" style="width: 82%"></div>
+                </div>
+                <div class="flex justify-between text-xs font-medium">
+                  <span
+                    >Recaudado:
+                    <b class="text-slate-900 dark:text-white"
+                      >$12.400.000</b
+                    ></span
+                  >
+                  <span>Meta: $15.000.000</span>
+                </div>
+                <button
+                  class="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-blue-900 transition-colors"
+                >
+                  DONAR AHORA
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-background-light dark:bg-slate-800 rounded-large overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800"
+          >
+            <img
+              alt="Mantenimiento"
+              class="w-full h-48 object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC6SatbVuKo66-HXGWyXAk0rrIOIWbeSHWqrzKx583w9u-0re5Sn5mpYxF7GXi3D15eGKc8IPPdcKwDpxuH9JmrpEe1fjQJQZMIoK3WHbHlGS37k9wFq3G7NgOhdfuaXhE3wJpKw4ZrtulnkjBp-wpyKosG9hd9lk1LJvWWxXflAJ78eJewAjwjSCm5HEB_9W0KvdzFtW-cn6FSQaCYXmVKn1qvohWv0bPdNbYMzrL8tQ8rhfSfxLJG_gg0m3CroodgZzcQyN9lJI"
+            />
+            <div class="p-6">
+              <span
+                class="text-[10px] bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded font-bold uppercase tracking-wider mb-4 inline-block"
+                >Mantenimiento</span
+              >
+              <h5 class="text-lg font-bold mb-2">Remodelación Sala Wudu</h5>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+                Mejora de las instalaciones de purificación para mayor comodidad
+                de los fieles.
+              </p>
+              <div class="space-y-4">
+                <div
+                  class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden"
+                >
+                  <div class="bg-secondary h-full" style="width: 30%"></div>
+                </div>
+                <div class="flex justify-between text-xs font-medium">
+                  <span
+                    >Recaudado:
+                    <b class="text-slate-900 dark:text-white"
+                      >$8.000.000</b
+                    ></span
+                  >
+                  <span>Meta: $25.000.000</span>
+                </div>
+                <button
+                  class="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-blue-900 transition-colors"
+                >
+                  DONAR AHORA
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="container mx-auto px-6 py-16">
+      <h3 class="font-display text-4xl mb-8">Noticias y Reflexiones</h3>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div
+          class="flex flex-col md:flex-row gap-6 bg-white dark:bg-card-dark p-6 rounded-large shadow-sm hover:shadow-md transition-all"
+        >
+          <img
+            alt="Ramadan Prep"
+            class="w-full md:w-48 h-48 object-cover rounded-lg"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMCThxyRaM3eC4iXNIcc0Lq2Je7QowhVMYqjnqqy6hdgZ92r9EtRHD64XpSXnvuWUWf6xA5DOYc8YIrcIyfH4N6nDpEQ7ngYIqh7RwsY6SJiCWpV7OgwuFBqduxly-QBIm0VST4MRFouAXQwzmd1WkRtRIyxb1O0LyKVhVL0phhRk2vTxPbU-RFOO5K1DdhxBcBS99GFAWQz7LtygGr3iYshzDoEhlR-wd89-y8fa5casKEZyrzTnZ_7JKHOl1zKy6u_GZWjx5I6Q"
+          />
+          <div class="flex flex-col justify-center">
+            <span class="text-xs text-slate-400 mb-2"
+              >10 Marzo, 2024 • 5 min lectura</span
+            >
+            <h4
+              class="text-xl font-bold mb-3 hover:text-primary cursor-pointer transition-colors"
+            >
+              Cómo prepararse para un Ramadán productivo
+            </h4>
+            <p class="text-sm text-slate-500 line-clamp-3 mb-4">
+              Consejos espirituales y prácticos para aprovechar al máximo el mes
+              bendito mientras mantienes tu rutina diaria en la ciudad...
+            </p>
+            <a
+              class="text-secondary font-bold text-sm flex items-center"
+              href="#"
+              >LEER MÁS
+              <span class="material-icons-outlined ml-1 text-base"
+                >arrow_right_alt</span
+              ></a
+            >
+          </div>
+        </div>
+        <div
+          class="flex flex-col md:flex-row gap-6 bg-white dark:bg-card-dark p-6 rounded-large shadow-sm hover:shadow-md transition-all"
+        >
+          <img
+            alt="Community"
+            class="w-full md:w-48 h-48 object-cover rounded-lg"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9kYRvVP1aXGRWysjLXXgCt0oD62mHcU2MTidsST3AjILoC3JDF1RKBygAvyhN9HipUYAgHP8Zhe5ilJwwv9GYZz2ufkaRruW9dXXDzfmlQ5eq__IoylCmUg0CKxBSs0ZHIUbtMUbzkJe3pMrTel1EQIsdRuBLGvtLt2BsgZ5-Ch30TOTMws9UrECA-6q12s6DdFBoK36nK5rqQhA1ozLl2mIMxGaD6NVSV-4myR9gTuWz4U9C8JFrDP9c2eUMqIjnTG2sJp4r7_Q"
+          />
+          <div class="flex flex-col justify-center">
+            <span class="text-xs text-slate-400 mb-2"
+              >8 Marzo, 2024 • Podcast #12</span
+            >
+            <h4
+              class="text-xl font-bold mb-3 hover:text-primary cursor-pointer transition-colors"
+            >
+              Podcast: La importancia de la Zakat
+            </h4>
+            <p class="text-sm text-slate-500 line-clamp-3 mb-4">
+              Nuestro Imam conversa sobre el impacto social de la caridad
+              obligatoria y cómo transforma las comunidades vulnerables...
+            </p>
+            <a
+              class="text-secondary font-bold text-sm flex items-center"
+              href="#"
+              >ESCUCHAR PODCAST
+              <span class="material-icons-outlined ml-1 text-base"
+                >play_circle</span
+              ></a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="bg-primary text-white pt-16">
+      <div class="container mx-auto px-6 pb-12 border-b border-white/10">
+        <div class="grid md:grid-cols-4 gap-12">
+          <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center space-x-3 mb-6">
+              <div
+                class="w-12 h-12 bg-white rounded-full flex items-center justify-center"
+              >
+                <span class="material-icons-outlined text-primary text-2xl"
+                  >mosque</span
+                >
+              </div>
+              <h2 class="font-display text-2xl">Mezquita Central de Bogotá</h2>
+            </div>
+            <p class="text-slate-300 max-w-md mb-8">
+              La Mezquita Central de Bogotá es un espacio de adoración,
+              aprendizaje y encuentro para la comunidad musulmana en Colombia.
+              Bienvenidos todos los que buscan paz y conocimiento.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"
+                href="#"
+              >
+                <span class="material-icons-outlined text-xl">facebook</span>
+              </a>
+              <a
+                class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"
+                href="#"
+              >
+                <span class="material-icons-outlined text-xl">camera_alt</span>
+              </a>
+              <a
+                class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors"
+                href="#"
+              >
+                <span class="material-icons-outlined text-xl"
+                  >play_circle_filled</span
+                >
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4
+              class="font-bold text-lg mb-6 uppercase tracking-widest text-secondary"
+            >
+              Enlaces
+            </h4>
+            <ul class="space-y-4 text-slate-300 text-sm">
+              <li>
+                <a class="hover:text-white transition-colors" href="#"
+                  >Horarios de Oración</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition-colors" href="#"
+                  >Eventos Comunitarios</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition-colors" href="#"
+                  >Certificación Halal</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition-colors" href="#"
+                  >Clases de Árabe</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition-colors" href="#"
+                  >Preguntas Frecuentes</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              class="font-bold text-lg mb-6 uppercase tracking-widest text-secondary"
+            >
+              Ubicación
+            </h4>
+            <p class="text-slate-300 text-sm mb-4">
+              Calle 45 # 13 - 15<br />
+              Bogotá, Colombia
+            </p>
+            <p class="text-slate-300 text-sm">
+              <b>Tel:</b> +57 (601) 123-4567<br />
+              <b>Email:</b> info@mezquitabogota.org
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-blue-950 py-6 text-center text-slate-400 text-xs">
+        <p>© 2024 Mezquita Central de Bogotá. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+    <button
+      class="fixed bottom-6 right-6 w-12 h-12 bg-white dark:bg-slate-800 text-primary dark:text-yellow-400 rounded-full shadow-2xl flex items-center justify-center border border-slate-200 dark:border-slate-700 hover:scale-110 transition-all z-50"
+      onclick="document.documentElement.classList.toggle('dark')"
+    >
+      <span class="material-icons-outlined">dark_mode</span>
+    </button>
+  </body>
+</html>

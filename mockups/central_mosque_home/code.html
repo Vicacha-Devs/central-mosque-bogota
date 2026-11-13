@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Central Mosque Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Material+Icons+Outlined&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#c13026", // Deep Red
+                        secondary: "#212e80", // Royal Blue
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="h-12 w-full"></div>
+<header class="px-5 py-3 flex items-center justify-between sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-icons-outlined">mosque</span>
+</div>
+<div>
+<h1 class="text-sm font-bold leading-tight uppercase tracking-wider">Mezquita Central</h1>
+<p class="text-[10px] text-slate-500 dark:text-slate-400">Bogotá, Colombia</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-icons-outlined text-slate-600 dark:text-slate-300">notifications</span>
+</button>
+</header>
+<main class="pb-24">
+<section class="px-5 mt-4">
+<div class="relative h-64 rounded-3xl overflow-hidden shadow-xl">
+<img alt="Central Mosque of Bogota Architecture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBBiHDl0JyaDZRObZ0PCiWgqy64qw4b20awxVdo4ys_dRw6dlIf44LZUc3zKc0eJIGbml_HVJezOB1q7Z0Q6nAYf-xI1bqEgxca0bM8bjoe9EwCaeybETJrf3rLRbExGaR-g_PHq8k8QiFIk2HWI26G1P0K9DLkWH1pzLzRT3dmY-lENFNPAfBiixIy4r664V9nee4u2SIs0dWPwdSoicbqLDwAftjl76WArSDgmKJ1s6G-sOUbqv26XBZqv9R7cOOqAYPMulpo9Ns"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 text-white">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs opacity-80 mb-1">Próxima Oración</p>
+<h2 class="text-3xl font-bold tracking-tight">Asr <span class="text-lg font-medium opacity-90">15:42</span></h2>
+</div>
+<div class="bg-primary px-3 py-1 rounded-full text-[11px] font-bold">
+                            FALTAN 01:24:10
+                        </div>
+</div>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-5 gap-2">
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl text-center shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-[10px] text-slate-500 uppercase font-bold">Fajr</p>
+<p class="text-xs font-bold mt-1">04:35</p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl text-center shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-[10px] text-slate-500 uppercase font-bold">Dhuhr</p>
+<p class="text-xs font-bold mt-1">12:15</p>
+</div>
+<div class="bg-secondary p-2 rounded-xl text-center shadow-md text-white">
+<p class="text-[10px] opacity-80 uppercase font-bold">Asr</p>
+<p class="text-xs font-bold mt-1">15:42</p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl text-center shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-[10px] text-slate-500 uppercase font-bold">Maghrib</p>
+<p class="text-xs font-bold mt-1 =">18:10</p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-2 rounded-xl text-center shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-[10px] text-slate-500 uppercase font-bold">Isha</p>
+<p class="text-xs font-bold mt-1">19:25</p>
+</div>
+</div>
+</section>
+<section class="mt-8">
+<div class="px-5 flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold">Próximos Eventos</h3>
+<a class="text-xs font-bold text-primary" href="#">Ver todos</a>
+</div>
+<div class="flex gap-4 overflow-x-auto px-5 hide-scrollbar pb-2">
+<div class="flex-shrink-0 w-64 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+<div class="h-24 bg-secondary/10 flex items-center px-4">
+<div class="bg-secondary text-white p-3 rounded-xl text-center">
+<span class="block text-xs font-bold uppercase leading-none">Mar</span>
+<span class="block text-xl font-extrabold">24</span>
+</div>
+<div class="ml-4">
+<h4 class="text-sm font-bold leading-tight">Clase de Tafsir Semanal</h4>
+<p class="text-[10px] text-slate-500 mt-1">19:00 • Sheikh Ahmed</p>
+</div>
+</div>
+</div>
+<div class="flex-shrink-0 w-64 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+<div class="h-24 bg-primary/10 flex items-center px-4">
+<div class="bg-primary text-white p-3 rounded-xl text-center">
+<span class="block text-xs font-bold uppercase leading-none">Mar</span>
+<span class="block text-xl font-extrabold">27</span>
+</div>
+<div class="ml-4">
+<h4 class="text-sm font-bold leading-tight">Jummah Khutbah</h4>
+<p class="text-[10px] text-slate-500 mt-1">13:00 • Mezquita Central</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="mt-8 px-5">
+<h3 class="text-lg font-bold mb-4">Donaciones</h3>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-md">Mantenimiento de la Mezquita</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Ayúdanos a preservar nuestra casa espiritual en Bogotá.</p>
+</div>
+<div class="bg-secondary/10 text-secondary p-2 rounded-lg">
+<span class="material-icons-outlined text-xl">volunteer_activism</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden mb-2">
+<div class="bg-primary h-full w-[65%] rounded-full"></div>
+</div>
+<div class="flex justify-between items-center text-[11px] font-bold">
+<span class="text-slate-500">Recaudado: <span class="text-slate-900 dark:text-slate-100">$12,450.00</span></span>
+<span class="text-primary">65% de $20,000</span>
+</div>
+<button class="w-full mt-5 bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-primary/30 active:scale-95 transition-transform">
+                    Donar Ahora
+                </button>
+</div>
+</section>
+<section class="mt-8">
+<div class="px-5 flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold">Últimos Podcasts</h3>
+<a class="text-xs font-bold text-primary" href="#">Escuchar más</a>
+</div>
+<div class="flex gap-4 overflow-x-auto px-5 hide-scrollbar">
+<div class="flex-shrink-0 w-40">
+<div class="relative w-40 h-40 rounded-2xl overflow-hidden mb-2">
+<img alt="Podcast Art 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNOB2QdmJhplw-WgwXA0zX8bOZyiOoy5xGAhscnOhGdHV6yWnuhuuqptD7RvmXYeXrYzkjH54zDWTGEePalsAz-s7vdsit0kbgmHmWXxNgDhi8y14SszI8ZPHGZdUItT0KIZ6VpHsazrccA_GFjX0lxQtT4ydU5vdtoqIXQucrJYQQd2Cz5IYiC_l7DKCCYfADm2Cy4E6qCPKdMCKnbXR0860yk43j8u0ezk6u4haqMUDe2D09e7fxAsLzjBT9KneULYCm2-qKkoXb"/>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<span class="material-icons-outlined text-white text-4xl">play_circle</span>
+</div>
+</div>
+<h4 class="text-xs font-bold truncate">Paciencia en tiempos difíciles</h4>
+<p class="text-[10px] text-slate-500 truncate">Dr. Omar Faruq</p>
+</div>
+<div class="flex-shrink-0 w-40">
+<div class="relative w-40 h-40 rounded-2xl overflow-hidden mb-2">
+<img alt="Podcast Art 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4ESzfgadUOcya9tkiCI58Rsz3lIQ5h9igUkw8LauJMC1iq_wur57ys6bRY-wAx6K5EOhsCwFkIOpf83cBn4RqQG2mbGFNHqh2IoiiZLqNxu_sBtQhq8gYsjiUH81aOxMnrOa0L5NItH8dpmzKnH6kZy2-f8apcwlondT8PTHKASowzCmvF53BXuMBZcxZzJ7Y65tx_FYD0kvvtYqUJevj34WRzgojvfTXEuzNe-Xjv4RSlzSDa_CJef2jbwNpkIysuJK7V95HpRdD"/>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<span class="material-icons-outlined text-white text-4xl">play_circle</span>
+</div>
+</div>
+<h4 class="text-xs font-bold truncate">Historia de la Mezquita</h4>
+<p class="text-[10px] text-slate-500 truncate">Hadj Ibrahim</p>
+</div>
+<div class="flex-shrink-0 w-40">
+<div class="relative w-40 h-40 rounded-2xl overflow-hidden mb-2">
+<img alt="Podcast Art 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG47G9EdIEcJ-wM_T4yaATbRbyBFtkdA8C-m8t7qBfRj1n1z5mFH4su1vRar_s0N5qoIbZiR_IAQyR-o4BluehlZajlPSj_FpBcHMcrlHwnv8u77ymYAjniFuKedPPotZzRi6dPu4yS90K9KqhKwF__63QsDWKTskI9cZgjdeggLqqpswWocN7BelpdYN6-_cwX3YYpHMUu5rB2-H9udt-_WG1wRboJd48ej0MXYVs0xFtAwMikdN-8nqHLjTnZhN2lR3hUfHXq5Lz"/>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+<span class="material-icons-outlined text-white text-4xl">play_circle</span>
+</div>
+</div>
+<h4 class="text-xs font-bold truncate">Aprender Árabe Básico</h4>
+<p class="text-[10px] text-slate-500 truncate">Ustadha Maryam</p>
+</div>
+</div>
+</section>
+<section class="mt-8 px-5">
+<h3 class="text-lg font-bold mb-4">Noticias de la Comunidad</h3>
+<div class="space-y-4">
+<div class="flex gap-4 items-center">
+<img alt="News 1" class="w-20 h-20 rounded-xl object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT6Vs3f-ozv3K0W_g-RgkRhOXTapxPWbzLds3gRRPGQnWvm7SC2irdTJpoQ33uagvKCIjHmMOcQupzqN5ljSrU9qKy0AVCEWsLBVQCpEMFXogz66RnIsqAicMBv3LYLrtQ8Arm5j3lluD8Kne7SZO7Kwd3_k3C4sdKnuzBXVOIWXvl4OxAnpLY4vwp-qVoG7kvX-3MSdGZkACGQe_Qp9y6zKgUFK5ftQVwQ6539NtmXZHUKGsihl4BYeiV21PpFmpBuvIt5xxaF3J7"/>
+<div class="flex-1">
+<p class="text-[10px] font-bold text-primary uppercase">Comunidad</p>
+<h4 class="text-sm font-bold leading-snug">Nueva biblioteca islámica inaugurada este fin de semana</h4>
+<p class="text-[10px] text-slate-500 mt-1">Hace 2 horas • 5 min de lectura</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<div class="w-20 h-20 rounded-xl overflow-hidden">
+<img alt="Community Members" class="w-full h-full object-cover scale-150" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGUi39lrCsiVmJ_AMdAsMm0m9i2o0au9BGg-PbiIoRKpJPq-_iv70oWYM0yi2A8z7t_hsDi0He449JFGgg6HsGda8VmmHtp6eEdEM7__B-kRG0PYMgh0FXepXYxsYjqx_w-r-wpNUNIAuO2-Jyt_zka7TYzvKRErEb8mWTXbJO17eD40nMtZxvbRhEOImnJKc3HQca9qriLSxs1QIbfgv_-b3r6y2kZ396EobOe2YjTyAv6w_4P9xuBwQm_wEnYpPUwfcxXc-9eyx9"/>
+</div>
+<div class="flex-1">
+<p class="text-[10px] font-bold text-secondary uppercase">Local</p>
+<h4 class="text-sm font-bold leading-snug">Encuentro interreligioso: Representantes Muisca visitan la Mezquita</h4>
+<p class="text-[10px] text-slate-500 mt-1">Ayer • 4 min de lectura</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-outlined">home</span>
+<span class="text-[10px] font-bold">Inicio</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">schedule</span>
+<span class="text-[10px] font-medium">Oración</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">menu_book</span>
+<span class="text-[10px] font-medium">Corán</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">explore</span>
+<span class="text-[10px] font-medium">Comunidad</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</button>
+</nav>
+<div class="fixed bottom-24 right-5">
+<button class="w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-icons-outlined">explore</span>
+</button>
+</div>
+
+</body></html>

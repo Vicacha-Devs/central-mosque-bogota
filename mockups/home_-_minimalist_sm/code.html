@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "header-blue": "#212e80",
+                        "background-light": "#ffffff",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 ios-blur border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between px-6 h-16 max-w-md mx-auto">
+<button class="flex items-center justify-center size-10">
+<span class="material-symbols-outlined text-header-blue dark:text-slate-200">menu</span>
+</button>
+<h1 class="text-header-blue dark:text-slate-100 font-bold text-lg tracking-tight">Mezquita Central</h1>
+<button class="flex items-center justify-center size-10">
+<span class="material-symbols-outlined text-header-blue dark:text-slate-200">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto pb-24">
+<!-- Hero / Date Section -->
+<section class="px-6 pt-8 pb-4">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Hoy en Bogotá</p>
+<h2 class="text-header-blue dark:text-slate-100 text-3xl font-bold mt-1">Sábado, 12 de Octubre</h2>
+<div class="flex items-center gap-2 mt-2 text-primary dark:text-primary/90 font-semibold">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>15 Rabi' al-Thani 1445</span>
+</div>
+</section>
+<!-- Next Prayer Countdown -->
+<section class="px-6 mb-8">
+<div class="bg-header-blue/5 dark:bg-slate-800/50 border border-header-blue/10 dark:border-slate-700 rounded-xl p-5 flex items-center justify-between">
+<div>
+<p class="text-header-blue/60 dark:text-slate-400 text-xs font-bold uppercase tracking-widest">Siguiente Oración</p>
+<h3 class="text-header-blue dark:text-slate-100 text-2xl font-bold">Dhuhr</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Empieza en 2h 14m</p>
+</div>
+<div class="bg-header-blue text-white size-14 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">wb_sunny</span>
+</div>
+</div>
+</section>
+<!-- Prayer Times Grid -->
+<section class="px-6 mb-10">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-header-blue dark:text-slate-100 text-xl font-bold">Horarios de Oración</h3>
+<span class="material-symbols-outlined text-header-blue/40">schedule</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Fajr -->
+<div class="bg-white dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-xl p-4 transition-all active:scale-95">
+<div class="flex items-center gap-2 mb-3 text-header-blue/50 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+<span class="text-xs font-bold uppercase tracking-tight">Fajr</span>
+</div>
+<p class="text-header-blue dark:text-slate-100 text-xl font-bold">04:30 AM</p>
+</div>
+<!-- Dhuhr (Active) -->
+<div class="bg-white dark:bg-slate-800/30 border-2 border-primary rounded-xl p-4 transition-all active:scale-95 relative">
+<div class="flex items-center gap-2 mb-3 text-primary">
+<span class="material-symbols-outlined text-[20px]">sunny</span>
+<span class="text-xs font-bold uppercase tracking-tight">Dhuhr</span>
+</div>
+<p class="text-header-blue dark:text-slate-100 text-xl font-bold">12:15 PM</p>
+<div class="absolute top-2 right-2 size-2 bg-primary rounded-full animate-pulse"></div>
+</div>
+<!-- Asr -->
+<div class="bg-white dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-xl p-4 transition-all active:scale-95">
+<div class="flex items-center gap-2 mb-3 text-header-blue/50 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">sunny_snowing</span>
+<span class="text-xs font-bold uppercase tracking-tight">Asr</span>
+</div>
+<p class="text-header-blue dark:text-slate-100 text-xl font-bold">03:30 PM</p>
+</div>
+<!-- Maghrib -->
+<div class="bg-white dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-xl p-4 transition-all active:scale-95">
+<div class="flex items-center gap-2 mb-3 text-header-blue/50 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">wb_shade</span>
+<span class="text-xs font-bold uppercase tracking-tight">Maghrib</span>
+</div>
+<p class="text-header-blue dark:text-slate-100 text-xl font-bold">06:10 PM</p>
+</div>
+<!-- Isha -->
+<div class="bg-white dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-xl p-4 transition-all active:scale-95">
+<div class="flex items-center gap-2 mb-3 text-header-blue/50 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">dark_mode</span>
+<span class="text-xs font-bold uppercase tracking-tight">Isha</span>
+</div>
+<p class="text-header-blue dark:text-slate-100 text-xl font-bold">07:45 PM</p>
+</div>
+<!-- Jummah -->
+<div class="bg-white dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-xl p-4 transition-all active:scale-95">
+<div class="flex items-center gap-2 mb-3 text-header-blue/50 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="text-xs font-bold uppercase tracking-tight">Jummah</span>
+</div>
+<p class="text-header-blue dark:text-slate-100 text-xl font-bold">01:00 PM</p>
+</div>
+</div>
+</section>
+<!-- Call to Action Section -->
+<section class="px-6 mb-10 flex flex-col gap-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">volunteer_activism</span>
+                Apoyar a la Mezquita
+            </button>
+<button class="w-full bg-header-blue/10 dark:bg-slate-800 text-header-blue dark:text-slate-100 font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">map</span>
+                Cómo llegar
+            </button>
+</section>
+<!-- Community Section -->
+<section class="px-6">
+<h3 class="text-header-blue dark:text-slate-100 text-xl font-bold mb-4">Comunidad</h3>
+<div class="space-y-4">
+<div class="flex gap-4 items-center">
+<div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-800 flex-shrink-0 flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-gradient-to-br from-header-blue to-primary/40" data-alt="Abstract gradient community icon pattern"></div>
+</div>
+<div class="flex-1">
+<h4 class="text-header-blue dark:text-slate-100 font-bold leading-tight">Clases de Árabe</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Todos los domingos a las 10:00 AM</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<div class="flex gap-4 items-center">
+<div class="size-16 rounded-lg bg-slate-100 dark:bg-slate-800 flex-shrink-0 flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-gradient-to-br from-primary/60 to-header-blue" data-alt="Abstract community events pattern"></div>
+</div>
+<div class="flex-1">
+<h4 class="text-header-blue dark:text-slate-100 font-bold leading-tight">Cena Comunitaria</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Viernes después de Maghrib</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Tab Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 ios-blur border-t border-slate-100 dark:border-slate-800 px-6 py-3 pb-8 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">home</span>
+<span class="text-[10px] font-bold uppercase">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-bold uppercase">Eventos</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-bold uppercase">Servicios</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase">Perfil</span>
+</a>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,568 @@
+<!doctype html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mezquita Central de Bogotá - Inicio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#c03026", // Primary Red
+              secondary: "#212E80", // Primary Blue
+              "background-light": "#f8f6f6",
+              "background-dark": "#201312",
+            },
+            fontFamily: {
+              display: ["Public Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Public Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100"
+  >
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+      <!-- Header / Navigation -->
+      <header
+        class="sticky top-0 z-50 bg-secondary text-white px-6 md:px-12 py-4 shadow-lg"
+      >
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="bg-white/10 p-2 rounded-lg">
+              <span class="material-symbols-outlined text-white text-3xl"
+                >mosque</span
+              >
+            </div>
+            <div>
+              <h1
+                class="text-lg font-extrabold leading-tight tracking-tight uppercase"
+              >
+                Mezquita Central
+              </h1>
+              <p class="text-[10px] tracking-[0.2em] opacity-80 uppercase">
+                Bogotá, Colombia
+              </p>
+            </div>
+          </div>
+          <nav class="hidden md:flex items-center gap-8">
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="#"
+              >Sobre Nosotros</a
+            >
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="#"
+              >Eventos</a
+            >
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="#"
+              >Servicios</a
+            >
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="#"
+              >Contacto</a
+            >
+          </nav>
+          <div class="flex items-center gap-4">
+            <button
+              class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg text-sm font-bold transition-all shadow-md"
+            >
+              Donar
+            </button>
+            <button class="md:hidden text-white">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <!-- Hero Section -->
+      <section
+        class="relative h-[450px] w-full flex items-center justify-center overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          data-alt="Main exterior of the Bogotá Mosque at sunset"
+          style="
+            background-image:
+              linear-gradient(rgba(33, 46, 128, 0.7), rgba(33, 46, 128, 0.4)),
+              url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBF2RIjEvWmGiMeOAU_jBgvDtyRrK1e5Rj7-_pN544iTzPj38D3Co36fSntjISnEYZ6M-pyvsqrub3HPSY5EwR1Z1o8bQRtI6kqYqmhNznmfIcmpK5i7zHHGTCH4fjQw9-ly1jC4j06qstwALkKGcwxsCDzzpLM0IWPBfmqUDTvdPhtSiq_-elkpn2eAD7Ts8kCj3Xwuo_P_1e6s1QWqboGa6zan_9DebMrN8TgFl0IMBdO9-h9vuZJNrbEt9999I6bNEXg33wPzJ4&quot;);
+          "
+        ></div>
+        <div class="relative z-10 text-center px-6 max-w-3xl">
+          <h2
+            class="text-white text-4xl md:text-5xl font-black mb-4 leading-tight"
+          >
+            Bienvenidos al Corazón de la Comunidad
+          </h2>
+          <p
+            class="text-white/90 text-lg md:text-xl font-light mb-8 max-w-2xl mx-auto"
+          >
+            Paz, Comunidad y Fe en el centro de Bogotá. Un espacio abierto para
+            todos.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              class="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all"
+            >
+              Apoyar la Mezquita
+            </button>
+            <button
+              class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-lg font-bold hover:bg-white/30 transition-all"
+            >
+              Horarios de Rezo
+            </button>
+          </div>
+        </div>
+      </section>
+      <main class="max-w-7xl mx-auto w-full px-6 md:px-12 py-12">
+        <!-- Prayer Times & Mission Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16 items-start">
+          <!-- Mission Statement -->
+          <div class="md:col-span-4 flex flex-col justify-center h-full">
+            <div class="inline-flex items-center gap-2 text-primary mb-4">
+              <div class="h-1 w-8 bg-primary"></div>
+              <span class="text-xs font-bold uppercase tracking-widest"
+                >Nuestra Misión</span
+              >
+            </div>
+            <h3 class="text-3xl font-bold text-secondary mb-6">
+              Fomentando la Paz y la Espiritualidad
+            </h3>
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+              Nuestra misión es cultivar una comunidad pacífica fundamentada en
+              la fe, proporcionando guía espiritual y apoyo social a todos los
+              habitantes de Bogotá.
+            </p>
+            <div class="flex items-center gap-4">
+              <div class="flex -space-x-2">
+                <div
+                  class="h-10 w-10 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center overflow-hidden"
+                >
+                  <span class="material-symbols-outlined text-sm">person</span>
+                </div>
+                <div
+                  class="h-10 w-10 rounded-full border-2 border-white bg-slate-300 flex items-center justify-center overflow-hidden"
+                >
+                  <span class="material-symbols-outlined text-sm">person</span>
+                </div>
+                <div
+                  class="h-10 w-10 rounded-full border-2 border-white bg-slate-400 flex items-center justify-center overflow-hidden"
+                >
+                  <span class="material-symbols-outlined text-sm">person</span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 font-medium">
+                +500 miembros activos
+              </p>
+            </div>
+          </div>
+          <!-- Prayer Times Widget -->
+          <div
+            class="md:col-span-8 bg-white dark:bg-zinc-900 rounded-xl shadow-xl border border-slate-100 dark:border-zinc-800 p-8"
+          >
+            <div
+              class="flex items-center justify-between mb-8 border-b border-slate-100 dark:border-zinc-800 pb-4"
+            >
+              <div>
+                <h4 class="text-xl font-bold text-slate-800 dark:text-white">
+                  Horarios de Salah
+                </h4>
+                <p class="text-sm text-slate-500">Bogotá - Hoy, 24 de Mayo</p>
+              </div>
+              <div
+                class="bg-primary/10 text-primary px-4 py-2 rounded-full flex items-center gap-2"
+              >
+                <span class="material-symbols-outlined text-sm animate-pulse"
+                  >schedule</span
+                >
+                <span class="text-xs font-bold uppercase tracking-tighter"
+                  >Próximo: Dhuhr (12:30 PM)</span
+                >
+              </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+              <!-- Fajr -->
+              <div
+                class="group flex flex-col items-center p-4 rounded-lg border border-slate-50 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-800/50 transition-all"
+              >
+                <span class="material-symbols-outlined text-secondary mb-2"
+                  >flare</span
+                >
+                <span class="text-xs font-bold text-slate-400 uppercase"
+                  >Fajr</span
+                >
+                <span class="text-lg font-black text-slate-800 dark:text-white"
+                  >5:15 AM</span
+                >
+              </div>
+              <!-- Dhuhr (Highlight) -->
+              <div
+                class="group flex flex-col items-center p-4 rounded-lg bg-primary text-white shadow-lg shadow-primary/30 transition-all scale-105 ring-4 ring-primary/20"
+              >
+                <span class="material-symbols-outlined mb-2">sunny</span>
+                <span class="text-xs font-bold text-white/80 uppercase"
+                  >Dhuhr</span
+                >
+                <span class="text-lg font-black">12:30 PM</span>
+              </div>
+              <!-- Asr -->
+              <div
+                class="group flex flex-col items-center p-4 rounded-lg border border-slate-50 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-800/50 transition-all"
+              >
+                <span class="material-symbols-outlined text-secondary mb-2"
+                  >wb_sunny</span
+                >
+                <span class="text-xs font-bold text-slate-400 uppercase"
+                  >Asr</span
+                >
+                <span class="text-lg font-black text-slate-800 dark:text-white"
+                  >3:45 PM</span
+                >
+              </div>
+              <!-- Maghrib -->
+              <div
+                class="group flex flex-col items-center p-4 rounded-lg border border-slate-50 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-800/50 transition-all"
+              >
+                <span class="material-symbols-outlined text-secondary mb-2"
+                  >nights_stay</span
+                >
+                <span class="text-xs font-bold text-slate-400 uppercase"
+                  >Maghrib</span
+                >
+                <span class="text-lg font-black text-slate-800 dark:text-white"
+                  >6:15 PM</span
+                >
+              </div>
+              <!-- Isha -->
+              <div
+                class="group flex flex-col items-center p-4 rounded-lg border border-slate-50 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-800/50 transition-all col-span-2 sm:col-span-1"
+              >
+                <span class="material-symbols-outlined text-secondary mb-2"
+                  >bedtime</span
+                >
+                <span class="text-xs font-bold text-slate-400 uppercase"
+                  >Isha</span
+                >
+                <span class="text-lg font-black text-slate-800 dark:text-white"
+                  >7:30 PM</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Two-Column Layout: Events & Services -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <!-- Section: Events -->
+          <section>
+            <div class="flex items-center justify-between mb-8">
+              <h3 class="text-2xl font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary"
+                  >event</span
+                >
+                Próximos Eventos
+              </h3>
+              <a class="text-primary text-sm font-bold hover:underline" href="#"
+                >Ver todos</a
+              >
+            </div>
+            <div class="space-y-6">
+              <!-- Event Card 1 -->
+              <div class="flex gap-4 group">
+                <div
+                  class="min-w-[120px] h-32 rounded-lg overflow-hidden relative"
+                >
+                  <img
+                    class="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    data-alt="Community gathering for religious seminar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1vbAk91cuoJZuAh6pmOivJTgpZnj7lRMbvrnuK8Wb0nflrQxfyx3tshslicci9N3NxDQzL_orqGRGh5m0u_MspF-JDd0EwBsFxFI64_VrlncOGY-hOKlj7eWMy3m9qZ0i3w1rcHqlLS3aFbZiHOXV02Jx9hH0n7FA6gmCiqlEGOeOOZZK_Z6y5NddABVNywkGtHlfPckHAWqXZpiiuMZ8ek57mofP0p3yF9iv-CdpPN4C7QG6Nm45oMqeVwIGni91NL3WoFGqzVM"
+                  />
+                  <div
+                    class="absolute top-2 left-2 bg-white px-2 py-1 rounded text-[10px] font-bold text-secondary uppercase"
+                  >
+                    28 Mayo
+                  </div>
+                </div>
+                <div class="flex flex-col justify-center">
+                  <h4
+                    class="text-lg font-bold group-hover:text-primary transition-colors"
+                  >
+                    Seminario de Tafsir
+                  </h4>
+                  <p class="text-sm text-slate-500 mb-2 line-clamp-2">
+                    Un estudio profundo del Corán con el Sheikh invitado
+                    Muhammad Ali.
+                  </p>
+                  <div
+                    class="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><span class="material-symbols-outlined text-sm"
+                        >schedule</span
+                      >
+                      18:00</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><span class="material-symbols-outlined text-sm"
+                        >location_on</span
+                      >
+                      Salon Principal</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Event Card 2 -->
+              <div class="flex gap-4 group">
+                <div
+                  class="min-w-[120px] h-32 rounded-lg overflow-hidden relative"
+                >
+                  <img
+                    class="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    data-alt="Arabic calligraphy workshop"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzWD40ez4YHskVX1SylogpkngJWKWXZuRtJgGQpPipRWJfp9wFx4c1Uh9jNgiChdE4Ykd1cIdLewwZjDMGlz_T4SX5fS3Ki8aoXfbqDEaKYjpHKSfXeEPIB4Tzzpy8bxdejkGb-BeessjsfU_aa8QW7niNUtB4gAx9DN-Nf2AOt5GyQzYOK3oMfz9n6QaKD6mRAFsCMHeZ2Li_CJYE081OFJcRDroFEUy0ERucxYomdKPEtOOS3xdebkqlIQa-m53ntFpaIIFtI30"
+                  />
+                  <div
+                    class="absolute top-2 left-2 bg-white px-2 py-1 rounded text-[10px] font-bold text-secondary uppercase"
+                  >
+                    02 Junio
+                  </div>
+                </div>
+                <div class="flex flex-col justify-center">
+                  <h4
+                    class="text-lg font-bold group-hover:text-primary transition-colors"
+                  >
+                    Taller de Caligrafía Árabe
+                  </h4>
+                  <p class="text-sm text-slate-500 mb-2 line-clamp-2">
+                    Aprende los fundamentos del arte de la escritura cúfica y
+                    thuluth.
+                  </p>
+                  <div
+                    class="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase"
+                  >
+                    <span class="flex items-center gap-1"
+                      ><span class="material-symbols-outlined text-sm"
+                        >schedule</span
+                      >
+                      10:00</span
+                    >
+                    <span class="flex items-center gap-1"
+                      ><span class="material-symbols-outlined text-sm"
+                        >location_on</span
+                      >
+                      Centro Cultural</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Section: Community Services -->
+          <section>
+            <div class="flex items-center justify-between mb-8">
+              <h3 class="text-2xl font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary"
+                  >volunteer_activism</span
+                >
+                Servicios a la Comunidad
+              </h3>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Service 1 -->
+              <div
+                class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-slate-100 dark:border-zinc-800 hover:shadow-md transition-shadow"
+              >
+                <div
+                  class="size-12 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center mb-4"
+                >
+                  <span class="material-symbols-outlined">favorite</span>
+                </div>
+                <h4 class="font-bold mb-1">Nikkah</h4>
+                <p class="text-xs text-slate-500">
+                  Servicios matrimoniales y asesoría para parejas.
+                </p>
+              </div>
+              <!-- Service 2 -->
+              <div
+                class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-slate-100 dark:border-zinc-800 hover:shadow-md transition-shadow"
+              >
+                <div
+                  class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4"
+                >
+                  <span class="material-symbols-outlined">school</span>
+                </div>
+                <h4 class="font-bold mb-1">Educación</h4>
+                <p class="text-xs text-slate-500">
+                  Clases de Árabe e Islam para niños y adultos.
+                </p>
+              </div>
+              <!-- Service 3 -->
+              <div
+                class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-slate-100 dark:border-zinc-800 hover:shadow-md transition-shadow"
+              >
+                <div
+                  class="size-12 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center mb-4"
+                >
+                  <span class="material-symbols-outlined">handshake</span>
+                </div>
+                <h4 class="font-bold mb-1">Zakat</h4>
+                <p class="text-xs text-slate-500">
+                  Distribución de caridad a los más necesitados.
+                </p>
+              </div>
+              <!-- Service 4 -->
+              <div
+                class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-slate-100 dark:border-zinc-800 hover:shadow-md transition-shadow"
+              >
+                <div
+                  class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4"
+                >
+                  <span class="material-symbols-outlined">church</span>
+                </div>
+                <h4 class="font-bold mb-1">Funeraria</h4>
+                <p class="text-xs text-slate-500">
+                  Apoyo integral en momentos de pérdida.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+      <!-- Newsletter / Contact Simple CTA -->
+      <section class="bg-secondary py-16 text-center px-6">
+        <h3 class="text-3xl font-bold text-white mb-4">Mantente Conectado</h3>
+        <p class="text-white/70 mb-8 max-w-xl mx-auto">
+          Únete a nuestra lista de correo para recibir actualizaciones semanales
+          sobre Jumu'ah y eventos especiales.
+        </p>
+        <div class="max-w-md mx-auto flex gap-2">
+          <input
+            class="flex-1 rounded-lg border-none focus:ring-2 focus:ring-primary px-4"
+            placeholder="Tu correo electrónico"
+            type="email"
+          />
+          <button
+            class="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-primary/90 transition-all"
+          >
+            Suscribirse
+          </button>
+        </div>
+      </section>
+      <!-- Footer -->
+      <footer
+        class="bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800 py-12 px-6 md:px-12"
+      >
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div class="md:col-span-1">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-primary text-2xl"
+                >mosque</span
+              >
+              <h4 class="font-black text-secondary uppercase tracking-tight">
+                Mezquita Bogotá
+              </h4>
+            </div>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              Un centro de fe y comunidad en el corazón de Colombia.
+            </p>
+          </div>
+          <div>
+            <h5 class="font-bold mb-4 text-slate-800 dark:text-white">
+              Explorar
+            </h5>
+            <ul class="text-sm text-slate-500 space-y-2">
+              <li>
+                <a class="hover:text-primary" href="#">Nuestra Historia</a>
+              </li>
+              <li>
+                <a class="hover:text-primary" href="#">Horarios de Rezo</a>
+              </li>
+              <li><a class="hover:text-primary" href="#">Donaciones</a></li>
+              <li><a class="hover:text-primary" href="#">Galería</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-bold mb-4 text-slate-800 dark:text-white">Legal</h5>
+            <ul class="text-sm text-slate-500 space-y-2">
+              <li><a class="hover:text-primary" href="#">Privacidad</a></li>
+              <li>
+                <a class="hover:text-primary" href="#">Términos de Uso</a>
+              </li>
+              <li><a class="hover:text-primary" href="#">Cookies</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-bold mb-4 text-slate-800 dark:text-white">
+              Ubicación
+            </h5>
+            <p class="text-sm text-slate-500 mb-2">
+              Cl. 80 #30, Bogotá, Colombia
+            </p>
+            <div
+              class="h-24 w-full bg-slate-100 dark:bg-zinc-900 rounded-lg overflow-hidden border border-slate-200 dark:border-zinc-800 relative"
+            >
+              <div
+                class="absolute inset-0 opacity-40 bg-cover"
+                data-location="Bogotá"
+                style="
+                  background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuD0W0XpFuIbgazdoiI2wUG3x_Psn7VQge8MyqNidPCMCHmQxaGBaSmCs0wiC8GfL6xMfDCnzAMKMeB0dS4L5NogXN2ZLXYAzwmd_LieoTz4sGqVJ8XlYDw-geDM3N6D9F0UOJaa9_0zf8hHgWTHS_NUK_CfVbONqH1XpJ7l5m-6Z6CpRCaLNnYtDbZRZ5YWkG6lAb5EhauIG5jIdUZFrtUhsGb8JFrk0_A0dymPdzXyc6LGxhC72ugFGPYogyCBdsgRi_GRuprdtLQ&quot;);
+                "
+              ></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary"
+                  >location_on</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-50 dark:border-zinc-900 text-center"
+        >
+          <p class="text-xs text-slate-400">
+            © 2024 Mezquita Central de Bogotá. Todos los derechos reservados.
+          </p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

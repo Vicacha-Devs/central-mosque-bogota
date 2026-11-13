@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Imam Profile | Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#212e83",
+                        "accent-red": "#C13026",
+                        "neutral-sand": "#F5F2EE",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#13151f",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Newsreader', serif;
+            background-color: #F5F2EE;
+        }
+    </style>
+</head>
+<body class="bg-neutral-sand text-primary">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-[1440px] mx-auto px-12 py-5 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">mosque</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-primary">Central Mosque of Bogotá</h1>
+</div>
+<nav class="hidden xl:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-accent-red transition-colors" href="#">Our Mosque</a>
+<a class="text-sm font-medium hover:text-accent-red transition-colors" href="#">Prayer Times</a>
+<a class="text-sm font-medium text-accent-red" href="#">Our Imams</a>
+<a class="text-sm font-medium hover:text-accent-red transition-colors" href="#">Events</a>
+<a class="text-sm font-medium hover:text-accent-red transition-colors" href="#">Giving</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 px-6 py-2 rounded-lg bg-accent-red text-white text-sm font-semibold hover:bg-red-700 transition-colors shadow-lg shadow-accent-red/20">
+<span class="material-symbols-outlined text-sm">favorite</span>
+                    Donate
+                </button>
+</div>
+</div>
+</header>
+<main class="pt-20">
+<!-- Split-Screen Hero -->
+<section class="relative h-[800px] flex overflow-hidden">
+<!-- Left Portrait -->
+<div class="w-1/2 h-full relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dignified portrait of an Imam in traditional robes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuArpi04uLNFq_tW4qu-Lig9rl8i8wg7unWEbwAX3uIBIWMQzUdvopSLn8b6eNpxbuDBTn_dp-gOzmDG8iwjWYoAZ3f1C4EzV1bylaiDEyEXY5ti0RPvApgjyP9h4Lu9999sVhV0nH-R5tmUcnHzsYz8H_zhiotQg7CxWpLW2WG48gPnUVJ7sP7qMNcDm1J_vQ34oahvQgD67EtJcel3ipZZ9MzSqblhc458NIWbOL5yclPse_WcqyPixblzKiQ5a7VcjKlTp0uouAA');"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary/10"></div>
+</div>
+<!-- Right Blue Panel -->
+<div class="w-1/2 h-full bg-primary flex flex-col justify-center px-20 relative">
+<div class="max-w-xl">
+<span class="text-white/60 uppercase tracking-[0.2em] text-sm mb-4 block font-medium">Head Imam &amp; Scholar</span>
+<h2 class="text-white text-7xl font-bold leading-tight mb-8">Sheikh Ahmad <br/> Al-Mansour</h2>
+<p class="text-white/80 text-2xl italic leading-relaxed border-l-2 border-accent-red pl-8">
+                        "The pursuit of knowledge is the path to divine proximity. Let us build a community rooted in compassion and shared wisdom."
+                    </p>
+<div class="mt-12 flex gap-4">
+<button class="bg-accent-red hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-xl shadow-black/20">
+                            Contact Imam
+                        </button>
+<button class="border border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all">
+                            Office Hours
+                        </button>
+</div>
+</div>
+<!-- Decorative Geometry -->
+<div class="absolute bottom-[-100px] right-[-100px] opacity-10">
+<span class="material-symbols-outlined text-[400px]">grid_4x4</span>
+</div>
+</div>
+<!-- Glassmorphism Bio Card Overlap -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-[1200px] z-20">
+<div class="glass-card p-10 rounded-xl shadow-2xl flex gap-12 items-center">
+<div class="flex-1">
+<h3 class="text-2xl font-bold mb-4 text-primary">Spiritual Journey &amp; Scholarly Background</h3>
+<p class="text-primary/70 leading-relaxed text-lg italic">
+                            A graduate of the prestigious Al-Azhar University with a PhD in Islamic Jurisprudence, Sheikh Ahmad has led the Central Mosque of Bogotá for over 15 years. His work focuses on integrating traditional spiritual values with the complexities of modern urban life, fostering a sanctuary for dialogue and growth.
+                        </p>
+</div>
+<div class="w-px h-24 bg-primary/10 hidden lg:block"></div>
+<div class="flex gap-8">
+<div class="text-center">
+<span class="block text-3xl font-bold text-accent-red">15+</span>
+<span class="text-xs uppercase tracking-widest text-primary/50">Years Service</span>
+</div>
+<div class="text-center">
+<span class="block text-3xl font-bold text-accent-red">400+</span>
+<span class="text-xs uppercase tracking-widest text-primary/50">Sermons Delivered</span>
+</div>
+<div class="text-center">
+<span class="block text-3xl font-bold text-accent-red">12</span>
+<span class="text-xs uppercase tracking-widest text-primary/50">Active Courses</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Section: Horizontal Masonry -->
+<section class="max-w-[1440px] mx-auto px-12 py-32">
+<!-- Recent Sermons -->
+<div class="mb-24">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl font-bold mb-2">Recent Sermons</h2>
+<div class="w-20 h-1 bg-accent-red"></div>
+</div>
+<button class="text-primary font-bold hover:text-accent-red flex items-center gap-2 group">
+                        View Sermon Archive 
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Masonry Tile Grid -->
+<div class="grid grid-cols-12 gap-6 h-[500px]">
+<!-- Large Feature Tile -->
+<div class="col-span-6 group relative overflow-hidden rounded-xl bg-primary text-white">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-700" data-alt="Imam leading prayer in the main hall" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDVmCpvvnWtHefwtGQ0aIykmhQIAANaMGfICxBGg1U05nkqZkcTA_qj6G0FctlVa8825Qpp9MGdX_pzNtvET6i7yQJSAqR7gB4Xu2BCipC_5i1zTZ6BGX4ByaUtpbk0axE1J7AV5LQ855sRoReMHpyOmkP_eJmXSEmeq6R5dMbRbtQHJ3BTC5_mR5ZP9gAQb7Hd_OhA7W-srTzCpLj47qmsej5bPfeNqDh7K9kKoXD3fys6gmr-vOBnt3JVMS082nKWIyBjsK3VAVM');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 p-8">
+<span class="bg-accent-red text-[10px] uppercase font-bold px-3 py-1 rounded mb-4 inline-block">Featured Khutbah</span>
+<h3 class="text-3xl font-bold mb-4">The Architecture of the Heart: Building Inner Faith</h3>
+<p class="text-white/70 mb-6 max-w-lg">Delivered on Friday, Oct 24th, 2024. Exploring the spiritual dimensions of patience in the modern world.</p>
+<button class="flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-lg font-bold hover:bg-accent-red hover:text-white transition-all">
+<span class="material-symbols-outlined">play_circle</span> Watch Now
+                            </button>
+</div>
+</div>
+<!-- Secondary Tile -->
+<div class="col-span-3 group relative overflow-hidden rounded-xl bg-white shadow-xl flex flex-col">
+<div class="h-48 bg-cover bg-center" data-alt="Close up of Arabic calligraphy on mosque walls" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpzuIY-pmj9Pn4BV7zuWn0LkEz1Nc7kDTzKxLwmq7JcnQHwUStA5Pu6vU53hqT2FF193XfHi2Jag0znSTlagGgwgn60hXJLsA_ELeC4S9hBJHItpFmm8FUabNZTuzXHEYbSka-qL3z_8pOiW0zfLbSzYxRZciQIGTcaIivx_j4KFev15LrkREzS4id7NYg4qd45P_9Ay4e4ZuMx1gdy9MNA6G4U4f8442-YNzL3xif1z0sE-LHr8NbO3Z6pzoyfW9ff-Jrg3iWTOU');"></div>
+<div class="p-6 flex flex-col justify-between flex-grow">
+<div>
+<h4 class="font-bold text-xl mb-2 group-hover:text-accent-red transition-colors">Justice in Islamic Tradition</h4>
+<p class="text-primary/60 text-sm italic">Oct 17th • 42 mins</p>
+</div>
+<button class="mt-4 border border-primary/20 rounded-lg py-2 flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">play_arrow</span> Listen
+                            </button>
+</div>
+</div>
+<!-- Tertiary Tile -->
+<div class="col-span-3 group relative overflow-hidden rounded-xl bg-white shadow-xl flex flex-col">
+<div class="h-48 bg-cover bg-center" data-alt="Gathering of community members in the mosque" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3XuBTwXQO4gGKHIrjzD7CyVRjznejLabFi9GqtOfhNRyCJ6z5CWn8lkSSspeQVzv0djGArMnBALqBAPz0SpDUYoYuhuOm5UHb8V3Yq4omdGq1zkabeFG04YazVqdNaxScbue67bME4zgISK9Ayzc0JvMbbNyF36f3fMQEeDRA2T91glFSC1auR5nvbVqbSNtYAUBCpjZaoJothy9sbZy5TZ85PhspLIMbXpELpNOgEILNiCeCMxONtr175XQZa4pstB3DDtdsEq4');"></div>
+<div class="p-6 flex flex-col justify-between flex-grow">
+<div>
+<h4 class="font-bold text-xl mb-2 group-hover:text-accent-red transition-colors">Community &amp; Compassion</h4>
+<p class="text-primary/60 text-sm italic">Oct 10th • 38 mins</p>
+</div>
+<button class="mt-4 border border-primary/20 rounded-lg py-2 flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">play_arrow</span> Listen
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Educational Courses -->
+<div class="mb-24">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl font-bold mb-2">Educational Courses</h2>
+<div class="w-20 h-1 bg-accent-red"></div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Course Card 1 (Wide) -->
+<div class="col-span-8 bg-white rounded-xl shadow-lg border border-primary/5 p-8 flex gap-8 hover:shadow-2xl transition-all">
+<div class="w-1/3 h-full min-h-[240px] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Student studying ancient Arabic manuscripts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkp7_6Lj_3Jf_s3c635UyKsZXuKrhP3tXDOoYZQcPiosVSpqihTUwr5gpzLuynYN3Aj9sdjUjnrrMI6DrGskg4G2q9rNU-9w0uKD7m-8A-iw-2vpgGqIBZpUDK1R6WJBiqrIIFwfl_5gTkS7_5j000vmeNNf9LGrsAPJjIY4QUT9_hfVW8KCVMhZzTimFXpQAOqB8q3MBlUU5jc3klY3QUjWmgdj_9AdSIavOsC-dEA1fBie-EjC3ftYAgWUvaIW3FPKMUYBsX0WE"/>
+<div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded">ONGOING</div>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex items-center gap-2 text-accent-red text-sm font-bold mb-2">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                ADVANCED TAJWEED
+                            </div>
+<h3 class="text-3xl font-bold mb-4">Mastery of the Quranic Recitation</h3>
+<p class="text-primary/60 mb-6 italic">A comprehensive 12-week course focusing on the deep nuances of pronunciation and rhythm.</p>
+<div class="flex items-center gap-8 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary/40">schedule</span>
+<span class="text-sm font-medium">Tuesdays 19:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary/40">person</span>
+<span class="text-sm font-medium">24 Students</span>
+</div>
+</div>
+<button class="bg-primary text-white w-fit px-8 py-3 rounded-lg font-bold hover:bg-accent-red transition-colors">
+                                Apply for Course
+                            </button>
+</div>
+</div>
+<!-- Course Card 2 (Vertical) -->
+<div class="col-span-4 bg-primary text-white rounded-xl shadow-lg p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-white/60 text-sm font-bold mb-2">
+<span class="material-symbols-outlined text-sm">language</span>
+                                LANGUAGE STUDIES
+                            </div>
+<h3 class="text-3xl font-bold mb-4 leading-tight">Beginner Classical Arabic</h3>
+<p class="text-white/70 italic mb-8">Unlock the language of the Divine. New cohort starting November 15th. Limited spaces available.</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-white/10 pb-4">
+<span class="text-sm">Registration Fee</span>
+<span class="font-bold text-accent-red">$45.00</span>
+</div>
+<button class="w-full bg-white text-primary py-3 rounded-lg font-bold hover:bg-accent-red hover:text-white transition-all">
+                                Enroll Now
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / Footer CTA -->
+<section class="bg-white border-t border-primary/10 py-24">
+<div class="max-w-[1440px] mx-auto px-12 grid grid-cols-2 gap-24 items-center">
+<div>
+<h2 class="text-4xl font-bold mb-6">Stay Connected</h2>
+<p class="text-lg text-primary/70 italic leading-relaxed">
+                        Receive monthly spiritual reflections, sermon highlights, and updates on educational programs directly from the office of Sheikh Ahmad Al-Mansour.
+                    </p>
+</div>
+<div class="flex gap-4">
+<input class="flex-grow p-4 bg-neutral-sand border-none rounded-lg focus:ring-2 focus:ring-primary/20 italic" placeholder="Your email address" type="email"/>
+<button class="bg-accent-red text-white px-10 py-4 rounded-lg font-bold hover:bg-red-700 transition-colors">
+                        Subscribe
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-primary text-white py-12">
+<div class="max-w-[1440px] mx-auto px-12 flex justify-between items-center">
+<div class="flex items-center gap-3 opacity-60">
+<span class="material-symbols-outlined">mosque</span>
+<span class="text-sm font-medium tracking-widest uppercase">Central Mosque of Bogotá</span>
+</div>
+<div class="flex gap-12">
+<a class="text-sm opacity-60 hover:opacity-100 transition-opacity" href="#">Privacy Policy</a>
+<a class="text-sm opacity-60 hover:opacity-100 transition-opacity" href="#">Terms of Service</a>
+<a class="text-sm opacity-60 hover:opacity-100 transition-opacity" href="#">Contact</a>
+</div>
+<div class="text-sm opacity-40">
+                © 2024 Central Mosque of Bogotá. All Rights Reserved.
+            </div>
+</div>
+</footer>
+</body></html>

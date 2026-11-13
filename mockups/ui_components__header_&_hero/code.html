@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Central Mosque of Bogotá - UI Components</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#20337e",
+                        "accent-red": "#C13026",
+                        "neutral-sand": "#f6f5f1",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#13151f",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #f6f5f1; /* Neutral Sand background */
+        }
+        .glass-headline {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900">
+<!-- Sticky Global Header -->
+<header class="sticky top-0 z-50 w-full bg-primary shadow-lg border-b border-primary/10">
+<div class="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
+<!-- Logo Section -->
+<div class="flex items-center gap-3">
+<div class="bg-white p-1.5 rounded-lg flex items-center justify-center">
+<svg class="w-8 h-8 text-primary" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-white text-lg font-bold leading-none uppercase tracking-wider">Mezquita Central</span>
+<span class="text-white/80 text-xs font-medium tracking-tight">De Bogotá</span>
+</div>
+</div>
+<!-- Main Nav -->
+<nav class="hidden xl:flex items-center gap-8">
+<a class="text-white text-sm font-semibold hover:text-white/80 transition-colors uppercase tracking-wide" href="#">Home</a>
+<a class="text-white/90 text-sm font-medium hover:text-white transition-colors uppercase tracking-wide" href="#">About Us</a>
+<a class="text-white/90 text-sm font-medium hover:text-white transition-colors uppercase tracking-wide" href="#">Religious Services</a>
+<a class="text-white/90 text-sm font-medium hover:text-white transition-colors uppercase tracking-wide" href="#">Community</a>
+<a class="text-white/90 text-sm font-medium hover:text-white transition-colors uppercase tracking-wide" href="#">Contact</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-6">
+<!-- Search Icon -->
+<button class="text-white/90 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+<!-- Language Selector -->
+<div class="hidden lg:flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">
+<span class="material-symbols-outlined text-white/80 text-lg">language</span>
+<span class="text-white text-xs font-bold">ES / AR / EN / TR</span>
+</div>
+<!-- Donate Button -->
+<button class="bg-accent-red hover:bg-[#a02820] text-white px-6 py-2.5 rounded-lg text-sm font-bold uppercase tracking-widest shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                    Donate
+                </button>
+</div>
+</div>
+</header>
+<!-- Secondary Navigation -->
+<div class="w-full bg-white border-b border-slate-200">
+<div class="max-w-[1440px] mx-auto px-6">
+<div class="flex items-center gap-10 overflow-x-auto no-scrollbar">
+<a class="py-4 border-b-2 border-primary text-primary text-sm font-bold whitespace-nowrap" href="#">
+                    All Services
+                </a>
+<a class="py-4 border-b-2 border-transparent text-slate-500 hover:text-primary transition-colors text-sm font-bold whitespace-nowrap" href="#">
+                    Educational Programs
+                </a>
+<a class="py-4 border-b-2 border-transparent text-slate-500 hover:text-primary transition-colors text-sm font-bold whitespace-nowrap" href="#">
+                    Community Events
+                </a>
+<a class="py-4 border-b-2 border-transparent text-slate-500 hover:text-primary transition-colors text-sm font-bold whitespace-nowrap" href="#">
+                    Youth Center
+                </a>
+<a class="py-4 border-b-2 border-transparent text-slate-500 hover:text-primary transition-colors text-sm font-bold whitespace-nowrap" href="#">
+                    Library &amp; Research
+                </a>
+<a class="py-4 border-b-2 border-transparent text-slate-500 hover:text-primary transition-colors text-sm font-bold whitespace-nowrap" href="#">
+                    Zakat &amp; Charity
+                </a>
+</div>
+</div>
+</div>
+<!-- Hero Section -->
+<main class="relative w-full overflow-hidden bg-neutral-sand">
+<div class="max-w-[1440px] mx-auto min-h-[720px] flex items-center p-6 lg:p-12">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0">
+<img alt="Mosque Interior" class="w-full h-full object-cover" data-alt="Stunning architecture of the Central Mosque in Bogotá" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSzKxA1WMANKkAAUnm0aqd32ibrjKjwkboW0pWHbns5ga1xghLKXRgtjGZX_qF3uiZZfVpICkYIOheCYxpje0iBKI-U7sDO-7DB197eyvDp8Ud_vGN-shRCYALXXXENJ-pyxVmVRoUOWknxBaUKS6bEFfbrRXNIMgzzJziblJeyVjBknqL_eK3NiK-8-cSDvuYYCOvDQQ-9B7IZsDSbPguyQfMgYvVN1oGt_ah40lWdnI3ZHBhJ0DGxlOAacLCOgHmZVLWQw_XCns"/>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-r from-primary/40 via-transparent to-black/20"></div>
+</div>
+<!-- Content Container -->
+<div class="relative z-10 w-full lg:w-3/5">
+<div class="glass-headline p-8 lg:p-12 rounded-xl shadow-2xl max-w-2xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="w-8 h-px bg-primary"></span>
+<span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Bogotá, Colombia</span>
+</div>
+<h1 class="text-primary text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
+                        The Heart of the Community in Bogotá
+                    </h1>
+<p class="text-slate-800 text-lg lg:text-xl font-medium leading-relaxed mb-10">
+                        A place of peace, spiritual growth, and community service. Join us for daily prayers, educational programs, and intercultural dialogue.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex items-center justify-center gap-2 bg-accent-red hover:bg-[#a02820] text-white px-8 py-4 rounded-lg font-bold text-base shadow-xl transition-all hover:-translate-y-1">
+<span class="material-symbols-outlined text-xl">volunteer_activism</span>
+                            Support the Mosque
+                        </button>
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold text-base shadow-xl transition-all hover:-translate-y-1">
+<span class="material-symbols-outlined text-xl">schedule</span>
+                            Prayer Times
+                        </button>
+</div>
+</div>
+</div>
+<!-- Quick Access Floating Info (XL Only) -->
+<div class="hidden xl:flex absolute bottom-12 right-12 z-10 flex-col gap-4">
+<div class="bg-white p-6 rounded-xl shadow-xl border border-slate-100 flex items-center gap-5">
+<div class="bg-primary/10 p-3 rounded-full text-primary">
+<span class="material-symbols-outlined text-3xl">location_on</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Visit Us</p>
+<p class="text-primary font-bold text-lg">Calle 45a #14-29</p>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-xl border border-slate-100 flex items-center gap-5">
+<div class="bg-primary/10 p-3 rounded-full text-primary">
+<span class="material-symbols-outlined text-3xl">mosque</span>
+</div>
+<div>
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Next Prayer</p>
+<p class="text-primary font-bold text-lg">Dhuhr - 12:45 PM</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Component Showcase Section Labels -->
+<section class="max-w-[1440px] mx-auto px-6 py-20">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Branding Palette Info -->
+<div class="bg-white p-10 rounded-2xl border border-slate-200 shadow-sm">
+<h3 class="text-primary font-bold text-2xl mb-6">Visual Identity</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-lg bg-[#20337e]"></div>
+<div>
+<p class="font-bold text-slate-800">Primary Blue</p>
+<p class="text-slate-500 text-sm">#20337e - Trust, Peace, Institutional</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-lg bg-[#C13026]"></div>
+<div>
+<p class="font-bold text-slate-800">Accent Red</p>
+<p class="text-slate-500 text-sm">#C13026 - Energy, Action, Charity</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-lg bg-[#f6f5f1] border border-slate-200"></div>
+<div>
+<p class="font-bold text-slate-800">Neutral Sand</p>
+<p class="text-slate-500 text-sm">#f6f5f1 - Warmth, Tradition, Balance</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Component Details -->
+<div class="flex flex-col justify-center">
+<h2 class="text-primary text-4xl font-extrabold mb-4">UI Standards Part 1</h2>
+<p class="text-slate-600 text-lg leading-relaxed">
+                    This component sheet establishes the global navigation architecture and hero engagement patterns. Utilizing high-contrast typography and a refined color system to represent the Central Mosque's status as a spiritual landmark in Bogotá.
+                </p>
+<div class="mt-8 flex gap-4">
+<span class="px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-widest">Desktop XL 1440px</span>
+<span class="px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-widest">Accessibility Compliant</span>
+</div>
+</div>
+</div>
+</section>
+</body></html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UI Component Sheet - Part 6: Footer &amp; Global</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#20337e",
+              "background-light": "#f6f6f8",
+              "background-dark": "#13151f",
+            },
+            fontFamily: {
+              "display": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<main class="max-w-[1440px] mx-auto p-12">
+<!-- Header Section -->
+<header class="mb-12 border-b border-primary/10 pb-8">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">PART 6</span>
+<h1 class="text-3xl font-bold text-primary dark:text-white">Footer &amp; Global Components</h1>
+</div>
+<p class="text-slate-600 dark:text-slate-400 max-w-2xl">
+                Design system specifications for the Central Mosque of Bogotá. This module covers the global footer architecture, language selection interfaces, and theme toggling utilities.
+            </p>
+</header>
+<!-- Section 1: Global Footer Representation -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-semibold flex items-center gap-2">
+<span class="material-icons text-primary">view_stream</span>
+                    01. Global Footer
+                </h2>
+<span class="text-xs font-medium text-slate-400 uppercase tracking-widest">Full-Width Component</span>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<!-- Actual Footer Component -->
+<footer class="bg-primary rounded-lg text-white p-12 md:p-16">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Column 1: Info -->
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+<span class="material-icons text-primary text-3xl">mosque</span>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight uppercase tracking-tight">Mezquita Central<br/>de Bogotá</h3>
+</div>
+</div>
+<p class="text-blue-100/80 text-sm leading-relaxed max-w-xs">
+                                Providing a spiritual home for the Muslim community in Bogotá since 1990. Open for all five daily prayers and community services.
+                            </p>
+<div class="space-y-3 text-sm">
+<div class="flex items-center gap-3">
+<span class="material-icons text-blue-300 text-sm">location_on</span>
+<span>Cl. 80 #14-23, Bogotá, Colombia</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-icons text-blue-300 text-sm">phone</span>
+<span>+57 (601) 123-4567</span>
+</div>
+</div>
+</div>
+<!-- Column 2: Quick Links -->
+<div class="grid grid-cols-2 gap-8">
+<div>
+<h4 class="font-semibold text-white mb-6 uppercase text-xs tracking-[0.2em]">Mosque</h4>
+<ul class="space-y-4 text-blue-100/70 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Prayer Times</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Services</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Events</a></li>
+<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-semibold text-white mb-6 uppercase text-xs tracking-[0.2em]">Resources</h4>
+<ul class="space-y-4 text-blue-100/70 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Donations</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Education</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact</a></li>
+<li><a class="hover:text-white transition-colors" href="#">News</a></li>
+</ul>
+</div>
+</div>
+<!-- Column 3: Social & Newsletter -->
+<div class="space-y-8">
+<div>
+<h4 class="font-semibold text-white mb-6 uppercase text-xs tracking-[0.2em]">Connect with us</h4>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all border border-white/10" href="#">
+<img alt="Facebook" class="w-5 h-5" data-alt="White Facebook icon logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN14Fwb56Mc3_AZhBLbeMeuRWmgqRm_EopMidza9Uxagwpq8MCjUl7qZ6siZ_5kAe9CFBfAewGqgR-DP6xwczWtxHvo0tYCRiLthIH3DeLNZT1P3slDKXrGpHG_Dw_YU5URisWw0eV64-RTywoej4vp8CtJFsXrjpJ9LE9GhOTKWWGu5ebi50hIu2Fzvzs7NueWRmHdYCPcIB_B6gMkotBJRE_Jn4TA8gRLI_8v23bfY97jGbMOtTveLJddJtYuEm28eLndXczGlA"/>
+</a>
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all border border-white/10" href="#">
+<img alt="Instagram" class="w-5 h-5" data-alt="White Instagram icon logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuIaDXHGPkvu-rIUB6DzjQTXAC59kitGu-sBBt80UDoJys_ihMrfqLEWd13NwXUGOtjL3NuV6e2diTucmWBZtfUJo_ApV8YUkWzTqRtSNZP7O61eZgSvTq7noiDL_Q5RkiTT-eo-oFatp-zTqS6wryfK4GB_UkoA3ZAEY2vV85kwjDZX0ZVQtqFS_jbhp4OXPd20mPha1ZdnHHF70YWBznKD6rpFxinpt7GrWjP9sGp16l4iqrSpejZVGzc2xlmOwA76nZq4MZ1OI"/>
+</a>
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all border border-white/10" href="#">
+<img alt="X" class="w-5 h-5" data-alt="White X Twitter icon logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ30qCeDY06hhAqMZFyArHGfBBoIsJOmVu-XNYxEi-BUcw5NeOyZNVpkS-_YsUK9Nsge9Ezkm1QAGSKFwkkwOutg1AbbuKbTnKxr1RCcfVIi9VTneQ8V0hb9rv3WwpHURPGApPyuAAjfML1y6MwV0TTlzEdh71-j-_PYy23TCcTSLk7EC0PU-qRtJ5KRvl_P0drAIx8Pa-RA-g9HCaRx7igFO2PeaLGs1aNBWtjCWYQKqrB8Ck4pGQlZFCyxnQhCoF3z47pq8bP-Y"/>
+</a>
+</div>
+</div>
+<div class="bg-white/5 p-6 rounded-xl border border-white/10">
+<h5 class="text-xs font-bold uppercase mb-3">Newsletter</h5>
+<div class="flex gap-2">
+<input class="bg-white/10 border-transparent rounded px-3 py-2 text-sm flex-grow focus:ring-1 focus:ring-white/30 text-white placeholder:text-blue-100/50" placeholder="Your email" type="email"/>
+<button class="bg-white text-primary px-4 py-2 rounded text-sm font-bold hover:bg-blue-50 transition-colors">Join</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-blue-100/50">
+<p>© 2024 Mezquita Central de Bogotá. All rights reserved.</p>
+<div class="flex gap-8 mt-4 md:mt-0">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Service</a>
+<a class="hover:text-white" href="#">Cookie Settings</a>
+</div>
+</div>
+</footer>
+</div>
+</section>
+<!-- Section 2: Interactive Controls -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<!-- Language Selector Section -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-semibold flex items-center gap-2">
+<span class="material-icons text-primary">translate</span>
+                        02. Language Selector
+                    </h2>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-10 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+<!-- Closed State -->
+<div>
+<span class="text-[10px] uppercase font-bold text-slate-400 block mb-4">State: Idle / Closed</span>
+<div class="relative w-48">
+<button class="w-full flex items-center justify-between bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm font-medium shadow-sm">
+<div class="flex items-center gap-2">
+<img alt="ES" class="w-5 h-5 rounded-sm" data-alt="Flag of Spain icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxpc72JB1neqFMAAk0zihXazYAPGZ5_Bp38fpJCGmeN3O-6nA8YWhFfDmd8Po5QWjdO3xZQ6bd9JqpQiNXZJdt11MApfAPRmA-qpAcdMsXfYSvuO2beSJRpnc8WJcgUYPB7Yle6Z2mOXUlHNwr7HiLy1TSdxAHaWYqFKbMNJ3QYY_0Fy4qZULaQDWwzdiikCzcdHf6-I1YhvQ4rKtCsrswtpCuK8mU7d9Q_RYg2-9GxybovPqkJ_V5XIoiPDiPFmqLcybzu_oGCgY"/>
+<span>Español</span>
+</div>
+<span class="material-icons text-slate-400 text-sm">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Open State -->
+<div>
+<span class="text-[10px] uppercase font-bold text-slate-400 block mb-4">State: Expanded / Hover</span>
+<div class="relative w-48">
+<button class="w-full flex items-center justify-between bg-white dark:bg-slate-800 border border-primary/40 rounded-t-lg px-4 py-2.5 text-sm font-medium shadow-sm ring-2 ring-primary/10">
+<div class="flex items-center gap-2 text-primary dark:text-blue-300 font-semibold">
+<img alt="ES" class="w-5 h-5 rounded-sm" data-alt="Flag of Spain icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcwyCCpOElMs4h10ihyIi8UVskNzKrCkBOaJTpehUuMZbdiAqAdy4SEJSxeOLck_ssXdyogMTCgokg2UrlIaYX4Opwne4e3r2q48kdbFPArj9NYETPZe5MOaJG3DoYpkpWSQ_995U_T1ovLbm1F5_Pg9Rj8YLO3u4d__sOmFSt84A4N3Z2vVSfwZ2jObVm-bqWuPEDM3Jf4sDZpmi9DCyvkADaPzpc56XI17K-VVR8PUCwlK5Vnl2quuwpxOUGj3fGczsj-i3WnvE"/>
+<span>Español</span>
+</div>
+<span class="material-icons text-primary text-sm">expand_less</span>
+</button>
+<div class="absolute top-full left-0 w-full bg-white dark:bg-slate-800 border-x border-b border-slate-200 dark:border-slate-700 rounded-b-lg shadow-xl z-10 overflow-hidden">
+<div class="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer flex items-center gap-2 text-sm border-t border-slate-100 dark:border-slate-700">
+<img alt="AR" class="w-5 h-5 rounded-sm" data-alt="Flag of Saudi Arabia icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0QoKMyz3iqkMJ35xlDCtFoHZsqRjGMGJuBfqQ8BhZ2XaE9fnTa3adHSwl5wVKlM_9lTMFJDb6Zng9nGHqWemwWj2wwQehfqcoNjojxvre7jHMRFF1Wf-9oeL9cApEniOED98Ub3SOBYGHKZgdpujJP2HgtuXRTN5YTcXlviuzemMJbLsHA9svt_qCyUmEfvsasF3TrDaSEI71BQWhKTbWbVprZgJOwQ9-QlfkiGzlIGt3SixgETY-AWy0vLzP0wgocqMzuAxUW6I"/>
+<span>العربية</span>
+</div>
+<div class="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer flex items-center gap-2 text-sm border-t border-slate-100 dark:border-slate-700">
+<img alt="EN" class="w-5 h-5 rounded-sm" data-alt="Flag of USA icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn_JgjyuALaGmoOGSJa9CQF0sVFWSudeAi7lqE5rab1HvGj3TYELuEHEoDOcKzSXwsetwHv_2-zMww5QQiho5A4pKO7CJuSqfHABBZjPP_z7XniM_98xtx9tHraFZJVHK2SG2L-nVrN90koJhbj6UUAMrZhDYFEIZlGy9JFQ5_Cb1FcbLlLQHKyhFnJalTqcmW5Xpr40etPWDfVoLpj69nZwGlV_5OPnwjvSqmnh9CHylHHpaVVFnUaTcrB1TGuonUt8N72ztFwKo"/>
+<span>English</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Theme Toggle Section -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-semibold flex items-center gap-2">
+<span class="material-icons text-primary">dark_mode</span>
+                        03. Mode &amp; Theme Toggle
+                    </h2>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-10 border border-slate-200 dark:border-slate-800 shadow-sm h-full flex items-center justify-center">
+<div class="flex items-center gap-16">
+<!-- Light Mode Indicator -->
+<div class="text-center">
+<span class="text-[10px] uppercase font-bold text-slate-400 block mb-4">Light Active</span>
+<div class="relative flex items-center bg-background-light p-1 rounded-full border border-slate-200 w-24 h-12">
+<div class="absolute left-1 top-1 bottom-1 w-10 bg-white shadow-md rounded-full flex items-center justify-center">
+<span class="material-icons text-amber-500 text-lg">light_mode</span>
+</div>
+<div class="ml-auto mr-3">
+<span class="material-icons text-slate-300 text-lg">dark_mode</span>
+</div>
+</div>
+</div>
+<!-- Dark Mode Indicator -->
+<div class="text-center">
+<span class="text-[10px] uppercase font-bold text-slate-400 block mb-4">Dark Active</span>
+<div class="relative flex items-center bg-slate-800 p-1 rounded-full border border-slate-700 w-24 h-12">
+<div class="ml-3">
+<span class="material-icons text-slate-600 text-lg">light_mode</span>
+</div>
+<div class="absolute right-1 top-1 bottom-1 w-10 bg-primary shadow-md rounded-full flex items-center justify-center">
+<span class="material-icons text-white text-lg">dark_mode</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Section 4: Color Palette & Specs -->
+<section class="mt-20">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-semibold flex items-center gap-2">
+<span class="material-icons text-primary">palette</span>
+                    04. Component Palette Reference
+                </h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="h-16 w-full bg-primary rounded-lg mb-3"></div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">Primary Blue</p>
+<p class="text-sm font-mono font-bold">#20337E</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="h-16 w-full bg-primary/10 rounded-lg mb-3"></div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">Primary Tint</p>
+<p class="text-sm font-mono font-bold">#E9EBF2</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="h-16 w-full bg-background-light rounded-lg mb-3 border border-slate-100"></div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">BG Light</p>
+<p class="text-sm font-mono font-bold">#F6F6F8</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="h-16 w-full bg-background-dark rounded-lg mb-3"></div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">BG Dark</p>
+<p class="text-sm font-mono font-bold">#13151F</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="h-16 w-full bg-slate-900 rounded-lg mb-3"></div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">Neutral Dark</p>
+<p class="text-sm font-mono font-bold">#0F172A</p>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="h-16 w-full bg-slate-100 dark:bg-slate-800 rounded-lg mb-3"></div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">Surface Soft</p>
+<p class="text-sm font-mono font-bold">VARIES</p>
+</div>
+</div>
+</section>
+<!-- RTL Context Note -->
+<section class="mt-20 p-8 bg-primary/5 rounded-2xl border border-primary/10">
+<div class="flex gap-4">
+<span class="material-icons text-primary">info</span>
+<div>
+<h3 class="font-bold text-primary dark:text-blue-300">RTL Architecture Note</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-4xl">
+                        All global components are engineered with logical properties (e.g., `ps-4`, `me-2`) to ensure seamless transition when Arabic is selected. The footer layout is designed to mirror horizontally, with "Mezquita Central" logo moving to the top-right position and navigation links flowing right-to-left.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Footer for the spec sheet itself -->
+<footer class="mt-24 text-center text-slate-400 text-xs py-8 border-t border-slate-200 dark:border-slate-800">
+            Mezquita Central de Bogotá • Design System Documentation • v1.0.6
+        </footer>
+</main>
+</body></html>

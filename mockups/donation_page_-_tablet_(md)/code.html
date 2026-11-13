@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Donation Page - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "header-blue": "#212E80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #c03026;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#171212] dark:text-white">
+<div class="relative flex h-auto flex-col w-full overflow-x-hidden">
+<!-- Header Section with Primary Blue -->
+<header class="bg-header-blue text-white px-6 md:px-12 py-4 flex items-center justify-between sticky top-0 z-50 shadow-md">
+<div class="flex items-center gap-3">
+<div class="size-8 text-white">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h1 class="text-lg font-bold leading-tight tracking-tight hidden md:block">Central Mosque of Bogotá</h1>
+<h1 class="text-lg font-bold leading-tight tracking-tight md:hidden">CMB</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary/20 transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary/20 transition-colors" href="#">Prayer Times</a>
+<a class="text-sm font-medium hover:text-primary/20 transition-colors" href="#">Events</a>
+<a class="text-sm font-medium border-b-2 border-primary" href="#">Donations</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-all">
+                    Donate Now
+                </button>
+<div class="size-8 rounded-full bg-primary/20 border border-white/20 bg-cover bg-center" data-alt="User profile placeholder" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBmbA3xv7wbkYK0ULQL2QI2R0qmeTXm8kt3KCXuBhg1JotV2SnQtWX01cV8aoSYu3-SNOr1g3p92KrkannEKkKg5mYN3qjAyxV782WZ3pfJtm3pAN8KfBxmMxrjGfqLaQv6Vka6cZXttFbZHZOaWvZZBL-2PgQPKXKSm_h0GVahDTwuYOJ5hn_X51btA54gL2K6hEs2ycil-m7I9Xe2Hnau-hxdJ3LFcnFHN7tKFKk5M0ExZt74VoLKPwGzVdptF1-tnvPxN-qc1E')"></div>
+</div>
+</header>
+<!-- Main Content for Tablet (MD) -->
+<main class="max-w-[1024px] mx-auto w-full px-6 py-8 md:py-12">
+<div class="flex flex-col gap-8">
+<!-- Hero Text -->
+<div class="flex flex-col gap-2 mb-4">
+<h2 class="text-3xl md:text-4xl font-black text-[#171212] dark:text-white tracking-tight">Support Your Community</h2>
+<p class="text-[#856866] dark:text-gray-400 text-base max-w-2xl">
+                        Your contributions help us maintain the house of Allah and provide essential services to the growing Muslim community in Bogotá.
+                    </p>
+</div>
+<!-- Two-Column Layout (Tablet Optimized) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+<!-- Left Column: Donation Form -->
+<section class="md:col-span-7 bg-white dark:bg-[#2a1b1a] p-6 rounded-xl shadow-sm border border-[#f4f1f1] dark:border-white/5">
+<div class="space-y-6">
+<!-- Frequency Toggle -->
+<div>
+<span class="block text-sm font-semibold mb-3 text-[#171212] dark:text-white">Donation Frequency</span>
+<div class="flex h-12 items-center justify-center rounded-lg bg-[#f4f1f1] dark:bg-white/5 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-primary has-[:checked]:shadow-sm text-sm font-medium">
+<span class="truncate">One-time</span>
+<input checked="" class="hidden" name="frequency" type="radio" value="once"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-primary has-[:checked]:shadow-sm text-sm font-medium">
+<span class="truncate">Monthly</span>
+<input class="hidden" name="frequency" type="radio" value="monthly"/>
+</label>
+</div>
+</div>
+<!-- Amount Grid -->
+<div>
+<span class="block text-sm font-semibold mb-3 text-[#171212] dark:text-white">Select Amount</span>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<button class="h-12 border-2 border-[#f4f1f1] dark:border-white/10 rounded-lg flex items-center justify-center font-bold hover:border-primary hover:text-primary transition-all">$20</button>
+<button class="h-12 border-2 border-primary bg-primary/5 dark:bg-primary/20 text-primary rounded-lg flex items-center justify-center font-bold">$50</button>
+<button class="h-12 border-2 border-[#f4f1f1] dark:border-white/10 rounded-lg flex items-center justify-center font-bold hover:border-primary hover:text-primary transition-all">$100</button>
+<button class="h-12 border-2 border-[#f4f1f1] dark:border-white/10 rounded-lg flex items-center justify-center font-bold hover:border-primary hover:text-primary transition-all">$500</button>
+</div>
+</div>
+<!-- Custom Amount -->
+<div>
+<span class="block text-sm font-semibold mb-3 text-[#171212] dark:text-white">Or enter custom amount</span>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
+<input class="w-full h-12 pl-8 pr-4 bg-[#f4f1f1] dark:bg-white/5 border-none rounded-lg focus:ring-2 focus:ring-primary text-lg font-semibold" placeholder="0.00" type="number"/>
+</div>
+</div>
+<!-- Category Selection -->
+<div>
+<span class="block text-sm font-semibold mb-3 text-[#171212] dark:text-white">Donation Category</span>
+<select class="w-full h-12 bg-[#f4f1f1] dark:bg-white/5 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm">
+<option>General Sadaqah</option>
+<option>Zakat Al-Maal</option>
+<option>Mosque Maintenance</option>
+<option>Community Kitchen</option>
+<option>Education Programs</option>
+</select>
+</div>
+<!-- CTA -->
+<button class="w-full py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">favorite</span>
+                                Donate Now
+                            </button>
+<!-- Trust Badges -->
+<div class="flex justify-center gap-6 pt-2 opacity-50 grayscale hover:grayscale-0 transition-all">
+<img class="h-6" data-alt="Visa payment icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF2ahIdoZp3cbdTmhIYqQUE2EpJXCNc6YHyWtLsJXoww9B9IkH4WEMhyyAO7zGH1cY2dcFZ9LjERl5-qdzXDEdOWFh_YEavXr1JadvU2aWVjTm2mv5gG3P41pd6fd7G3plMfKi2qk9gM134rabRWc-W9cqdXzUpIYEMdoUw86ZXSz9YB2Zzb_txmInwaeKGaw97YrmiXMcE0N_dgNP9jEYASd0u5f0gttzV_Y3cZU44TKYmT_mrgP7angz0EXoKKjaUtN8WBoBVxg"/>
+<img class="h-6" data-alt="Mastercard payment icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRIsK2BnxW6wZVywBwoz_IJVlOzTWzE2BZd9Ycmq_ht2QmDPcsbvA2hSEOOArQYGDWJ6e9_PfOwZTkOuH8HS4pv6wZgn6tDViJInyW8hafMZQrCuVUBXqBCdcc3SDv-z19FDQR5nNMMV_87TYIVnDONDLcQlKbAZ__pPok8BW0HhuGSZvAh-3dyouHW5KTlN6PNqGzpXLhgTaiTY9sdLR321CPDIa7yzl5EcDpKzG9JYJwuwkrNCEE2kFxDMp0J8x9B-wY1XOd7YI"/>
+<img class="h-6" data-alt="Paypal payment icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyabzAq9g9ZRYFEWfyXLWL0wsqMdjamPU8osZuCVvP4Pcd0IsFAug2AdaR-ocpsA45kTGc4LWVFhQH-wgmkaIk14oWo1ag4-ke1Yb2wJvlZKv4ooiSkbSXbCqdFNgAn3Z29Z_7kST6HERJiAfHcUgVjzbvxtCH25-2bJkzLhrvEMgkLegrjY9jDRQhGlOHNiFzPypJDVrWvih1FteTjfR4cPphJhSQ7D73amIPizq5j5JVkE352g3xH0TaJ19L3Kamv6Vnkt5J1KU"/>
+</div>
+</div>
+</section>
+<!-- Right Column: Impact Info -->
+<section class="md:col-span-5 space-y-8">
+<div class="rounded-xl overflow-hidden shadow-lg border border-[#f4f1f1] dark:border-white/5">
+<div class="h-48 bg-cover bg-center" data-alt="Community gathering at the mosque" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7BFpDhbvfCiRJejND49iSOeRsHGY_cXGi5m07_STT9hdF3sNwXbhPtrQ3krD9uVhzCleuJkxwbNS1e4ArhzZH_wGhyK-IRGIRQIvJqFhWSeH30pC2U6v9AGdAqLxwotreQX-KpULlIw04coKYfMPvieDdX5PxCJCpibeUPY_QhKpcb6tOnzXcZRAm8OMyddAa9yDuAVsiICsnG7G_7Vtav846Ur4XZUilDJm2RSRQSFfNcLw1U17HX_BNh1brCj54Vq71GHY-sLI')"></div>
+<div class="p-6 bg-white dark:bg-[#2a1b1a]">
+<h3 class="text-xl font-bold mb-2">Where your money goes</h3>
+<p class="text-sm text-[#856866] dark:text-gray-400 mb-6">
+                                    Every Peso donated is used transparently to support our three core pillars.
+                                </p>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-xs font-bold mb-1 uppercase tracking-wider">
+<span>Maintenance</span>
+<span>45%</span>
+</div>
+<div class="w-full h-2 bg-[#f4f1f1] dark:bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 45%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-bold mb-1 uppercase tracking-wider">
+<span>Community Programs</span>
+<span>35%</span>
+</div>
+<div class="w-full h-2 bg-[#f4f1f1] dark:bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-header-blue" style="width: 35%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-bold mb-1 uppercase tracking-wider">
+<span>Social Help</span>
+<span>20%</span>
+</div>
+<div class="w-full h-2 bg-[#f4f1f1] dark:bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500" style="width: 20%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Testimonial / Verse -->
+<div class="bg-primary/5 dark:bg-primary/10 p-6 rounded-xl border-l-4 border-primary italic text-sm text-[#171212] dark:text-gray-300">
+<span class="material-symbols-outlined text-primary mb-2 block">format_quote</span>
+                            "The example of those who spend their wealth in the way of Allah is like a seed of grain which grows seven spikes; in each spike is a hundred grains."
+                            <footer class="mt-2 font-bold not-italic">— Al-Baqarah 2:261</footer>
+</div>
+<!-- Tax Info -->
+<div class="flex gap-3 items-center text-xs text-[#856866] dark:text-gray-500">
+<span class="material-symbols-outlined text-sm">info</span>
+<p>All donations are tax-deductible in accordance with Colombian law. Your receipt will be sent via email.</p>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t border-[#f4f1f1] dark:border-white/5 px-6 md:px-12 py-10 bg-white dark:bg-[#1a0f0e]">
+<div class="max-w-[1024px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="size-6 text-header-blue">
+<svg fill="currentColor" viewbox="0 0 48 48">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<span class="text-sm font-bold">Central Mosque of Bogotá</span>
+</div>
+<div class="flex gap-8 text-xs font-medium text-[#856866] dark:text-gray-400 uppercase tracking-widest">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+<a class="hover:text-primary transition-colors" href="#">Contact</a>
+<a class="hover:text-primary transition-colors" href="#">Tax Info</a>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary">share</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary">mail</span>
+</div>
+</div>
+<p class="text-center text-[10px] text-[#856866] mt-8">© 2024 Central Mosque of Bogotá. Built for the community.</p>
+</footer>
+</div>
+</body></html>

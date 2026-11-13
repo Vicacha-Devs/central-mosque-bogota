@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zakat Checkout - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#120a0a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass {
+            background: rgba(18, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display overflow-x-hidden">
+<!-- Mobile Container (Max 365px simulated for design task) -->
+<div class="relative flex min-h-screen w-full flex-col max-w-[365px] mx-auto bg-background-dark shadow-2xl overflow-hidden pb-32">
+<!-- Top Nav Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-4 py-4 glass border-b border-primary/10">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-white">arrow_back</span>
+</button>
+<h1 class="text-sm font-bold uppercase tracking-widest text-white/90">Zakat Checkout</h1>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-white">more_vert</span>
+</button>
+</header>
+<!-- Hero Section -->
+<div class="relative h-44 w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Interior view of a beautiful grand mosque" style="background-image: linear-gradient(to bottom, rgba(18,10,10,0.2), rgba(18,10,10,1)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBpL5uqMNUuRl3K6P3_-XyleXx38sHyoBGZ5D_ey8FcZdqzeMwNcAUHFTuFkW0M9igYl5fDE07KDDtOQFeo_UaqTjR1BiF94xe62pki7KKM5gMsFU1CEtBzk6pDhLdK3oxGzoEyVWwUuaa5mEkdwP6QGD9OQoCdZ2wJam62vkqZSNKbGXufBzAWrcwo1vp5SEHRzohEqsV6sbbAYOWF3iKa9v0r3MDa7YT7q7yfMQvAC99vP1HCRYwMZ-6PDyMv62CJ1j09ZlxOh5I');">
+</div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="glass px-4 py-3 rounded-lg border border-white/10">
+<h2 class="text-xl font-extrabold text-white">Zakat Al-Mal</h2>
+<p class="text-xs text-white/60 font-medium">Supporting the Bogotá Community</p>
+</div>
+</div>
+</div>
+<!-- Progress Stepper -->
+<div class="px-5 py-6">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary">Step 2 of 3</span>
+<span class="text-[10px] font-bold text-white/40">66% Complete</span>
+</div>
+<div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 66%;"></div>
+</div>
+</div>
+<!-- Form Content -->
+<main class="flex flex-col gap-6 px-5">
+<!-- Amount Selection -->
+<section>
+<label class="block text-sm font-bold text-white/80 mb-3">Donation Amount</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center py-3 rounded-lg border border-primary bg-primary/10 text-white font-bold text-sm">
+                        $100
+                    </button>
+<button class="flex items-center justify-center py-3 rounded-lg border border-white/10 bg-white/5 text-white/60 font-bold text-sm hover:bg-white/10">
+                        $250
+                    </button>
+<button class="flex items-center justify-center py-3 rounded-lg border border-white/10 bg-white/5 text-white/60 font-bold text-sm hover:bg-white/10">
+                        $500
+                    </button>
+<button class="flex items-center justify-center py-3 rounded-lg border border-white/10 bg-white/5 text-white/60 font-bold text-sm hover:bg-white/10 italic">
+                        Custom
+                    </button>
+</div>
+</section>
+<!-- Payment Details Card -->
+<section class="flex flex-col gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-sm font-bold text-white">Card Details</h3>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-lg text-white/40">credit_card</span>
+<span class="material-symbols-outlined text-lg text-white/40">lock</span>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Card Number -->
+<div class="relative">
+<label class="text-[10px] font-bold text-white/40 uppercase tracking-tighter mb-1 block">Card Number</label>
+<input class="w-full bg-background-dark/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-white/20" placeholder="0000 0000 0000 0000" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Expiry -->
+<div>
+<label class="text-[10px] font-bold text-white/40 uppercase tracking-tighter mb-1 block">Expiry Date</label>
+<input class="w-full bg-background-dark/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-white/20" placeholder="MM / YY" type="text"/>
+</div>
+<!-- CVV -->
+<div>
+<label class="text-[10px] font-bold text-white/40 uppercase tracking-tighter mb-1 block">CVV</label>
+<input class="w-full bg-background-dark/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-white/20" placeholder="123" type="text"/>
+</div>
+</div>
+<!-- Holder Name -->
+<div>
+<label class="text-[10px] font-bold text-white/40 uppercase tracking-tighter mb-1 block">Cardholder Name</label>
+<input class="w-full bg-background-dark/50 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-white/20" placeholder="Full Name" type="text"/>
+</div>
+</div>
+</section>
+<!-- Security Badge -->
+<div class="flex items-center justify-center gap-2 py-4">
+<span class="material-symbols-outlined text-primary text-sm">verified_user</span>
+<span class="text-[11px] font-medium text-white/40">Your payment is secured with SSL encryption</span>
+</div>
+</main>
+<!-- Fixed Bottom Bar -->
+<footer class="fixed bottom-0 left-0 right-0 max-w-[365px] mx-auto glass border-t border-white/10 p-5 pb-8 z-50">
+<div class="flex items-center justify-between mb-4">
+<div>
+<p class="text-[10px] font-bold text-white/40 uppercase tracking-widest">Total Donation</p>
+<p class="text-2xl font-extrabold text-white">$100.00</p>
+</div>
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full bg-white/10 border border-background-dark flex items-center justify-center">
+<img alt="Visa" class="size-5" data-alt="Visa payment logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXOW8BdyFAMftW9wRjI92AFKY2DK7fFp0ZjyIVDWqOsvTyQ-w8X2-0m13NHwZFuhXVm9Azuvu_Ttr4x-b5bh1yp3aLx5h54t4_G9l2NtVcGIn9JzEMP6rz0NOd3i68QTyTQo3i-uPK8yFoYzM6QSAzgJrMTQgTV49Kp0sQjwKHoWAo0206kojzNJUgXLiQEm4j-Tj8pPMDfJ46VLGug1TiLt9kAQ20cPIculobVBzRZ2ZexucuC72TRpooxpWwNzsVCu9zqpoc8Lw"/>
+</div>
+<div class="size-8 rounded-full bg-white/10 border border-background-dark flex items-center justify-center">
+<img alt="Mastercard" class="size-5" data-alt="Mastercard payment logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOzAwDcCQ4KiKWeiOsvg_rD9T0U_ba-JeF_dexsTNqzVvZOZqFdj6VPmWPIxJ0AYADeM8vGW2cgCyrwt2geDmuIi5dsOmLCdgkwBRoscRp3fpMQeldhG8kMtcunzVKjqACo684T6-e-vulltGI3BamdlWusPgaY-WqFyqc6n4iQl7URVprmzIjLLIjsrwIvSa8LvjTDH2v_eAk6dcBqlmeFK5pKNm4UMV403q92bubnG5CzV8rdeE6IyA7eDIiqBMRoRgOXb0vfNA"/>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(192,48,38,0.3)] flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+                Complete Payment
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</footer>
+</div>
+</body></html>

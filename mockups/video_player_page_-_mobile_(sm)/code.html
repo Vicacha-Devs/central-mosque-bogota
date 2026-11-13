@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Video Player - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c1251a",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211211",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Spline Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#171211] dark:text-white antialiased">
+<!-- Mobile Container (Max 365px for SM target) -->
+<div class="relative mx-auto min-h-screen max-w-[365px] bg-white dark:bg-[#1a0f0e] shadow-2xl flex flex-col pb-20">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between bg-white/90 dark:bg-[#1a0f0e]/90 backdrop-blur-md px-4 py-3 border-b border-primary/10">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-background-light dark:hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[#171211] dark:text-white">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="text-xs font-bold uppercase tracking-widest text-primary">Media Center</h1>
+<p class="text-[10px] text-gray-500">Central Mosque Bogotá</p>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+<img class="size-full object-cover" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFevbFg4pyT9C51BaaxfCVZ33CqhgKKToPooWNpwgJrp64poGQO2Iyh9Iqz5L2CVi3VexBBd9XT_Dc9OAYRP54h1GmkiCn7mCp9dxVXhRqO0nUL_iYGjKDpS8ZqUarlftRSpkpfv_EOdlp3iuHgm4sm0ua0THX8akbU1DvZ21gKjD3X2mTxDOvUh0CQHX2gjvaRa_rUI3ZP--rbtSe28RaVxywGbeL67bNPMwuHnppLhO8mkGUEuDxVc_6n18RqrIUEp0eJ7XWxe0"/>
+</div>
+</button>
+</header>
+<!-- Video Player Section -->
+<div class="w-full bg-black">
+<div class="relative aspect-video w-full group overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="Interior view of a beautiful mosque dome during prayer" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaeUm98Icf4fwVjLGNz3hN2vI5fOFFnzZCFi1cHFhSaxlf43jYxcGIwcipfdh8RdEyQ5uIg6hHnA1YTtC_zjNJn5B53O-A6oKrzp3sBJyHhG1H3w_17QfZ2S1MegQnK-xPEz3K-sV5VKwmiUxmxi-43hb4ZhrHCOKq9B_kjPNdkTXYfR7yzEC_YfMWtnd-uGQIl8Bx68K4_hCCdBcY60_quJmpuomTjTsYDJFnKQP35VYFLuMaqsCCaE6YeYtBPLDy1DjNcf6XNIw');">
+</div>
+<!-- Player Overlay -->
+<div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all">
+<button class="flex items-center justify-center size-16 rounded-full bg-primary text-white shadow-lg transform active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Player Controls (Simulated) -->
+<div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+<div class="flex items-center gap-2 mb-2">
+<div class="h-1 flex-1 rounded-full bg-white/30 overflow-hidden">
+<div class="h-full bg-primary w-1/3"></div>
+</div>
+<span class="text-[10px] text-white font-medium">12:45 / 38:20</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white text-xl">pause</span>
+<span class="material-symbols-outlined text-white text-xl">volume_up</span>
+</div>
+<span class="material-symbols-outlined text-white text-xl">fullscreen</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Video Info Section -->
+<div class="px-4 py-5 bg-white dark:bg-[#1a0f0e]">
+<div class="flex flex-col gap-1">
+<span class="text-primary text-[10px] font-bold uppercase tracking-wider">Friday Khutbah</span>
+<h2 class="text-xl font-bold leading-tight text-[#171211] dark:text-white">The Importance of Community in Modern Times</h2>
+<p class="text-gray-500 text-xs mt-1">October 20, 2023 • 15:30 • 1.2k views</p>
+</div>
+<!-- Action Bar -->
+<div class="flex items-center gap-3 mt-6">
+<button class="flex-1 flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-lg font-bold text-sm shadow-md active:opacity-90">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    Donate
+                </button>
+<button class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-primary/10 text-primary py-3 rounded-lg font-bold text-sm border border-primary/10 active:opacity-90">
+<span class="material-symbols-outlined text-lg">share</span>
+                    Share
+                </button>
+</div>
+<div class="mt-6 border-t border-gray-100 dark:border-white/5 pt-4">
+<p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Join Sheikh Omar in this week's khutbah as he explores the Quranic foundations of community bonding and why unity is our greatest strength... 
+                    <button class="text-primary font-bold">Read more</button>
+</p>
+</div>
+</div>
+<!-- Related Content Section -->
+<div class="flex-1 px-4 py-4 bg-background-light dark:bg-[#211211]/50">
+<h3 class="text-sm font-bold text-[#171211] dark:text-white mb-4 flex items-center justify-between">
+                Related Lectures
+                <span class="text-xs text-primary font-normal">See All</span>
+</h3>
+<div class="flex flex-col gap-4">
+<!-- Related Card 1 -->
+<div class="flex gap-3 bg-white dark:bg-[#1a0f0e] p-2 rounded-xl shadow-sm border border-black/5">
+<div class="relative shrink-0 w-24 h-16 rounded-lg overflow-hidden bg-gray-200">
+<img class="w-full h-full object-cover" data-alt="Traditional mosque courtyard architecture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPihSB4OoHmwLiZFU7FwlKOdSyKP8bLGbQsnyKoZcO3zEk4Og_5VRAVR4P96i-mezBi4GmHScMEeKGcL6yfzH-Wav4p5TwqLPMEt6kPce_1FUVq1SIgbOgnXjAFs1iKgJHfGp-4fde2ypDpEHHvYBTfn0dUHeLYHd_DXwg-c7sFoIJo_kJM0IIh_pzssxnJqdDz58vQ1GfhXYOcu1YmVewid-LVy3UN1gIKFebD6iJXvtML58ZQO4Pb3D55YOTr-_dG8TVTw0Z6q8"/>
+<span class="absolute bottom-1 right-1 bg-black/70 text-[10px] text-white px-1 rounded">12:40</span>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="text-xs font-bold line-clamp-2 leading-snug">Character of the Believer: Patience</h4>
+<p class="text-[10px] text-gray-500 mt-1">2 weeks ago • Sheikh Ibrahim</p>
+</div>
+</div>
+<!-- Related Card 2 -->
+<div class="flex gap-3 bg-white dark:bg-[#1a0f0e] p-2 rounded-xl shadow-sm border border-black/5">
+<div class="relative shrink-0 w-24 h-16 rounded-lg overflow-hidden bg-gray-200">
+<img class="w-full h-full object-cover" data-alt="Islamic geometric patterns background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6VrDYQRcbzTidZCvgZXwgjyzajrDATb_4SN6RV6qXVEoiDXXOCeA1o4woiGylHEJznK1D-eq82OCUSeXGP1CiYXbm6dzXKE1QNE5zsMAwAR6EXddnwAV5YvblQowc56RCs0GZzwFs6fsrXCZNrIRK7vyd4O1kkn_gQMxsecXS0_ADZx3CtVutyDt5C1UtEf2vddRQ8m1-ro7te-MlOHfwFt6gjC2h6xcJBZuumg9p_hs7o8KNCdSoM2b8nVzGeq8xIXMNB5RcGbM"/>
+<span class="absolute bottom-1 right-1 bg-black/70 text-[10px] text-white px-1 rounded">25:15</span>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="text-xs font-bold line-clamp-2 leading-snug">Understanding Zakat in Colombia</h4>
+<p class="text-[10px] text-gray-500 mt-1">1 month ago • Community Board</p>
+</div>
+</div>
+<!-- Related Card 3 -->
+<div class="flex gap-3 bg-white dark:bg-[#1a0f0e] p-2 rounded-xl shadow-sm border border-black/5">
+<div class="relative shrink-0 w-24 h-16 rounded-lg overflow-hidden bg-gray-200">
+<img class="w-full h-full object-cover" data-alt="Muslim community gathering event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqNrqVOjOH_4IAqPN-kWQ1MGMl8ETGr5IHIbe-65Mpk15bkKLJ8Z_W2jBqheki9GdrTCHrHqIoheM4H1lEDaI7u87JOa1kUz67W6nFn_O9lYyhu8isRPljB2qB2ZRZZ9wsfpgWE0Xfc44ynAoZTjz8k8tysYAadpyt-4u0tmnoXGQbOwe1iqPWY9IonRCHiM9HIe5KvtD0rrQgsuhlSQGkPbutP5r3RPROh8bcii2n8t-nwVcUxwn3KXUyxQOmP-7O4njUYiV-Nk4"/>
+<span class="absolute bottom-1 right-1 bg-black/70 text-[10px] text-white px-1 rounded">08:22</span>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="text-xs font-bold line-clamp-2 leading-snug">Youth Outreach: Recap 2023</h4>
+<p class="text-[10px] text-gray-500 mt-1">3 months ago • Youth Council</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[365px] bg-white dark:bg-[#1a0f0e] border-t border-primary/10 px-6 py-3 flex items-center justify-between z-50 rounded-t-xl">
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[9px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">schedule</span>
+<span class="text-[9px] font-bold">Prayers</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span class="text-[9px] font-bold">Media</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">event</span>
+<span class="text-[9px] font-bold">Events</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[9px] font-bold">Profile</span>
+</button>
+</nav>
+</div>
+</body></html>

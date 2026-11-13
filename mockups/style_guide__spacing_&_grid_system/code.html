@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Style Guide: Spacing &amp; Grid System | Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#20c6df",
+                        "background-light": "#F9F7F2",
+                        "background-dark": "#111f21",
+                        "grid-red": "#FF4D4D",
+                        "sand-neutral": "#E8E2D9",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grid-visualizer {
+            background-image: repeating-linear-gradient(to right, rgba(255, 77, 77, 0.1) 0, rgba(255, 77, 77, 0.1) 1px, transparent 1px, transparent calc(100% / 12));
+            background-size: 100% 100%;
+        }
+        .mobile-grid-visualizer {
+            background-image: repeating-linear-gradient(to right, rgba(255, 77, 77, 0.1) 0, rgba(255, 77, 77, 0.1) 1px, transparent 1px, transparent calc(100% / 4));
+            background-size: 100% 100%;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0e191b] antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header / Navigation -->
+<header class="flex h-16 items-center justify-between border-b border-sand-neutral px-8 lg:px-20 bg-background-light/80 backdrop-blur-sm sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+</div>
+<h2 class="text-sm font-black uppercase tracking-widest">DS: Mosque Bogotá</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-xs font-bold uppercase tracking-tighter text-[#508c95] hover:text-primary transition-colors" href="#">Foundations</a>
+<a class="text-xs font-bold uppercase tracking-tighter text-primary border-b-2 border-primary pb-1" href="#">Layout</a>
+<a class="text-xs font-bold uppercase tracking-tighter text-[#508c95] hover:text-primary transition-colors" href="#">Components</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 rounded-lg bg-sand-neutral/50 px-4 py-2 text-xs font-bold text-[#508c95] hover:bg-sand-neutral transition-all">
+<span class="material-symbols-outlined text-[18px]">grid_on</span>
+<span class="hidden sm:inline">Grid Overlay</span>
+</button>
+<button class="rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white shadow-lg shadow-primary/20">
+                    Export JSON
+                </button>
+</div>
+</header>
+<!-- Hero Content -->
+<div class="px-8 lg:px-20 py-12 max-w-[1440px] mx-auto w-full">
+<div class="mb-12 border-l-4 border-primary pl-6">
+<h1 class="text-5xl font-black tracking-tight mb-4">Spacing &amp; Grid System</h1>
+<p class="text-[#508c95] text-lg max-w-2xl leading-relaxed">
+                    Technical documentation for the 8px base unit system and responsive grid architecture defining the structural integrity of the Central Mosque of Bogotá web presence.
+                </p>
+</div>
+<!-- Grid Scale Section -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-8 border-b border-sand-neutral pb-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">straighten</span>
+                        The Spacing Scale
+                    </h3>
+<span class="text-[10px] font-mono font-bold text-[#508c95] uppercase tracking-widest">Unit: 8px Incremental</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-6">
+<!-- Scale Item 8px -->
+<div class="flex flex-col gap-3">
+<div class="h-2 w-2 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">8px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-xs</p>
+</div>
+</div>
+<!-- Scale Item 16px -->
+<div class="flex flex-col gap-3">
+<div class="h-4 w-4 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">16px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-sm</p>
+</div>
+</div>
+<!-- Scale Item 24px -->
+<div class="flex flex-col gap-3">
+<div class="h-6 w-6 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">24px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-md</p>
+</div>
+</div>
+<!-- Scale Item 32px -->
+<div class="flex flex-col gap-3">
+<div class="h-8 w-8 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">32px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-lg</p>
+</div>
+</div>
+<!-- Scale Item 48px -->
+<div class="flex flex-col gap-3">
+<div class="h-12 w-12 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">48px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-xl</p>
+</div>
+</div>
+<!-- Scale Item 64px -->
+<div class="flex flex-col gap-3">
+<div class="h-16 w-16 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">64px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-2xl</p>
+</div>
+</div>
+<!-- Scale Item 80px -->
+<div class="flex flex-col gap-3">
+<div class="h-20 w-20 bg-primary rounded-sm shadow-sm"></div>
+<div>
+<p class="text-xs font-bold">80px</p>
+<p class="text-[10px] font-mono text-[#508c95] uppercase tracking-tighter">$space-3xl</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Grid Systems Section -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-8 border-b border-sand-neutral pb-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+                        Column Architecture
+                    </h3>
+</div>
+<div class="grid lg:grid-cols-2 gap-12">
+<!-- 12-Column Desktop -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<p class="text-sm font-black uppercase tracking-widest text-[#508c95]">Desktop XL (1440px)</p>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded">12 Columns</span>
+</div>
+<div class="relative h-64 w-full bg-sand-neutral/30 rounded-xl overflow-hidden border border-sand-neutral">
+<div class="grid-visualizer absolute inset-0"></div>
+<div class="relative z-10 p-8 h-full flex flex-col justify-end">
+<div class="glass-card p-6 rounded-lg border-2 border-primary/40">
+<div class="h-4 w-1/2 bg-primary/20 rounded mb-4"></div>
+<div class="grid grid-cols-3 gap-4">
+<div class="h-12 bg-primary/30 rounded"></div>
+<div class="h-12 bg-primary/30 rounded"></div>
+<div class="h-12 bg-primary/30 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 text-center">
+<div class="bg-sand-neutral/20 p-3 rounded-lg">
+<p class="text-[10px] font-mono text-[#508c95] uppercase mb-1">Gutter</p>
+<p class="text-sm font-bold">24px</p>
+</div>
+<div class="bg-sand-neutral/20 p-3 rounded-lg">
+<p class="text-[10px] font-mono text-[#508c95] uppercase mb-1">Margin</p>
+<p class="text-sm font-bold">80px</p>
+</div>
+<div class="bg-sand-neutral/20 p-3 rounded-lg">
+<p class="text-[10px] font-mono text-[#508c95] uppercase mb-1">Max-Width</p>
+<p class="text-sm font-bold">1440px</p>
+</div>
+</div>
+</div>
+<!-- 4-Column Mobile -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<p class="text-sm font-black uppercase tracking-widest text-[#508c95]">Mobile SM (365px)</p>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded">4 Columns</span>
+</div>
+<div class="relative h-64 flex justify-center bg-sand-neutral/30 rounded-xl overflow-hidden border border-sand-neutral">
+<div class="mobile-grid-visualizer absolute inset-y-0 w-[180px] border-x border-grid-red/30"></div>
+<div class="relative z-10 p-8 flex items-center justify-center">
+<div class="w-[140px] glass-card p-4 rounded-lg border-2 border-primary/40">
+<div class="h-3 w-full bg-primary/20 rounded mb-2"></div>
+<div class="h-3 w-3/4 bg-primary/20 rounded mb-4"></div>
+<div class="h-16 bg-primary/30 rounded"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 text-center">
+<div class="bg-sand-neutral/20 p-3 rounded-lg">
+<p class="text-[10px] font-mono text-[#508c95] uppercase mb-1">Gutter</p>
+<p class="text-sm font-bold">16px</p>
+</div>
+<div class="bg-sand-neutral/20 p-3 rounded-lg">
+<p class="text-[10px] font-mono text-[#508c95] uppercase mb-1">Margin</p>
+<p class="text-sm font-bold">20px</p>
+</div>
+<div class="bg-sand-neutral/20 p-3 rounded-lg">
+<p class="text-[10px] font-mono text-[#508c95] uppercase mb-1">Viewport</p>
+<p class="text-sm font-bold">365px+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Responsive Breakpoints Table -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-8 border-b border-sand-neutral pb-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">devices</span>
+                        Responsive Breakpoints
+                    </h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-sand-neutral/20">
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#508c95] border-b border-sand-neutral">Breakpoint</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#508c95] border-b border-sand-neutral">Width (Min)</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#508c95] border-b border-sand-neutral">Columns</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#508c95] border-b border-sand-neutral">Gutter</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#508c95] border-b border-sand-neutral">Margin</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-sand-neutral">
+<tr>
+<td class="px-6 py-4 font-bold">SM</td>
+<td class="px-6 py-4 font-mono text-xs">365px</td>
+<td class="px-6 py-4">4</td>
+<td class="px-6 py-4 text-xs">16px</td>
+<td class="px-6 py-4 text-xs">20px</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold text-primary">MD</td>
+<td class="px-6 py-4 font-mono text-xs">768px</td>
+<td class="px-6 py-4">8</td>
+<td class="px-6 py-4 text-xs">24px</td>
+<td class="px-6 py-4 text-xs">40px</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-bold">LG</td>
+<td class="px-6 py-4 font-mono text-xs">1024px</td>
+<td class="px-6 py-4">12</td>
+<td class="px-6 py-4 text-xs">24px</td>
+<td class="px-6 py-4 text-xs">60px</td>
+</tr>
+<tr class="bg-primary/5">
+<td class="px-6 py-4 font-bold">XL</td>
+<td class="px-6 py-4 font-mono text-xs">1440px</td>
+<td class="px-6 py-4">12</td>
+<td class="px-6 py-4 text-xs">32px</td>
+<td class="px-6 py-4 text-xs">80px</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Component Anatomy -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-8 border-b border-sand-neutral pb-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">view_quilt</span>
+                        Component Spacing &amp; Gaps
+                    </h3>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Padding Visualization -->
+<div class="p-8 bg-sand-neutral/30 rounded-xl relative overflow-hidden flex items-center justify-center">
+<div class="absolute top-2 left-4 text-[10px] font-mono text-grid-red uppercase">Card Internal Padding (24px)</div>
+<div class="w-full glass-card p-6 rounded-xl border border-primary relative">
+<!-- Padding Markers -->
+<div class="absolute inset-0 border-[24px] border-grid-red/10 pointer-events-none"></div>
+<div class="flex items-center gap-4 mb-4">
+<div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Example Component</h4>
+<p class="text-[10px] text-[#508c95]">Visual padding spec</p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="h-3 w-full bg-sand-neutral rounded"></div>
+<div class="h-3 w-2/3 bg-sand-neutral rounded"></div>
+</div>
+</div>
+</div>
+<!-- Masonry Tiles Gaps -->
+<div class="p-8 bg-sand-neutral/30 rounded-xl relative overflow-hidden">
+<div class="absolute top-2 left-4 text-[10px] font-mono text-grid-red uppercase">Masonry Gap System (16px)</div>
+<div class="grid grid-cols-2 gap-4 h-full">
+<div class="h-full bg-white/40 rounded-lg flex items-end p-4 border border-white/50">
+<div class="h-2 w-12 bg-primary/30 rounded"></div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex-1 bg-white/40 rounded-lg border border-white/50"></div>
+<div class="flex-1 bg-white/40 rounded-lg border border-white/50"></div>
+</div>
+</div>
+<!-- Gap Measurement Annotations -->
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-4 border-2 border-grid-red flex items-center justify-center">
+<span class="absolute -top-6 text-[8px] font-bold text-grid-red bg-white px-1">16px</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer / Meta -->
+<footer class="mt-auto border-t border-sand-neutral px-8 lg:px-20 py-8 bg-white/50">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-[1440px] mx-auto w-full">
+<div class="flex items-center gap-6">
+<p class="text-[10px] font-bold uppercase text-[#508c95] tracking-[0.3em]">Version 2.4.0 (Stable)</p>
+<p class="text-[10px] font-bold uppercase text-[#508c95] tracking-[0.3em]">Last Updated: Oct 2023</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[10px] font-bold text-primary tracking-widest uppercase">Central Mosque of Bogotá</span>
+<div class="h-px w-8 bg-primary"></div>
+<span class="text-[10px] font-bold text-[#508c95] tracking-widest uppercase">Design Architecture Unit</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

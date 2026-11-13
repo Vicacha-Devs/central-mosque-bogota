@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Design System - Bogotá Mosque | Cards &amp; Feeds</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#cd2118",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211211",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .mobile-shell {
+            width: 365px;
+            height: 720px;
+            border: 8px solid #1b0f0e;
+            border-radius: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1b0f0e] min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full bg-white dark:bg-background-dark border-b border-[#f3e8e7] dark:border-primary/20">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-16">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined text-2xl leading-none">mosque</span>
+</div>
+<h2 class="text-[#1b0f0e] dark:text-white text-lg font-bold tracking-tight">Bogotá Mosque <span class="font-light opacity-50 ml-1 text-sm">Design System</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Guidelines</a>
+<a class="text-sm font-bold text-primary border-b-2 border-primary pt-0.5" href="#">Components</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Tokens</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Assets</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-[#f3e8e7] dark:bg-primary/10 rounded-lg px-3 py-1.5 w-64">
+<span class="material-symbols-outlined text-[#97524e] text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-[#97524e]" placeholder="Search components..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                    Download UI Kit
+                </button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid grid-cols-12 gap-10">
+<!-- Left Sidebar Documentation -->
+<aside class="col-span-12 lg:col-span-3 flex flex-col gap-8">
+<div class="sticky top-28">
+<div class="mb-6">
+<h1 class="text-4xl font-black text-[#1b0f0e] dark:text-white leading-none">Part 3</h1>
+<p class="text-xl text-primary font-bold mt-1">Cards &amp; Feeds</p>
+<p class="text-[#97524e] dark:text-[#97524e] mt-4 text-sm leading-relaxed">
+                        Documentation for the Central Mosque of Bogotá mobile app (SM 365px). Focused on engagement and thumb-optimized interactions.
+                    </p>
+</div>
+<nav class="space-y-1">
+<a class="group flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-bold" href="#event-cards">
+<span class="material-symbols-outlined">event</span>
+<span>Event &amp; Media</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#1b0f0e] dark:text-white hover:bg-[#f3e8e7] transition-all" href="#impact-cards">
+<span class="material-symbols-outlined">analytics</span>
+<span>Impact Tracking</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#1b0f0e] dark:text-white hover:bg-[#f3e8e7] transition-all" href="#carousels">
+<span class="material-symbols-outlined">view_carousel</span>
+<span>Horizontal Carousels</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#1b0f0e] dark:text-white hover:bg-[#f3e8e7] transition-all border-t border-[#f3e8e7] mt-4 pt-4" href="#specs">
+<span class="material-symbols-outlined text-gray-400">straighten</span>
+<span class="text-gray-500">Technical Specs</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Right Content: Mobile Preview Grid -->
+<div class="col-span-12 lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Mobile Shell 1: Event Feed -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<span class="text-xs font-bold uppercase tracking-widest text-[#97524e]">Mobile Preview 01</span>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded">Event Feed</span>
+</div>
+<div class="mobile-shell border-[#e2d6d5]">
+<!-- Mobile App Header -->
+<div class="px-5 py-4 flex items-center justify-between border-b border-[#f3e8e7]">
+<span class="material-symbols-outlined text-[#1b0f0e]">menu</span>
+<div class="bg-primary/5 px-3 py-1 rounded-full">
+<span class="text-xs font-bold text-primary">Community Events</span>
+</div>
+<span class="material-symbols-outlined text-[#1b0f0e]">notifications</span>
+</div>
+<!-- Scrollable Feed -->
+<div class="h-[640px] overflow-y-auto scrollbar-hide bg-[#fcf8f8] p-4 space-y-6 pb-20">
+<!-- Event Card 1 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-[#f3e8e7] relative">
+<div class="relative h-44 w-full">
+<img class="w-full h-full object-cover" data-alt="Mosque courtyard during prayer reflection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUhX3a4Yf4cGHNrQY7XMPw5PI9oVfXwigjLZaw0wvCEHBFlNBMUubBrxC8v41Scwj3sJ59zwSNIQC6yWLpqitWPVX67ebUwzNE5pf75Db8qB-H-ddsKc7co2rj5BS_AKW4jtzRZN31BLQefFODFtsXNDn7U0rmwLXoqwuf2Ldk1Ml9QKCQYYZtZY1XaewItey78C8zf00hthFG8-tjjytG3Wia54ziWlRHacaaRhNQ2GazAijkKG3XphPTN4UYAlktcPdWG4vvegg"/>
+<div class="absolute top-3 left-3 bg-primary text-white p-2 rounded-lg text-center min-w-[50px] shadow-lg">
+<p class="text-xs font-medium leading-none uppercase">Oct</p>
+<p class="text-lg font-bold leading-tight">27</p>
+</div>
+</div>
+<div class="p-4">
+<p class="text-primary text-[10px] font-bold uppercase tracking-wider mb-1">Friday Reflection</p>
+<h3 class="text-[#1b0f0e] font-bold text-lg leading-tight mb-2">Friday Prayer: Community Reflection</h3>
+<div class="flex items-center gap-2 text-[#97524e] text-sm mb-4">
+<span class="material-symbols-outlined text-base">person</span>
+<span>Sheikh Ahmed Al-Maktoum</span>
+</div>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-lg text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                                    Register Now
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Video Media Card -->
+<div class="bg-[#1b0f0e] rounded-xl overflow-hidden shadow-sm relative group">
+<div class="relative h-44 w-full opacity-80">
+<img class="w-full h-full object-cover" data-alt="Evening lights at central mosque" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh8yigJ7FkPYxsA_-c--fLj8yfJt11762BH3I4OlBpGUMqRSXukpCr2YrM_v5kwMo8R3fHs30G8LoxEeYPikpktqCaSa0zt56-oZ4L_7XupSUbg45bm_nVUoyHqMFXNVMzyOq1yypiNnmJAyjHSB1wJ9onHq1jVJyRWuIbWH4zXgCpDZe9J_r1mUNZUbYWnvYrsdchSGp5X9_ko35-bKLc9e6j8Yos3zuJKoFnWMbvhaLnDLdEYtMtPNTchjYFRKZHr0bVOtKpyxY"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary/90 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl">
+<span class="material-symbols-outlined text-3xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] px-2 py-1 rounded-md backdrop-blur-sm">
+                                    24:15
+                                </div>
+</div>
+<div class="p-4">
+<h3 class="text-white font-bold text-base leading-snug">Understanding the Pillars of Community Service</h3>
+<p class="text-gray-400 text-xs mt-2">Uploaded 2 days ago • 1.2k views</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Shell 2: Impact & Carousels -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<span class="text-xs font-bold uppercase tracking-widest text-[#97524e]">Mobile Preview 02</span>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded">Impact &amp; Carousel</span>
+</div>
+<div class="mobile-shell border-[#e2d6d5]">
+<!-- App Navigation -->
+<div class="px-5 py-4 flex items-center justify-between border-b border-[#f3e8e7]">
+<span class="material-symbols-outlined text-[#1b0f0e]">arrow_back_ios</span>
+<h4 class="font-bold text-sm">Community Pulse</h4>
+<span class="material-symbols-outlined text-[#1b0f0e]">share</span>
+</div>
+<!-- Scrollable Feed -->
+<div class="h-[640px] overflow-y-auto scrollbar-hide bg-[#fcf8f8] space-y-8 pb-20">
+<!-- Horizontal Carousel Section -->
+<div class="pt-6">
+<div class="px-5 flex items-center justify-between mb-4">
+<h2 class="text-lg font-black tracking-tight">Featured Courses</h2>
+<a class="text-primary text-xs font-bold" href="#">View All</a>
+</div>
+<div class="flex gap-4 overflow-x-auto px-5 scrollbar-hide">
+<!-- Course Card 1 -->
+<div class="min-w-[140px] bg-white rounded-xl p-3 border border-[#f3e8e7] shadow-sm">
+<div class="w-full h-20 bg-primary/10 rounded-lg flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-primary text-3xl">menu_book</span>
+</div>
+<p class="text-[10px] font-bold text-primary uppercase mb-1">Beginner</p>
+<h4 class="text-xs font-bold text-[#1b0f0e] leading-tight mb-2">Arabic 101: Basic Scripts</h4>
+<div class="w-full bg-[#f3e8e7] h-1 rounded-full overflow-hidden">
+<div class="bg-primary w-1/3 h-full"></div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="min-w-[140px] bg-white rounded-xl p-3 border border-[#f3e8e7] shadow-sm">
+<div class="w-full h-20 bg-blue-500/10 rounded-lg flex items-center justify-center mb-3 text-blue-500">
+<span class="material-symbols-outlined text-3xl">history_edu</span>
+</div>
+<p class="text-[10px] font-bold text-blue-500 uppercase mb-1">Intermediate</p>
+<h4 class="text-xs font-bold text-[#1b0f0e] leading-tight mb-2">Islamic History of the Andes</h4>
+<div class="w-full bg-[#f3e8e7] h-1 rounded-full overflow-hidden">
+<div class="bg-blue-500 w-1/2 h-full"></div>
+</div>
+</div>
+<!-- Peeking Card -->
+<div class="min-w-[40px] bg-[#f3e8e7] rounded-xl opacity-30"></div>
+</div>
+</div>
+<!-- Impact Progress Cards -->
+<div class="px-5 space-y-4">
+<h2 class="text-lg font-black tracking-tight">Our Impact</h2>
+<!-- Fundraising Card -->
+<div class="bg-white rounded-2xl p-5 border border-[#f3e8e7] shadow-md">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="bg-green-500/10 p-2 rounded-lg text-green-600">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Winter Relief Fund</h4>
+<p class="text-[10px] text-[#97524e]">Bogotá Community Reach</p>
+</div>
+</div>
+<span class="text-xs font-black text-[#1b0f0e]">78%</span>
+</div>
+<div class="w-full bg-[#f3e8e7] h-3 rounded-full mb-4 overflow-hidden p-0.5">
+<div class="bg-primary h-full rounded-full" style="width: 78%"></div>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-[10px] text-[#97524e] uppercase font-bold tracking-wider">Raised</p>
+<p class="text-sm font-black text-[#1b0f0e]">$12,450 <span class="text-[10px] text-gray-400 font-normal">of $16,000</span></p>
+</div>
+<button class="bg-[#1b0f0e] text-white px-4 py-2 rounded-lg text-[11px] font-bold">Donate Now</button>
+</div>
+</div>
+<!-- Community Target -->
+<div class="bg-primary text-white rounded-2xl p-5 shadow-lg relative overflow-hidden">
+<div class="absolute -right-6 -top-6 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[100px] fill-1">diversity_3</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Weekly Volunteer Target</h4>
+<p class="text-xs opacity-80 mb-4">Join 42 others helping this week</p>
+<div class="flex gap-2">
+<div class="bg-white/20 h-2 flex-1 rounded-full"><div class="bg-white h-full w-full rounded-full"></div></div>
+<div class="bg-white/20 h-2 flex-1 rounded-full"><div class="bg-white h-full w-full rounded-full"></div></div>
+<div class="bg-white/20 h-2 flex-1 rounded-full"><div class="bg-white h-full w-2/3 rounded-full"></div></div>
+<div class="bg-white/20 h-2 flex-1 rounded-full"></div>
+<div class="bg-white/20 h-2 flex-1 rounded-full"></div>
+</div>
+<div class="mt-4 flex items-center justify-between text-[11px] font-bold">
+<span>2.5k Hours logged</span>
+<span>Goal: 4k</span>
+</div>
+</div>
+</div>
+</div>
+<!-- App Bottom Bar -->
+<div class="absolute bottom-0 left-0 right-0 h-16 bg-white border-t border-[#f3e8e7] flex items-center justify-around px-4">
+<span class="material-symbols-outlined text-primary">home</span>
+<span class="material-symbols-outlined text-[#97524e]">calendar_month</span>
+<div class="bg-primary p-2 rounded-full -mt-10 border-4 border-[#fcf8f8] shadow-lg">
+<span class="material-symbols-outlined text-white">volunteer_activism</span>
+</div>
+<span class="material-symbols-outlined text-[#97524e]">school</span>
+<span class="material-symbols-outlined text-[#97524e]">person</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Annotation Section / Technical Specs -->
+<section class="col-span-12 mt-12 pt-12 border-t border-[#f3e8e7]" id="specs">
+<h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">architecture</span>
+                Technical Specifications
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#f3e8e7]">
+<p class="text-xs font-bold text-primary uppercase mb-3">Touch Targets</p>
+<p class="text-sm text-[#1b0f0e] dark:text-gray-300 leading-relaxed mb-4">All interactive components (Buttons, Cards) maintain a minimum hit area of <span class="font-bold text-primary">48x48dp</span> to ensure accessibility for thumb-scrolling.</p>
+<div class="flex gap-2">
+<div class="w-12 h-12 border-2 border-dashed border-primary/40 rounded flex items-center justify-center text-[10px] text-primary/60">48px</div>
+<div class="w-12 h-12 bg-primary/20 rounded-lg"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#f3e8e7]">
+<p class="text-xs font-bold text-primary uppercase mb-3">Color Hierarchy</p>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-primary"></div>
+<span class="text-xs font-medium">Primary Red (#CD2118) - CTAs &amp; Badges</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-[#1b0f0e]"></div>
+<span class="text-xs font-medium">Dark Onyx (#1B0F0E) - Headers</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-white border border-gray-200"></div>
+<span class="text-xs font-medium">Surface White (#FFFFFF) - Cards</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 p-6 rounded-xl border border-[#f3e8e7]">
+<p class="text-xs font-bold text-primary uppercase mb-3">Spacing System</p>
+<p class="text-sm text-[#1b0f0e] dark:text-gray-300 leading-relaxed mb-4">Utilizes a 4px baseline grid. Standard horizontal gutters: <span class="font-bold">20px (5 units)</span> for main app content.</p>
+<div class="flex items-center gap-1">
+<div class="h-4 w-4 bg-primary/10 border border-primary/20"></div>
+<div class="h-4 w-4 bg-primary/10 border border-primary/20"></div>
+<div class="h-4 w-4 bg-primary/10 border border-primary/20"></div>
+<div class="h-4 w-4 bg-primary/10 border border-primary/20"></div>
+<div class="h-4 w-4 bg-primary/10 border border-primary/20"></div>
+<span class="text-xs ml-2 text-gray-500">20px Gutters</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="mt-20 py-10 border-t border-[#f3e8e7] bg-white dark:bg-background-dark text-center">
+<p class="text-[#97524e] text-sm">© 2024 Design System - Central Mosque of Bogotá. All components are optimized for 365px viewports.</p>
+</footer>
+</body></html>

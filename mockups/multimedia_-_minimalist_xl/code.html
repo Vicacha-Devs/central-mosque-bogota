@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                        "accent-blue": "#212e80",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Multimedia Hub - Central Mosque of Bogotá</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white dark:bg-background-dark font-sans text-gray-900 transition-colors">
+<div class="relative flex min-h-screen flex-col bg-white dark:bg-background-dark max-w-[1440px] mx-auto">
+<!-- Header Section -->
+<header class="sticky top-0 z-50 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-primary/10 px-6 py-4 lg:px-12">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer text-3xl">menu</span>
+<h1 class="font-display text-2xl font-bold tracking-tight text-accent-blue dark:text-white lg:text-3xl">Mezquita Central de Bogotá</h1>
+</div>
+<div class="flex items-center gap-6">
+<button class="hidden lg:block text-sm font-medium hover:text-primary transition-colors">Directorio</button>
+<button class="hidden lg:block text-sm font-medium hover:text-primary transition-colors">Donaciones</button>
+<div class="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 px-6 py-8 lg:px-12 lg:py-12">
+<!-- Search & Filters Container -->
+<div class="max-w-7xl mx-auto space-y-8">
+<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+<div>
+<h2 class="font-display text-4xl font-bold text-accent-blue dark:text-white tracking-tight">Multimedia Hub</h2>
+<p class="text-gray-500 mt-2 font-display italic">Explora nuestra colección de sermones, eventos y series educativas.</p>
+</div>
+<div class="w-full lg:max-w-md">
+<label class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-4 text-gray-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full h-14 pl-12 pr-4 bg-gray-50 dark:bg-primary/5 border-none rounded-xl text-base focus:ring-2 focus:ring-primary/20 placeholder:text-gray-400 font-sans" placeholder="Buscar videos, khutbahs o eventos..." type="text"/>
+</label>
+</div>
+</div>
+<!-- Category Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
+<button class="px-6 py-2 rounded-full bg-primary text-white font-medium text-sm whitespace-nowrap transition-all shadow-lg shadow-primary/20">Todos los Videos</button>
+<button class="px-6 py-2 rounded-full bg-gray-100 dark:bg-primary/10 text-gray-700 dark:text-gray-300 font-medium text-sm whitespace-nowrap hover:bg-primary/20 transition-all border border-transparent">Friday Khutbah</button>
+<button class="px-6 py-2 rounded-full bg-gray-100 dark:bg-primary/10 text-gray-700 dark:text-gray-300 font-medium text-sm whitespace-nowrap hover:bg-primary/20 transition-all border border-transparent">Conferencias</button>
+<button class="px-6 py-2 rounded-full bg-gray-100 dark:bg-primary/10 text-gray-700 dark:text-gray-300 font-medium text-sm whitespace-nowrap hover:bg-primary/20 transition-all border border-transparent">Ramadan 2024</button>
+<button class="px-6 py-2 rounded-full bg-gray-100 dark:bg-primary/10 text-gray-700 dark:text-gray-300 font-medium text-sm whitespace-nowrap hover:bg-primary/20 transition-all border border-transparent">Comunidad</button>
+<button class="px-6 py-2 rounded-full bg-gray-100 dark:bg-primary/10 text-gray-700 dark:text-gray-300 font-medium text-sm whitespace-nowrap hover:bg-primary/20 transition-all border border-transparent">Educación</button>
+</div>
+<!-- 4-Column Grid (Desktop XL Responsive) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 pt-4">
+<!-- Video Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Interior view of a beautiful mosque with ornate architectural details" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDsp_zAKSTUYYW4hpo6h3Z2pBpvwA0b6P8OZ3ShrlDRuFPx4BFakBYt4adAx9IwnHRlIfWx5LKkTd28SgCxlHMjo3AUgY_S_mgEUvZ7lH4HEwDE2Fz7gpL08wrySxrC3kXnws89HUYA2XW_WrNuJckDz8dE2gH1kuKH9up-gmo0JGPCkdqtIOdqbjJai0r-_Ljckj6jUTZKWECVpjCnE0wA4tCQQ0_oBoQEPf0RsqvAfgGjfue2Xvn44deXybPzW9v-x-5iG4-u2p4');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                45:12
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Friday Khutbah: La importancia de la reflexión en el Islam</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            15 Oct 2024 • Khutbah
+                        </p>
+</div>
+<!-- Video Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="People gathering for a community meal during Ramadan" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZXx6x_wa8IpYCEq5VqcDOiAL58jX7pqrchAPZoZBChqd7pfbdD2XHAa-O1fNgqpubgmc2iqegUU1sZpRdJZbf2sJSa7YBMosHVhWFECCJN4Cqhw5x_NML7HdPUkxt5HXknAJB1AXsYrjeYXH6aKbH8nyK5sSbyy-6lVzaBERL9y-AZP8KpkP2zR97FVKRbLHQbWhgCsqL2VsoKEsTxIf0g26_f1gl6smgjCwZdEV818ey5Pc4K16esUx0WGf-u88o3ymllvzMWDI');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                12:45
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Resumen de Actividades: Ramadan 2024 en Bogotá</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            10 Abr 2024 • Eventos
+                        </p>
+</div>
+<!-- Video Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Scholarly books stacked in a traditional library setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCslkR-gLIJhL1LbeJWF3vjBpa0I28-0fIkIhQ6kWY31mqov9ux95ew_PXC_tffNzuizPhVpSJbSnIhMaBFUzQLJ3KF5wNx2stbFJAQCcgIFrst1HA9asqSVuqt5M6OKoH_GP5MNYKGiUjmhqgh-O6qWTIVFDHuvE2q_2IaoLTFvAjipI013Oic6vE7CS6TAnS1KcvTYaUuJgV8IMN3a3T6xQv78pnIwDZf0ipZmXCMnnPauCEkYkelXc4YBNyc9WIWtAoKONZfSdk');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                1:05:20
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Serie Educativa: Introducción a la Jurisprudencia Islámica</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            05 Oct 2024 • Educación
+                        </p>
+</div>
+<!-- Video Card 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Children learning Arabic calligraphy in a classroom" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCP2B85AA0KHJYTP_xondTg7xQLnA6lNsst7F1acJOo_6Q4il-Mzpq7DRfHIG0Zm5kHxg8yCN88q6sZoUWg9DZiZBQAjZ1E-CPK700i873RlV_uJhyHDED8lxZmIaIaGDZNM06USP-nol0fpmakL4HcN6T2e6yeMk_YDQxRdCWMD-wddi-qZTAI4CNHyqofQ3zO1XwD5Yl8sgHNDqWaUECCS1iOwtk976o3hphySkxeY8NkoY405H2yBsC4xXZKfD-fpqQzQwadEPQ');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                08:30
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Programas Juveniles: Futuro y Comunidad</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            28 Sep 2024 • Comunidad
+                        </p>
+</div>
+<!-- Video Card 5 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Close up of a decorative prayer mat and a rosary" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaOriqntTjKfJPSGuHr4DmJVTu0NXGMguMffA4kK-HVZPMwMMnVmtKEbET4bx83Pn-vzIbKIryA56PPRhNGgO0s2TtkwwmZuR6sE6U2zqDPUOPtd-RdhV6D30V9TjL8faloeDuzexky9ofndKuhBS91PeG9Kuh_60zU3KV0bLR1YS0r3BdNJ1PP89BqhS2UBA9jJ56metscoGxIwGECoUy1UDLDTNaOntwA7Fuu7IXCXpjXVtbycL-Pxp6qLw1X4B60Vp4CiZ8BK0');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                52:10
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Conferencia: Espiritualidad en el Mundo Moderno</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            12 Sep 2024 • Conferencias
+                        </p>
+</div>
+<!-- Video Card 6 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Mountain landscape symbolizing peaceful reflection" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC6p4GlXX0nBbLoOFQlD_hXtiALduIRz5zD37xToJPJ8BvypwtK6SKXh9PmhdChyDiR4sWJDlWkO_QfeoS6-QZsCCebc-8WjYKNfd6PiXN-ttH-yqvNR7h3MU-SLAU05Dkrtzc5UI1V_BbzdJQoLGvkHHxIepFsNu0hQUhoVrntNCcprfAgYyMrBz8vKO3nie2wUZ3trZPxbaL7J5C-vBgd2nN3Tg7itbfdV3gTpQjZwjqa22Z7f6z1l-qAJAZmvpu2F2kGl02uINo');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                38:05
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Friday Khutbah: La gratitud como camino a la paz</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            08 Sep 2024 • Khutbah
+                        </p>
+</div>
+<!-- Video Card 7 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Modern geometric pattern inspired by Islamic art" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxVsa_o1u_K9GwprrN9SlX7lPOnWCHUDpa5jC5XweeYHxh9yqv0ud7MFE3emNkQiWupW-KwEuNSSunpJdM_IJbtHnYdDqQl1HXmCL7mGeSPcMaa0Do79yez0VyLkGIoQVHPnjK7vLM31AzqQi7Mm3PH-TXHm2DvMZQksrGI6zlhy0OBAp6xxCPrMTtc_Ey35iuE7DX0xrA-qNDrWpZ-XXlCWaJVCLa2CnHpzgGG-wepvH2aUvKR1dWZyclMHFAOUOpFqxKNydMbWo');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                25:40
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Clases de Árabe: Lección 1 para Principiantes</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            01 Sep 2024 • Educación
+                        </p>
+</div>
+<!-- Video Card 8 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 mb-4">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="People collaborating around a table in a workspace" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpjpK3r7g8wQi7tQv4tw8yBKku7L9l2e7WMIm163VpF9xGPvDgmHZ_r56JQccIMR351QTVGY-NZk0kvORHnW1RxdxZAv209IGmwdsbikK6628QzgFBONISkMsi2drKMqMl5rHvCjhXWSvhgPvysE9lbSDsF9B4rncQ-ALsYIQf8L3VQJkjjEyGW8wa-ZDrQiUBg9AsF7luuZD0Pe3fmzEeX3AjCXiIMmJyMIL_8ZcmAZvR6F8qZlOOeI30Cr36GiwWAWe7LJl75Xk');">
+</div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+<span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 px-2 py-1 rounded text-[10px] text-white font-medium backdrop-blur-sm">
+                                15:55
+                            </div>
+</div>
+<h3 class="font-display text-lg font-bold text-accent-blue dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">Voluntariado: Impactando nuestra ciudad</h3>
+<p class="text-xs text-gray-500 mt-2 font-sans flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            25 Ago 2024 • Comunidad
+                        </p>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="flex flex-col items-center pt-16 pb-12">
+<button class="px-8 py-3 bg-white dark:bg-primary/10 border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary hover:text-white transition-all transform active:scale-95">
+                        Cargar más contenido
+                    </button>
+<p class="mt-4 text-sm text-gray-400">Mostrando 8 de 124 videos</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-50 dark:bg-background-dark/50 border-t border-gray-100 dark:border-primary/10 px-6 py-12 lg:px-12">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="space-y-4">
+<h4 class="font-display text-xl font-bold text-accent-blue dark:text-white">Mezquita Central</h4>
+<p class="text-gray-500 text-sm leading-relaxed max-w-xs">Un faro de paz, conocimiento y comunidad en el corazón de Bogotá, Colombia.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">public</span>
+<span class="material-symbols-outlined text-primary cursor-pointer">mail</span>
+<span class="material-symbols-outlined text-primary cursor-pointer">share</span>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="font-display text-lg font-bold text-accent-blue dark:text-white">Enlaces Rápidos</h4>
+<ul class="text-gray-500 text-sm space-y-2">
+<li class="hover:text-primary cursor-pointer transition-colors">Horarios de Oración</li>
+<li class="hover:text-primary cursor-pointer transition-colors">Educación Islámica</li>
+<li class="hover:text-primary cursor-pointer transition-colors">Zakat y Donaciones</li>
+<li class="hover:text-primary cursor-pointer transition-colors">Calendario de Eventos</li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-display text-lg font-bold text-accent-blue dark:text-white">Contacto</h4>
+<p class="text-gray-500 text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                        Bogotá, Colombia
+                    </p>
+<p class="text-gray-500 text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">call</span>
+                        +57 (601) 123-4567
+                    </p>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-200 dark:border-primary/5 text-center text-xs text-gray-400">
+                © 2024 Mezquita Central de Bogotá. Todos los derechos reservados.
+            </div>
+</footer>
+</div>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-primary/10 px-6 py-3 flex justify-between items-center z-50">
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] mt-1 font-medium">Inicio</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] mt-1 font-medium">Oración</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">video_library</span>
+<span class="text-[10px] mt-1 font-medium">Multimedia</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">volunteer_activism</span>
+<span class="text-[10px] mt-1 font-medium">Donar</span>
+</div>
+</nav>
+</body></html>

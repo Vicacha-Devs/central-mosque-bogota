@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zakat Checkout - Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c03026",
+                        "secondary": "#212E80",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#201312",
+                        "neutral-sand": "#F2EFE9",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-neutral-sand font-display text-background-dark">
+<div class="relative flex flex-col min-h-screen w-full overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-secondary/10 px-10 py-5 bg-white/50 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4 text-secondary">
+<div class="size-8">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Central Mosque of Bogotá</h2>
+</div>
+<nav class="flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Prayer Times</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Donations</a>
+<a class="text-sm font-medium text-primary border-b-2 border-primary" href="#">Zakat</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">About</a>
+<button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                    Donate Now
+                </button>
+</nav>
+</header>
+<main class="flex-grow">
+<!-- Split-Screen Hero -->
+<section class="grid grid-cols-1 lg:grid-cols-2 h-[450px]">
+<div class="relative bg-center bg-cover" data-alt="Atmospheric interior photo of a beautiful mosque with golden light" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGiFGo4MMMRcoeUIG85T5leI9vPJUiL1tv2_ZyBCkVKnPq7OC7Dep_XFZRXl0_z67IKHZ2jCvti4tK3V1GIOjbi4sV_pF1zP8UtLXM1O7Vwsdt0bLjxbLUoO5nhzPfKt_0SHpREj_i7DoR1fcjypbQt84N_5tpf3XxDttukXl2nb9grV1m2gvCXV2haJQBflwIQ2uXg4AmQDHVqeRAdcaO4uorTg42UYRLnmE1Y0pUpjKcttR0pvwNIms5vOs9pgCacW7SjTOn9rA');">
+<div class="absolute inset-0 bg-black/20"></div>
+</div>
+<div class="bg-secondary flex flex-col justify-center px-16 text-white">
+<nav class="flex gap-2 text-white/60 text-sm mb-6 uppercase tracking-widest font-bold">
+<span>Giving</span> / <span>Checkout</span>
+</nav>
+<h1 class="font-serif text-6xl mb-4 leading-tight">Zakat Payment</h1>
+<p class="text-white/80 text-lg max-w-md font-light leading-relaxed">
+                        Fulfill your sacred obligation with a secure and transparent contribution that supports our community pillars in Bogotá.
+                    </p>
+</div>
+</section>
+<!-- Checkout Grid -->
+<section class="max-w-[1440px] mx-auto px-16 py-20">
+<div class="grid grid-cols-12 gap-12">
+<!-- Form Column (60%) -->
+<div class="col-span-12 lg:col-span-7">
+<div class="glass-panel p-10 rounded-xl shadow-2xl">
+<h3 class="text-2xl font-bold text-secondary mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">person</span>
+                                Personal Information
+                            </h3>
+<div class="grid grid-cols-2 gap-6 mb-12">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-secondary/70">Full Name</span>
+<input class="h-14 bg-white/50 border-secondary/10 rounded-lg px-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all" placeholder="Enter your full name" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-secondary/70">Email Address</span>
+<input class="h-14 bg-white/50 border-secondary/10 rounded-lg px-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all" placeholder="you@example.com" type="email"/>
+</label>
+<label class="flex flex-col gap-2 col-span-2">
+<span class="text-sm font-semibold text-secondary/70">Phone Number</span>
+<input class="h-14 bg-white/50 border-secondary/10 rounded-lg px-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all" placeholder="+57 (300) 000-0000" type="tel"/>
+</label>
+</div>
+<h3 class="text-2xl font-bold text-secondary mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">credit_card</span>
+                                Payment Details
+                            </h3>
+<div class="grid grid-cols-2 gap-6">
+<label class="flex flex-col gap-2 col-span-2">
+<span class="text-sm font-semibold text-secondary/70">Card Number</span>
+<div class="relative">
+<input class="h-14 w-full bg-white/50 border-secondary/10 rounded-lg px-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+<span class="material-symbols-outlined text-secondary/30">credit_card</span>
+</div>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-secondary/70">Expiry Date</span>
+<input class="h-14 bg-white/50 border-secondary/10 rounded-lg px-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all" placeholder="MM/YY" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-secondary/70">CVV</span>
+<input class="h-14 bg-white/50 border-secondary/10 rounded-lg px-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all" placeholder="***" type="password"/>
+</label>
+</div>
+<div class="mt-8 flex items-center gap-3">
+<input class="size-5 rounded text-primary focus:ring-primary border-secondary/20" id="save-card" type="checkbox"/>
+<label class="text-sm text-secondary/70 font-medium cursor-pointer" for="save-card">Save my card information for future donations</label>
+</div>
+<div class="mt-12 p-4 bg-secondary/5 rounded-lg flex items-center gap-4 border border-secondary/10">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<p class="text-xs text-secondary/70 leading-relaxed uppercase tracking-wider font-bold">
+                                    Your payment is secured with 256-bit SSL encryption. We never store your full CVV or plain text card data.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Summary Column (40%) -->
+<div class="col-span-12 lg:col-span-5 space-y-6">
+<!-- Summary Masonry Card -->
+<div class="bg-white rounded-xl shadow-xl overflow-hidden border border-secondary/5">
+<div class="bg-secondary/5 px-8 py-6 border-b border-secondary/5">
+<h4 class="text-lg font-bold text-secondary">Zakat Summary</h4>
+</div>
+<div class="p-8 space-y-6">
+<div class="flex justify-between items-center text-secondary/70">
+<span>Calculated Zakat Amount</span>
+<span class="font-bold text-secondary">$1,240.00</span>
+</div>
+<div class="flex justify-between items-center text-secondary/70">
+<span>Processing Fee (Optional)</span>
+<span class="font-bold text-secondary text-xs uppercase bg-secondary/10 px-2 py-1 rounded">Covered by Mosque</span>
+</div>
+<div class="pt-6 border-t border-secondary/5 flex justify-between items-end">
+<div class="flex flex-col">
+<span class="text-xs uppercase tracking-widest font-bold text-secondary/40">Total Contribution</span>
+<span class="text-4xl font-serif font-black text-secondary">$1,240.00</span>
+</div>
+<span class="text-sm font-bold text-primary italic">COP ~4.8M</span>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-5 rounded-lg transition-all shadow-xl shadow-primary/30 flex items-center justify-center gap-3 transform hover:-translate-y-1">
+<span class="material-symbols-outlined">lock</span>
+                                    Pay Securely
+                                </button>
+</div>
+<!-- Impact Masonry Tile -->
+<div class="grid grid-cols-2 bg-secondary text-white border-t border-white/10">
+<div class="p-6 border-r border-white/10 flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary">restaurant</span>
+<h5 class="text-sm font-bold">Food Impact</h5>
+<p class="text-xs text-white/60">Provides 50 family food baskets this month.</p>
+</div>
+<div class="p-6 flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+<h5 class="text-sm font-bold">Education</h5>
+<p class="text-xs text-white/60">Supports 5 orphans with school materials.</p>
+</div>
+</div>
+</div>
+<!-- Side Note Card -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-6">
+<h4 class="font-bold text-secondary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">volunteer_activism</span>
+                                Direct Local Reach
+                            </h4>
+<p class="text-sm text-secondary/70 leading-relaxed">
+                                100% of your Zakat stays within the Bogotá metropolitan area to support the needy in our direct neighborhood and surrounding barrios.
+                            </p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-secondary text-white/80 py-20 px-16">
+<div class="max-w-[1440px] mx-auto grid grid-cols-4 gap-12 border-b border-white/10 pb-12 mb-12">
+<div class="col-span-1">
+<div class="flex items-center gap-3 text-white mb-6">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight">Central Mosque</span>
+</div>
+<p class="text-sm leading-relaxed text-white/50">
+                        La Mezquita Central de Bogotá: A beacon of faith, unity, and community service in the heart of Colombia.
+                    </p>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Navigation</h5>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Prayer Times</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Community Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Friday Sermon</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Volunteer</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Donations</h5>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Zakat al-Maal</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sadaqah Jariyah</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Masjid Construction</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Ramadan 2024</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Contact</h5>
+<ul class="space-y-4 text-sm text-white/50">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">location_on</span> Calle 12 # 4-55, Bogotá</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">call</span> +57 1 234 5678</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">mail</span> contact@mezquitabogota.org</li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto flex justify-between text-xs text-white/30 font-medium uppercase tracking-widest">
+<span>© 2024 Central Mosque of Bogotá. All Rights Reserved.</span>
+<div class="flex gap-8">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

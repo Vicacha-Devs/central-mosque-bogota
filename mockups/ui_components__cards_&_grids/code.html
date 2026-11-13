@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UI Components: Cards &amp; Grids | Central Mosque of Bogotá</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#20337e",
+                        "accent-red": "#C13026",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#13151f",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#101119] font-display min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 bg-white/80 backdrop-blur-md px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-primary text-xl font-bold leading-tight tracking-tight">Central Mosque of Bogotá</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-9">
+<a class="text-primary text-sm font-semibold leading-normal hover:opacity-70 transition-opacity" href="#">Home</a>
+<a class="text-primary/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-primary/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Donations</a>
+<a class="text-primary/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Gallery</a>
+<a class="text-primary/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">About</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-primary/60 flex border-none bg-primary/5 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-primary/5 focus:ring-0 text-sm font-normal px-3 rounded-r-lg placeholder:text-primary/40" placeholder="Search archives..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold tracking-wide transition-all hover:bg-primary/90 hover:shadow-lg active:scale-95">
+<span>Sign In</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto w-full px-10 py-10">
+<!-- Breadcrumbs & Header -->
+<div class="flex flex-col gap-4 mb-12">
+<div class="flex items-center gap-2 text-primary/50 text-sm font-medium">
+<a class="hover:text-primary transition-colors" href="#">Design System</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">UI Components</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary">Cards &amp; Masonry</span>
+</div>
+<div class="flex flex-col gap-2">
+<h1 class="text-primary text-5xl font-black leading-tight tracking-tight">UI Components: Part 3</h1>
+<p class="text-primary/60 text-lg max-w-2xl font-normal">Advanced card architectures and masonry layouts for communal engagement, cultural events, and impact transparency.</p>
+</div>
+</div>
+<!-- Section A: Media Masonry (Horizontal Tiles) -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-8 border-b border-primary/10 pb-4">
+<h2 class="text-primary text-2xl font-bold tracking-tight">Horizontal Masonry Tiles</h2>
+<span class="text-xs font-bold uppercase tracking-widest text-primary/40">Component ID: C-MT-01</span>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+<!-- Horizontal Tile 1 -->
+<div class="flex flex-row items-stretch bg-white rounded-xl shadow-sm border border-primary/5 overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1 group">
+<div class="w-2/5 min-h-[280px] bg-center bg-cover transition-transform duration-500 group-hover:scale-105" data-alt="Close up of ornate mosque architecture detailing" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3RPXfF7tCETBJnpI28SMIUNEGKH_evzZqp-iBCgI8J5YDn8cMjsDIvZZdHLipuHeSpd9-TRfnO41hVF9QH48nvhlqzYERKpgkrUZuAPo5jtkUNgU74rp-lF2M0Og4QJBdIRmC4RsTW8yAkKmmUn128jmMtoFOJMqjVQww4BznjMwHjVnML4TlC64zgMO8uk2qGndgl-BgQOsS-W_PldcMEnN51v8bZkUC-Zvgq-gLKcjHEK03V_qWj_HZmqCQyWSbAU1z2rbl5Cs');"></div>
+<div class="w-3/5 p-8 flex flex-col justify-between">
+<div class="flex flex-col gap-3">
+<span class="text-accent-red text-xs font-bold uppercase tracking-widest">Community Update</span>
+<h3 class="text-primary text-2xl font-bold leading-tight">Expansion Project: Phase II Begins</h3>
+<p class="text-primary/60 text-base font-normal leading-relaxed">The second stage of our library development project has officially commenced, focusing on the new digital archive center.</p>
+</div>
+<div class="mt-6">
+<button class="flex items-center gap-2 px-0 text-primary font-bold text-sm group-hover:gap-4 transition-all">
+                                        READ THE FULL REPORT
+                                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Horizontal Tile 2 -->
+<div class="flex flex-row items-stretch bg-white rounded-xl shadow-sm border border-primary/5 overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1 group">
+<div class="w-2/5 min-h-[280px] bg-center bg-cover transition-transform duration-500 group-hover:scale-105" data-alt="Sunlight streaming through mosque windows on carpets" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCP4oAj181HK1DyMOJ1gE2LZL8vLcNL5bZH_RU3zsO9H3nx_mbhNU2nPAr4m8KIgX-LgREZnM2FVm6Mv9a5h6_kOI4f5RRFBfbClS9WJxoUd1HoDOuNtByM8Glaieg82FOSy3P5aicyUcci6Rnc4FbTiOmwGpLOmLupJnpCthVi1kqO6A5rduRH_j3aSeTtwvfEIhmlTkT7W6BnJZ48vxy75_6XluDQbmVQUexBcaXo9L43uZy9Li7Ytad_xqfgkP6JoJvHobmmRHU');"></div>
+<div class="w-3/5 p-8 flex flex-col justify-between">
+<div class="flex flex-col gap-3">
+<span class="text-accent-red text-xs font-bold uppercase tracking-widest">Spiritual Insights</span>
+<h3 class="text-primary text-2xl font-bold leading-tight">Ramadan 2024 Prep Classes</h3>
+<p class="text-primary/60 text-base font-normal leading-relaxed">Join our weekly preparation seminars designed to help you make the most of the upcoming blessed month of fasting.</p>
+</div>
+<div class="mt-6">
+<button class="flex items-center gap-2 px-0 text-primary font-bold text-sm group-hover:gap-4 transition-all">
+                                        VIEW CLASS SCHEDULE
+                                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section B: Upcoming Events (Vertical Cards with Badges) -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-8 border-b border-primary/10 pb-4">
+<h2 class="text-primary text-2xl font-bold tracking-tight">Event Grid (Vertical Architecture)</h2>
+<span class="text-xs font-bold uppercase tracking-widest text-primary/40">Component ID: C-EV-02</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Event Card 1 -->
+<div class="bg-white rounded-xl shadow-sm border border-primary/5 overflow-hidden transition-all hover:shadow-lg flex flex-col">
+<div class="relative h-48 bg-center bg-cover" data-alt="Books and Arabic calligraphy tools on a desk" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZJRYMUOVWeQvQv26pxW9cDbiH1Tll9Xmbv-IOoMsmFjAmpz8dctwkD9HnwqFtVLdJer5wrNltYXH_BhzB57uW4fo4-x5S3xmFJPhDkzMEyYhlFDAYl_pRDkVbkvD9iTpc-5FTjqMlEzCZ-nUKbHj3PQ7FgD3Rq1ig5BkeNwHKdJ21K4-skCi-gNxQ0hoJWJe2tFP8yP7lEMlaCuih4jdEiZOItMx2AQ-Qoubj9sQjyXOWq86VToTlUYVPwCFBJzBUDUSlkCqJ1mw');">
+<div class="absolute top-4 left-4 bg-accent-red text-white flex flex-col items-center justify-center w-14 h-14 rounded-lg shadow-md">
+<span class="text-xl font-black leading-none">12</span>
+<span class="text-[10px] font-bold uppercase leading-none mt-1">OCT</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4 flex-grow">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-primary/40 text-xs font-bold uppercase mb-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                        6:00 PM - 8:00 PM
+                                    </div>
+<h4 class="text-primary text-lg font-bold leading-tight">Advanced Arabic Calligraphy</h4>
+</div>
+<div class="flex items-center gap-2 text-primary/60 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+                                    Main Hall, 2nd Floor
+                                </div>
+<button class="mt-auto w-full py-2.5 bg-primary/5 hover:bg-primary hover:text-white transition-all rounded-lg text-primary text-xs font-bold uppercase tracking-wider">
+                                    Register Now
+                                </button>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-white rounded-xl shadow-sm border border-primary/5 overflow-hidden transition-all hover:shadow-lg flex flex-col">
+<div class="relative h-48 bg-center bg-cover" data-alt="People sitting in a circle for community talk" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDu4cCIAcFN7AWJ4r6c1744LgvyOOwuZbEyDJbcVbyf0wnTPNX8F4ECzhUGYnyrc0V5Bplf7VH3-yBTzHEmSLr6bOk0M2kzOH_cLzu9IcInlfKJHNNrkzmg3-JPTtGyBSNkF8etvKlfP9mzIw_eZUxgzD1FCbCeiWOknA9aNaDW4eDv30UMIET1uDDJYWaDAKhnWDoRB5rqqf8GZuCslIr_hSPebpaulASpAOJWTvP7GRRo0GEUS0LvXTiBCO4kOQtGMQosJiFCgYQ');">
+<div class="absolute top-4 left-4 bg-accent-red text-white flex flex-col items-center justify-center w-14 h-14 rounded-lg shadow-md">
+<span class="text-xl font-black leading-none">15</span>
+<span class="text-[10px] font-bold uppercase leading-none mt-1">OCT</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4 flex-grow">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-primary/40 text-xs font-bold uppercase mb-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                        1:30 PM
+                                    </div>
+<h4 class="text-primary text-lg font-bold leading-tight">Friday Khutbah Special</h4>
+</div>
+<div class="flex items-center gap-2 text-primary/60 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+                                    Prayer Hall
+                                </div>
+<button class="mt-auto w-full py-2.5 bg-primary/5 hover:bg-primary hover:text-white transition-all rounded-lg text-primary text-xs font-bold uppercase tracking-wider">
+                                    Add to Calendar
+                                </button>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="bg-white rounded-xl shadow-sm border border-primary/5 overflow-hidden transition-all hover:shadow-lg flex flex-col">
+<div class="relative h-48 bg-center bg-cover" data-alt="Vegetables and aid boxes for charity" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuArUxofvdzZnfaSNr8clSKQoJbaJFzPgtwy_2LeVSq_VWrlQ5kGbCmY2BSWlu7TXYTBg8pP9Q9dZP8DAxiS7nRTOhST-qQOBCX5SatMjsW0UulGesXWgZu1MzGNmpMCqDIAJ7MXCfBM7MojMwQz4tjbedoyrNIp9GmiNYb-LtatZXoNmgSNpSezZZeACaDDf-GabEqgTy5-rvPWj00SFkfKkd0YTr7MTk2AFVufNBC82tX5P_y_WA3vpyOAYPQ128V6k5pXuKcXYG0');">
+<div class="absolute top-4 left-4 bg-accent-red text-white flex flex-col items-center justify-center w-14 h-14 rounded-lg shadow-md">
+<span class="text-xl font-black leading-none">20</span>
+<span class="text-[10px] font-bold uppercase leading-none mt-1">OCT</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4 flex-grow">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-primary/40 text-xs font-bold uppercase mb-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                        All Day
+                                    </div>
+<h4 class="text-primary text-lg font-bold leading-tight">Bogotá Food Drive</h4>
+</div>
+<div class="flex items-center gap-2 text-primary/60 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+                                    Main Entrance Plaza
+                                </div>
+<button class="mt-auto w-full py-2.5 bg-primary/5 hover:bg-primary hover:text-white transition-all rounded-lg text-primary text-xs font-bold uppercase tracking-wider">
+                                    Volunteer
+                                </button>
+</div>
+</div>
+<!-- Event Card 4 -->
+<div class="bg-white rounded-xl shadow-sm border border-primary/5 overflow-hidden transition-all hover:shadow-lg flex flex-col">
+<div class="relative h-48 bg-center bg-cover" data-alt="University building or library entrance" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDM13K6Mdh15ezzumgLTTkWMDLob9YbOe4a71yi_bmoDOWeGsYCAQbbxqJbeWSoo_91AmbcZU0LvV3SaLs3XkCx4X3MFMocIgyS9iawDO-0poCF1PEQfnM7ZFj_5EE_Xr_dlqn2el3s8xBJ2GTmBAuM6vsz2sn0fJdvvyQcMMCvtx-bOxj5N6CbtabqILHAfyYNg72IdjvALqw2rYtCg0KxZdcjKVa_lVEzpuGCnNe7dsWtC1rd6txtMKSzVnjTi28LuaRsBwVb8mE');">
+<div class="absolute top-4 left-4 bg-accent-red text-white flex flex-col items-center justify-center w-14 h-14 rounded-lg shadow-md">
+<span class="text-xl font-black leading-none">28</span>
+<span class="text-[10px] font-bold uppercase leading-none mt-1">OCT</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4 flex-grow">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-primary/40 text-xs font-bold uppercase mb-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                        7:00 PM
+                                    </div>
+<h4 class="text-primary text-lg font-bold leading-tight">Youth Discussion Circle</h4>
+</div>
+<div class="flex items-center gap-2 text-primary/60 text-sm">
+<span class="material-symbols-outlined text-base">location_on</span>
+                                    Community Center
+                                </div>
+<button class="mt-auto w-full py-2.5 bg-primary/5 hover:bg-primary hover:text-white transition-all rounded-lg text-primary text-xs font-bold uppercase tracking-wider">
+                                    Register Now
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section C: Impact Tracker (Glassmorphism Cards) -->
+<section class="p-12 rounded-2xl relative overflow-hidden">
+<!-- Background for Glass Effect -->
+<div class="absolute inset-0 bg-primary/95"></div>
+<div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1590076153381-471850799897?q=80&amp;w=2000')] bg-cover bg-center mix-blend-overlay"></div>
+<div class="relative z-10">
+<div class="flex flex-col items-center text-center mb-12 gap-3">
+<h2 class="text-white text-4xl font-black tracking-tight">Community Impact Tracker</h2>
+<p class="text-white/70 max-w-xl text-base font-light">Real-time transparency on our most critical community goals and infrastructure developments in Bogotá.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Glass Card 1 -->
+<div class="glass-card p-8 rounded-2xl flex flex-col gap-6 border-white/20">
+<div class="flex items-center justify-between">
+<div class="p-3 bg-white/20 rounded-xl">
+<span class="material-symbols-outlined text-white text-3xl">auto_stories</span>
+</div>
+<span class="text-white text-2xl font-black">78%</span>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-white text-xl font-bold">New Digital Library</h4>
+<p class="text-white/70 text-sm leading-relaxed">Funding for digital archive servers and high-speed research terminals.</p>
+</div>
+<div class="flex flex-col gap-3">
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-white rounded-full transition-all" style="width: 78%"></div>
+</div>
+<div class="flex justify-between text-white/50 text-[10px] font-bold uppercase tracking-widest">
+<span>$42,000 Raised</span>
+<span>Goal: $55,000</span>
+</div>
+</div>
+<button class="w-full py-3 bg-white text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-all border border-transparent">
+                                    Contribute Now
+                                </button>
+</div>
+<!-- Glass Card 2 -->
+<div class="glass-card p-8 rounded-2xl flex flex-col gap-6 border-white/20">
+<div class="flex items-center justify-between">
+<div class="p-3 bg-white/20 rounded-xl">
+<span class="material-symbols-outlined text-white text-3xl">restaurant</span>
+</div>
+<span class="text-white text-2xl font-black">45%</span>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-white text-xl font-bold">Daily Iftar Fund</h4>
+<p class="text-white/70 text-sm leading-relaxed">Providing evening meals to over 400 community members daily this Ramadan.</p>
+</div>
+<div class="flex flex-col gap-3">
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-white rounded-full transition-all" style="width: 45%"></div>
+</div>
+<div class="flex justify-between text-white/50 text-[10px] font-bold uppercase tracking-widest">
+<span>$12,500 Raised</span>
+<span>Goal: $28,000</span>
+</div>
+</div>
+<button class="w-full py-3 bg-white text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-all border border-transparent">
+                                    Sponsor a Meal
+                                </button>
+</div>
+<!-- Glass Card 3 -->
+<div class="glass-card p-8 rounded-2xl flex flex-col gap-6 border-white/20">
+<div class="flex items-center justify-between">
+<div class="p-3 bg-white/20 rounded-xl">
+<span class="material-symbols-outlined text-white text-3xl">school</span>
+</div>
+<span class="text-white text-2xl font-black">92%</span>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-white text-xl font-bold">Youth Scholarship 2024</h4>
+<p class="text-white/70 text-sm leading-relaxed">Educational grants for 20 outstanding students from the local congregation.</p>
+</div>
+<div class="flex flex-col gap-3">
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-white rounded-full transition-all" style="width: 92%"></div>
+</div>
+<div class="flex justify-between text-white/50 text-[10px] font-bold uppercase tracking-widest">
+<span>$18,400 Raised</span>
+<span>Goal: $20,000</span>
+</div>
+</div>
+<button class="w-full py-3 bg-white text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-all border border-transparent">
+                                    Support Education
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Documentation Note Footer -->
+<div class="mt-20 pt-8 border-t border-primary/10 flex items-center justify-between text-primary/40 text-xs font-medium uppercase tracking-widest">
+<p>© 2024 Central Mosque of Bogotá - Design System v1.3.4</p>
+<p>Internal Component Library - Proprietary Use Only</p>
+</div>
+</main>
+</div>
+</div>
+</body></html>
