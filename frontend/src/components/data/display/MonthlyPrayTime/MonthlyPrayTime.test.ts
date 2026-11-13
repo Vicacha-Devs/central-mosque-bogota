@@ -68,10 +68,12 @@ vi.mock("@utils/location.utils", async () => {
 
   return {
     ...actual,
-    getClientLocation: vi.fn(() => Promise.resolve({
-      ...actual.BOGOTA_LOCATION,
-      timeZone: "America/Bogota",
-    })),
+    getClientLocation: vi.fn(() => {
+      return Promise.resolve({
+        ...actual.BOGOTA_LOCATION,
+        timeZone: "America/Bogota",
+      });
+    }),
   };
 });
 
