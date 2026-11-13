@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import { Button } from "@/components/starwind/button";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import AboutInstitutionalSections from "@components/data/display/AboutInstitutionalSections/AboutInstitutionalSections.astro";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { getLocalizedAboutPageData } from "@utils/institutional-mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const fallbackAboutData = getLocalizedAboutPageData(lang);
+
+const [aboutEntries, leaderEntries] = await Promise.all([
+  getCollection("aboutPage", (entry) => entry.data.locale === lang),
+  getCollection("leaders", (entry) => entry.data.locale === lang),
+]);
+
+const baseAbout = aboutEntries[0]?.data ?? fallbackAboutData;
+const pageContent = {
+  ...baseAbout,
+  leaders:
+    leaderEntries.length > 0
+      ? leaderEntries.map((entry) => entry.data)
+      : baseAbout.leaders,
+};
+---
+
+<Layout
+  title={pageContent.heroTitle}
+  description={pageContent.heroSubtitle}
+>
+  <!-- Hero Section -->
+  <PageHeroBanner
+    badgeIcon="mosque"
+    badgeLabel={t("about-page.badge")}
+    title={pageContent.heroTitle}
+    subtitle={pageContent.heroSubtitle}
+  >
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <Button href={translatePath("/contact-and-visit")} variant="primary">
+        {t("about-page.book-visit-cta")}
+      </Button>
+    </div>
+  </PageHeroBanner>
+
+  <!--
+    Institutional Mission, Vision, History Timeline, Architectural Heritage &
+    Leadership Directory
+  -->
+  <AboutInstitutionalSections lang={lang} content={pageContent} />
+</Layout>

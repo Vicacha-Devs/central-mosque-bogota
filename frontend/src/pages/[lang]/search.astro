@@ -1,0 +1,172 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import SiteSearchSection, {
+  type TSearchIndexItem,
+} from "@components/data/display/SiteSearchSection/SiteSearchSection.astro";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { fetchStrapiData } from "@services/strapi";
+import { getLocalizedMocks } from "@utils/localized-mocks";
+import {
+  getLocalizedGlossaryTerms,
+  getLocalizedPublications,
+  type TResourceGlossaryTerm,
+  type TResourcePublication,
+} from "@utils/resources-mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const mocks = getLocalizedMocks(lang);
+
+const [
+  articleEntries,
+  eventEntries,
+  serviceEntries,
+  mediaEntries,
+  faqEntries,
+  cmsPublicationsRes,
+  cmsGlossaryRes,
+] = await Promise.all([
+  getCollection("articles", (entry) => entry.data.locale === lang),
+  getCollection("events", (entry) => entry.data.locale === lang),
+  getCollection("communityServices", (entry) => entry.data.locale === lang),
+  getCollection("mediaHighlights", (entry) => entry.data.locale === lang),
+  getCollection("faqs", (entry) => entry.data.locale === lang),
+  fetchStrapiData<{ data?: TResourcePublication[] }>("resources/publications", {
+    locale: lang,
+  }).catch(() => null),
+  fetchStrapiData<{ data?: TResourceGlossaryTerm[] }>("resources/glossary", {
+    locale: lang,
+  }).catch(() => null),
+]);
+
+const articles
+  = articleEntries.length > 0
+    ? articleEntries.map((entry) => entry.data)
+    : mocks.academyCourses;
+
+const events
+  = eventEntries.length > 0
+    ? eventEntries.map((entry) => entry.data)
+    : mocks.events;
+
+const services
+  = serviceEntries.length > 0
+    ? serviceEntries.map((entry) => entry.data)
+    : mocks.defaultServices;
+
+const media
+  = mediaEntries.length > 0
+    ? mediaEntries.map((entry) => entry.data)
+    : mocks.mediaHighlights;
+
+const faqs
+  = faqEntries.length > 0
+    ? faqEntries.map((entry) => entry.data)
+    : mocks.islamFaithData.faqs;
+
+const cmsPubs = cmsPublicationsRes?.data;
+const publications: TResourcePublication[]
+  = Array.isArray(cmsPubs) && cmsPubs.length > 0
+    ? cmsPubs
+    : getLocalizedPublications(lang);
+
+const glossaryTerms: TResourceGlossaryTerm[]
+  = Array.isArray(cmsGlossaryRes?.data) && cmsGlossaryRes.data.length > 0
+    ? cmsGlossaryRes.data
+    : getLocalizedGlossaryTerms(lang);
+
+const searchItems: Array<TSearchIndexItem> = [
+  ...articles.map((course) => ({
+    id: `article-${course.slug}`,
+    category: "article" as const,
+    categoryLabel: t("search-page.filter-article"),
+    title: course.title,
+    description: course.description,
+    href: course.href,
+    icon: "school",
+  })),
+  ...publications.map((pub) => ({
+    id: `publication-${pub.slug}`,
+    category: "article" as const,
+    categoryLabel: pub.categoryLabel,
+    title: pub.title,
+    description: pub.summary,
+    href: pub.downloadEndpoint,
+    icon: "picture_as_pdf",
+  })),
+  ...events.map((eventItem) => ({
+    id: `event-${eventItem.slug}`,
+    category: "event" as const,
+    categoryLabel: t("search-page.filter-event"),
+    title: eventItem.title,
+    description: eventItem.description,
+    href: eventItem.url,
+    icon: "calendar_month",
+  })),
+  ...services.map((srv, idx) => ({
+    id: `service-${String(idx)}`,
+    category: "service" as const,
+    categoryLabel: t("search-page.filter-service"),
+    title: srv.title,
+    description: srv.description,
+    href: translatePath("/community-services"),
+    icon: srv.icon,
+  })),
+  ...media.map((mediaItem) => ({
+    id: `media-${mediaItem.slug}`,
+    category: "media" as const,
+    categoryLabel: t("search-page.filter-media"),
+    title: mediaItem.title,
+    description: mediaItem.description,
+    href: mediaItem.href,
+    icon: "podcasts",
+  })),
+  ...faqs.map((faq, idx) => ({
+    id: `faq-${String(idx)}`,
+    category: "faq" as const,
+    categoryLabel: t("search-page.filter-faq"),
+    title: faq.question,
+    description: faq.answer,
+    href: translatePath("/islam-and-faith"),
+    icon: "help",
+  })),
+  ...glossaryTerms.map((term) => ({
+    id: `glossary-${term.slug}`,
+    category: "faq" as const,
+    categoryLabel: term.categoryLabel,
+    title: `${term.term} (${term.nativeScript})`,
+    description: term.definition,
+    href: `${translatePath("/islam-and-faith")}#islamic-glossary`,
+    icon: "menu_book",
+  })),
+];
+---
+
+<Layout
+  title={t("search-page.title")}
+  description={t("search-page.subtitle")}
+>
+  <!-- Hero Section -->
+  <PageHeroBanner
+    badgeIcon="search"
+    badgeLabel={t("search-page.badge")}
+    title={t("search-page.title")}
+    subtitle={t("search-page.subtitle")}
+  />
+
+  <!-- Interactive Search & Category Filter Component -->
+  <SiteSearchSection lang={lang} items={searchItems} />
+</Layout>

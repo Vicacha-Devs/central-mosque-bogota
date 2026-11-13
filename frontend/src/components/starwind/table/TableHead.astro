@@ -1,0 +1,13 @@
+---
+import { tableHead } from "./variants";
+import type { HTMLAttributes } from "astro/types";
+import type { VariantProps } from "tailwind-variants";
+
+type Props = HTMLAttributes<"th"> & VariantProps<typeof tableHead>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<th role="columnheader" class={tableHead({ class: className })} {...rest} data-slot="table-head">
+  <slot />
+</th>

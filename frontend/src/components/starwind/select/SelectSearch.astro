@@ -1,0 +1,42 @@
+---
+import { selectSearch } from "./variants";
+import Search from "@tabler/icons/outline/search.svg";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = Omit<HTMLAttributes<"input">, "type" | "autocomplete"> & {
+  /**
+   * The text to display when no results are found
+   * @default "No results found."
+   */
+  emptyText?: string;
+};
+
+const {
+  class: className,
+  placeholder = "Search...",
+  emptyText = "No results found.",
+  ...rest
+} = Astro.props;
+---
+
+<div
+  data-slot="select-search-wrapper"
+  class="-mx-1 -mt-1 mb-1 flex items-center gap-2 border-b px-3"
+>
+  <slot name="icon">
+    <Search class="size-4.5 shrink-0 text-muted-foreground" />
+  </slot>
+  <input
+    type="text"
+    class={selectSearch({ class: className })}
+    placeholder={placeholder}
+    autocomplete="off"
+    aria-label={placeholder}
+    {...rest}
+    data-slot="select-search"
+  />
+</div>
+
+<div class="hidden py-6 text-center text-sm text-muted-foreground" data-slot="select-empty">
+  <slot name="empty">{emptyText}</slot>
+</div>

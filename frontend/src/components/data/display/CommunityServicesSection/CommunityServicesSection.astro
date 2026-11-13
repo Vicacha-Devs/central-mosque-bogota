@@ -1,6 +1,6 @@
 ---
-import type { TCommunityService } from '@utils/models/services'
-import CommunityServiceCard from './CommunityServiceCard.astro'
+import type { TCommunityService } from "@utils/models/services";
+import CommunityServiceCard from "./CommunityServiceCard.astro";
 
 /**
  * @component CommunityServicesSection
@@ -55,11 +55,11 @@ interface Props {
   /**
    * Title of the community services section
    */
-  title: string
+  title: string;
   /**
    * List of community services to display
    */
-  services: Array<TCommunityService>
+  services: Array<TCommunityService>;
 }
 
 const { title, services } = Astro.props as Props;
@@ -78,7 +78,7 @@ const { title, services } = Astro.props as Props;
   "
   >
     {
-      services.map(service => (
+      services.map((service) => (
         <li class="h-full">
           <CommunityServiceCard {...service} />
         </li>

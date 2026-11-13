@@ -47,9 +47,9 @@ describe("MediaHighlightsSection", () => {
       expect(cta.getAttribute("href")).toBe(props.mediaHref);
 
       const cardHeadings = getAllByRole(root, "heading", { level: 3 });
-      expect(cardHeadings.map((h) => h.textContent.trim())).toEqual(
-        expect.arrayContaining(props.highlights.map((h) => h.title))
-      );
+      const renderedTitles = cardHeadings.map((h) => h.textContent.trim());
+      const expectedTitles = props.highlights.map((h) => h.title);
+      expect(renderedTitles).toEqual(expect.arrayContaining(expectedTitles));
 
       const cardCtas = getAllByRole(root, "link", { name: /escuchar ahora/i });
       expect(cardCtas.length).toBe(props.highlights.length);

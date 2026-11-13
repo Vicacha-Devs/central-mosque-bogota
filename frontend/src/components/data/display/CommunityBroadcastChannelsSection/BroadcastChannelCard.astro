@@ -1,0 +1,114 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import { Card, CardContent } from "@/components/starwind/card";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import type { TPublicChannelItem } from "@utils/inbox-mocks";
+
+/**
+ * @component BroadcastChannelCard
+ * @title Community Broadcast Channel Card
+ * @description Molecule card displaying an official broadcast channel (WhatsApp, Telegram, etc.) with localized title, handle, description, and direct invite button.
+ *
+ * Props
+ * - `channel`: `TPublicChannelItem` object
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `joinLabel`: localized CTA button text
+ *
+ * @preview
+ *
+ * <BroadcastChannelCard
+ *   lang="es"
+ *   joinLabel="Unirse al canal"
+ *   channel={{
+ *     channel: "whatsapp",
+ *     label: "Canal Oficial WhatsApp",
+ *     handle: "@MezquitaCentralBogota",
+ *     inviteUrl: "https://whatsapp.com/channel/0029VaMosqueBogota",
+ *   }}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import BroadcastChannelCard from "@components/data/display/CommunityBroadcastChannelsSection/BroadcastChannelCard.astro";
+ * ---
+ *
+ * <BroadcastChannelCard channel={channel} lang="es" joinLabel="Unirse al canal" />
+ * ```
+ */
+interface Props {
+  /**
+   * Broadcast channel item descriptor.
+   */
+  channel: TPublicChannelItem;
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Localized call-to-action button label.
+   */
+  joinLabel: string;
+}
+
+const { channel: ch, lang, joinLabel } = Astro.props;
+const label = ch.localizedLabels?.[lang] || ch.label;
+const desc = ch.localizedDescriptions?.[lang] || "";
+---
+
+<Card
+  class="
+    flex flex-col justify-between gap-0 rounded-2xl border-slate-200 bg-slate-50
+    p-5 shadow-none
+    dark:border-slate-800 dark:bg-slate-800/50
+  "
+>
+  <CardContent class="p-0">
+    <div class="mb-2 flex items-center justify-between gap-2">
+      <Badge
+        variant="success"
+        class="
+          rounded-md bg-emerald-700 px-2.5 py-0.5 text-xs font-bold text-white
+          uppercase
+        "
+      >
+        {ch.channel}
+      </Badge>
+      <span class="
+        text-xs font-semibold text-slate-500
+        dark:text-slate-400
+      "
+      >
+        {ch.handle}
+      </span>
+    </div>
+    <h4 class="
+      mb-1 text-base font-bold text-slate-900
+      dark:text-white
+    "
+    >
+      {label}
+    </h4>
+    <p class="
+      mb-4 text-xs text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {desc}
+    </p>
+  </CardContent>
+  <Button
+    href={ch.inviteUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    variant="secondary"
+    size="sm"
+    class="w-full justify-center rounded-xl text-xs font-bold"
+  >
+    <span>{joinLabel}</span>
+    <Icon name="open_in_new" class="text-xs" />
+  </Button>
+</Card>

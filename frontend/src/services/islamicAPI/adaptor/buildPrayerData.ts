@@ -9,9 +9,9 @@ import {
   parseTimeToMinutes,
 } from "@utils/time.utils";
 
-const parsePrayerTimes = (
-  times: TIslamicApiPrayerTimes
-): TDailyPrayerSchedule => ({
+type TRawTimes = TIslamicApiPrayerTimes;
+
+const parsePrayerTimes = (times: TRawTimes): TDailyPrayerSchedule => ({
   fajr: times.Fajr,
   sunrise: times.Sunrise,
   dhuhr: times.Dhuhr,

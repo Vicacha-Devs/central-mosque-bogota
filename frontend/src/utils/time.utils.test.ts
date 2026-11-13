@@ -1,7 +1,15 @@
 import {
+  buildMonthHref,
+  buildMonthLabel,
+  formatHijriDate,
+  formatLongDate,
   formatTime,
+  formatYm,
+  formatYmd,
   getCurrentMinutes,
+  getMonthAnchorDate,
   isTimeInRange,
+  isToday,
   parseTimeToMinutes,
 } from "@utils/time.utils";
 
@@ -80,7 +88,7 @@ describe("time.utils", () => {
       const dateTimeFormatSpy = vi
         .spyOn(Intl, "DateTimeFormat")
         .mockImplementation(function (
-          locale?: string | Array<string>,
+          locale?: Intl.LocalesArgument,
           options?: Intl.DateTimeFormatOptions
         ) {
           expect(locale).toBe("en-US");
@@ -102,11 +110,19 @@ describe("time.utils", () => {
       dateTimeFormatSpy.mockRestore();
     });
 
-    it("should fall back to local time when Intl.DateTimeFormat fails", () => {
+    it("should fall back to local time when Intl.DateTimeFormat fails or returns NaN parts", () => {
       const dateTimeFormatSpy = vi
         .spyOn(Intl, "DateTimeFormat")
-        .mockImplementation(function () {
-          throw new Error("Unsupported timeZone");
+        .mockImplementationOnce(function () {
+          return {
+            formatToParts() {
+              return [] as Array<Intl.DateTimeFormatPart>;
+            },
+          } as unknown as Intl.DateTimeFormat;
+        })
+        .mockImplementationOnce(function () {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw "Non-Error failure";
         });
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {
         return;
@@ -119,16 +135,53 @@ describe("time.utils", () => {
         .mockReturnValue(22);
 
       expect(getCurrentMinutes("Invalid/Zone")).toBe(11 * 60 + 22);
-      expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining(
-          "Timezone \"Invalid/Zone\" failed, falling back to local time."
-        )
-      );
+      expect(getCurrentMinutes("Invalid/Zone")).toBe(11 * 60 + 22);
+      expect(warnSpy).toHaveBeenCalledTimes(2);
 
       getMinutesSpy.mockRestore();
       getHoursSpy.mockRestore();
       warnSpy.mockRestore();
       dateTimeFormatSpy.mockRestore();
+    });
+  });
+
+  describe("date and month helpers", () => {
+    it("should format dates, Hijri dates, and month helpers when given valid inputs", () => {
+      const sample = new Date("2026-03-15T12:00:00Z");
+      expect(formatYmd(sample, "UTC")).toContain("2026");
+      expect(isToday(new Date(), "UTC")).toBe(true);
+      expect(formatYm(sample, "UTC")).toBe("2026-03");
+      expect(formatLongDate(sample, "UTC", "es")).toContain("2026");
+      expect(formatHijriDate(sample, "UTC", "en")).not.toMatch(/A\.?H\.?$/i);
+
+      const anchor = getMonthAnchorDate("2026-03", 1);
+      expect(anchor.getUTCMonth()).toBe(3);
+
+      const fallbackAnchor = getMonthAnchorDate(null, 0);
+      expect(fallbackAnchor).toBeInstanceOf(Date);
+
+      expect(buildMonthLabel(sample, "es", "UTC").length).toBeGreaterThan(0);
+      expect(
+        buildMonthHref("2026-04", new URL("https://mezquitabogota.org/es/pray"))
+      ).toBe("/es/pray?date=2026-04");
+    });
+
+    it("should handle empty month label and missing formatYm parts when Intl returns empty", () => {
+      const dtfSpy = vi
+        .spyOn(Intl, "DateTimeFormat")
+        .mockImplementation(function () {
+          return {
+            format: () => "",
+            formatToParts: () => [],
+          } as unknown as Intl.DateTimeFormat;
+        });
+
+      expect(buildMonthLabel(new Date(), "es", "UTC")).toBe("");
+      expect(() => formatYm(new Date(), "UTC")).toThrow(
+        "Could not format current month"
+      );
+
+      dtfSpy.mockRestore();
     });
   });
 });

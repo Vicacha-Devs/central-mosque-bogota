@@ -1,0 +1,384 @@
+---
+import { Avatar, AvatarFallback } from "@/components/starwind/avatar";
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import TiptapContent from "@components/data/display/TiptapContent/TiptapContent.astro";
+import type { TiptapContentInput } from "@vicacha-devs/astro-tiptap-blocks";
+import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
+import {
+  getLocalizedAboutPageData,
+  type TAboutPageData,
+} from "@utils/institutional-mocks";
+
+interface Props {
+  lang?: TLang;
+  content?: TAboutPageData & {
+    architectureDescription?: TiptapContentInput;
+  };
+}
+
+const { lang = "es", content: contentProp } = Astro.props as Props;
+const content: TAboutPageData & {
+  architectureDescription?: TiptapContentInput;
+} = contentProp ?? getLocalizedAboutPageData(lang);
+const t = useTranslations(lang);
+---
+
+<div class="space-y-16">
+  <!-- Mission & Vision -->
+  <section class="
+    grid grid-cols-1 gap-8
+    md:grid-cols-2
+  "
+  >
+    <Card
+      class="
+        rounded-2xl border border-slate-200 bg-white p-0 shadow-sm
+        dark:border-slate-800 dark:bg-slate-900
+      "
+    >
+      <CardContent class="p-8">
+        <div
+          class="
+            mb-4 inline-flex size-12 items-center justify-center rounded-xl
+            bg-secondary/10 text-secondary
+            dark:bg-blue-500/20 dark:text-blue-300
+          "
+        >
+          <Icon name="flag" class="text-2xl" />
+        </div>
+        <h2 class="
+          mb-3 text-2xl font-bold text-slate-900
+          dark:text-white
+        "
+        >
+          {content.missionTitle}
+        </h2>
+        <p class="
+          leading-relaxed text-slate-600
+          dark:text-slate-300
+        "
+        >
+          {content.missionBody}
+        </p>
+      </CardContent>
+    </Card>
+
+    <Card
+      class="
+        rounded-2xl border border-slate-200 bg-white p-0 shadow-sm
+        dark:border-slate-800 dark:bg-slate-900
+      "
+    >
+      <CardContent class="p-8">
+        <div
+          class="
+            mb-4 inline-flex size-12 items-center justify-center rounded-xl
+            bg-primary/10 text-primary
+          "
+        >
+          <Icon name="visibility" class="text-2xl" />
+        </div>
+        <h2 class="
+          mb-3 text-2xl font-bold text-slate-900
+          dark:text-white
+        "
+        >
+          {content.visionTitle}
+        </h2>
+        <p class="
+          leading-relaxed text-slate-600
+          dark:text-slate-300
+        "
+        >
+          {content.visionBody}
+        </p>
+      </CardContent>
+    </Card>
+  </section>
+
+  <!-- History Timeline -->
+  <section class="space-y-10">
+    <div class="text-center">
+      <h2 class="
+        text-3xl font-extrabold text-slate-900
+        dark:text-white
+      "
+      >
+        {t("about-page.history-title")}
+      </h2>
+      <p class="
+        mt-2 text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {t("about-page.history-subtitle")}
+      </p>
+    </div>
+
+    <div class="
+      grid grid-cols-1 gap-6
+      md:grid-cols-2
+      lg:grid-cols-4
+    "
+    >
+      {
+        content.historyTimeline.map((item) => (
+          <Card class="
+            relative flex flex-col rounded-2xl border border-slate-200 bg-white
+            p-0 shadow-sm
+            dark:border-slate-800 dark:bg-slate-900
+          "
+          >
+            <CardContent class="p-6">
+              <Badge
+                variant="secondary"
+                class="
+                  mb-3 rounded-lg bg-secondary px-3 py-1 text-sm font-extrabold
+                  text-white
+                "
+              >
+                {item.year}
+              </Badge>
+              <h3 class="
+                mb-2 text-lg font-bold text-slate-900
+                dark:text-white
+              "
+              >
+                {item.title}
+              </h3>
+              <p class="
+                text-sm/relaxed text-slate-600
+                dark:text-slate-400
+              "
+              >
+                {item.description}
+              </p>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Architectural Heritage -->
+  <section
+    class="
+      rounded-3xl border border-slate-200 bg-slate-50 p-8
+      sm:p-12
+      dark:border-slate-800 dark:bg-slate-900/60
+    "
+  >
+    <div class="mb-10 text-center">
+      <h2 class="
+        text-3xl font-extrabold text-slate-900
+        dark:text-white
+      "
+      >
+        {t("about-page.architecture-title")}
+      </h2>
+      <p class="
+        mt-2 text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {t("about-page.architecture-subtitle")}
+      </p>
+      {
+        content.architectureDescription && (
+          <div class="mx-auto mt-4 max-w-3xl text-start">
+            <TiptapContent content={content.architectureDescription} />
+          </div>
+        )
+      }
+    </div>
+    <div class="
+      grid grid-cols-1 gap-8
+      md:grid-cols-3
+    "
+    >
+      {
+        content.architectureHighlights.map((arch) => (
+          <Card class="
+            rounded-2xl border-0 bg-white p-0 shadow-sm
+            dark:bg-slate-900
+          "
+          >
+            <CardContent class="p-6">
+              <div class="
+                mb-4 inline-flex size-12 items-center justify-center rounded-xl
+                bg-secondary/10 text-secondary
+                dark:bg-blue-500/20 dark:text-blue-300
+              "
+              >
+                <Icon name={arch.icon} class="text-2xl" />
+              </div>
+              <h3 class="
+                mb-2 text-lg font-bold text-slate-900
+                dark:text-white
+              "
+              >
+                {arch.title}
+              </h3>
+              <p class="
+                text-sm/relaxed text-slate-600
+                dark:text-slate-400
+              "
+              >
+                {arch.description}
+              </p>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Leadership, Imams & Mosque Staff Directory -->
+  <section class="space-y-10">
+    <div class="text-center">
+      <h2 class="
+        text-3xl font-extrabold text-slate-900
+        dark:text-white
+      "
+      >
+        {t("about-page.leadership-title")}
+      </h2>
+      <p class="
+        mt-2 text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {t("about-page.leadership-subtitle")}
+      </p>
+    </div>
+
+    <div class="
+      grid grid-cols-1 gap-8
+      md:grid-cols-2
+      lg:grid-cols-4
+    "
+    >
+      {
+        content.leaders
+          .filter((leader) => leader.showInStaffDirectory !== false)
+          .map((leader) => {
+            const profileHref
+              = leader.slug && leader.hasDedicatedPage !== false
+                ? `/${lang}/staff/${leader.slug}`
+                : undefined;
+            const categoryIcon
+              = leader.memberCategory === "imam_scholar"
+                ? "mosque"
+                : leader.memberCategory === "instructor"
+                  ? "school"
+                  : leader.memberCategory === "staff_caretaker"
+                    ? "verified_user"
+                    : "person";
+            return (
+              <Card class="
+                flex flex-col justify-between rounded-2xl border
+                border-slate-200 bg-white p-0 shadow-sm transition-shadow
+                hover:shadow-md
+                dark:border-slate-800 dark:bg-slate-900
+              "
+              >
+                <CardContent class="flex h-full flex-col justify-between p-6">
+                  <div>
+                    <div class="mb-4 flex items-center justify-between gap-2">
+                      <Avatar size="lg" variant="secondary" class="size-14">
+                        <AvatarFallback class="
+                          bg-secondary text-xl font-bold text-white
+                        "
+                        >
+                          <Icon name={categoryIcon} class="text-2xl" />
+                        </AvatarFallback>
+                      </Avatar>
+                      {leader.honorificTitle && (
+                        <Badge
+                          variant="outline"
+                          class="
+                            rounded-full border-slate-200 px-3 py-1 text-xs
+                            font-semibold text-slate-600
+                            dark:border-slate-700 dark:text-slate-300
+                          "
+                        >
+                          {leader.honorificTitle}
+                        </Badge>
+                      )}
+                    </div>
+                    <h3 class="
+                      text-xl font-bold text-slate-900
+                      dark:text-white
+                    "
+                    >
+                      {profileHref
+                        ? (
+                            <a
+                              href={profileHref}
+                              class="
+                                transition-colors
+                                hover:text-primary
+                              "
+                            >
+                              {leader.name}
+                            </a>
+                          )
+                        : (
+                            leader.name
+                          )}
+                    </h3>
+                    <p class="mt-1 text-sm font-semibold text-primary">
+                      {leader.roleTitle}
+                    </p>
+                    <p class="
+                      mt-4 text-sm/relaxed text-slate-600
+                      dark:text-slate-400
+                    "
+                    >
+                      {leader.shortSummary || leader.bio}
+                    </p>
+                  </div>
+                  <div class="mt-6">
+                    <Separator class="
+                      mb-4 bg-slate-100
+                      dark:bg-slate-800
+                    "
+                    />
+                    <div class="
+                      flex items-center justify-between gap-2 text-xs
+                      font-medium text-slate-500
+                      dark:text-slate-400
+                    "
+                    >
+                      <span>
+                        {t("about-page.languages-label")}
+                        :
+                        {leader.languagesSpoken}
+                      </span>
+                      {profileHref && (
+                        <a
+                          href={profileHref}
+                          class="
+                            inline-flex shrink-0 items-center gap-1 font-bold
+                            text-secondary
+                            hover:text-primary
+                            dark:text-blue-300
+                          "
+                        >
+                          <Icon name="arrow_forward" class="text-sm" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })
+      }
+    </div>
+  </section>
+</div>
