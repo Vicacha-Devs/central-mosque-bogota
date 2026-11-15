@@ -26,3 +26,7 @@ storybook-static/
 # Logs & Databases
 *.log
 .tmp/
+
+# Local-only
+mockups
+stories
