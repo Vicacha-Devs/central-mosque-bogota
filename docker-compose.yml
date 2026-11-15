@@ -6,11 +6,11 @@ services:
     container_name: central-mosque-postgres
     restart: unless-stopped
     env_file:
-      - ./backend/.env
+      - ./apps/backend/.env
     environment:
       POSTGRES_DB: ${DATABASE_NAME:-central_mosque_strapi}
       POSTGRES_USER: ${DATABASE_USERNAME:-mosque_app_user}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set in backend/.env}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set in apps/backend/.env}
     # Bind strictly to loopback (127.0.0.1) to prevent external exposure
     ports:
       - "127.0.0.1:5432:5432"
@@ -27,10 +27,10 @@ services:
     container_name: central-mosque-typesense
     restart: unless-stopped
     env_file:
-      - ./backend/.env
+      - ./apps/backend/.env
     environment:
       TYPESENSE_DATA_DIR: /data
-      TYPESENSE_API_KEY: ${TYPESENSE_API_KEY:?TYPESENSE_API_KEY must be set in backend/.env}
+      TYPESENSE_API_KEY: ${TYPESENSE_API_KEY:?TYPESENSE_API_KEY must be set in apps/backend/.env}
       TYPESENSE_ENABLE_CORS: "true"
     # Bind strictly to loopback (127.0.0.1) to prevent external exposure
     ports:

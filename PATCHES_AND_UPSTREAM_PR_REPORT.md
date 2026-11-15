@@ -26,7 +26,7 @@ This document catalogs every build-time Vite transform, `dist/` bundle patch, an
 ---
 
 ### Patch A2 & A3 — `strapi-5-sitemap-plugin` Missing Locale Warning & Double `/settings/settings/...` Route
-- **File**: [`backend/src/admin/vite.config.ts#L48-L61`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L48-L61)
+- **File**: [`apps/backend/src/admin/vite.config.ts#L48-L61`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L48-L61)
 - **Affected Plugin**: `strapi-5-sitemap-plugin` (`^1.0.8`)
 - **Reason**:
   1. In `admin/src/index.ts`, `registerTrads` catches missing locale files (`es`, `ar`, `tr`) and logs `console.warn('[strapi-5-sitemap-plugin] Could not load translations for locale "...":', error)` on every page load, and only ships `en.json`.
@@ -57,7 +57,7 @@ You are fixing `admin/src/index.ts` and adding `es`, `ar`, and `tr` translations
 ---
 
 ### Patch A4, A5 & A6 — `@strapi/content-manager` / `@strapi/admin` Primitive Input `attribute` DOM Leak, `useRBAC` Warning & React Router v7 Future Flags
-- **File**: [`backend/src/admin/vite.config.ts#L63-L102`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L63-L102)
+- **File**: [`apps/backend/src/admin/vite.config.ts#L63-L102`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L63-L102)
 - **Affected Packages**: `@strapi/content-manager` (`5.59.0`) & `@strapi/admin` (`5.59.0`)
 - **Reason**:
   - **Patch A4 (Why stripping `attribute` in `@strapi/admin`'s `FormInputs/Renderer.tsx` is safe and does NOT affect custom fields)**:
@@ -108,7 +108,7 @@ In the `strapi/strapi` monorepo:
 ---
 
 ### Patch B1 — `@strapi/i18n` `ai-localization-jobs` Returning `404 Not Found` When Disabled
-- **File**: [`backend/src/bootstrap/plugin-patches.ts#L28-L55`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L28-L55) & [`L300-L334`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L300-L334)
+- **File**: [`apps/backend/src/bootstrap/plugin-patches.ts#L28-L55`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L28-L55) & [`L300-L334`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L300-L334)
 - **Affected Package**: `@strapi/i18n` (`5.59.0`)
 - **Reason**: When opening any localized entry in the Content Manager, the admin UI requests `GET /i18n/ai-localization-jobs/collection-types/:model/:documentId` (or `/single-types/:model`). When AI localizations are disabled (`await aiLocalizationsService.isEnabled() === false`), the server controller calls `return ctx.notFound()`, causing the browser to log a red `404 Not Found` network error on every Edit View load.
 
@@ -153,7 +153,7 @@ In `packages/plugins/i18n/server/src/controllers/ai-localization-jobs.ts`:
 ---
 
 ### Patch B2 — `@strapi/content-manager` Field `placeholder` Localization
-- **File**: [`backend/src/bootstrap/plugin-patches.ts#L98-L212`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L98-L212)
+- **File**: [`apps/backend/src/bootstrap/plugin-patches.ts#L98-L212`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L98-L212)
 - **Affected Package**: `@strapi/content-manager` (`5.59.0`)
 - **Reason**: `@strapi/content-manager` localizes `field.label` in `FormLayout.tsx`, `FormInputs/Component/NonRepeatable.tsx`, and `FormInputs/Component/Repeatable.tsx` using `formatMessage({ id: 'content-manager.content-types.<uid>.<field>', defaultMessage: field.label })`, but passes `field.placeholder` raw without calling `formatMessage`. As a result, field placeholders configured in `metadatas.<field>.edit.placeholder` cannot be translated via admin i18n keys (`content-manager.content-types.<uid>.<field>.placeholder` and `content-manager.components.<uid>.<field>.placeholder`).
 
@@ -186,7 +186,7 @@ In `packages/core/content-manager/admin/src/pages/EditView/components`:
 ---
 
 ### Patch B3 — `strapi-plugin-preview-button` `listViewColumn` Default (`true`) & Deprecated `noBorder` Prop on `<IconButton>`
-- **File**: [`backend/src/bootstrap/plugin-patches.ts#L59-L83`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L59-L83) & [`L336-L359`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L336-L359)
+- **File**: [`apps/backend/src/bootstrap/plugin-patches.ts#L59-L83`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L59-L83) & [`L336-L359`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L336-L359)
 - **Affected Plugin**: `strapi-plugin-preview-button` (`^3.0.2`)
 - **Reason**:
   1. Per the [`strapi-plugin-preview-button` documentation](https://github.com/mattmilburn/strapi-plugin-preview-button#plugin-options), `pluginOptions['preview-button'].listViewColumn` defaults to `true`. However, `admin/src/contentManagerHooks/addPreviewColumn.tsx` checks `get(layout, ['options', PLUGIN_ID, 'listViewColumn'], false) === true`, while `server/src/index.ts` has no `bootstrap` hook to set `pluginOptions['preview-button'].listViewColumn = true` on content types configured in `plugin::preview-button.contentTypes`.
@@ -224,7 +224,7 @@ In `strapi-plugin-preview-button`:
 ---
 
 ### Patch B4 — `strapi-plugin-navigation` Excluding `plugin::*` Content Types from Shortcut Links & Dropdowns
-- **File**: [`backend/src/bootstrap/plugin-patches.ts#L215-L239`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L215-L239)
+- **File**: [`apps/backend/src/bootstrap/plugin-patches.ts#L215-L239`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L215-L239)
 - **Affected Plugin**: `strapi-plugin-navigation` (`^3.3.7`)
 - **Reason**: In `strapi-plugin-navigation`'s admin UI, the check that enables the "Go to Content Manager" shortcut link on navigation item cards and populates content-type filters checks `uid?.includes("api::")` and `["api::", ...]` exclusively. When navigation items link to plugin-provided collection types (`plugin::events.event`, `plugin::donations.campaign`, `plugin::resources.publication`, `plugin::media-feeds.media-item`), the Content Manager shortcut icon is hidden or disabled.
 
@@ -252,7 +252,7 @@ In `strapi-plugin-navigation` (`admin/src`):
 ---
 
 ### Patch C1 — `strapi-plugin-content-manager-organizer` Filtering System Plugins & Disambiguating Duplicate `singularName`s
-- **File**: [`backend/src/bootstrap/content-manager-organizer.ts#L100-L185`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/content-manager-organizer.ts#L100-L185)
+- **File**: [`apps/backend/src/bootstrap/content-manager-organizer.ts#L100-L185`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/content-manager-organizer.ts#L100-L185)
 - **Affected Plugin**: `strapi-plugin-content-manager-organizer` (`^2.0.3`)
 - **Reason**:
   1. `contentTypes.getContentTypes()` returns internal system plugin models (`plugin::i18n.locale`, `plugin::upload.file`, `plugin::upload.folder`, `plugin::navigation.*`, `plugin::content-manager-organizer.*`, `plugin::email-designer-5.*`, etc.) even when `pluginOptions['content-manager'].visible === false`.
@@ -289,16 +289,16 @@ In `strapi-plugin-content-manager-organizer`:
 Each item below corresponds to a `TODO(upstream-patch-removal)` comment added in the codebase. When an upstream package releases a fix and is upgraded in `package.json`:
 
 - [x] **Step 1 — `strapi-5-sitemap-plugin` (settings route & silent locale fallback)**:
-  - Replaced by `@vicacha-devs/strapi-plugin-sitemap`; `TODO(Patch A2)` and `TODO(Patch A3)` blocks and `strapi-5-sitemap-plugin` pattern have been removed from [`backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts).
+  - Replaced by `@vicacha-devs/strapi-plugin-sitemap`; `TODO(Patch A2)` and `TODO(Patch A3)` blocks and `strapi-5-sitemap-plugin` pattern have been removed from [`apps/backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts).
 - [ ] **Step 2 — `@strapi/admin` (`InputRenderer`, `useRBAC`, React Router v7 flags)**:
-  - Remove `TODO(Patch A4)`, `TODO(Patch A5)`, `TODO(Patch A6a)`, and `TODO(Patch A6b)` in [`backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L46-L85). Once Steps 1–2 are complete, `normalizeAdminBundlesVitePlugin` can be removed entirely from `vite.config.ts`.
+  - Remove `TODO(Patch A4)`, `TODO(Patch A5)`, `TODO(Patch A6a)`, and `TODO(Patch A6b)` in [`apps/backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L46-L85). Once Steps 1–2 are complete, `normalizeAdminBundlesVitePlugin` can be removed entirely from `vite.config.ts`.
 - [ ] **Step 3 — `@strapi/i18n` (`ai-localization-jobs` 200 `{ data: null }` when disabled)**:
-  - Remove `TODO(Patch B1a)` and `TODO(Patch B1b)` in [`backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L28-L55).
+  - Remove `TODO(Patch B1a)` and `TODO(Patch B1b)` in [`apps/backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L28-L55).
 - [ ] **Step 4 — `@strapi/content-manager` (native `field.placeholder` localization)**:
-  - Remove `TODO(Patch B2)` in [`backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L98-L212).
+  - Remove `TODO(Patch B2)` in [`apps/backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L98-L212).
 - [ ] **Step 5 — `strapi-plugin-preview-button` (`listViewColumn` default `true` & `noBorder` removal)**:
-  - Remove `TODO(Patch B3a)` and section 4 (`noBorder` dist chunk patch) in [`backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L59-L83).
+  - Remove `TODO(Patch B3a)` and section 4 (`noBorder` dist chunk patch) in [`apps/backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L59-L83).
 - [ ] **Step 6 — `strapi-plugin-navigation` (`plugin::*` Content Manager shortcut links)**:
-  - Remove `TODO(Patch B4)` in [`backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L215-L239). Once Steps 3–6 are complete, [`backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts) can be deleted completely.
+  - Remove `TODO(Patch B4)` in [`apps/backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts#L215-L239). Once Steps 3–6 are complete, [`apps/backend/src/bootstrap/plugin-patches.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/plugin-patches.ts) can be deleted completely.
 - [ ] **Step 7 — `strapi-plugin-content-manager-organizer` (hidden system plugins & duplicate `singularName` disambiguation)**:
-  - Remove `TODO(upstream-patch-removal) [Patch C1]` in [`backend/src/bootstrap/content-manager-organizer.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/content-manager-organizer.ts#L100-L185), keeping only the initial default group seed.
+  - Remove `TODO(upstream-patch-removal) [Patch C1]` in [`apps/backend/src/bootstrap/content-manager-organizer.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/bootstrap/content-manager-organizer.ts#L100-L185), keeping only the initial default group seed.

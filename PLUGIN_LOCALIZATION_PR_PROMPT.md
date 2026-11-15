@@ -4,7 +4,7 @@
 
 Here is the audit of all Strapi plugins in
 
-backend/package.json
+apps/backend/package.json
 against our 4 configured admin locales (en, es, ar, tr):
 
 1. Plugins with NO translations at all (no registerTrads)

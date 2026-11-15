@@ -8,9 +8,9 @@ Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en
 
 | Workspace | Path | Stack & Responsibilities | Default Port |
 | :--- | :--- | :--- | :--- |
-| **Frontend (`frontend`)** | [`./frontend`](./frontend/README.md) | **Astro 7 SSR** (`@astrojs/node`), Tailwind CSS v4, Starwind UI, `@sensinum/astro-strapi-loader`, `@vicacha-devs/astro-tiptap-blocks`, IslamicAPI prayer & Zakat engine, Vitest, and Storybook 10. | `http://localhost:4321` |
-| **Backend (`@central-mosque-bogota/backend`)** | [`./backend`](./backend/README.md) | **Strapi v5 Headless CMS** (`5.61.1`), SQLite (local dev) / PostgreSQL 16 (production), Cloudinary CDN, `strapi-cache` (`^1.13.0`), and 15 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions (including `tiptap-editor`, `seo`, `sitemap`, `global-search`, and `notes`). | `http://127.0.0.1:1337` |
-| **Docs (`@central-mosque-bogota/docs`)** | [`./docs`](./docs/README.md) | **Astro Starlight** bilingual (`en` + `es`) handbook with **Pele** (`https://pele.run/`) build-time SVG Mermaid diagrams, **Archify** interactive HTML explainers, and **TypeDoc** API reference generation (`<= 500 lines` per file). | `http://localhost:4322` |
+| **Frontend (`frontend`)** | [`./frontend`](./apps/frontend/README.md) | **Astro 7 SSR** (`@astrojs/node`), Tailwind CSS v4, Starwind UI, `@sensinum/astro-strapi-loader`, `@vicacha-devs/astro-tiptap-blocks`, IslamicAPI prayer & Zakat engine, Vitest, and Storybook 10. | `http://localhost:4321` |
+| **Backend (`@central-mosque-bogota/backend`)** | [`./backend`](./apps/backend/README.md) | **Strapi v5 Headless CMS** (`5.61.1`), SQLite (local dev) / PostgreSQL 16 (production), Cloudinary CDN, `strapi-cache` (`^1.13.0`), and 15 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions (including `tiptap-editor`, `seo`, `sitemap`, `global-search`, and `notes`). | `http://127.0.0.1:1337` |
+| **Docs (`@central-mosque-bogota/docs`)** | [`./docs`](./apps/docs/README.md) | **Astro Starlight** bilingual (`en` + `es`) handbook with **Pele** (`https://pele.run/`) build-time SVG Mermaid diagrams, **Archify** interactive HTML explainers, and **TypeDoc** API reference generation (`<= 500 lines` per file). | `http://localhost:4322` |
 
 ---
 
@@ -18,8 +18,8 @@ Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en
 
 ### Standalone Interactive Explainers (Archify)
 
-- **System Architecture Explorer (Dark/Light + Motion)**: [`docs/public/archify/central-mosque-architecture.html`](./docs/public/archify/central-mosque-architecture.html)
-- **One-Page Platform Explainer**: [`docs/public/archify/central-mosque-explainer.html`](./docs/public/archify/central-mosque-explainer.html)
+- **System Architecture Explorer (Dark/Light + Motion)**: [`apps/docs/public/archify/central-mosque-architecture.html`](./apps/docs/public/archify/central-mosque-architecture.html)
+- **One-Page Platform Explainer**: [`apps/docs/public/archify/central-mosque-explainer.html`](./apps/docs/public/archify/central-mosque-explainer.html)
 
 ### Bilingual Starlight Documentation (`/docs`) & Junior Learning Plan
 
@@ -27,27 +27,27 @@ Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en
 
 | Guide | English (`en`) | Español (`es`) |
 | :--- | :--- | :--- |
-| **Jr. Dev 10-Minute Executive Summary** | [`01-getting-started/jr-dev-summary.md`](./docs/src/content/docs/en/01-getting-started/jr-dev-summary.md) | [`01-getting-started/jr-dev-summary.md`](./docs/src/content/docs/es/01-getting-started/jr-dev-summary.md) |
-| **Step-by-Step Onboarding Guide** | [`01-getting-started/onboarding-guide.md`](./docs/src/content/docs/en/01-getting-started/onboarding-guide.md) | [`01-getting-started/onboarding-guide.md`](./docs/src/content/docs/es/01-getting-started/onboarding-guide.md) |
-| **4-Tier Learning Roadmap & YouTube Tutorials** | [`01-getting-started/learning-roadmap.md`](./docs/src/content/docs/en/01-getting-started/learning-roadmap.md) | [`01-getting-started/learning-roadmap.md`](./docs/src/content/docs/es/01-getting-started/learning-roadmap.md) |
-| **Environment Setup** | [`01-getting-started/environment-setup.md`](./docs/src/content/docs/en/01-getting-started/environment-setup.md) | [`01-getting-started/environment-setup.md`](./docs/src/content/docs/es/01-getting-started/environment-setup.md) |
-| **System Overview & Data Flows** | [`02-architecture/system-overview.md`](./docs/src/content/docs/en/02-architecture/system-overview.md) | [`02-architecture/system-overview.md`](./docs/src/content/docs/es/02-architecture/system-overview.md) |
-| **System Architecture ADRs (001–012)** | [`02-architecture/adrs.md`](./docs/src/content/docs/en/02-architecture/adrs.md) | [`02-architecture/adrs.md`](./docs/src/content/docs/es/02-architecture/adrs.md) |
-| **Verification TODO Checklist** | [`05-quality-and-verification/verification-todo-checklist.md`](./docs/src/content/docs/en/05-quality-and-verification/verification-todo-checklist.md) | [`05-quality-and-verification/verification-todo-checklist.md`](./docs/src/content/docs/es/05-quality-and-verification/verification-todo-checklist.md) |
-| **Mosque Staff Strapi v5 Handbook** | [`06-editorial-guide/cms-editor-handbook.md`](./docs/src/content/docs/en/06-editorial-guide/cms-editor-handbook.md) | [`06-editorial-guide/cms-editor-handbook.md`](./docs/src/content/docs/es/06-editorial-guide/cms-editor-handbook.md) |
+| **Jr. Dev 10-Minute Executive Summary** | [`01-getting-started/jr-dev-summary.md`](./apps/docs/src/content/docs/en/01-getting-started/jr-dev-summary.md) | [`01-getting-started/jr-dev-summary.md`](./apps/docs/src/content/docs/es/01-getting-started/jr-dev-summary.md) |
+| **Step-by-Step Onboarding Guide** | [`01-getting-started/onboarding-guide.md`](./apps/docs/src/content/docs/en/01-getting-started/onboarding-guide.md) | [`01-getting-started/onboarding-guide.md`](./apps/docs/src/content/docs/es/01-getting-started/onboarding-guide.md) |
+| **4-Tier Learning Roadmap & YouTube Tutorials** | [`01-getting-started/learning-roadmap.md`](./apps/docs/src/content/docs/en/01-getting-started/learning-roadmap.md) | [`01-getting-started/learning-roadmap.md`](./apps/docs/src/content/docs/es/01-getting-started/learning-roadmap.md) |
+| **Environment Setup** | [`01-getting-started/environment-setup.md`](./apps/docs/src/content/docs/en/01-getting-started/environment-setup.md) | [`01-getting-started/environment-setup.md`](./apps/docs/src/content/docs/es/01-getting-started/environment-setup.md) |
+| **System Overview & Data Flows** | [`02-architecture/system-overview.md`](./apps/docs/src/content/docs/en/02-architecture/system-overview.md) | [`02-architecture/system-overview.md`](./apps/docs/src/content/docs/es/02-architecture/system-overview.md) |
+| **System Architecture ADRs (001–012)** | [`02-architecture/adrs.md`](./apps/docs/src/content/docs/en/02-architecture/adrs.md) | [`02-architecture/adrs.md`](./apps/docs/src/content/docs/es/02-architecture/adrs.md) |
+| **Verification TODO Checklist** | [`05-quality-and-verification/verification-todo-checklist.md`](./apps/docs/src/content/docs/en/05-quality-and-verification/verification-todo-checklist.md) | [`05-quality-and-verification/verification-todo-checklist.md`](./apps/docs/src/content/docs/es/05-quality-and-verification/verification-todo-checklist.md) |
+| **Mosque Staff Strapi v5 Handbook** | [`06-editorial-guide/cms-editor-handbook.md`](./apps/docs/src/content/docs/en/06-editorial-guide/cms-editor-handbook.md) | [`06-editorial-guide/cms-editor-handbook.md`](./apps/docs/src/content/docs/es/06-editorial-guide/cms-editor-handbook.md) |
 
 ---
 
 ## Core Platform Capabilities
 
 1. **Offline-First Resilient Content Layer**:
-   - Every Strapi v5 collection and single-type loader in [`frontend/src/services/strapi/loader.ts`](./frontend/src/services/strapi/loader.ts) and [`frontend/src/services/strapi/api.ts`](./frontend/src/services/strapi/api.ts) automatically falls back to deterministic 4-locale mocks in [`frontend/src/utils/`](./frontend/src/utils/) when Strapi is offline.
+   - Every Strapi v5 collection and single-type loader in [`apps/frontend/src/services/strapi/loader.ts`](./apps/frontend/src/services/strapi/loader.ts) and [`apps/frontend/src/services/strapi/api.ts`](./apps/frontend/src/services/strapi/api.ts) automatically falls back to deterministic 4-locale mocks in [`apps/frontend/src/utils/`](./apps/frontend/src/utils/) when Strapi is offline.
 2. **4-Locale & Native RTL Support (`es`, `en`, `ar`, `tr`)**:
    - Full UI dictionary parity, localized route slugs, and logical CSS layout properties (`ps-*`, `pe-*`, `ms-*`, `me-*`, `text-start`) with automatic `dir="rtl"` rendering for Arabic (`ar`).
 3. **Zero-`set:html` Rich Text Rendering**:
-   - Rich text content authored in `@vicacha-devs/strapi-plugin-tiptap-editor` is sanitized and rendered through native Astro components via `@vicacha-devs/astro-tiptap-blocks` ([`TiptapContent.astro`](./frontend/src/components/data/display/TiptapContent/TiptapContent.astro)).
+   - Rich text content authored in `@vicacha-devs/strapi-plugin-tiptap-editor` is sanitized and rendered through native Astro components via `@vicacha-devs/astro-tiptap-blocks` ([`TiptapContent.astro`](./apps/frontend/src/components/data/display/TiptapContent/TiptapContent.astro)).
 4. **Islamic Prayer Engine, Qibla & Zakat Calculator**:
-   - Real-time Bogotá prayer schedule calculation, Hijri calendar conversions, Qibla bearing & observances, and live Zakat Nisab gold/silver thresholds via [`frontend/src/services/islamicAPI/`](./frontend/src/services/islamicAPI/).
+   - Real-time Bogotá prayer schedule calculation, Hijri calendar conversions, Qibla bearing & observances, and live Zakat Nisab gold/silver thresholds via [`apps/frontend/src/services/islamicAPI/`](./apps/frontend/src/services/islamicAPI/).
 5. **Astro SSR BFF Endpoints (`/api/*`)**:
    - Unified form submissions proxy (`POST /api/submissions`) for contact messages, guided visit bookings, and donation pledges, plus `GET /api/prayer-calendar.ics`, `GET /api/events/feed.ics`, `GET /api/media-feeds/rss.xml`, and `GET /api/resources/publications/[slug]/download`.
 
@@ -67,7 +67,7 @@ pnpm --filter frontend install
 pnpm run dev:frontend
 ```
 
-Accessible at `http://localhost:4321` (automatically uses 4-locale domain mocks in `frontend/src/utils/*-mocks.ts` when Strapi is not running).
+Accessible at `http://localhost:4321` (automatically uses 4-locale domain mocks in `apps/frontend/src/utils/*-mocks.ts` when Strapi is not running).
 
 ### 2. Start the Strapi v5 Backend (`/backend`)
 
@@ -99,7 +99,7 @@ pnpm run verify
 ```
 
 Executes [`scripts/verify-all.ts`](./scripts/verify-all.ts), which enforces:
-1. All documentation files in `docs/src/content/docs/` are `<= 500 lines`.
+1. All documentation files in `apps/docs/src/content/docs/` are `<= 500 lines`.
 2. `oxfmt --check` formatting gate.
 3. `eslint . --quiet` static analysis gate.
 4. `astro check` TypeScript & Astro template diagnostics.

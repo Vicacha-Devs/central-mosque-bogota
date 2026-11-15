@@ -43,7 +43,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Validate PR title with Commitlint
-        working-directory: ./frontend
+        working-directory: ./apps/frontend
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: echo "$PR_TITLE" | npx commitlint --config ./commitlint.config.ts

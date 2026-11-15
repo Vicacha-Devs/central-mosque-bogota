@@ -11,8 +11,8 @@ Use the steps below if you need to file a minimal reproduction for standard `But
 ## 1. Project Metadata to Include
 
 - **Framework / Styling:** Astro + Tailwind CSS v4
-- **Installed Starwind `button` version** (from `frontend/starwind.config.json`): `2.3.2`
-- **Relevant theme values** (from `frontend/src/styles/global.css`):
+- **Installed Starwind `button` version** (from `apps/frontend/starwind.config.json`): `2.3.2`
+- **Relevant theme values** (from `apps/frontend/src/styles/global.css`):
 
 ```css
 :root {

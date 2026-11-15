@@ -14,12 +14,12 @@ body:
       label: Affected Workspace / Area
       description: Which part of the monorepo is affected?
       options:
-        - "Frontend — Astro 6 SSR / UI Components (frontend/)"
+        - "Frontend — Astro 6 SSR / UI Components (apps/frontend/)"
         - "Frontend — BFF API Routes (/api/*)"
         - "Frontend — Islamic APIs (Prayer Times, Quran, Hadith, Hijri, Ramadan)"
         - "Frontend — Internationalization (es, en, ar, tr) or RTL Layout"
-        - "Backend — Strapi v5 CMS & Custom Plugins (backend/)"
-        - "Documentation — Astro Starlight Portal (docs/)"
+        - "Backend — Strapi v5 CMS & Custom Plugins (apps/backend/)"
+        - "Documentation — Astro Starlight Portal (apps/docs/)"
         - "Docker / CI / Build Tooling"
     validations:
       required: true
