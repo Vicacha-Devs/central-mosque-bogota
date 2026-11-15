@@ -11,10 +11,12 @@ type Props = HTMLAttributes<"div"> & {
 const { keepMounted, value, class: className, ...rest } = Astro.props;
 ---
 
+{/* TODO: drop role="tabpanel" once Starwind renders it server-side, see https://github.com/starwind-ui/starwind-ui/issues/297 */}
 <TabsPrimitive.Panel
   class={tabsContent({ class: className })}
   keepMounted={keepMounted}
   value={value}
+  role="tabpanel"
   {...rest}
   data-slot="tabs-content"
 >

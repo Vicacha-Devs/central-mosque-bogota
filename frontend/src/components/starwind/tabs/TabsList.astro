@@ -11,10 +11,12 @@ type Props = HTMLAttributes<"div"> & {
 const { activateOnFocus, loopFocus, class: className, ...rest } = Astro.props;
 ---
 
+{/* TODO: drop role="tablist" once Starwind renders it server-side, see https://github.com/starwind-ui/starwind-ui/issues/297 */}
 <TabsPrimitive.List
   class={tabsList({ class: className })}
   activateOnFocus={activateOnFocus}
   loopFocus={loopFocus}
+  role="tablist"
   {...rest}
   data-slot="tabs-list"
 >

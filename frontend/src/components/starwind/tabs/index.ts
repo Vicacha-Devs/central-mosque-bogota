@@ -18,6 +18,8 @@ const TabsParts = {
   Content: TabsContent,
 };
 
-export { Tabs, TabsContent, TabsList, TabsTrigger, TabsVariants };
+export {
+  Tabs, TabsContent, TabsList, TabsTrigger, TabsVariants,
+};
 
 export default TabsParts;
