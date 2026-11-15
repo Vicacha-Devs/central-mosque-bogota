@@ -26,6 +26,7 @@
       "@vicacha-devs/strapi-plugin-bookings": "file:../strapi-v5-extensions/packages/strapi-plugin-bookings",
       "@vicacha-devs/strapi-plugin-calendar": "file:../strapi-v5-extensions/packages/strapi-plugin-calendar",
       "@vicacha-devs/strapi-plugin-certificates": "file:../strapi-v5-extensions/packages/strapi-plugin-certificates",
+      "@opentelemetry/api": "~1.9.0",
       "better-sqlite3": "^13.0.3"
     },
     "onlyBuiltDependencies": [
@@ -36,6 +37,9 @@
       "esbuild",
       "sharp",
       "unrs-resolver"
+    ],
+    "ignoredBuiltDependencies": [
+      "protobufjs"
     ],
     "peerDependencyRules": {
       "ignoreMissing": [

@@ -288,8 +288,8 @@ In `strapi-plugin-content-manager-organizer`:
 
 Each item below corresponds to a `TODO(upstream-patch-removal)` comment added in the codebase. When an upstream package releases a fix and is upgraded in `package.json`:
 
-- [ ] **Step 1 — `strapi-5-sitemap-plugin` (settings route & silent locale fallback)**:
-  - Remove the `TODO(Patch A2)` and `TODO(Patch A3)` blocks in [`backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L31-L44) and remove `strapi-5-sitemap-plugin` from `ADMIN_BUNDLE_PATCH_PATTERN`.
+- [x] **Step 1 — `strapi-5-sitemap-plugin` (settings route & silent locale fallback)**:
+  - Replaced by `@vicacha-devs/strapi-plugin-sitemap`; `TODO(Patch A2)` and `TODO(Patch A3)` blocks and `strapi-5-sitemap-plugin` pattern have been removed from [`backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts).
 - [ ] **Step 2 — `@strapi/admin` (`InputRenderer`, `useRBAC`, React Router v7 flags)**:
   - Remove `TODO(Patch A4)`, `TODO(Patch A5)`, `TODO(Patch A6a)`, and `TODO(Patch A6b)` in [`backend/src/admin/vite.config.ts`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/admin/vite.config.ts#L46-L85). Once Steps 1–2 are complete, `normalizeAdminBundlesVitePlugin` can be removed entirely from `vite.config.ts`.
 - [ ] **Step 3 — `@strapi/i18n` (`ai-localization-jobs` 200 `{ data: null }` when disabled)**:

@@ -2,8 +2,8 @@
 
 Welcome! This roadmap is designed to take junior developers from **foundational TypeScript & monorepo tooling** to **shipping production features** across our full ecosystem:
 - **[`central-mosque-bogota`](./README.md)**: Astro 7 SSR Frontend (`frontend/`), Strapi v5 Headless CMS (`backend/`), and Bilingual Astro Starlight + TypeDoc Docs (`docs/`).
-- **[`strapi-v5-extensions`](../strapi-v5-extensions/README.md)**: Turborepo + `pnpm` workspace monorepo containing our 10 custom `@vicacha-devs/strapi-plugin-*` packages (`calendar`, `events`, `bookings`, `islam`, `donations`, `certificates`, `inbox`, `broadcasts`, `media-feeds`, `resources`) and `@notum-cz/strapi-plugin-seo`.
-- **Companion Packages**: [`@vicacha-devs/astro-tiptap-blocks`](../astro-tiptap-blocks), [`@notum-cz/strapi-plugin-tiptap-editor`](../strapi-plugin-tiptap-editor), and [`strapi-global-search`](../strapi-global-search).
+- **[`strapi-v5-extensions`](../strapi-v5-extensions/README.md)**: Turborepo + `pnpm` workspace monorepo containing all 15 `@vicacha-devs/strapi-plugin-*` packages (`calendar`, `events`, `bookings`, `islam`, `donations`, `certificates`, `inbox`, `broadcasts`, `media-feeds`, `resources`, `notes`, `seo`, `sitemap`, `global-search`, `tiptap-editor`).
+- **Companion Packages**: [`@vicacha-devs/astro-tiptap-blocks`](../astro-tiptap-blocks).
 
 ---
 
