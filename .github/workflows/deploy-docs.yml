@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - "docs/**"
-      - "frontend/src/**"
+      - "apps/docs/**"
+      - "apps/frontend/src/**"
       - "docker-compose.yml"
-      - "frontend/Dockerfile"
-      - "backend/Dockerfile"
+      - "apps/frontend/Dockerfile"
+      - "apps/backend/Dockerfile"
       - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
@@ -69,7 +69,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs/dist
+          path: ./apps/docs/dist
 
   deploy-docs:
     name: Deploy Docs to GitHub Pages

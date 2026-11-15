@@ -47,6 +47,6 @@ body:
       options:
         - label: "Requires 4-locale translations (es, en, ar, tr) and RTL support"
         - label: "Requires Strapi v5 content-type schema or @vicacha-devs/* plugin changes"
-        - label: "Requires offline mock fallback data in frontend/src/utils/*-mocks.ts"
+        - label: "Requires offline mock fallback data in apps/frontend/src/utils/*-mocks.ts"
         - label: "Requires new BFF endpoint with Zod validation and rate limiting"
         - label: "Requires Storybook stories and Vitest / Playwright test coverage"

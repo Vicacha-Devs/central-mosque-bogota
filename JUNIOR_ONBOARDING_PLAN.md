@@ -1,7 +1,7 @@
 # Junior Developer Learning Roadmap & Hands-On Training Plan
 
 Welcome! This roadmap is designed to take junior developers from **foundational TypeScript & monorepo tooling** to **shipping production features** across our full ecosystem:
-- **[`central-mosque-bogota`](./README.md)**: Astro 7 SSR Frontend (`frontend/`), Strapi v5 Headless CMS (`backend/`), and Bilingual Astro Starlight + TypeDoc Docs (`docs/`).
+- **[`central-mosque-bogota`](./README.md)**: Astro 7 SSR Frontend (`apps/frontend/`), Strapi v5 Headless CMS (`apps/backend/`), and Bilingual Astro Starlight + TypeDoc Docs (`apps/docs/`).
 - **[`strapi-v5-extensions`](../strapi-v5-extensions/README.md)**: Turborepo + `pnpm` workspace monorepo containing all 15 `@vicacha-devs/strapi-plugin-*` packages (`calendar`, `events`, `bookings`, `islam`, `donations`, `certificates`, `inbox`, `broadcasts`, `media-feeds`, `resources`, `notes`, `seo`, `sitemap`, `global-search`, `tiptap-editor`).
 - **Companion Packages**: [`@vicacha-devs/astro-tiptap-blocks`](../astro-tiptap-blocks).
 
@@ -27,7 +27,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 2. **80-Column Line Width & Automated Formatting**:
    - In `central-mosque-bogota/frontend`, `oxfmt` (`.oxfmtrc.json`) and ESLint enforce an **80-character line width**. Always run `./node_modules/.bin/oxfmt` before committing.
 3. **Multilingual i18n & Arabic RTL Parity**:
-   - **Frontend (`es`, `en`, `ar`, `tr`)**: Every UI key added to `frontend/src/i18n/locales/es.ts` must also be added to `en.ts`, `ar.ts`, and `tr.ts`.
+   - **Frontend (`es`, `en`, `ar`, `tr`)**: Every UI key added to `apps/frontend/src/i18n/locales/es.ts` must also be added to `en.ts`, `ar.ts`, and `tr.ts`.
    - **Logical CSS Properties Only**: Use Tailwind v4 logical utilities (`ps-*`, `pe-*`, `ms-*`, `me-*`, `start-*`, `end-*`, `text-start`, `border-s-*`) instead of `pl-*`/`pr-*`/`ml-*`/`mr-*` so Arabic (`dir="rtl"`) mirrors automatically.
    - **Strapi Plugins**: Maintain 10-locale translation parity in `admin/src/translations/*.json` (verified by each plugin's `services-and-i18n.test.ts`).
 4. **Zero `set:html` / `innerHTML` for Untrusted Data**:
@@ -60,7 +60,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 
 ### Tier 1 Hands-On Graduation PR Challenge
 - Clone all repositories into `/Projects/experiments/`, boot the frontend in offline mock mode (`pnpm dev:frontend`), boot the Starlight docs (`pnpm dev:docs`), and run `pnpm verify`.
-- **Deliverable PR**: Add a pure TypeScript utility function (with strict types and edge-case handling) in `frontend/src/utils/` accompanied by a Vitest unit test file (`*.test.ts`) achieving 100% branch coverage.
+- **Deliverable PR**: Add a pure TypeScript utility function (with strict types and edge-case handling) in `apps/frontend/src/utils/` accompanied by a Vitest unit test file (`*.test.ts`) achieving 100% branch coverage.
 
 ---
 
@@ -78,13 +78,13 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 | **Vitest, Happy DOM & Testing Library** | **Midudev** — [Testing en JavaScript y TypeScript con Vitest](https://www.youtube.com/@midudev/search?query=vitest) | **Net Ninja** — [Vitest Crash Course / Unit Testing](https://www.youtube.com/@NetNinja/search?query=vitest) |
 
 ### Codebase Reading List (Tier 2)
-1. `frontend/src/pages/[lang]/index.astro` & `frontend/src/pages/[lang]/events/index.astro` — See how localized SSR routes resolve `lang`, load CMS/mock data, and render components.
-2. `frontend/src/i18n/ui.ts` & `frontend/src/i18n/locales/{es,en,ar,tr}.ts` — Study how `useTranslations(lang)` and `useTranslatedPath(lang)` work.
-3. `frontend/src/components/data/display/` — Inspect how `.astro` markup pairs with a dedicated `*.controller.ts` script, `*.stories.ts` (Storybook 10), and `*.test.ts` (`renderAstroComponentToDom`).
+1. `apps/frontend/src/pages/[lang]/index.astro` & `apps/frontend/src/pages/[lang]/events/index.astro` — See how localized SSR routes resolve `lang`, load CMS/mock data, and render components.
+2. `apps/frontend/src/i18n/ui.ts` & `apps/frontend/src/i18n/locales/{es,en,ar,tr}.ts` — Study how `useTranslations(lang)` and `useTranslatedPath(lang)` work.
+3. `apps/frontend/src/components/data/display/` — Inspect how `.astro` markup pairs with a dedicated `*.controller.ts` script, `*.stories.ts` (Storybook 10), and `*.test.ts` (`renderAstroComponentToDom`).
 4. `astro-tiptap-blocks/src/` — Understand how `<TiptapContent />` safely renders Strapi Tiptap JSON/HTML without `set:html` XSS risks.
 
 ### Tier 2 Hands-On Graduation PR Challenge
-- **Deliverable PR**: Build or enhance a UI component in `frontend/src/components/` that:
+- **Deliverable PR**: Build or enhance a UI component in `apps/frontend/src/components/` that:
   1. Uses Tailwind v4 logical properties (`ps-*`, `pe-*`, `start-*`, `end-*`) so it renders properly in both LTR (`es`, `en`, `tr`) and RTL (`ar`).
   2. Includes translations across all 4 locale dictionaries (`es.ts`, `en.ts`, `ar.ts`, `tr.ts`).
   3. Ships with a `.stories.ts` file (verified in Storybook `http://localhost:6006` with 0 `a11y` violations) and a `.test.ts` file using `renderAstroComponentToDom`.
@@ -93,7 +93,7 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 
 ## Tier 3: Backend & Headless CMS (Strapi v5, Document Service API, i18n & Resilient Loaders)
 
-**Goal**: Understand Strapi v5's Content-Types, Components, Document Service API (`strapi.documents(uid)`), 4-locale i18n (`es`, `en`, `ar`, `tr`), first-boot seeding (`backend/src/index.ts`), `strapi-cache`, and how the Astro frontend consumes Strapi with automatic offline mock fallbacks.
+**Goal**: Understand Strapi v5's Content-Types, Components, Document Service API (`strapi.documents(uid)`), 4-locale i18n (`es`, `en`, `ar`, `tr`), first-boot seeding (`apps/backend/src/index.ts`), `strapi-cache`, and how the Astro frontend consumes Strapi with automatic offline mock fallbacks.
 
 ### Curated YouTube Tutorials (Spanish & English)
 
@@ -104,15 +104,15 @@ Every Pull Request across `central-mosque-bogota` and `strapi-v5-extensions` is 
 | **Astro + Strapi Integration (`astro-strapi-loader`)** | **Midudev** — [Conectar Astro con Strapi Headless CMS](https://www.youtube.com/watch?v=W4brAobC2Hc) | **Paul Bratslavsky (Coding After Thirty / Strapi)** — [Build a Website with Astro & Strapi 5](https://www.youtube.com/@CodingAfterThirty/search?query=astro%20strapi%205) |
 
 ### Codebase Reading List (Tier 3)
-1. `backend/src/api/` — Inspect the 17 Content-Type schemas (`schema.json`) such as `event`, `article`, `service`, `donation-campaign`, `visit-booking`, and `prayer-setting`.
-2. `backend/config/plugins.ts` — Review how all Strapi v5 plugins (`i18n`, `strapi-cache` v1.13.0, `typesense`, `seo`, `tiptap-editor`, and our 10 `@vicacha-devs/*` plugins) are configured.
-3. `backend/src/index.ts` — Study how `bootstrap()` provisions locales (`es`, `en`, `ar`, `tr`), sets public permissions, and seeds initial bilingual/multilingual records.
-4. `frontend/src/services/strapi/api.ts`, `loader.ts`, & `frontend/src/utils/localized-mocks.ts` — Trace how the frontend queries Strapi v5 and falls back to offline mocks when Strapi is unreachable.
+1. `apps/backend/src/api/` — Inspect the 17 Content-Type schemas (`schema.json`) such as `event`, `article`, `service`, `donation-campaign`, `visit-booking`, and `prayer-setting`.
+2. `apps/backend/config/plugins.ts` — Review how all Strapi v5 plugins (`i18n`, `strapi-cache` v1.13.0, `typesense`, `seo`, `tiptap-editor`, and our 10 `@vicacha-devs/*` plugins) are configured.
+3. `apps/backend/src/index.ts` — Study how `bootstrap()` provisions locales (`es`, `en`, `ar`, `tr`), sets public permissions, and seeds initial bilingual/multilingual records.
+4. `apps/frontend/src/services/strapi/api.ts`, `loader.ts`, & `apps/frontend/src/utils/localized-mocks.ts` — Trace how the frontend queries Strapi v5 and falls back to offline mocks when Strapi is unreachable.
 
 ### Tier 3 Hands-On Graduation PR Challenge
 - **Deliverable PR**:
-  1. Add or extend a field on a Strapi Content-Type in `backend/src/api/`, update the seed data in `backend/src/index.ts`, and add a backend test in `backend/tests/`.
-  2. Map the field in `frontend/src/services/strapi/mappers.ts`, provide 4-locale offline fallback data in `frontend/src/utils/localized-mocks.ts`, and display it on an Astro page with a unit test.
+  1. Add or extend a field on a Strapi Content-Type in `apps/backend/src/api/`, update the seed data in `apps/backend/src/index.ts`, and add a backend test in `apps/backend/tests/`.
+  2. Map the field in `apps/frontend/src/services/strapi/mappers.ts`, provide 4-locale offline fallback data in `apps/frontend/src/utils/localized-mocks.ts`, and display it on an Astro page with a unit test.
 
 ---
 

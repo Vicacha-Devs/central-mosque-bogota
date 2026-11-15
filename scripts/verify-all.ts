@@ -16,9 +16,9 @@ interface VerificationStep {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
-const frontendDir = path.join(rootDir, "frontend");
-const backendDir = path.join(rootDir, "backend");
-const docsDir = path.join(rootDir, "docs");
+const frontendDir = path.join(rootDir, "apps/frontend");
+const backendDir = path.join(rootDir, "apps/backend");
+const docsDir = path.join(rootDir, "apps/docs");
 const docsContentDir = path.join(docsDir, "src/content/docs");
 const MAX_DOC_LINES = 500;
 

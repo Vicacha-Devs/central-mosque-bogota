@@ -12,7 +12,7 @@
 # Allowed <type> values (lowercase):
 #   feat     - New user-facing feature, route, component, or Strapi collection
 #   fix      - Bug fix (SSR, UI, i18n, RTL, API fallback, or CMS schema)
-#   docs     - Documentation updates (docs/ Astro Starlight, README, CLAUDE.md)
+#   docs     - Documentation updates (apps/docs/ Astro Starlight, README, CLAUDE.md)
 #   style    - Formatting, Tailwind tokens, CSS logical properties (no logic change)
 #   refactor - Code restructuring without changing external behavior
 #   perf     - Performance optimization (caching, image optimization, bundle size)

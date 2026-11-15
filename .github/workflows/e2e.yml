@@ -39,16 +39,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright Chromium browser
-        if: ${{ hashFiles('frontend/e2e/**') != '' }}
-        working-directory: ./frontend
+        if: ${{ hashFiles('apps/frontend/e2e/**') != '' }}
+        working-directory: ./apps/frontend
         run: npx playwright install --with-deps chromium
 
       - name: Build Astro SSR Frontend
         run: pnpm build:frontend
 
       - name: Run Playwright E2E tests
-        if: ${{ hashFiles('frontend/e2e/**') != '' }}
-        working-directory: ./frontend
+        if: ${{ hashFiles('apps/frontend/e2e/**') != '' }}
+        working-directory: ./apps/frontend
         run: npx playwright test
 
       - name: Upload Playwright HTML Report
@@ -56,6 +56,6 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: frontend/playwright-report/
+          path: apps/frontend/playwright-report/
           retention-days: 14
           if-no-files-found: ignore

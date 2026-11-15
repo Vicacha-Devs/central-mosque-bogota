@@ -1,4 +1,4 @@
 packages:
-  - "frontend"
-  - "backend"
-  - "docs"
+  - "apps/frontend"
+  - "apps/backend"
+  - "apps/docs"
