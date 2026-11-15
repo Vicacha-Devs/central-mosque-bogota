@@ -1,0 +1,52 @@
+name: Feature Request
+description: Propose a new community feature, Islamic resource, CMS collection, or UX enhancement
+title: "[Feat]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a new feature or enhancement for the **Central Mosque of Bogotá** digital platform.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      options:
+        - "Community Service (Bookings, Certificates, Donations, Inboxes)"
+        - "Islamic Knowledge & Worship (Prayer Times, Ramadan, Quran, Hadith, Khutbahs)"
+        - "Frontend UI / UX / Accessibility (WCAG 2.2 AA)"
+        - "Internationalization (es, en, ar, tr) & RTL Support"
+        - "Strapi v5 Backend / Content Modeling"
+        - "Developer Experience, Testing, or Documentation"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement / Community Need
+      description: What user or community need does this feature address?
+      placeholder: "As a community member / visitor / mosque administrator, I want to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe how the feature should work across Frontend (Astro), Backend (Strapi v5), and Offline Fallbacks.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Architectural Considerations
+      description: Check all areas that this feature will require updating.
+      options:
+        - label: "Requires 4-locale translations (es, en, ar, tr) and RTL support"
+        - label: "Requires Strapi v5 content-type schema or @vicacha-devs/* plugin changes"
+        - label: "Requires offline mock fallback data in frontend/src/utils/*-mocks.ts"
+        - label: "Requires new BFF endpoint with Zod validation and rate limiting"
+        - label: "Requires Storybook stories and Vitest / Playwright test coverage"
