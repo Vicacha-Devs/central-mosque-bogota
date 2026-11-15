@@ -348,6 +348,9 @@ importers:
       oxfmt:
         specifier: 0.57.0
         version: 0.57.0
+      remark-gfm:
+        specifier: 4.0.1
+        version: 4.0.1
       storybook:
         specifier: 10.6.5
         version: 10.6.5(@types/react@18.3.31)(prettier@3.9.10)(react@18.3.1)
