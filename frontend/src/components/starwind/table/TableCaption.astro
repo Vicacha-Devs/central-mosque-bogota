@@ -1,13 +1,13 @@
 ---
-import { tableCaption } from "./variants";
 import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
 
-type Props = HTMLAttributes<"caption"> & VariantProps<typeof tableCaption>;
+import { tableCaption } from "./variants";
+
+type Props = HTMLAttributes<"caption">;
 
 const { class: className, ...rest } = Astro.props;
 ---
 
-<caption class={tableCaption({ class: className })} {...rest} data-slot="table-caption">
+<caption {...rest} class={tableCaption({ class: className })} data-slot="table-caption">
   <slot />
 </caption>

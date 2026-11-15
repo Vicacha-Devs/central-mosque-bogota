@@ -1,95 +1,58 @@
+// TODO(https://github.com/starwind-ui/starwind-ui/issues/283): Local RTL-safe logical CSS utilities pending upstream full RTL release.
 import { tv } from "tailwind-variants";
 
-export const dropdown = tv({ base: "starwind-dropdown relative" });
+export const dropdown = tv({
+  base: "relative",
+});
 
-export const dropdownSub = tv({ base: "starwind-dropdown-sub relative" });
+export const dropdownCheckboxItem = tv({
+  base: [
+    "data-highlighted:bg-accent data-highlighted:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pe-8 ps-2 transition-colors outline-none select-none",
+    "data-disabled:pointer-events-none data-disabled:opacity-50",
+    "group/dropdown-item [&>svg]:size-4 [&>svg]:shrink-0",
+  ],
+  variants: {
+    inset: {
+      true: "ps-8",
+    },
+    disabled: {
+      true: "pointer-events-none opacity-50",
+    },
+  },
+  defaultVariants: {
+    inset: false,
+    disabled: false,
+  },
+});
 
-export const dropdownTriggerWrapper = tv({ base: "starwind-dropdown-trigger" });
+export const dropdownCheckboxItemIndicator = tv({
+  base: [
+    "pointer-events-none absolute end-2 flex size-4 items-center justify-center opacity-0 transition-opacity",
+    "data-[state=checked]:opacity-100 data-visible:opacity-100 data-hidden:opacity-0",
+    "[&>svg]:size-4 [&>svg]:shrink-0",
+  ],
+});
 
 export const dropdownContent = tv({
   base: [
-    "starwind-dropdown-content",
-    `
-      z-50 min-w-36 overflow-x-hidden overflow-y-auto rounded-md border
-      bg-popover p-1 text-popover-foreground shadow-md
-    `,
-    `
-      zoom-in-95 fade-in
-      data-[state=open]:animate-in
-    `,
-    `
-      zoom-out-95 fade-out
-      data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards
-    `,
-    "absolute will-change-transform",
+    "bg-popover text-popover-foreground z-50 min-w-[9rem] overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md",
+    "data-[state=open]:animate-in fade-in zoom-in-95 outline-none",
+    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out zoom-out-95",
+    "data-[side=bottom]:slide-in-from-top-2 data-[side=bottom]:slide-out-to-top-2 data-[side=top]:slide-in-from-bottom-2 data-[side=top]:slide-out-to-bottom-2",
+    "data-[side=right]:slide-in-from-left-2 data-[side=right]:slide-out-to-left-2 data-[side=left]:slide-in-from-right-2 data-[side=left]:slide-out-to-right-2",
+    "origin-(--transform-origin) pointer-events-auto fixed isolate will-change-transform",
   ],
-  variants: {
-    side: {
-      bottom: "top-full slide-in-from-top-2 slide-out-to-top-2",
-      top: "bottom-full slide-in-from-bottom-2 slide-out-to-bottom-2",
-      right: "top-0 left-full slide-in-from-left-2 slide-out-to-left-2",
-      left: "top-0 right-full slide-in-from-right-2 slide-out-to-right-2",
-    },
-    align: {
-      start: "",
-      center: "",
-      end: "",
-    },
-  },
-  compoundVariants: [
-    {
-      side: ["top", "bottom"],
-      align: "start",
-      class: "left-0 slide-in-from-left-1 slide-out-to-left-1",
-    },
-    {
-      side: ["top", "bottom"],
-      align: "center",
-      class: "left-1/2 -translate-x-1/2",
-    },
-    {
-      side: ["top", "bottom"],
-      align: "end",
-      class: "right-0 slide-in-from-right-1 slide-out-to-right-1",
-    },
-    {
-      side: ["left", "right"],
-      align: "start",
-      class: "top-0",
-    },
-    {
-      side: ["left", "right"],
-      align: "center",
-      class: "top-1/2 -translate-y-1/2",
-    },
-    {
-      side: ["left", "right"],
-      align: "end",
-      class: "bottom-0",
-    },
-  ],
-  defaultVariants: {
-    side: "bottom",
-    align: "start",
-  },
 });
 
 export const dropdownItem = tv({
   base: [
-    `
-      relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5
-      transition-colors outline-none select-none
-      focus:bg-accent focus:text-accent-foreground
-    `,
+    "data-highlighted:bg-accent data-highlighted:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 transition-colors outline-none select-none",
     "data-disabled:pointer-events-none data-disabled:opacity-50",
-    `
-      group/dropdown-item
-      [&>svg]:size-4 [&>svg]:shrink-0
-    `,
+    "group/dropdown-item [&>svg]:size-4 [&>svg]:shrink-0",
   ],
   variants: {
     inset: {
-      true: "pl-8",
+      true: "ps-8",
     },
     disabled: {
       true: "pointer-events-none opacity-50",
@@ -102,10 +65,12 @@ export const dropdownItem = tv({
 });
 
 export const dropdownLabel = tv({
-  base: ["px-2 py-1.5 text-sm font-medium text-muted-foreground"],
+  base: [
+    "text-muted-foreground px-2 py-1.5 text-sm font-medium",
+  ],
   variants: {
     inset: {
-      true: "pl-8",
+      true: "ps-8",
     },
   },
   defaultVariants: {
@@ -113,18 +78,52 @@ export const dropdownLabel = tv({
   },
 });
 
+export const dropdownRadioGroup = tv({
+  base: "",
+});
+
+export const dropdownRadioItem = tv({
+  base: [
+    "data-highlighted:bg-accent data-highlighted:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pe-8 ps-2 transition-colors outline-none select-none",
+    "data-disabled:pointer-events-none data-disabled:opacity-50",
+    "group/dropdown-item [&>svg]:size-4 [&>svg]:shrink-0",
+  ],
+  variants: {
+    inset: {
+      true: "ps-8",
+    },
+    disabled: {
+      true: "pointer-events-none opacity-50",
+    },
+  },
+  defaultVariants: {
+    inset: false,
+    disabled: false,
+  },
+});
+
+export const dropdownRadioItemIndicator = tv({
+  base: [
+    "pointer-events-none absolute end-2 flex size-4 items-center justify-center opacity-0 transition-opacity",
+    "data-[state=checked]:opacity-100 data-visible:opacity-100 data-hidden:opacity-0",
+    "[&>svg]:size-4 [&>svg]:shrink-0",
+  ],
+});
+
 export const dropdownSeparator = tv({
-  base: "-mx-1 my-1 h-px bg-border",
+  base: "bg-border -mx-1 my-1 h-px",
+});
+
+export const dropdownShortcut = tv({
+  base: [
+    "group-data-highlighted/dropdown-item:text-accent-foreground group-focus/dropdown-item:text-accent-foreground group-hover/dropdown-item:text-accent-foreground text-muted-foreground ms-auto text-sm tracking-widest transition-colors",
+  ],
 });
 
 export const dropdownTrigger = tv({
   base: [
-    "starwind-dropdown-trigger",
     "inline-flex items-center justify-center",
-    `
-      transition-[color,box-shadow] outline-none
-      focus-visible:ring-3 focus-visible:ring-outline/50
-    `,
+    "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3",
     "disabled:pointer-events-none",
   ],
 });

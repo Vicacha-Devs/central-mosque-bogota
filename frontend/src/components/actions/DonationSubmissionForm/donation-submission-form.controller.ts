@@ -1,3 +1,5 @@
+import { bindJsonFormSubmission } from "@utils/form-submission.utils";
+
 const initializedForms = new WeakSet<HTMLFormElement>();
 const initializedButtons = new WeakSet<HTMLElement>();
 
@@ -78,59 +80,30 @@ export function initDonationSubmissionForm(): void {
   if (!form || !statusEl || initializedForms.has(form)) return;
   initializedForms.add(form);
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const payload: Record<string, unknown> = {
-      formType: "donation",
-      locale: form.getAttribute("data-locale") ?? "es",
-    };
-    formData.forEach((value, key) => {
-      payload[key] = value;
-    });
-
-    statusEl.classList.remove(
-      "hidden",
-      "bg-red-100",
-      "text-red-800",
-      "bg-emerald-100",
-      "text-emerald-800"
-    );
-    statusEl.classList.add("bg-slate-100", "text-slate-800");
-    statusEl.textContent =
-      form.getAttribute("data-submitting-text") ?? "Submitting...";
-
-    void (async () => {
-      try {
-        const res = await fetch("/api/submissions", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const body = (await res.json().catch(() => ({}))) as {
-          referenceCode?: string;
-        };
-
-        if (res.ok) {
-          statusEl.classList.remove("bg-slate-100", "text-slate-800");
-          statusEl.classList.add("bg-emerald-100", "text-emerald-800");
-          const baseMsg =
-            form.getAttribute("data-success-text") ?? "Registered!";
-          statusEl.textContent = body.referenceCode
-            ? `${baseMsg} ${body.referenceCode}`
-            : baseMsg;
-          form.reset();
-        } else {
-          statusEl.classList.remove("bg-slate-100", "text-slate-800");
-          statusEl.classList.add("bg-red-100", "text-red-800");
-          statusEl.textContent =
-            form.getAttribute("data-error-text") ?? "Error";
-        }
-      } catch {
-        statusEl.classList.remove("bg-slate-100", "text-slate-800");
-        statusEl.classList.add("bg-red-100", "text-red-800");
-        statusEl.textContent = form.getAttribute("data-error-text") ?? "Error";
-      }
-    })();
+  bindJsonFormSubmission({
+    form,
+    statusEl,
+    buildPayload: (formData, currentForm) => {
+      const payload: Record<string, unknown> = {
+        formType: "donation",
+        locale: currentForm.getAttribute("data-locale") ?? "es",
+      };
+      formData.forEach((value, key) => {
+        payload[key] = value;
+      });
+      return payload;
+    },
+    getMessages: (currentForm) => ({
+      sending:
+        currentForm.getAttribute("data-submitting-text") ?? "Submitting...",
+      error: currentForm.getAttribute("data-error-text") ?? "Error",
+      formatSuccess: (body) => {
+        const baseMsg =
+          currentForm.getAttribute("data-success-text") ?? "Registered!";
+        return body.referenceCode
+          ? `${baseMsg} ${body.referenceCode}`
+          : baseMsg;
+      },
+    }),
   });
 }

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/starwind/card";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
 import type { TPublicChannelItem } from "@utils/inbox-mocks";
+import { toSafeHref } from "@utils/url.utils";
 
 /**
  * @component BroadcastChannelCard
@@ -101,7 +102,7 @@ const desc = ch.localizedDescriptions?.[lang] || "";
     </p>
   </CardContent>
   <Button
-    href={ch.inviteUrl}
+    href={toSafeHref(ch.inviteUrl)}
     target="_blank"
     rel="noopener noreferrer"
     variant="secondary"

@@ -1,113 +1,141 @@
 ---
 import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import Icon from "@components/data/display/Icons/Icon.astro";
 import { Image } from "astro:assets";
 
-/**
- * @component HeroHijri
- * @description Full-bleed hero banner that displays a background image, Hijri date, current date, and a supporting phrase.
- *
- * Required props:
- * - `imageUrl`: Background image URL.
- * - `imageAlt`: Accessible image description for the background.
- * - `hijriDate`: Hijri date string to highlight (also used as the main heading).
- * - `currentDate`: Current (Gregorian) date string.
- * - `phrase`: Supporting text shown under the heading.
- *
- * Layout notes:
- * - Uses a "full-bleed" technique (`w-screen` + `inset-x-1/2 -mx-[50vw]`) so it spans the entire viewport even inside a centered container.
- *
- * @usage
- *
- * ```astro
- * ---
- * import HeroHijri from '@components/layout/HeroHijri.astro'
- * ---
- *
- * <HeroHijri
- *   imageUrl="https://example.com/mosque.jpg"
- *   imageAlt="Beautiful Mosque Architecture"
- *   hijriDate="Ramadán 1445 H"
- *   currentDate="10 Mar 2026"
- *   phrase="Unidos en oración y comunidad. Bienvenidos al corazón de la espiritualidad islámica en Bogotá."
- * />
- * ```
- */
-interface Props {
-  /**
-   * Background image URL.
-   */
+type Props = {
+  /** Background image URL. */
   imageUrl: string;
-  /**
-   * Accessible description for the background image.
-   */
+  /** Accessible description for the background image. */
   imageAlt: string;
-  /**
-   * Hijri date label shown as the hero title.
-   */
+  /** Editorial hero headline. Falls back to `hijriDate` if omitted. */
+  title?: string;
+  /** Hijri date label shown in the metadata pill. */
   hijriDate: string;
-  /**
-   * Gregorian date label shown next to the Hijri date.
-   */
+  /** Gregorian date label shown next to the Hijri date. */
   currentDate: string;
-  /**
-   * Supporting sentence shown under the dates.
-   */
+  /** Supporting sentence shown under the headline. */
   phrase: string;
-}
+  /** Optional primary CTA label (e.g. Plan Your Visit). */
+  primaryCtaLabel?: string;
+  /** Optional primary CTA href. */
+  primaryCtaHref?: string;
+  /** Optional secondary CTA label (e.g. Prayer Times). */
+  secondaryCtaLabel?: string;
+  /** Optional secondary CTA href. */
+  secondaryCtaHref?: string;
+};
 
-const { imageUrl, imageAlt, hijriDate, currentDate, phrase }
-  = Astro.props as Props;
+const {
+  imageUrl,
+  imageAlt,
+  title,
+  hijriDate,
+  currentDate,
+  phrase,
+  primaryCtaLabel,
+  primaryCtaHref,
+  secondaryCtaLabel,
+  secondaryCtaHref,
+} = Astro.props as Props;
+
+const headingText = title ?? hijriDate;
 ---
 
 <section
   class="
-    relative inset-x-1/2 mx-[-50vw] flex h-[600px] w-screen items-center
-    overflow-hidden
+    relative flex min-h-[540px] w-full items-center overflow-hidden
+    lg:min-h-[600px]
   "
 >
   <Image
     src={imageUrl}
     alt={imageAlt}
     class="absolute inset-0 size-full object-cover"
-    priority={true}
+    fetchpriority="high"
+    loading="eager"
     layout="constrained"
-    width={512}
-    height={512}
+    width={1600}
+    height={900}
   />
   <div class="hero-overlay absolute inset-0"></div>
   <div
     class="
-      relative mx-auto w-full max-w-7xl px-4 text-center
-      lg:px-8
+      relative mx-auto w-full max-w-5xl px-4 pt-16 pb-24 text-center
+      sm:px-6 sm:pb-28
+      lg:px-8 lg:pb-32
     "
   >
     <h1
       class="
-        mb-6 text-5xl font-extrabold text-white drop-shadow-lg
-        lg:text-7xl
+        mx-auto mb-5 max-w-4xl text-4xl/tight font-extrabold tracking-tight
+        text-white drop-shadow-lg
+        sm:text-5xl/tight
+        lg:text-6xl/tight
       "
     >
-      {hijriDate}
+      {headingText}
     </h1>
     <Badge
       variant="outline"
       class="
         mx-auto mb-6 inline-flex flex-wrap items-center justify-center gap-x-3
-        gap-y-2 rounded-full border border-white/15 bg-white/10 px-5 py-2
-        text-sm text-white/90 backdrop-blur-sm
+        gap-y-1.5 rounded-full border border-white/20 bg-white/10 px-5 py-2
+        text-sm text-white/95 backdrop-blur-sm
       "
     >
       <span class="font-semibold tracking-wide">{hijriDate}</span>
-      <span class="text-white/50">•</span>
-      <span class="font-medium">{currentDate}</span>
+      <span class="text-white/60" aria-hidden="true">•</span>
+      <time class="font-medium tabular-nums">{currentDate}</time>
     </Badge>
     <p
       class="
-        mx-auto max-w-xl text-lg font-medium text-white/90
-        lg:text-xl
+        mx-auto max-w-2xl text-lg/relaxed font-medium text-white/95
+        lg:text-xl/relaxed
       "
     >
       {phrase}
     </p>
+    {
+      (primaryCtaHref || secondaryCtaHref) && (
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          {
+            primaryCtaHref && primaryCtaLabel && (
+              <Button
+                href={primaryCtaHref}
+                variant="primary"
+                size="lg"
+                class="rounded-full px-7 shadow-lg"
+              >
+                <span>{primaryCtaLabel}</span>
+                <Icon name="arrow_forward" class="text-base rtl:-scale-x-100" />
+              </Button>
+            )
+          }
+          {
+            secondaryCtaHref && secondaryCtaLabel && (
+              /* TODO(https://github.com/starwind-ui/starwind-ui/issues/278): Starwind's outline variant uses
+                 --outline (#212e80 in light mode) for focus-visible; keep focus treatments coordinated with
+                 the dark hero surface until upstream contrast handling is resolved. */
+              <Button
+                href={secondaryCtaHref}
+                variant="outline"
+                size="lg"
+                class="
+                  rounded-full border-white/35 bg-white/10 px-7 text-white
+                  backdrop-blur-sm
+                  hover:bg-white/20 hover:text-white
+                  focus-visible:border-white focus-visible:ring-white/50
+                "
+              >
+                <Icon name="schedule" class="text-base" />
+                <span>{secondaryCtaLabel}</span>
+              </Button>
+            )
+          }
+        </div>
+      )
+    }
   </div>
 </section>

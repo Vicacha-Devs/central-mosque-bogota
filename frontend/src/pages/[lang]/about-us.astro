@@ -59,5 +59,23 @@ const pageContent = {
     Institutional Mission, Vision, History Timeline, Architectural Heritage &
     Leadership Directory
   -->
-  <AboutInstitutionalSections lang={lang} content={pageContent} />
+  <AboutInstitutionalSections
+    lang={lang}
+    content={{
+      ...pageContent,
+      leaders: pageContent.leaders.map((leader) => ({
+        ...leader,
+        slug: leader.slug ?? "",
+        honorificTitle: leader.honorificTitle ?? "",
+        memberCategory: leader.memberCategory ?? "",
+        shortSummary: leader.shortSummary ?? "",
+        credentials: leader.credentials ?? "",
+        officeHours: leader.officeHours ?? "",
+        showInStaffDirectory: leader.showInStaffDirectory ?? false,
+        hasDedicatedPage: leader.hasDedicatedPage ?? false,
+        isAuthor: leader.isAuthor ?? false,
+        isKhateeb: leader.isKhateeb ?? false,
+      })),
+    }}
+  />
 </Layout>

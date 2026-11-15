@@ -36,13 +36,11 @@ describe("AboutInstitutionalSections", () => {
       expect(getByText(root, content.leaders[0].roleTitle)).toBeInTheDocument();
       expect(getByText(root, "Hajj Ibrahim Al-Khatib")).toBeInTheDocument();
       const profileLink = root.querySelector(
-        // eslint-disable-next-line @stylistic/quotes
-        'a[href="/en/staff/sheikh-ahmad-al-mansoor"]'
+        "a[href=\"/en/staff/sheikh-ahmad-al-mansoor\"]"
       );
       expect(profileLink).not.toBeNull();
       const caretakerLink = root.querySelector(
-        // eslint-disable-next-line @stylistic/quotes
-        'a[href="/en/staff/hajj-ibrahim-al-khatib"]'
+        "a[href=\"/en/staff/hajj-ibrahim-al-khatib\"]"
       );
       expect(caretakerLink).not.toBeNull();
     } finally {

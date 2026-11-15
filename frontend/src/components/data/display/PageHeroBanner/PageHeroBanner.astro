@@ -12,10 +12,13 @@ interface Props {
 const { badgeIcon, badgeLabel, title, subtitle } = Astro.props;
 ---
 
+{/* TODO(https://github.com/starwind-ui/starwind-ui/issues/278): Scope .dark tokens on this bg-secondary
+    banner so slotted Starwind components (e.g. outline/ghost Button) do not inherit light-mode
+    bg-background / --outline (#212e80) against text-white. */}
 <section
   class="
-    relative overflow-hidden rounded-3xl bg-secondary px-6 py-16 text-center
-    text-white shadow-xl
+    dark relative overflow-hidden rounded-3xl bg-secondary px-6 py-16
+    text-center text-white shadow-xl
     sm:px-12
   "
   data-testid="page-hero-banner"

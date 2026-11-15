@@ -1,15 +1,23 @@
 ---
-import type { ComponentProps } from "astro/types";
+import SheetPrimitive from "@starwind-ui/astro/drawer";
+import type { HTMLAttributes } from "astro/types";
 
-import { DialogTrigger } from "@/components/starwind/dialog";
+type Props = HTMLAttributes<"button"> & {
+  asChild?: boolean;
+  targetId?: string;
+};
 
-import { sheetTrigger } from "./variants";
+const { asChild = false, targetId, class: className, ...rest } = Astro.props;
 
-type Props = ComponentProps<typeof DialogTrigger>;
-
-const { class: className, ...rest } = Astro.props;
+const triggerClassName = className;
 ---
 
-<DialogTrigger class={sheetTrigger({ class: className })} {...rest}>
+<SheetPrimitive.Trigger
+  asChild={asChild}
+  class={triggerClassName}
+  targetId={targetId}
+  {...rest}
+  data-slot="sheet-trigger"
+>
   <slot />
-</DialogTrigger>
+</SheetPrimitive.Trigger>

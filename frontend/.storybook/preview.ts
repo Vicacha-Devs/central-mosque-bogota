@@ -1,8 +1,13 @@
-import { definePreview, type AstroRenderer } from "@storybook-astro/framework";
+import {
+  definePreview,
+  type AstroRenderer,
+} from "@storybook-astro/framework";
 import { decorators as astroDocsDecorators } from "@storybook-astro/renderer/entry-preview-docs";
 import addonA11y from "@storybook/addon-a11y";
 import addonDocs from "@storybook/addon-docs";
-import addonThemes, { withThemeByDataAttribute } from "@storybook/addon-themes";
+import addonThemes, {
+  withThemeByDataAttribute,
+} from "@storybook/addon-themes";
 import {
   DOCS_RENDERED,
   GLOBALS_UPDATED,
@@ -14,12 +19,11 @@ import { addons } from "storybook/preview-api";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
 
 import { CUSTOM_VIEW_PORTS } from "./constants";
-import { websiteThemeLight } from "./theme";
 
 import "@/styles/global.css";
-import "./docs.css";
 
 const REGISTER_THEMES_EVENT = "storybook/themes/REGISTER_THEMES";
+let currentTheme = "light";
 
 type GlobalsPayload = {
   globals?: {
@@ -30,31 +34,22 @@ type GlobalsPayload = {
 const applyDocumentTheme = (themeName?: string): void => {
   if (typeof document === "undefined") return;
   const resolved = themeName === "dark" ? "dark" : "light";
+  currentTheme = resolved;
   document.documentElement.setAttribute("data-theme", resolved);
   document.documentElement.classList.toggle("dark", resolved === "dark");
   document.body.setAttribute("data-theme", resolved);
 };
 
-// Mirrors the <body> classes set in src/layouts/Layout.astro
-const BODY_CLASSES = [
-  "bg-background",
-  "font-display",
-  "text-slate-900",
-  "transition-colors",
-  "duration-300",
-  "dark:text-slate-100",
-];
-
 if (typeof document !== "undefined") {
-  document.body.classList.add(...BODY_CLASSES);
-  applyDocumentTheme("light");
+  applyDocumentTheme(currentTheme);
   try {
     const channel = addons.getChannel();
     const syncChannelTheme = (payload?: GlobalsPayload): void => {
       const nextTheme = payload?.globals?.theme;
-      // Render events carry no globals; the DOM already holds the theme.
       if (typeof nextTheme === "string" && nextTheme) {
         applyDocumentTheme(nextTheme);
+      } else {
+        applyDocumentTheme(currentTheme);
       }
       channel.emit(REGISTER_THEMES_EVENT, {
         defaultTheme: "light",
@@ -76,6 +71,13 @@ if (typeof document !== "undefined") {
   }
 }
 
+const figmaUrl =
+  typeof process !== "undefined" ? process.env.STORYBOOK_FIGMA_URL : undefined;
+const figmaToken =
+  typeof process !== "undefined"
+    ? process.env.STORYBOOK_FIGMA_ACCESS_TOKEN
+    : undefined;
+
 export default definePreview({
   addons: [addonA11y(), addonDocs(), addonThemes()],
   initialGlobals: {
@@ -93,8 +95,21 @@ export default definePreview({
     }),
   ],
   parameters: {
-    // The theme toggle owns the canvas color; a second background switch only conflicts with it.
-    backgrounds: { disable: true },
+    ...(figmaUrl
+      ? {
+          design: figmaToken
+            ? {
+                type: "figspec",
+                url: figmaUrl,
+                accessToken: figmaToken,
+              }
+            : {
+                type: "link",
+                url: figmaUrl,
+                label: "Abrir diseño en Figma",
+              },
+        }
+      : {}),
     controls: {
       expanded: true,
       matchers: {
@@ -103,7 +118,6 @@ export default definePreview({
       },
     },
     docs: {
-      theme: websiteThemeLight,
       codePanel: true,
       toc: true,
       source: {
@@ -112,6 +126,9 @@ export default definePreview({
     },
     viewport: {
       options: { ...CUSTOM_VIEW_PORTS, ...INITIAL_VIEWPORTS },
+    },
+    a11y: {
+      test: "todo",
     },
   },
   tags: ["autodocs"],

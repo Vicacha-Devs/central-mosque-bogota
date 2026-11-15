@@ -40,8 +40,16 @@ export function initFooterNewsletter(root: ParentNode = document): void {
   if (form.getAttribute("data-newsletter-bound") === "true") return;
   form.setAttribute("data-newsletter-bound", "true");
 
+  const submitBtn = form.querySelector<HTMLButtonElement>(
+    "button[type=\"submit\"], button:not([type])"
+  );
+  let isSubmitting = false;
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    if (isSubmitting || submitBtn?.disabled) return;
+    isSubmitting = true;
+
     const fd = new FormData(form);
     const email = getFormStr(fd, "email");
     const website = getFormStr(fd, "website");
@@ -53,6 +61,11 @@ export function initFooterNewsletter(root: ParentNode = document): void {
     const invalidMsg =
       form.getAttribute("data-invalid-msg") ?? fallback.invalid;
     const errorMsg = form.getAttribute("data-error-msg") ?? fallback.error;
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.setAttribute("aria-busy", "true");
+    }
 
     statusEl.classList.remove("hidden", "text-red-300");
     statusEl.classList.add("text-emerald-300");
@@ -80,6 +93,12 @@ export function initFooterNewsletter(root: ParentNode = document): void {
       } catch {
         statusEl.classList.replace("text-emerald-300", "text-red-300");
         statusEl.textContent = errorMsg;
+      } finally {
+        isSubmitting = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.removeAttribute("aria-busy");
+        }
       }
     })();
   });

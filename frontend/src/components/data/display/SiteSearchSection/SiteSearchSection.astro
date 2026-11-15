@@ -8,6 +8,7 @@ import {
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { toSafeHref } from "@utils/url.utils";
 
 /**
  * @component SiteSearchSection
@@ -123,7 +124,7 @@ const filterTabs = [
     {
       items.map((item) => (
         <a
-          href={item.href}
+          href={toSafeHref(item.href)}
           data-search-item
           data-search-category={item.category}
           data-search-text={`${item.title} ${item.description} ${item.categoryLabel}`.toLowerCase()}
@@ -196,10 +197,8 @@ const filterTabs = [
 </section>
 
 <script>
-
   import { initSiteSearch } from "./site-search.controller";
 
   initSiteSearch();
   document.addEventListener("astro:after-swap", () => initSiteSearch());
-
 </script>

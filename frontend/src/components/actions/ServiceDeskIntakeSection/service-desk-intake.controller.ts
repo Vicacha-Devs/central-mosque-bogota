@@ -1,3 +1,5 @@
+import { bindJsonFormSubmission } from "@utils/form-submission.utils";
+
 const initializedForms = new WeakSet<HTMLFormElement>();
 
 export function initServiceDeskIntake(): void {
@@ -49,50 +51,28 @@ export function initServiceDeskIntake(): void {
     );
   });
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const payload: Record<string, unknown> = {
-      formType: "service_desk",
-      locale: form.getAttribute("data-locale") ?? "es",
-    };
-    fd.forEach((v, k) => {
-      payload[k] = v;
-    });
-
-    statusEl.className =
-      "rounded-xl px-4 py-2.5 text-sm font-semibold bg-slate-100 text-slate-800";
-    statusEl.textContent = form.getAttribute("data-sending") ?? "Enviando...";
-
-    void (async () => {
-      try {
-        const res = await fetch("/api/submissions", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const json = (await res.json()) as {
-          ok?: boolean;
-          referenceCode?: string;
-        };
-        if (res.ok && json.ok) {
-          statusEl.className =
-            "rounded-xl px-4 py-2.5 text-sm font-semibold bg-emerald-100 text-emerald-800";
-          const prefix =
-            form.getAttribute("data-success-prefix") ?? "Radicado:";
-          const refCode = json.referenceCode ?? "";
-          statusEl.textContent = `${prefix} ${refCode}`;
-          form.reset();
-        } else {
-          statusEl.className =
-            "rounded-xl px-4 py-2.5 text-sm font-semibold bg-red-100 text-red-800";
-          statusEl.textContent = form.getAttribute("data-error") ?? "Error";
-        }
-      } catch {
-        statusEl.className =
-          "rounded-xl px-4 py-2.5 text-sm font-semibold bg-red-100 text-red-800";
-        statusEl.textContent = form.getAttribute("data-error") ?? "Error";
-      }
-    })();
+  bindJsonFormSubmission({
+    form,
+    statusEl,
+    buildPayload: (fd, currentForm) => {
+      const payload: Record<string, unknown> = {
+        formType: "service_desk",
+        locale: currentForm.getAttribute("data-locale") ?? "es",
+      };
+      fd.forEach((v, k) => {
+        payload[k] = v;
+      });
+      return payload;
+    },
+    getMessages: (currentForm) => ({
+      sending: currentForm.getAttribute("data-sending") ?? "Enviando...",
+      error: currentForm.getAttribute("data-error") ?? "Error",
+      formatSuccess: (json) => {
+        const prefix =
+          currentForm.getAttribute("data-success-prefix") ?? "Radicado:";
+        const refCode = json.referenceCode ?? "";
+        return `${prefix} ${refCode}`;
+      },
+    }),
   });
 }

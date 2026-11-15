@@ -21,10 +21,10 @@ export const languages = {
  * `code` must match a supported locale key and is used to build locale-prefixed URLs.
  */
 export const localeFlags = [
-  { code: "ar", flag: "🇸🇦" },
-  { code: "es", flag: "🇪🇸" },
-  { code: "en", flag: "🇺🇸" },
-  { code: "tr", flag: "🇹🇷" },
+  { code: "ar", flag: "AR" },
+  { code: "es", flag: "ES" },
+  { code: "en", flag: "EN" },
+  { code: "tr", flag: "TR" },
 ] as const;
 
 /**

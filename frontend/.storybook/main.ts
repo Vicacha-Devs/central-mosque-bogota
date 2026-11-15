@@ -1,5 +1,4 @@
 import { defineMain } from "@storybook-astro/framework/node";
-import remarkGfm from "remark-gfm";
 // import path from "node:path";
 
 /*
@@ -11,17 +10,11 @@ const dirname =
 
 export default defineMain({
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  staticDirs: ["../public"],
   addons: [
     "@storybook/addon-a11y",
     "@storybook/addon-designs",
-    {
-      name: "@storybook/addon-docs",
-      options: {
-        mdxPluginOptions: {
-          mdxCompileOptions: { remarkPlugins: [remarkGfm] },
-        },
-      },
-    },
+    "@storybook/addon-docs",
     "@storybook/addon-themes",
     "@storybook/addon-vitest",
     "storybook-addon-rtl",
@@ -29,9 +22,6 @@ export default defineMain({
   ],
   framework: {
     name: "@storybook-astro/framework",
-  },
-  core: {
-    disableTelemetry: true,
   },
   viteFinal: (config) => {
     config.optimizeDeps ??= {};

@@ -123,7 +123,9 @@ describe("download-pdf.controller", () => {
     const btnNan = root.querySelector<HTMLButtonElement>("#btn-nan");
 
     btnMissing?.click();
-    expect(alertMock).toHaveBeenCalledWith("Target element not found");
+    expect(btnMissing?.getAttribute("data-error")).toBe(
+      "Target element not found"
+    );
 
     btnValid?.click();
     await new Promise((resolve) => setTimeout(resolve, 120));
@@ -142,7 +144,7 @@ describe("download-pdf.controller", () => {
     btnNan?.click();
     await new Promise((resolve) => setTimeout(resolve, 30));
     expect(errorSpy).toHaveBeenCalled();
-    expect(alertMock).toHaveBeenCalledWith(
+    expect(btnNan?.getAttribute("data-error")).toBe(
       "Failed to generate PDF. Please try again."
     );
 

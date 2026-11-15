@@ -14,10 +14,10 @@ import { getLocalizedMocks } from "@utils/data.mocks";
 
 import "@styles/global.css";
 
-interface Props {
+type Props = {
   title?: string;
   description?: string;
-}
+};
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -63,6 +63,8 @@ const navLinks = globalSetting?.navLinks ?? localizedMocks.navLinks;
 const rightsText = globalSetting?.rightsText ?? localizedMocks.rightsText;
 const socialNetworkLinks
   = globalSetting?.socialNetworkLinks ?? localizedMocks.socialNetworkLinks;
+const cspNonce = Astro.locals.cspNonce;
+const hasHeroSlot = Astro.slots.has("hero");
 ---
 
 <!doctype html>
@@ -70,7 +72,8 @@ const socialNetworkLinks
 <html lang={lang} dir={dir}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -91,31 +94,20 @@ const socialNetworkLinks
     <Font cssVariable="--font-display" />
     <Font cssVariable="--font-sans" />
     <Font cssVariable="--font-symbols" preload />
+    <Font cssVariable="--font-arabic" />
+    <Font cssVariable="--font-arabic-serif" />
 
-    <script is:inline>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      function applyResolvedTheme(resolved) {
+    <script is:inline nonce={cspNonce}>
+      function applyResolvedTheme(resolved, setting) {
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
+        const meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) {
+          meta.setAttribute(
+            "content",
+            setting === "system" ? "light dark" : resolved,
+          );
+        }
       }
 
       function initTheme() {
@@ -134,24 +126,27 @@ const socialNetworkLinks
                 : "dark"
               : setting;
 
-          applyResolvedTheme(resolved);
+          applyResolvedTheme(resolved, setting);
           localStorage.setItem("colorTheme", setting);
           localStorage.setItem("theme", setting);
 
-          const mql = window.matchMedia("(prefers-color-scheme: dark)");
-          const handleSystemChange = () => {
-            const current =
-              localStorage.getItem("colorTheme") ||
-              localStorage.getItem("theme");
-            if (current !== "system") return;
-            applyResolvedTheme(mql.matches ? "dark" : "light");
-          };
-          mql.addEventListener("change", handleSystemChange);
+          if (!window.__themeMqlBound) {
+            window.__themeMqlBound = true;
+            const mql = window.matchMedia("(prefers-color-scheme: dark)");
+            const handleSystemChange = () => {
+              const current =
+                localStorage.getItem("colorTheme") ||
+                localStorage.getItem("theme");
+              if (current !== "system") return;
+              applyResolvedTheme(mql.matches ? "dark" : "light", "system");
+            };
+            mql.addEventListener("change", handleSystemChange);
+          }
         } catch {
           const prefersDark = window.matchMedia(
             "(prefers-color-scheme: dark)",
           ).matches;
-          applyResolvedTheme(prefersDark ? "dark" : "light");
+          applyResolvedTheme(prefersDark ? "dark" : "light", "system");
         }
       }
 
@@ -160,48 +155,55 @@ const socialNetworkLinks
       document.addEventListener("theme:change", (e) => {
         const next = e?.detail?.theme;
         if (next === "dark" || next === "light") {
-          applyResolvedTheme(next);
+          applyResolvedTheme(next, next);
           try {
+            localStorage.setItem("colorTheme", next);
             localStorage.setItem("theme", next);
           } catch {}
         }
       });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
+    </script>
   </head>
   <body
     class="
-      bg-background font-display text-slate-900 transition-colors duration-300
-      dark:text-slate-100
+      bg-background font-sans text-foreground transition-colors duration-300
     "
   >
-    <UrgentAlertBanner lang={lang} />
-    <Header lang={lang} navLinks={navLinks} />
-    <main
+    <a
+      href="#main-content"
       class="
-        mx-auto my-20 flex max-w-7xl flex-col gap-20 px-4
-        sm:px-6
-        lg:px-8
+        sr-only
+        focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100]
+        focus:rounded-xl focus:bg-secondary focus:px-4 focus:py-2.5 focus:text-sm
+        focus:font-semibold focus:text-white focus:shadow-lg
       "
+    >
+      {
+        lang === "ar"
+          ? "انتقل إلى المحتوى"
+          : lang === "en"
+            ? "Skip to content"
+            : lang === "tr"
+              ? "İçeriğe geç"
+              : "Ir al contenido principal"
+      }
+    </a>
+    <div class="sticky top-0 z-50">
+      <UrgentAlertBanner lang={lang} />
+      <Header lang={lang} navLinks={navLinks} />
+    </div>
+    <slot name="hero" />
+    <main
+      id="main-content"
+      tabindex="-1"
+      class:list={[
+        `
+          mx-auto mb-12 flex max-w-7xl flex-col gap-20 px-4 outline-none
+          sm:px-6
+          lg:mb-16 lg:px-8
+        `,
+        !hasHeroSlot && "mt-12 lg:mt-16",
+      ]}
     >
       <slot />
     </main>
@@ -217,50 +219,10 @@ const socialNetworkLinks
 </html>
 
 <style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   html,
   body {
     margin: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>

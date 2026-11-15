@@ -53,6 +53,8 @@ export const es = {
   "download.preparing": "Preparando...",
   "download.error": "Error al descargar PDF. Por favor, intenta de nuevo.",
   "header.search": "Buscar",
+  "header.open-menu": "Abrir menú",
+  "header.close-menu": "Cerrar menú",
   "daily-dua.trigger": "Leer Súplica del Día",
   "daily-dua.copy": "Copiar Súplica",
   "daily-dua.copied": "¡Copiada!",
@@ -329,8 +331,7 @@ export const es = {
   "islam-suite.asmaOfDayLabel": "Nombre de Allah del Día",
   "islam-suite.reflectionLabel": "Reflexión espiritual",
   "islam-suite.takeawayLabel": "Enseñanza práctica",
-  "islam-suite.listenRecitationLabel":
-    "Escuchar recitación (Mishari Rashid al-`Afasy)",
+  "islam-suite.listenRecitationLabel": "Escuchar recitación (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Reiniciar",
   "islam-suite.tasbihIncrementLabel": "Contar Dhikr (+1)",
   "islam-suite.tasbihCompletedLabel": "¡Meta alcanzada! Alhamdulillah",
@@ -437,9 +438,9 @@ export const es = {
   "resources-hub.galleriesTitle":
     "Galerías Fotográficas de la Mezquita y la Comunidad",
   "resources-hub.galleriesSubtitle":
-    "Álbumes sincronizados automáticamente desde carpetas de Strapi v5 Media Library (plugin::upload.folder) con optimización Cloudinary.",
+    "Recorridos visuales por nuestra arquitectura, celebraciones comunitarias y encuentros culturales en Bogotá.",
   "resources-hub.photosCountLabel": "fotos",
-  "resources-hub.mediaFolderLabel": "Carpeta Media Library",
+  "resources-hub.mediaFolderLabel": "Colección",
   "nav.about-us": "Nosotros",
   "nav.islam": "Islam",
   "nav.prayer": "Oración",

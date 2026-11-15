@@ -100,31 +100,32 @@ const buildLangHref = (targetLang: TLang): string =>
   >
     {
       localeFlags.map(({ code, flag }) => (
-        <DropdownItem
-          as="a"
-          href={buildLangHref(code)}
-          class="
-            flex cursor-pointer items-center gap-3 px-4 py-2 text-sm
-            font-semibold text-slate-700 transition-colors
-            hover:bg-slate-200
-            focus-visible:bg-slate-50
-            motion-reduce:cursor-default
-            dark:text-slate-200
-            dark:hover:bg-white/20
-            dark:focus-visible:bg-slate-800
-          "
-          aria-current={code === currentLang ? "page" : undefined}
-        >
-          <span
+        <DropdownItem class="p-0">
+          <a
+            href={buildLangHref(code)}
             class="
-              flex h-4 w-5 shrink-0 items-center justify-center rounded-sm
-              bg-slate-200 text-[10px]
-              dark:bg-slate-700
+              flex w-full cursor-pointer items-center gap-3 px-4 py-2 text-sm
+              font-semibold text-slate-700 transition-colors
+              hover:bg-slate-200
+              focus-visible:bg-slate-50
+              motion-reduce:cursor-default
+              dark:text-slate-200
+              dark:hover:bg-white/20
+              dark:focus-visible:bg-slate-800
             "
+            aria-current={code === currentLang ? "page" : undefined}
           >
-            {flag}
-          </span>
-          <span>{languages[code]}</span>
+            <span
+              class="
+                flex h-5 w-7 shrink-0 items-center justify-center rounded-sm
+                bg-slate-200 text-xs font-bold tracking-wider
+                dark:bg-slate-700
+              "
+            >
+              {flag}
+            </span>
+            <span>{languages[code]}</span>
+          </a>
         </DropdownItem>
       ))
     }

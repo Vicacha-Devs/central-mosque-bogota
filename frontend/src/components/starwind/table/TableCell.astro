@@ -1,13 +1,13 @@
 ---
-import { tableCell } from "./variants";
 import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
 
-type Props = HTMLAttributes<"td"> & VariantProps<typeof tableCell>;
+import { tableCell } from "./variants";
+
+type Props = HTMLAttributes<"td">;
 
 const { class: className, ...rest } = Astro.props;
 ---
 
-<td class={tableCell({ class: className })} {...rest} data-slot="table-cell">
+<td {...rest} class={tableCell({ class: className })} data-slot="table-cell">
   <slot />
 </td>

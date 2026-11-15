@@ -1,10 +1,8 @@
+import { fetchStrapiRaw, resolveApiLang } from "@services/strapi";
+import { pad2, sanitizeIcsText } from "@utils/ics.utils";
 import type { APIRoute } from "astro";
-import { STRAPI_API_URL } from "astro:env/client";
-import { getSecret } from "astro:env/server";
 
 export const prerender = false;
-
-const ALLOWED_LANGS = new Set(["es", "en", "ar", "tr"]);
 
 const BOGOTA_DAILY_PRAYERS: Array<{
   key: string;
@@ -69,14 +67,6 @@ const BOGOTA_DAILY_PRAYERS: Array<{
   },
 ];
 
-function sanitizeIcsText(input: string): string {
-  return input.replace(/[\r\n,;\\]+/g, " ").trim();
-}
-
-function pad2(num: number): string {
-  return String(num).padStart(2, "0");
-}
-
 function buildFallbackIcs(yearMonth: string, lang: string): string {
   const [yearStr, monthStr] = yearMonth.split("-");
   const year = Number(yearStr);
@@ -123,33 +113,26 @@ function buildFallbackIcs(yearMonth: string, lang: string): string {
 
 export const GET: APIRoute = async ({ url }) => {
   const rawYm = url.searchParams.get("ym") ?? "";
-  const rawLang = (url.searchParams.get("lang") ?? "es").toLowerCase();
-
   const now = new Date();
   const defaultYm = `${String(now.getUTCFullYear())}-${pad2(now.getUTCMonth() + 1)}`;
-  const safeYm = /^\d{4}-\d{2}$/.test(rawYm) ? rawYm : defaultYm;
-  const safeLang = ALLOWED_LANGS.has(rawLang) ? rawLang : "es";
+  const safeYm = /^\d{4}-(0[1-9]|1[0-2])$/.test(rawYm) ? rawYm : defaultYm;
+  const safeLang = resolveApiLang(url);
 
   let icsBody: string | null = null;
 
   try {
-    const baseUrl = STRAPI_API_URL || "http://127.0.0.1:1337";
-    const token = getSecret("STRAPI_API_TOKEN");
-    const targetUrl = new URL("/api/islam/prayer-times/calendar.ics", baseUrl);
-    targetUrl.searchParams.set("yearMonth", safeYm);
-    targetUrl.searchParams.set("locale", safeLang);
+    const res = await fetchStrapiRaw(
+      "islam/prayer-times/calendar.ics",
+      { yearMonth: safeYm, locale: safeLang },
+      {
+        headers: { Accept: "text/calendar" },
+        timeoutMs: 2500,
+        skipDefaultPopulate: true,
+      }
+    );
 
-    const headers = new Headers({ Accept: "text/calendar" });
-    if (typeof token === "string" && token.trim()) {
-      headers.set("Authorization", `Bearer ${token.trim()}`);
-    }
-
-    const res = await fetch(targetUrl, {
-      headers,
-      signal: AbortSignal.timeout(2500),
-    });
-
-    if (res.ok) {
+    const contentType = res.headers.get("content-type") ?? "";
+    if (contentType.includes("text/calendar") || contentType.includes("text/plain")) {
       const upstreamText = await res.text();
       if (upstreamText.includes("BEGIN:VCALENDAR")) {
         icsBody = upstreamText;
@@ -166,6 +149,7 @@ export const GET: APIRoute = async ({ url }) => {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",
       "Content-Disposition": `attachment; filename="mezquita-central-bogota-${safeYm}.ics"`,
+      "Content-Security-Policy": "default-src 'none'; sandbox",
       "X-Content-Type-Options": "nosniff",
       "Cache-Control": "public, max-age=3600",
     },

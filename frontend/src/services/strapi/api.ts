@@ -26,6 +26,35 @@ const DEFAULT_PRAYER_SETTINGS: TStrapiPrayerSettings = {
   jumuahPrayerTime: "12:45 PM",
 };
 
+const ALLOWED_API_LANGS = new Set(["es", "en", "ar", "tr"]);
+
+/**
+ * Resolves a safe locale code (`es` | `en` | `ar` | `tr`) from URL search parameters.
+ */
+export function resolveApiLang(url: URL): "es" | "en" | "ar" | "tr" {
+  const raw = (
+    url.searchParams.get("locale")
+    ?? url.searchParams.get("lang")
+    ?? "es"
+  )
+    .trim()
+    .toLowerCase();
+  return ALLOWED_API_LANGS.has(raw) ? (raw as "es" | "en" | "ar" | "tr") : "es";
+}
+
+/**
+ * Typed HTTP error thrown when Strapi responds with a non-2xx status code.
+ */
+export class StrapiHttpError extends Error {
+  public readonly status: number;
+
+  public constructor(status: number, message?: string) {
+    super(message ?? `Strapi API request failed (${String(status)})`);
+    this.name = "StrapiHttpError";
+    this.status = status;
+  }
+}
+
 /**
  * Optimizes Cloudinary CDN URLs with `f_auto,q_auto` transformations.
  * Leaves non-Cloudinary URLs untouched.
@@ -35,32 +64,46 @@ export function optimizeCloudinaryUrl(
   width?: number
 ): string {
   if (!rawUrl) return "";
-  if (!rawUrl.includes("res.cloudinary.com") || !rawUrl.includes("/upload/")) {
+  let parsed: URL;
+  try {
+    parsed = new URL(rawUrl);
+  } catch {
     return rawUrl;
   }
+
+  if (
+    parsed.protocol !== "https:"
+    || parsed.hostname !== "res.cloudinary.com"
+    || !parsed.pathname.includes("/upload/")
+  ) {
+    return rawUrl;
+  }
+
   const transform = width
     ? `f_auto,q_auto,w_${String(width)}`
     : "f_auto,q_auto";
-  if (rawUrl.includes(`/upload/${transform}/`)) {
+  if (parsed.pathname.includes(`/upload/${transform}/`)) {
     return rawUrl;
   }
-  return rawUrl.replace("/upload/", `/upload/${transform}/`);
+
+  parsed.pathname = parsed.pathname.replace(
+    "/upload/",
+    `/upload/${transform}/`
+  );
+  return parsed.toString();
 }
 
 let strapiOfflineUntil = 0;
 
 /**
- * Generic HTTP client for Strapi v5 REST endpoints.
- * Automatically injects `populate=deep` (via strapi-v5-plugin-populate-deep) and Bearer token when available.
+ * Low-level HTTP client for Strapi v5 REST endpoints returning the raw `Response`.
+ * Shares the circuit breaker, Bearer token injection, and timeout handling.
  */
-export const fetchStrapiData = async <
-  TResult,
-  TParams extends TStrapiQueryParams = TStrapiQueryParams,
->(
+export async function fetchStrapiRaw(
   endpoint: string,
-  params: TParams = {} as TParams,
-  init?: RequestInit
-): Promise<TResult> => {
+  params: TStrapiQueryParams = {},
+  init?: RequestInit & { timeoutMs?: number; skipDefaultPopulate?: boolean }
+): Promise<Response> {
   const isGet = !init?.method || init.method.toUpperCase() === "GET";
   if (isGet && Date.now() < strapiOfflineUntil) {
     throw new Error("Strapi API offline (circuit breaker active)");
@@ -73,7 +116,7 @@ export const fetchStrapiData = async <
   const url = new URL(`/api/${normalizedEndpoint}`, baseUrl);
   const searchParams = new URLSearchParams(url.search);
 
-  if (!searchParams.has("populate")) {
+  if (!init?.skipDefaultPopulate && !searchParams.has("populate")) {
     searchParams.set("populate", "deep");
   }
 
@@ -85,7 +128,9 @@ export const fetchStrapiData = async <
   url.search = searchParams.toString();
 
   const headers = new Headers(init?.headers);
-  headers.set("Accept", "application/json");
+  if (!headers.has("Accept")) {
+    headers.set("Accept", "application/json");
+  }
   if (typeof token === "string" && token.trim()) {
     headers.set("Authorization", `Bearer ${token.trim()}`);
   }
@@ -93,7 +138,7 @@ export const fetchStrapiData = async <
   const controller = new AbortController();
   const timeout = setTimeout(() => {
     controller.abort();
-  }, 1500);
+  }, init?.timeoutMs ?? 1500);
 
   let res: Response;
   try {
@@ -112,16 +157,32 @@ export const fetchStrapiData = async <
   }
 
   if (!res.ok) {
-    throw new Error(`Strapi API request failed (${String(res.status)})`);
+    throw new StrapiHttpError(res.status);
   }
 
+  return res;
+}
+
+/**
+ * Generic HTTP client for Strapi v5 REST endpoints.
+ * Automatically injects `populate=deep` (via strapi-v5-plugin-populate-deep) and Bearer token when available.
+ */
+export const fetchStrapiData = async <
+  TResult,
+  TParams extends TStrapiQueryParams = TStrapiQueryParams,
+>(
+  endpoint: string,
+  params: TParams = {} as TParams,
+  init?: RequestInit
+): Promise<TResult> => {
+  const res = await fetchStrapiRaw(endpoint, params, init);
   return (await res.json()) as TResult;
 };
 
 /**
- * Fetches Mosque prayer calculation parameters from `@vicacha-devs/strapi-plugin-islam`
- * (`/api/islam/prayer-times`), with resilient fallback if Strapi is offline.
- */
+  * Fetches Mosque prayer calculation parameters from `@vicacha-devs/strapi-plugin-islam`
+  * (`/api/islam/prayer-times`), with resilient fallback if Strapi is offline.
+  */
 export async function fetchPrayerSettingsFromStrapi(
   locale = "es"
 ): Promise<TStrapiPrayerSettings> {
@@ -187,7 +248,7 @@ export async function fetchQuranChapterVersesFromStrapi(
     words?: boolean;
     reciterId?: number;
   }
-) {
+): Promise<unknown> {
   const safeChapter = Math.max(
     1,
     Math.min(114, Math.trunc(chapterNumber) || 1)
@@ -209,7 +270,7 @@ export async function fetchQuranChapterVersesFromStrapi(
 export async function fetchQuranAyahHadithsFromStrapi(
   verseKey: string,
   options?: { locale?: string; page?: number; limit?: number }
-) {
+): Promise<unknown> {
   const safeKey = /^\d{1,3}:\d{1,3}$/.test(verseKey.trim())
     ? verseKey.trim()
     : "1:1";

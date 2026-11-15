@@ -4,7 +4,10 @@ export {
   fetchQuranAyahHadithsFromStrapi,
   fetchQuranChapterVersesFromStrapi,
   fetchStrapiData,
+  fetchStrapiRaw,
   optimizeCloudinaryUrl,
+  resolveApiLang,
+  StrapiHttpError,
   type TStrapiPrayerSettings,
   type TStrapiQueryParams,
 } from "./api";

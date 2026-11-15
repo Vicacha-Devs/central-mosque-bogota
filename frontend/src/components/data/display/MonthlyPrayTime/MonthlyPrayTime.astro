@@ -142,7 +142,18 @@ const {
 } = Astro.props as Props;
 
 const referer = Astro.request.headers.get("Referer");
-const url = referer ? new URL(referer) : Astro.url;
+let url = Astro.url;
+if (referer) {
+  try {
+    const parsed = new URL(referer);
+    if (parsed.origin === Astro.url.origin) {
+      url = parsed;
+    }
+  }
+  catch {
+    url = Astro.url;
+  }
+}
 
 const { timeZone } = await getClientLocation();
 
@@ -287,15 +298,16 @@ const getCellClasses = (
                       </DropdownItem>
                     )
                   : (
-                      <DropdownItem
-                        as="a"
-                        href={buildMonthHref(item.ym, Astro.url)}
-                        class="
-                          cursor-pointer
-                          motion-reduce:cursor-default
-                        "
-                      >
-                        {item.label}
+                      <DropdownItem class="p-0">
+                        <a
+                          href={buildMonthHref(item.ym, Astro.url)}
+                          class="
+                            block w-full cursor-pointer px-2 py-1.5
+                            motion-reduce:cursor-default
+                          "
+                        >
+                          {item.label}
+                        </a>
                       </DropdownItem>
                     ),
               )
@@ -397,8 +409,8 @@ const getCellClasses = (
                       <span
                         class="
                           ms-2 inline-flex items-center rounded-full
-                          bg-secondary px-2 py-0.5 text-[10px] font-bold
-                          tracking-widest text-white uppercase
+                          bg-secondary px-2 py-0.5 text-xs font-bold
+                          tracking-wider text-white uppercase
                           dark:bg-primary
                         "
                         aria-label={resolved.todayBadge}
@@ -443,7 +455,6 @@ const getCellClasses = (
 </section>
 
 <style>
-
   [data-action="show-more"] [data-monthly-toggle-less] {
     display: none;
   }
@@ -476,11 +487,9 @@ const getCellClasses = (
       transition: none;
     }
   }
-
 </style>
 
 <script>
-
   import { initMonthlyPrayTimes } from "./monthly-pray-time.controller";
 
   // This component is rendered as a server island (`server:defer`), so its
@@ -493,5 +502,4 @@ const getCellClasses = (
     initMonthlyPrayTimes();
   }
   document.addEventListener("astro:after-swap", initMonthlyPrayTimes);
-
 </script>

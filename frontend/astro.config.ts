@@ -74,6 +74,18 @@ export default defineConfig({
       name: "Material Symbols Outlined",
       cssVariable: "--font-symbols",
     },
+    {
+      provider: fontProviders.fontsource(),
+      name: "IBM Plex Sans Arabic",
+      cssVariable: "--font-arabic",
+      weights: [400, 500, 600, 700],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Amiri",
+      cssVariable: "--font-arabic-serif",
+      weights: [400, 700],
+    },
   ],
   i18n: {
     defaultLocale: "es",

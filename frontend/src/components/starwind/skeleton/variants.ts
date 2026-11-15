@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
 
 export const skeleton = tv({
-  base: "animate-pulse rounded-md bg-muted",
+  base: "bg-muted animate-pulse rounded-md",
 });

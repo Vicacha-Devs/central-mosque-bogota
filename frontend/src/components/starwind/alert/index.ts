@@ -3,12 +3,18 @@ import AlertDescription from "./AlertDescription.astro";
 import AlertTitle from "./AlertTitle.astro";
 import { alert, alertDescription, alertTitle } from "./variants";
 
-const AlertVariants = { alert, alertDescription, alertTitle };
+const AlertVariants = {
+  alert,
+  alertDescription,
+  alertTitle,
+};
 
-export { Alert, AlertDescription, AlertTitle, AlertVariants };
-
-export default {
+const AlertParts = {
   Root: Alert,
   Description: AlertDescription,
   Title: AlertTitle,
 };
+
+export { Alert, AlertDescription, AlertTitle, AlertVariants };
+
+export default AlertParts;
