@@ -36,7 +36,7 @@ flowchart TD
 
 ```bash
 # 1. Start the Frontend in dev mode (works immediately with offline mocks!)
-cd frontend
+cd apps/frontend
 cp .env.example .env
 pnpm dev
 # -> Open http://localhost:4321/es
@@ -97,13 +97,13 @@ pnpm verify
 
 ### Recipe B: Running a Single Unit Test File Fast
 ```bash
-cd frontend
+cd apps/frontend
 ./node_modules/.bin/vitest --project=unit --run src/utils/islamic.utils.test.ts
 ```
 
 ### Recipe C: Checking All Quality Gates Before Pushing
 ```bash
-cd frontend
+cd apps/frontend
 ./node_modules/.bin/oxfmt && \
 ./node_modules/.bin/oxfmt --check && \
 ./node_modules/.bin/eslint . --quiet && \

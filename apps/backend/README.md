@@ -45,7 +45,7 @@ Headless CMS backend for the **Central Mosque of Bogotá (Mezquita Central Abu B
 ### Local Development (SQLite)
 
 ```bash
-cd backend
+cd apps/backend
 cp .env.example .env
 pnpm install
 pnpm run develop

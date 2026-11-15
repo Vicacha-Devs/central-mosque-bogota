@@ -47,14 +47,14 @@ Abre `http://localhost:4321`:
 
 ### 1. Explorador de Componentes Storybook 10
 ```bash
-cd frontend
+cd apps/frontend
 pnpm storybook
 ```
 En `http://localhost:6006` puedes alternar **Modo Claro / Oscuro**, dirección **LTR / RTL** y revisar la pestaña **Accessibility (a11y)**.
 
 ### 2. Ejecutar Pruebas Unitarias y Cobertura
 ```bash
-cd frontend
+cd apps/frontend
 ./node_modules/.bin/vitest --project=unit --run --coverage
 ```
 Los 92 archivos de prueba (201 tests) se ejecutan en ~9 segundos usando `renderAstroComponentToDom` y `happy-dom`.

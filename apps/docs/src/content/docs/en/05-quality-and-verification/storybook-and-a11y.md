@@ -20,7 +20,7 @@ Our Storybook environment uses `@storybook-astro/framework` (`1.8.0`) and `story
 ## 2. Running & Building Storybook
 
 ```bash
-cd frontend
+cd apps/frontend
 
 # Start interactive Storybook server on http://localhost:6006
 pnpm storybook

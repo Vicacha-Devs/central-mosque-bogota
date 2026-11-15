@@ -60,7 +60,7 @@ Open `http://localhost:4321`:
 ### 1. Storybook 10 Component Explorer
 Every domain component and Starwind primitive has an interactive `.stories.ts` file:
 ```bash
-cd frontend
+cd apps/frontend
 pnpm storybook
 ```
 In Storybook (`http://localhost:6006`):
@@ -70,7 +70,7 @@ In Storybook (`http://localhost:6006`):
 ### 2. Running the Unit & Component Test Suite
 We use **Vitest** + **Astro Container API** (`renderAstroComponentToDom` in `src/utils/test.helpers.ts`) + **Happy DOM** + **Testing Library**:
 ```bash
-cd frontend
+cd apps/frontend
 ./node_modules/.bin/vitest --project=unit --run --coverage
 ```
 All 92 unit test files (201 tests) run in ~9 seconds and verify:

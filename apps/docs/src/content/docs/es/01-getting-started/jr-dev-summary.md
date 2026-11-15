@@ -36,7 +36,7 @@ flowchart TD
 
 ```bash
 # 1. Iniciar el Frontend en modo desarrollo (funciona de inmediato con mocks offline)
-cd frontend
+cd apps/frontend
 cp .env.example .env
 pnpm dev
 # -> Abre http://localhost:4321/es

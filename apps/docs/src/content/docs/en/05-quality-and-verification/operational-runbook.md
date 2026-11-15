@@ -17,7 +17,7 @@ flowchart LR
 
 #### 1. Strapi v5 Backend (`apps/backend/Dockerfile`)
 ```bash
-cd backend
+cd apps/backend
 pnpm build
 NODE_ENV=production pnpm start
 ```
@@ -25,7 +25,7 @@ NODE_ENV=production pnpm start
 
 #### 2. Astro 7 SSR Frontend (`apps/frontend/`)
 ```bash
-cd frontend
+cd apps/frontend
 pnpm build
 HOST=127.0.0.1 PORT=4321 node ./dist/server/entry.mjs
 ```

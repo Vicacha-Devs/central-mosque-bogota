@@ -63,5 +63,5 @@ POSTGRES_PASSWORD="change-me-local-only" docker compose up -d
 
 # 2. Set DATABASE_CLIENT=postgres and DATABASE_PASSWORD in apps/backend/.env
 # 3. Start Strapi v5
-cd backend && pnpm develop
+cd apps/backend && pnpm develop
 ```

@@ -72,7 +72,7 @@ Accessible at `http://localhost:4321` (automatically uses 4-locale domain mocks 
 ### 2. Start the Strapi v5 Backend (`/backend`)
 
 ```bash
-cd backend
+cd apps/backend
 cp .env.example .env
 pnpm install
 pnpm run develop

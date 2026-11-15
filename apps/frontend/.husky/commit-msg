@@ -1,1 +1,1 @@
-cd frontend && pnpm commitlint --edit
+cd apps/frontend && pnpm commitlint --edit

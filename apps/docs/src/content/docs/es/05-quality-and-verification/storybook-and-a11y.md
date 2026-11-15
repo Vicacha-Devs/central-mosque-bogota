@@ -20,7 +20,7 @@ Nuestro entorno Storybook utiliza `@storybook-astro/framework` (`1.8.0`) y `stor
 ## 2. Ejecución y Compilación de Storybook
 
 ```bash
-cd frontend
+cd apps/frontend
 
 # Iniciar servidor interactivo en http://localhost:6006
 pnpm storybook
