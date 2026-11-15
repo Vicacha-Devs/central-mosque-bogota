@@ -126,6 +126,13 @@ Executes [`scripts/verify-all.ts`](./scripts/verify-all.ts), which enforces:
 
 ---
 
+## Dependency Notes
+
+- **`@strapi/sdk-plugin` pinned to `6.1.1`** (root `package.json` → `pnpm.overrides`): our `@vicacha-devs/strapi-plugin-*` packages accept `^5.0.0 || ^6.0.0`, but third-party plugins declare conflicting peer ranges — `strapi-plugin-navigation`, `strapi-plugin-preview-button`, `strapi-plugin-email-designer-5` and `@sensinum/strapi-utils` want `^5.x`, while `@juadariasmar/strapi-plugin-typesense` and `strapi-plugin-form-builder-cms` want `^6.x`. The override resolves the "Conflicting peer dependencies" warning by installing a single version. The `^5`-only plugins run on v6 outside their declared range, so re-run `pnpm test:backend` and start the backend after bumping any of them, and remove the override once they support v6.
+- **`file:../strapi-v5-extensions/...` overrides** (`calendar`, `bookings`, `certificates`): the local plugins depend on each other with `workspace:*`, which only resolves inside the `strapi-v5-extensions` workspace. Check out that repository next to this one before running `pnpm install`.
+
+---
+
 ## License
 
 **Private & Proprietary**
