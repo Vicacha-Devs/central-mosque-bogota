@@ -1,0 +1,33 @@
+# [TICKET-123] <type>(<scope>): <short summary in imperative mood>
+# |<----  Prefer <= 72 chars (Hard limit: 150 chars per commitlint)  ---->|
+
+# Explain WHY this change is being made and any architectural context:
+# |<----   Wrap body lines at <= 100 chars (Hard limit: 250 chars)   ---->|
+
+# Footer (optional):
+# Closes #123
+# BREAKING CHANGE: <description of breaking change and migration path>
+
+# --- COMMITLINT CONVENTIONS (central-mosque-bogota) ---
+# Allowed <type> values (lowercase):
+#   feat     - New user-facing feature, route, component, or Strapi collection
+#   fix      - Bug fix (SSR, UI, i18n, RTL, API fallback, or CMS schema)
+#   docs     - Documentation updates (docs/ Astro Starlight, README, CLAUDE.md)
+#   style    - Formatting, Tailwind tokens, CSS logical properties (no logic change)
+#   refactor - Code restructuring without changing external behavior
+#   perf     - Performance optimization (caching, image optimization, bundle size)
+#   test     - Adding or updating unit (Vitest), Storybook, or E2E (Playwright) tests
+#   build    - Build system, Vite/Astro config, Docker, or dependency updates
+#   ci       - GitHub Actions workflows, Husky hooks, or verification scripts
+#   chore    - Maintenance tasks, tooling, or configuration updates
+#   revert   - Reverting a previous commit
+#
+# Common <scope> values (lowercase):
+#   frontend, backend, docs, i18n, rtl, a11y, bff, islamic-api, strapi,
+#   prayer-times, ramadan, quran, hadith, khutbahs, events, bookings,
+#   donations, certificates, newsletter, ui, seo, docker, deps
+#
+# Examples:
+#   feat(prayer-times): add Hijri month calendar fallback for Bogota coordinates
+#   [CMB-42] fix(rtl): replace physical left/right padding with ps/pe in Navbar
+#   docs(architecture): document 4-layer Islamic API offline resilience flow

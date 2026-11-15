@@ -1,3 +1,4 @@
+import type { TAcademyArticle } from "./models/academy";
 import type { TEvent } from "./models/events";
 import type { TCommunityService } from "./models/services";
 
@@ -145,7 +146,7 @@ export const mediaHighlights = [
   },
 ];
 
-export const academyCourses = [
+export const academyCourses: Array<Omit<TAcademyArticle, "ctaLabel">> = [
   {
     badgeLabel: "Fundacional",
     badgeTone: "primary",

@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: central-mosque-postgres
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-central_mosque_strapi}
+      POSTGRES_USER: ${DATABASE_USERNAME:-mosque_app_user}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set in backend/.env}
+    # Bind strictly to loopback (127.0.0.1) to prevent external exposure
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - mosque_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  typesense:
+    image: typesense/typesense:27.1
+    container_name: central-mosque-typesense
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      TYPESENSE_DATA_DIR: /data
+      TYPESENSE_API_KEY: ${TYPESENSE_API_KEY:?TYPESENSE_API_KEY must be set in backend/.env}
+      TYPESENSE_ENABLE_CORS: "true"
+    # Bind strictly to loopback (127.0.0.1) to prevent external exposure
+    ports:
+      - "127.0.0.1:8108:8108"
+    volumes:
+      - mosque_typesense_data:/data
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    container_name: central-mosque-valkey
+    profiles: ["cache"]
+    restart: unless-stopped
+    command: ["valkey-server", "--save", "60", "1", "--loglevel", "warning", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    # Bind strictly to loopback (127.0.0.1) to prevent external exposure
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - mosque_valkey_data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  mosque_pgdata:
+  mosque_typesense_data:
+  mosque_valkey_data:
+
+
