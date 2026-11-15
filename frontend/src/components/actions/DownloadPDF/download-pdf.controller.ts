@@ -120,11 +120,16 @@ async function handleClick(
 
   const element = document.querySelector<HTMLElement>(`[${targetAttr}]`);
   if (!element) {
-    alert(btn.dataset.errorLabel ?? "Target element not found");
+    btn.setAttribute(
+      "data-error",
+      btn.dataset.errorLabel ?? "Target element not found"
+    );
     return;
   }
 
-  const originalContent = btn.innerHTML;
+  const originalNodes = Array.from(btn.childNodes).map((node) =>
+    node.cloneNode(true)
+  );
 
   const root = document.documentElement;
   const prevTheme = root.dataset.theme;
@@ -132,7 +137,11 @@ async function handleClick(
 
   try {
     btn.disabled = true;
-    btn.innerHTML = `<span class="animate-pulse">${btn.dataset.loadingLabel ?? "Preparing..."}</span>`;
+    btn.setAttribute("aria-busy", "true");
+    const loadingSpan = document.createElement("span");
+    loadingSpan.className = "animate-pulse";
+    loadingSpan.textContent = btn.dataset.loadingLabel ?? "Preparing...";
+    btn.replaceChildren(loadingSpan);
 
     if (prevTheme === "dark") {
       root.dataset.theme = "light";
@@ -158,8 +167,8 @@ async function handleClick(
       windowHeight: Math.max(element.scrollHeight, element.clientHeight),
       ignoreElements: (el) => {
         return (
-          el.matches("[data-action='download-pdf']") ||
-          el.matches("[data-action='show-more']")
+          el.matches("[data-action='download-pdf']")
+          || el.matches("[data-action='show-more']")
         );
       },
     });
@@ -193,15 +202,18 @@ async function handleClick(
     const filenameBase = slugifyFilenamePart(title);
     const filename = filenameBase.length > 0 ? filenameBase : "document";
     pdf.save(`${filename}.pdf`);
+    btn.removeAttribute("data-error");
   } catch (error) {
     console.error("PDF generation failed:", error);
-    alert(
+    btn.setAttribute(
+      "data-error",
       btn.dataset.errorLabel ?? "Failed to generate PDF. Please try again."
     );
   } finally {
     restoreExpandedLayout?.();
     btn.disabled = false;
-    btn.innerHTML = originalContent;
+    btn.removeAttribute("aria-busy");
+    btn.replaceChildren(...originalNodes);
     if (prevTheme) root.dataset.theme = prevTheme;
   }
 }

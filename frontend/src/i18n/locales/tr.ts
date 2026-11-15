@@ -53,6 +53,8 @@ export const tr = {
   "download.preparing": "Hazırlanıyor...",
   "download.error": "PDF indirilemedi. Lütfen tekrar deneyin.",
   "header.search": "Ara",
+  "header.open-menu": "Menüyü aç",
+  "header.close-menu": "Menüyü kapat",
   "daily-dua.trigger": "Günün Duasını Oku",
   "daily-dua.copy": "Duayı Kopyala",
   "daily-dua.copied": "Kopyalandı!",
@@ -324,8 +326,7 @@ export const tr = {
   "islam-suite.asmaOfDayLabel": "Günün Esmaü'l-Hüsnası",
   "islam-suite.reflectionLabel": "Tefekkür Notu",
   "islam-suite.takeawayLabel": "Pratik Hikmet",
-  "islam-suite.listenRecitationLabel":
-    "Tilaveti Dinle (Mishari Rashid al-`Afasy)",
+  "islam-suite.listenRecitationLabel": "Tilaveti Dinle (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Sıfırla",
   "islam-suite.tasbihIncrementLabel": "Zikir Çek (+1)",
   "islam-suite.tasbihCompletedLabel": "Hedefe ulaşıldı! Elhamdülillah",
@@ -416,9 +417,9 @@ export const tr = {
   "resources-hub.galleriesTitle":
     "Cami Mimarisi ve Topluluk Fotoğraf Galerileri",
   "resources-hub.galleriesSubtitle":
-    "Strapi v5 Medya Kütüphanesi klasörlerinden (plugin::upload.folder) eşzamanlanan albümler.",
+    "Bogota'daki mimarimizi, topluluk buluşmalarımızı ve kültürel etkinliklerimizi yansıtan görsel seçkiler.",
   "resources-hub.photosCountLabel": "fotoğraf",
-  "resources-hub.mediaFolderLabel": "Medya Klasörü",
+  "resources-hub.mediaFolderLabel": "Koleksiyon",
   "nav.about-us": "Hakkımızda",
   "nav.islam": "İslam",
   "nav.prayer": "Namaz",

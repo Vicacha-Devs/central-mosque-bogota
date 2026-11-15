@@ -1,5 +1,6 @@
 ---
 import MonthlyPrayTime from "@components/data/display/MonthlyPrayTime/MonthlyPrayTime.astro";
+import MonthlyPrayTimeSkeleton from "@components/data/display/MonthlyPrayTime/MonthlyPrayTimeSkeleton.astro";
 import QiblaAndObservancesSection from "@components/data/display/QiblaAndObservancesSection/QiblaAndObservancesSection.astro";
 import Layout from "@layouts/Layout.astro";
 import { routes } from "@i18n/ui";
@@ -27,6 +28,8 @@ const t = useTranslations(lang);
   title={t("nav.prayer")}
   description={t("pray-calendar.title")}
 >
-  <MonthlyPrayTime server:defer lang={lang} />
+  <MonthlyPrayTime server:defer lang={lang}>
+    <MonthlyPrayTimeSkeleton slot="fallback" />
+  </MonthlyPrayTime>
   <QiblaAndObservancesSection lang={lang} />
 </Layout>

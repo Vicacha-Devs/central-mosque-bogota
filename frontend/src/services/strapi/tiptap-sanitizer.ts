@@ -106,7 +106,7 @@ function normalizeToHtml(input: TTiptapRichContent): string {
 }
 
 /**
- * Sanitizes HTML output from Strapi's `@notum-cz/strapi-plugin-tiptap-editor`
+ * Sanitizes HTML output from Strapi's `@vicacha-devs/strapi-plugin-tiptap-editor`
  * (`"type": "richtext"`) using `isomorphic-dompurify`, enforces `rel="noopener noreferrer"`
  * on links, and optimizes embedded Cloudinary images.
  */

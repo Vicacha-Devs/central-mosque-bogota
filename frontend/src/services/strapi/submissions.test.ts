@@ -175,13 +175,31 @@ describe("POST /api/submissions BFF endpoint", () => {
     const { fetchStrapiData } = await import("@services/strapi");
     const mockFetch = vi.mocked(fetchStrapiData);
 
-    const badJsonRes = await POST({
+    const nonJsonRes = await POST({
       request: new Request("http://localhost:4321/api/submissions", {
         method: "POST",
         body: "{bad-json",
       }),
     } as never);
-    expect(badJsonRes.status).toBe(500);
+    expect(nonJsonRes.status).toBe(415);
+
+    const badJsonRes = await POST({
+      request: new Request("http://localhost:4321/api/submissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{bad-json",
+      }),
+    } as never);
+    expect(badJsonRes.status).toBe(400);
+
+    const arrayJsonRes = await POST({
+      request: new Request("http://localhost:4321/api/submissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "[]",
+      }),
+    } as never);
+    expect(arrayJsonRes.status).toBe(400);
 
     const badTypeRes = await POST({
       request: buildJsonRequest({ type: "unknown", locale: "invalid" }),

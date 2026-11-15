@@ -53,6 +53,8 @@ export const en = {
   "download.preparing": "Preparing...",
   "download.error": "Error downloading PDF. Please try again.",
   "header.search": "Search",
+  "header.open-menu": "Open menu",
+  "header.close-menu": "Close menu",
   "daily-dua.trigger": "Read Daily Supplication",
   "daily-dua.copy": "Copy Supplication",
   "daily-dua.copied": "Copied!",
@@ -324,8 +326,7 @@ export const en = {
   "islam-suite.asmaOfDayLabel": "Name of Allah of the Day",
   "islam-suite.reflectionLabel": "Spiritual reflection",
   "islam-suite.takeawayLabel": "Key takeaway",
-  "islam-suite.listenRecitationLabel":
-    "Listen to recitation (Mishari Rashid al-`Afasy)",
+  "islam-suite.listenRecitationLabel": "Listen to recitation (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Reset",
   "islam-suite.tasbihIncrementLabel": "Count Dhikr (+1)",
   "islam-suite.tasbihCompletedLabel": "Target reached! Alhamdulillah",
@@ -426,9 +427,9 @@ export const en = {
   "resources-hub.galleriesTitle":
     "Mosque Architecture & Community Photo Galleries",
   "resources-hub.galleriesSubtitle":
-    "Curated albums synchronized directly from Strapi v5 Media Library folders (plugin::upload.folder) with Cloudinary optimization.",
+    "Visual stories celebrating our architecture, community gatherings, and cultural encounters in Bogotá.",
   "resources-hub.photosCountLabel": "photos",
-  "resources-hub.mediaFolderLabel": "Media Library Folder",
+  "resources-hub.mediaFolderLabel": "Collection",
   "nav.about-us": "About Us",
   "nav.islam": "Islam",
   "nav.prayer": "Prayer",

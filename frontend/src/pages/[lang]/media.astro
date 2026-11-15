@@ -24,28 +24,80 @@ export function getStaticPaths() {
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const fallbackMediaItems = getDetailedMediaHighlights(lang);
 const fallbackGalleryAlbums = getLocalizedGalleryAlbums(lang);
 
 const [mediaEntries, cmsEpisodesRes, cmsGalleriesRes] = await Promise.all([
   getCollection("mediaHighlights", (entry) => entry.data.locale === lang),
-  fetchStrapiData<{ data?: TDetailedMediaItem[] }>("media-feeds/episodes", {
+  fetchStrapiData<{ data?: Array<TDetailedMediaItem> }>("media-feeds/episodes", {
     locale: lang,
   }).catch(() => null),
-  fetchStrapiData<{ data?: TResourceGalleryAlbum[] }>("resources/galleries", {
+  fetchStrapiData<{ data?: Array<TResourceGalleryAlbum> }>("resources/galleries", {
     locale: lang,
   }).catch(() => null),
 ]);
 
-const mediaItems: TDetailedMediaItem[]
-  = Array.isArray(cmsEpisodesRes?.data) && cmsEpisodesRes.data.length > 0
-    ? cmsEpisodesRes.data
-    : mediaEntries.length > 0
-      ? mediaEntries.map((entry) => entry.data)
-      : getDetailedMediaHighlights(lang);
+const baseMediaItems: Array<TDetailedMediaItem>
+  = mediaEntries.length > 0
+    ? mediaEntries.map((entry) => entry.data)
+    : fallbackMediaItems;
 
-const galleryAlbums: TResourceGalleryAlbum[]
+const mediaByTitle = new Map(
+  baseMediaItems.map((item) => [item.title.toLowerCase(), item])
+);
+
+const mediaItems: Array<TDetailedMediaItem>
+  = Array.isArray(cmsEpisodesRes?.data) && cmsEpisodesRes.data.length > 0
+    ? cmsEpisodesRes.data.map((item, idx) => {
+        const fallback
+          = mediaByTitle.get((item.title ?? "").toLowerCase())
+            ?? baseMediaItems[idx % baseMediaItems.length]
+            ?? fallbackMediaItems[idx % fallbackMediaItems.length];
+        return {
+          ...fallback,
+          ...item,
+          imageUrl: item.imageUrl || fallback?.imageUrl || "",
+          imageAlt: item.imageAlt || item.title || fallback?.imageAlt || "",
+          providerLabel: item.providerLabel || fallback?.providerLabel || "",
+          typeLabel: item.typeLabel || fallback?.typeLabel || item.type,
+          speakerName: item.speakerName || fallback?.speakerName || "",
+          publishedDate: item.publishedDate || fallback?.publishedDate || "",
+          duration: item.duration || fallback?.duration || "",
+          watchUrl: item.watchUrl || fallback?.watchUrl || "#",
+        };
+      })
+    : baseMediaItems;
+
+const galleryByTitle = new Map(
+  fallbackGalleryAlbums.map((album) => [album.title.toLowerCase(), album])
+);
+
+const galleryAlbums: Array<TResourceGalleryAlbum>
   = Array.isArray(cmsGalleriesRes?.data) && cmsGalleriesRes.data.length > 0
-    ? cmsGalleriesRes.data
+    ? cmsGalleriesRes.data.map((album, idx) => {
+        const fallback
+          = galleryByTitle.get((album.title ?? "").toLowerCase())
+            ?? fallbackGalleryAlbums[idx % fallbackGalleryAlbums.length];
+        return {
+          ...fallback,
+          ...album,
+          coverUrl: album.coverUrl || fallback?.coverUrl || "",
+          coverAlt: album.coverAlt || album.title || fallback?.coverAlt || "",
+          categoryLabel: album.categoryLabel || fallback?.categoryLabel || "",
+          photoCount:
+            typeof album.photoCount === "number" && album.photoCount > 0
+              ? album.photoCount
+              : (fallback?.photoCount ?? 0),
+          photographerCredit:
+            album.photographerCredit || fallback?.photographerCredit || "",
+          secondaryDateFormatted:
+            album.secondaryDateFormatted
+            || fallback?.secondaryDateFormatted
+            || "",
+          mediaFolderPath:
+            album.mediaFolderPath || fallback?.mediaFolderPath || "",
+        };
+      })
     : fallbackGalleryAlbums;
 ---
 
@@ -64,10 +116,7 @@ const galleryAlbums: TResourceGalleryAlbum[]
   <!-- Live Stream Spotlight & Filterable Media Archive -->
   <MediaArchiveSection lang={lang} items={mediaItems} />
 
-  <!--
-    Strapi v5 Media Library Photo Galleries
-    (@vicacha-devs/strapi-plugin-resources)
-  -->
+  <!-- Photo Galleries -->
   <PhotoGalleriesSection lang={lang} albums={galleryAlbums} />
 
   <!-- Ramadan Suhoor & Iftar Reference Banner Component -->

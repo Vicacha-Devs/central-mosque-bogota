@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/starwind/card";
 import { Separator } from "@/components/starwind/separator";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TResourcePublication } from "@utils/resources-mocks";
+import { toSafeHref } from "@utils/url.utils";
 
 /**
  * @component PublicationCard
@@ -129,7 +130,7 @@ const { publication, pagesLabel, downloadLabel } = Astro.props as Props;
         {publication.mediaFolderPath}
       </span>
       <Button
-        href={publication.externalDownloadUrl}
+        href={toSafeHref(publication.externalDownloadUrl)}
         download
         variant="primary"
         size="sm"

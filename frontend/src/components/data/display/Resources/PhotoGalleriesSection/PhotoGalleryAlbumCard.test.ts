@@ -27,7 +27,7 @@ describe("PhotoGalleryAlbumCard", () => {
       expect(
         getByRole(root, "heading", { name: album.title })
       ).toBeInTheDocument();
-      expect(getByText(root, album.mediaFolderPath)).toBeInTheDocument();
+      expect(getByText(root, album.photographerCredit)).toBeInTheDocument();
     } finally {
       await close();
     }

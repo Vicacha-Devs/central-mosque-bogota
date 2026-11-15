@@ -1,133 +1,51 @@
 ---
-import { progress, progressIndicator } from "./variants";
+import ProgressPrimitive from "@starwind-ui/astro/progress";
 import type { HTMLAttributes } from "astro/types";
+import { progress, progressIndicator, progressTrack } from "./variants";
 
-type Props = HTMLAttributes<"div"> & {
-  /**
-   * Current value of the progress bar (omit for indeterminate state)
-   */
-  value?: number;
-  /**
-   * Maximum value for the progress bar (default: 100)
-   */
+interface Props extends Omit<HTMLAttributes<"div">, "value"> {
+  label?: string;
   max?: number;
-  /**
-   * Color variant for the progress indicator (default: default)
-   */
+  min?: number;
+  value?: number | null;
   variant?: "default" | "primary" | "secondary" | "info" | "success" | "warning" | "error";
-};
+}
 
-const { class: className, value, max = 100, variant = "default", ...rest } = Astro.props;
-
-const isIndeterminate = value == null;
-const valuePercent = isIndeterminate
-  ? undefined
-  : Math.round((value / max) * 100);
-const valueText = isIndeterminate ? undefined : `${valuePercent}%`;
-
-const indicator = progressIndicator;
-
-const progressClasses = progress({
-  variant: isIndeterminate ? "indeterminate" : undefined,
+const {
+  label,
+  value = null,
+  max = 100,
+  min = 0,
+  variant = "default",
   class: className,
-});
+  ...rest
+} = Astro.props;
 
-const indicatorClasses = indicator({
-  variant: isIndeterminate ? "indeterminate" : undefined,
-  color: variant,
-});
-
-const indicatorStyle = isIndeterminate
-  ? ""
-  : `transform: translateX(-${100 - (valuePercent ?? 0)}%);`;
+const ariaLabel = rest["aria-label"] ?? label;
+const boundedMin = Number.isFinite(min) ? min : 0;
+const boundedMax = Number.isFinite(max) ? max : 100;
+const normalizedMin = Math.min(boundedMin, boundedMax);
+const normalizedMax = Math.max(boundedMin, boundedMax);
+const progressValue = value == null || !Number.isFinite(Number(value)) ? null : Math.min(Math.max(Number(value), normalizedMin), normalizedMax);
+const isIndeterminate = progressValue === null;
+const progressPercent = isIndeterminate ? 0 : normalizedMax === normalizedMin ? progressValue >= normalizedMax ? 100 : 0 : Math.round(Math.min(Math.max(((progressValue - normalizedMin) / (normalizedMax - normalizedMin)) * 100, 0), 100));
+const indicatorStyle = isIndeterminate ? undefined : { transform: `translateX(-${100 - progressPercent}%)` };
 ---
 
-<div
-  role="progressbar"
-  aria-valuemin={0}
-  aria-valuemax={max}
-  aria-valuenow={isIndeterminate ? undefined : value}
-  aria-valuetext={valueText}
-  class:list={[progressClasses]}
-  data-value={value}
-  data-max={max}
-  data-indeterminate={isIndeterminate}
+<ProgressPrimitive.Root
+  class={progress({ variant: isIndeterminate ? "indeterminate" : undefined, class: className })}
+  max={normalizedMax}
+  min={normalizedMin}
+  value={progressValue}
   {...rest}
+  aria-label={ariaLabel}
   data-slot="progress"
 >
-  <div class:list={[indicatorClasses]} style={indicatorStyle}></div>
-</div>
-
-<script>
-
-  class ProgressHandler {
-    private progressElement: HTMLElement;
-    private observer!: MutationObserver;
-
-    constructor(progressElement: HTMLElement) {
-      this.progressElement = progressElement;
-      this.setupMutationObserver();
-      this.updateProgress(); // Initial update
-    }
-
-    private setupMutationObserver(): void {
-      // Create a MutationObserver to watch for data-value attribute changes
-      this.observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          const attr = mutation.attributeName;
-          if (attr === "data-value" || attr === "data-max") {
-            this.updateProgress();
-          }
-        });
-      });
-
-      // Start observing
-      this.observer.observe(this.progressElement, { attributes: true });
-    }
-
-    private updateProgress(): void {
-      const value = Number(this.progressElement.getAttribute("data-value"));
-      const max = Number(this.progressElement.getAttribute("data-max") || 100);
-      const isIndeterminate
-        = this.progressElement.hasAttribute("data-indeterminate")
-        ? this.progressElement.getAttribute("data-indeterminate") === "true"
-        : value == null;
-
-      // Update ARIA attributes
-      if (!isIndeterminate) {
-        const valuePercent = Math.round((value / max) * 100);
-        this.progressElement.setAttribute("aria-valuenow", String(value));
-        this.progressElement.setAttribute("aria-valuetext", `${valuePercent}%`);
-
-        // Update indicator position
-        const indicator = this.progressElement.querySelector("div");
-        if (indicator) {
-          indicator.style.transform = `translateX(-${100 - valuePercent}%)`;
-        }
-      }
-    }
-
-    // Clean up method to disconnect observer
-    public destroy(): void {
-      this.observer.disconnect();
-    }
-  }
-
-  // Store instances in a WeakMap to avoid memory leaks
-  const progressInstances = new WeakMap<HTMLElement, ProgressHandler>();
-
-  const setupProgressBars = () => {
-    document
-      .querySelectorAll<HTMLElement>(".starwind-progress-bar")
-      .forEach((el) => {
-        if (!progressInstances.has(el)) {
-          progressInstances.set(el, new ProgressHandler(el));
-      }
-    });
-  };
-
-  setupProgressBars();
-  document.addEventListener("astro:after-swap", setupProgressBars);
-  document.addEventListener("starwind:init", setupProgressBars);
-
-</script>
+  <ProgressPrimitive.Track class={progressTrack()} data-slot="progress-track">
+    <ProgressPrimitive.Indicator
+      class={progressIndicator({ variant: isIndeterminate ? "indeterminate" : undefined, color: variant })}
+      style={indicatorStyle}
+      data-slot="progress-indicator"
+    />
+  </ProgressPrimitive.Track>
+</ProgressPrimitive.Root>

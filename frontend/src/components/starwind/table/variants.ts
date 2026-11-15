@@ -1,3 +1,4 @@
+// TODO(https://github.com/starwind-ui/starwind-ui/issues/283): Local RTL-safe logical CSS utilities pending upstream full RTL release.
 import { tv } from "tailwind-variants";
 
 export const table = tv({
@@ -9,31 +10,19 @@ export const tableBody = tv({
 });
 
 export const tableCaption = tv({
-  base: "mt-4 text-sm text-muted-foreground",
+  base: "text-muted-foreground mt-4 text-sm",
 });
 
 export const tableCell = tv({
-  base: `
-    p-2 align-middle whitespace-nowrap
-    has-[[role=checkbox]]:pr-0
-    *:[[role=checkbox]]:translate-y-[2px]
-  `,
+  base: "p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px]",
 });
 
 export const tableFoot = tv({
-  base: `
-    border-t bg-muted/50 font-medium
-    [&>tr]:last:border-b-0
-  `,
+  base: "bg-muted/50 border-t font-medium [&>tr]:last:border-b-0",
 });
 
 export const tableHead = tv({
-  base: `
-    h-10 px-2 text-left align-middle font-medium whitespace-nowrap
-    text-muted-foreground
-    has-[[role=checkbox]]:pr-0
-    *:[[role=checkbox]]:translate-y-[2px]
-  `,
+  base: "text-muted-foreground h-10 px-2 text-start align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px]",
 });
 
 export const tableHeader = tv({
@@ -41,9 +30,5 @@ export const tableHeader = tv({
 });
 
 export const tableRow = tv({
-  base: `
-    border-b transition-colors
-    hover:bg-muted/50
-    data-[state=selected]:bg-muted
-  `,
+  base: "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
 });

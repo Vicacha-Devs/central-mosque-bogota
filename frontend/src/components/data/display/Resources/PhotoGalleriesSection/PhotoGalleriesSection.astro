@@ -1,6 +1,4 @@
 ---
-import { Badge } from "@/components/starwind/badge";
-import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
 import { getLangFromUrl } from "@i18n/utils";
 import {
@@ -59,37 +57,19 @@ const copy = propCopy ?? getResourcesHubCopy(lang);
 
 <section id="media-photo-galleries" class="space-y-8">
   <div class="text-center">
-    <Badge
-      variant="secondary"
-      class="
-        mb-3 gap-2 bg-secondary/10 px-4 py-1 text-xs font-bold tracking-widest
-        text-secondary uppercase
-        dark:bg-blue-950/60 dark:text-blue-300
-      "
-    >
-      <Icon name="photo_library" class="text-sm" />
-      <span>{copy.galleriesBadge}</span>
-    </Badge>
-    <h2 class="
-      text-3xl font-extrabold text-slate-900
-      dark:text-white
-    "
-    >
+    <h2 class="text-3xl font-extrabold text-foreground">
       {copy.galleriesTitle}
     </h2>
-    <p class="
-      mx-auto mt-2 max-w-2xl text-slate-600
-      dark:text-slate-400
-    "
-    >
+    <p class="mx-auto mt-2 max-w-2xl text-muted-foreground">
       {copy.galleriesSubtitle}
     </p>
   </div>
 
-  <div class="
-    grid grid-cols-1 gap-8
-    md:grid-cols-3
-  "
+  <div
+    class:list={[
+      "grid grid-cols-1 gap-8",
+      albums.length <= 2 ? "md:grid-cols-2" : "md:grid-cols-3",
+    ]}
   >
     {
       albums.map((album) => (

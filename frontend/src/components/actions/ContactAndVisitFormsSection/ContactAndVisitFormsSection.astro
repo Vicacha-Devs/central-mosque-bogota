@@ -62,6 +62,8 @@ const subjects = [
 
     <form
       id="contact-form"
+      method="POST"
+      action="/api/submissions"
       data-locale={lang}
       data-sending-text={t("contact-page.sending")}
       data-success-text={t("contact-page.contact-success")}
@@ -92,6 +94,7 @@ const subjects = [
           id="contact-name"
           name="fullName"
           type="text"
+          autocomplete="name"
           required
           maxlength={120}
           class="rounded-xl"
@@ -117,6 +120,8 @@ const subjects = [
             id="contact-email"
             name="email"
             type="email"
+            autocomplete="email"
+            inputmode="email"
             required
             maxlength={160}
             class="rounded-xl"
@@ -136,6 +141,8 @@ const subjects = [
             id="contact-phone"
             name="phone"
             type="tel"
+            autocomplete="tel"
+            inputmode="tel"
             maxlength={40}
             class="rounded-xl"
           />
@@ -224,6 +231,8 @@ const subjects = [
 
     <form
       id="visit-form"
+      method="POST"
+      action="/api/submissions"
       data-locale={lang}
       data-sending-text={t("contact-page.sending")}
       data-success-text={t("contact-page.visit-success")}
@@ -259,6 +268,7 @@ const subjects = [
             id="visit-name"
             name="visitorName"
             type="text"
+            autocomplete="name"
             required
             maxlength={120}
             class="rounded-xl"
@@ -278,6 +288,7 @@ const subjects = [
             id="visit-org"
             name="organizationOrSchool"
             type="text"
+            autocomplete="organization"
             maxlength={160}
             class="rounded-xl"
           />
@@ -303,6 +314,8 @@ const subjects = [
             id="visit-email"
             name="email"
             type="email"
+            autocomplete="email"
+            inputmode="email"
             required
             maxlength={160}
             class="rounded-xl"
@@ -322,6 +335,8 @@ const subjects = [
             id="visit-phone"
             name="phone"
             type="tel"
+            autocomplete="tel"
+            inputmode="tel"
             required
             maxlength={40}
             class="rounded-xl"
@@ -432,12 +447,10 @@ const subjects = [
 </section>
 
 <script>
-
   import {
     initContactAndVisitForms,
   } from "./contact-and-visit-forms.controller";
 
   initContactAndVisitForms();
   document.addEventListener("astro:after-swap", initContactAndVisitForms);
-
 </script>

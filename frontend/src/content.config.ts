@@ -33,28 +33,16 @@ const asStr = (...values: Array<unknown>): string => {
 
 const inferProfileSlug = (nameOrSlug: string): string => {
   const lower = nameOrSlug.toLowerCase();
-  if (
-    lower.includes("mansoor") ||
-    lower.includes("mansur") ||
-    lower.includes("منصور")
-  ) {
+  if (lower.includes("mansoor") || lower.includes("mansur") || lower.includes("منصور")) {
     return "sheikh-ahmad-al-mansoor";
   }
-  if (
-    lower.includes("tariq") ||
-    lower.includes("tarık") ||
-    lower.includes("طارق")
-  ) {
+  if (lower.includes("tariq") || lower.includes("tarık") || lower.includes("طارق")) {
     return "ustadh-tariq-ramirez";
   }
   if (lower.includes("amina") || lower.includes("أمينة")) {
     return "dra-amina-gomez";
   }
-  if (
-    lower.includes("ibrahim") ||
-    lower.includes("إبراهيم") ||
-    lower.includes("khatib")
-  ) {
+  if (lower.includes("ibrahim") || lower.includes("إبراهيم") || lower.includes("khatib")) {
     return "hajj-ibrahim-al-khatib";
   }
   return nameOrSlug
@@ -161,10 +149,7 @@ const eventsCollection = defineCollection({
       const speaker = asStr(raw.speaker, defaults.speaker);
       const speakerSlug = asStr(raw.speakerSlug, inferProfileSlug(speaker));
 
-      const item: TDetailedEvent & {
-        richDescription: string;
-        speakerSlug: string;
-      } = {
+      const item: TDetailedEvent & { richDescription: string; speakerSlug: string } = {
         slug,
         category: asStr(raw.category, defaults.category),
         title: asStr(raw.title, defaults.title),
@@ -283,11 +268,7 @@ const mediaHighlightsCollection = defineCollection({
         rawType === "khutbah" || rawType === "podcast" || rawType === "video"
           ? rawType
           : defaults.type;
-      const speakerName = asStr(
-        raw.speaker,
-        raw.speakerName,
-        defaults.speakerName
-      );
+      const speakerName = asStr(raw.speaker, raw.speakerName, defaults.speakerName);
       const speakerSlug = asStr(raw.speakerSlug, inferProfileSlug(speakerName));
       const item: TDetailedMediaItem & { speakerSlug: string } = {
         slug: asStr(raw.slug, defaults.slug),
@@ -301,12 +282,7 @@ const mediaHighlightsCollection = defineCollection({
             : defaults.externalId,
         embedUrl:
           typeof raw.embedUrl === "string" ? raw.embedUrl : defaults.embedUrl,
-        watchUrl: asStr(
-          raw.href,
-          raw.sourceUrl,
-          raw.watchUrl,
-          defaults.watchUrl
-        ),
+        watchUrl: asStr(raw.href, raw.sourceUrl, raw.watchUrl, defaults.watchUrl),
         title: asStr(raw.title, defaults.title),
         description: asStr(raw.description, defaults.description),
         speakerName,
@@ -698,41 +674,39 @@ const donationsPageCollection = defineCollection({
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getLocalizedPaymentMethods(lang);
       if (Array.isArray(raw.paymentMethods) && raw.paymentMethods.length > 0) {
-        const mapItem = (
-          item: Record<string, unknown>,
-          idx: number
-        ): Record<string, string> => {
-          const fallbackItem = defaults[idx % defaults.length];
-          const rawInstructions = item.instructions;
-          const instructions =
-            rawInstructions &&
-            typeof rawInstructions === "object" &&
-            typeof (rawInstructions as Record<string, unknown>)[lang] ===
+        const mapped = raw.paymentMethods.map(
+          (item: Record<string, unknown>, idx: number) => {
+            const fallbackItem = defaults[idx % defaults.length];
+            const rawInstructions = item.instructions;
+            const instructions =
+              rawInstructions &&
+              typeof rawInstructions === "object" &&
+              typeof (rawInstructions as Record<string, unknown>)[lang] ===
               "string"
-              ? String((rawInstructions as Record<string, unknown>)[lang])
-              : asStr(rawInstructions, fallbackItem.instructions);
+                ? String((rawInstructions as Record<string, unknown>)[lang])
+                : asStr(rawInstructions, fallbackItem.instructions);
 
-          return {
-            providerName: asStr(item.providerName, fallbackItem.providerName),
-            accountType: asStr(
-              item.accountType,
-              item.channel,
-              fallbackItem.accountType
-            ),
-            accountNumber: asStr(
-              item.accountNumber,
-              fallbackItem.accountNumber
-            ),
-            accountHolder: asStr(
-              item.accountHolder,
-              item.accountTitle,
-              fallbackItem.accountHolder
-            ),
-            nit: asStr(item.nit, item.taxId, fallbackItem.nit),
-            instructions,
-          };
-        };
-        const mapped = raw.paymentMethods.map(mapItem);
+            return {
+              providerName: asStr(item.providerName, fallbackItem.providerName),
+              accountType: asStr(
+                item.accountType,
+                item.channel,
+                fallbackItem.accountType
+              ),
+              accountNumber: asStr(
+                item.accountNumber,
+                fallbackItem.accountNumber
+              ),
+              accountHolder: asStr(
+                item.accountHolder,
+                item.accountTitle,
+                fallbackItem.accountHolder
+              ),
+              nit: asStr(item.nit, item.taxId, fallbackItem.nit),
+              instructions,
+            };
+          }
+        );
         return { paymentMethods: mapped };
       }
       return {

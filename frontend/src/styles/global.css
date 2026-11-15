@@ -5,22 +5,26 @@
 @custom-variant dark (&:where(.dark, .dark *, [data-theme=dark], [data-theme=dark] *));
 
 :root {
-  --background: var(--color-slate-50);
-  --foreground: var(--color-neutral-950);
-  --card: var(--color-white);
-  --card-foreground: var(--color-neutral-950);
-  --popover: var(--color-white);
-  --popover-foreground: var(--color-neutral-950);
+  color-scheme: light dark;
+  /* eslint-disable-next-line css/use-baseline, css/no-invalid-properties */
+  accent-color: var(--primary);
+
+  --background: #f7f8fb;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
   --primary: #c13026;
-  --primary-foreground: var(--color-white);
-  --primary-accent: #a6251c;
+  --primary-foreground: #ffffff;
+  --primary-accent: #9e231a;
   --secondary: #212e80;
-  --secondary-foreground: var(--color-white);
-  --secondary-accent: #1a2466;
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: var(--color-slate-100);
-  --accent-foreground: var(--color-neutral-900);
+  --secondary-foreground: #ffffff;
+  --secondary-accent: #182261;
+  --muted: #eef1f6;
+  --muted-foreground: #475569;
+  --accent: #eef1f6;
+  --accent-foreground: #0f172a;
   --info: var(--color-sky-600);
   --info-foreground: var(--color-white);
   --success: var(--color-emerald-600);
@@ -29,40 +33,46 @@
   --warning-foreground: var(--color-slate-950);
   --error: var(--color-red-600);
   --error-foreground: var(--color-white);
-  --border: var(--color-slate-200);
-  --input: var(--color-slate-300);
+  --border: #e2e7f0;
+  --input: #cbd3e1;
   --outline: #212e80;
   --radius: 0.75rem;
 
-  --sidebar-background: var(--color-slate-50);
-  --sidebar-foreground: var(--color-neutral-950);
+  --sidebar-background: #f7f8fb;
+  --sidebar-foreground: #0f172a;
   --sidebar-primary: #c13026;
-  --sidebar-primary-foreground: var(--color-white);
-  --sidebar-accent: var(--color-slate-100);
-  --sidebar-accent-foreground: var(--color-neutral-900);
-  --sidebar-border: var(--color-slate-200);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef1f6;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e7f0;
   --sidebar-outline: #212e80;
   --starwind-accordion-content-height: 0px;
 }
 
+[data-theme="light"] {
+  color-scheme: light;
+}
+
 .dark,
 [data-theme="dark"] {
-  --background: var(--color-slate-900);
-  --foreground: var(--color-neutral-50);
-  --card: var(--color-slate-800);
-  --card-foreground: var(--color-neutral-50);
-  --popover: var(--color-slate-800);
-  --popover-foreground: var(--color-neutral-50);
+  color-scheme: dark;
+
+  --background: #11131a;
+  --foreground: #f4f2ec;
+  --card: #181b25;
+  --card-foreground: #f4f2ec;
+  --popover: #181b25;
+  --popover-foreground: #f4f2ec;
   --primary: #c13026;
-  --primary-foreground: var(--color-white);
-  --primary-accent: #e0483e;
+  --primary-foreground: #ffffff;
+  --primary-accent: #e5584e;
   --secondary: #212e80;
-  --secondary-foreground: var(--color-white);
-  --secondary-accent: var(--color-blue-300);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: var(--color-slate-800);
-  --accent-foreground: var(--color-neutral-100);
+  --secondary-foreground: #ffffff;
+  --secondary-accent: #93c5fd;
+  --muted: #222634;
+  --muted-foreground: #b3b9c9;
+  --accent: #222634;
+  --accent-foreground: #f4f2ec;
   --info: var(--color-sky-500);
   --info-foreground: var(--color-slate-950);
   --success: var(--color-emerald-500);
@@ -71,18 +81,37 @@
   --warning-foreground: var(--color-slate-950);
   --error: var(--color-red-500);
   --error-foreground: var(--color-white);
-  --border: var(--color-slate-800);
-  --input: var(--color-slate-700);
-  --outline: var(--color-blue-400);
+  --border: #282d3e;
+  --input: #343a4f;
+  --outline: #93c5fd;
 
-  --sidebar-background: var(--color-slate-900);
-  --sidebar-foreground: var(--color-neutral-50);
+  --sidebar-background: #11131a;
+  --sidebar-foreground: #f4f2ec;
   --sidebar-primary: #c13026;
-  --sidebar-primary-foreground: var(--color-white);
-  --sidebar-accent: var(--color-slate-800);
-  --sidebar-accent-foreground: var(--color-neutral-100);
-  --sidebar-border: var(--color-slate-800);
-  --sidebar-outline: var(--color-blue-400);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #222634;
+  --sidebar-accent-foreground: #f4f2ec;
+  --sidebar-border: #282d3e;
+  --sidebar-outline: #93c5fd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) {
+    color-scheme: dark;
+    --background: #11131a;
+    --foreground: #f4f2ec;
+    --card: #181b25;
+    --card-foreground: #f4f2ec;
+    --popover: #181b25;
+    --popover-foreground: #f4f2ec;
+    --muted: #222634;
+    --muted-foreground: #b3b9c9;
+    --accent: #222634;
+    --accent-foreground: #f4f2ec;
+    --border: #282d3e;
+    --input: #343a4f;
+    --outline: #93c5fd;
+  }
 }
 
 @theme {
@@ -124,6 +153,10 @@
 
 @theme inline {
   --font-display: var(--font-display);
+  --font-heading: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-arabic: var(--font-arabic);
+  --font-arabic-serif: var(--font-arabic-serif);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -168,6 +201,94 @@
   --color-sidebar-outline: var(--sidebar-outline);
 }
 
+/* eslint-disable css/use-baseline, css/no-invalid-properties */
+@layer base {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) transparent;
+    scrollbar-gutter: stable;
+  }
+
+  @supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--muted-foreground);
+      border-radius: 9999px;
+    }
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 18%, transparent);
+    color: var(--foreground);
+  }
+
+  input,
+  textarea,
+  select {
+    caret-color: var(--primary);
+  }
+
+  input:user-invalid,
+  textarea:user-invalid,
+  select:user-invalid {
+    border-color: var(--error);
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--outline);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    text-wrap: balance;
+  }
+
+  p,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  time,
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :lang(ar),
+  [dir="rtl"] {
+    font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+/* eslint-enable css/use-baseline, css/no-invalid-properties */
+
 @layer components {
   .material-symbols-outlined {
     font-variation-settings:
@@ -180,7 +301,7 @@
     font-family: var(--font-symbols);
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: 1.5rem;
     display: inline-block;
     line-height: 1;
     text-transform: none;
@@ -199,7 +320,7 @@
     font-family: "Material Symbols Rounded Variable", sans-serif;
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: 1.5rem;
     display: inline-block;
     line-height: 1;
     text-transform: none;
@@ -218,7 +339,7 @@
     font-family: "Material Symbols Sharp Variable", sans-serif;
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: 1.5rem;
     display: inline-block;
     line-height: 1;
     text-transform: none;
@@ -229,7 +350,11 @@
   }
 
   .hero-overlay {
-    background: linear-gradient(rgba(33, 46, 128, 0.4), rgba(33, 46, 128, 0.6));
+    background: linear-gradient(
+      180deg,
+      rgba(17, 23, 64, 0.45) 0%,
+      rgba(17, 23, 64, 0.72) 100%
+    );
   }
 
   .hero-pattern {

@@ -1,13 +1,10 @@
 import type { TLang } from "@i18n/ui";
 import { useTranslations } from "@i18n/utils";
+import { fetchStrapiRaw, resolveApiLang } from "@services/strapi";
 import { getDetailedMediaHighlights } from "@utils/localized-mocks";
 import type { APIRoute } from "astro";
-import { STRAPI_API_URL } from "astro:env/client";
-import { getSecret } from "astro:env/server";
 
 export const prerender = false;
-
-const ALLOWED_LANGS = new Set<TLang>(["es", "en", "ar", "tr"]);
 
 export function escapeXml(value: string): string {
   return value
@@ -54,33 +51,27 @@ export function buildMediaRssXml(lang: TLang, siteOrigin: string): string {
   ].join("\n");
 }
 
-export const GET: APIRoute = async ({ url }) => {
-  const rawLocale = (
-    url.searchParams.get("locale") ??
-    url.searchParams.get("lang") ??
-    "es"
-  ).toLowerCase() as TLang;
-  const safeLang: TLang = ALLOWED_LANGS.has(rawLocale) ? rawLocale : "es";
-
+export const GET: APIRoute = async ({ url, site }) => {
+  const safeLang = resolveApiLang(url);
   let rssXml: string | null = null;
 
   try {
-    const baseUrl = STRAPI_API_URL || "http://127.0.0.1:1337";
-    const token = getSecret("STRAPI_API_TOKEN");
-    const targetUrl = new URL("/api/media-feeds/rss.xml", baseUrl);
-    targetUrl.searchParams.set("locale", safeLang);
+    const res = await fetchStrapiRaw(
+      "media-feeds/rss.xml",
+      { locale: safeLang },
+      {
+        headers: { Accept: "application/rss+xml, application/xml, text/xml" },
+        timeoutMs: 2500,
+        skipDefaultPopulate: true,
+      }
+    );
 
-    const headers = new Headers({ Accept: "application/rss+xml" });
-    if (typeof token === "string" && token.trim()) {
-      headers.set("Authorization", `Bearer ${token.trim()}`);
-    }
-
-    const res = await fetch(targetUrl, {
-      headers,
-      signal: AbortSignal.timeout(2500),
-    });
-
-    if (res.ok) {
+    const contentType = res.headers.get("content-type") ?? "";
+    if (
+      contentType.includes("xml")
+      || contentType.includes("rss")
+      || contentType.includes("text/plain")
+    ) {
       const upstreamXml = await res.text();
       if (upstreamXml.includes("<rss")) {
         rssXml = upstreamXml;
@@ -90,12 +81,14 @@ export const GET: APIRoute = async ({ url }) => {
     // Fall back to deterministic localized RSS 2.0 generator when Strapi is offline
   }
 
-  const finalXml = rssXml ?? buildMediaRssXml(safeLang, url.origin);
+  const safeOrigin = site?.origin ?? "https://mezquitabogota.org";
+  const finalXml = rssXml ?? buildMediaRssXml(safeLang, safeOrigin);
 
   return new Response(finalXml, {
     status: 200,
     headers: {
       "Content-Type": "application/rss+xml; charset=utf-8",
+      "Content-Security-Policy": "default-src 'none'; sandbox",
       "X-Content-Type-Options": "nosniff",
       "Cache-Control": "public, max-age=3600",
     },

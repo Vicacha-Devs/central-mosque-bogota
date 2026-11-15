@@ -1,7 +1,8 @@
 ---
-import { label } from "./variants";
 import type { HTMLAttributes } from "astro/types";
 import type { VariantProps } from "tailwind-variants";
+
+import { label } from "./variants";
 
 type Props = HTMLAttributes<"label"> & VariantProps<typeof label>;
 
@@ -9,6 +10,6 @@ const { size, class: className, ...rest } = Astro.props;
 ---
 
 {/* eslint-disable-next-line astro/jsx-a11y/label-has-associated-control */}
-<label class={label({ size, class: className })} {...rest} data-slot="label">
+<label {...rest} data-sw-label class={label({ size, class: className })} data-slot="label">
   <slot />
 </label>

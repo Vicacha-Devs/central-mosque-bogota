@@ -14,6 +14,7 @@ import { useTranslatedPath, useTranslations } from "@i18n/utils";
 import type { TLang } from "@i18n/ui";
 import { getDetailedMediaHighlights } from "@utils/localized-mocks";
 import type { TDetailedMediaItem } from "@utils/models/media";
+import { toSafeHref } from "@utils/url.utils";
 
 export interface Props {
   lang?: TLang;
@@ -88,7 +89,7 @@ const spotlightItem = mediaItems[0];
 
             <div class="mt-8 flex flex-wrap items-center gap-4">
               <Button
-                href={spotlightItem.watchUrl}
+                href={toSafeHref(spotlightItem.watchUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="primary"
@@ -101,7 +102,7 @@ const spotlightItem = mediaItems[0];
                 variant="outline"
                 class="
                   border-white/30 bg-transparent text-white
-                  hover:bg-white/10
+                  hover:border-white/50 hover:bg-white/15 hover:text-white
                 "
               >
                 <Icon name="schedule" />
@@ -128,29 +129,40 @@ const spotlightItem = mediaItems[0];
             </div>
           </div>
 
-          <div class="
-            relative min-h-64
-            lg:col-span-5
-          "
-          >
-            <img
-              src={spotlightItem.imageUrl}
-              alt={spotlightItem.imageAlt}
-              class="size-full object-cover opacity-80"
-            />
-            <div class="
-              absolute inset-0 flex items-center justify-center bg-slate-950/40
+          <div
+            class="
+              relative min-h-64 bg-secondary
+              lg:col-span-5
             "
+          >
+            {
+              spotlightItem.imageUrl && (
+                <img
+                  src={spotlightItem.imageUrl}
+                  alt={spotlightItem.imageAlt}
+                  width={800}
+                  height={500}
+                  fetchpriority="high"
+                  decoding="async"
+                  class="size-full object-cover opacity-80"
+                />
+              )
+            }
+            <div
+              class="
+                absolute inset-0 flex items-center justify-center
+                bg-slate-950/35
+              "
             >
               <a
-                href={spotlightItem.watchUrl}
+                href={toSafeHref(spotlightItem.watchUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("media-page.watch-youtube")}
                 class="
                   flex size-16 items-center justify-center rounded-full
-                  bg-primary text-slate-950 shadow-2xl transition-transform
-                  hover:scale-105
+                  bg-primary text-white shadow-2xl transition-colors
+                  hover:bg-primary-accent
                 "
               >
                 <Icon name="play_arrow" class="text-4xl" />
@@ -166,54 +178,62 @@ const spotlightItem = mediaItems[0];
   <section class="space-y-8">
     <div
       class="flex flex-wrap items-center justify-center gap-3"
-      role="tablist"
+      role="group"
+      aria-label={t("media-page.filter-all")}
     >
-      <button
-        type="button"
-        data-media-filter="all"
-        class="
-          cursor-pointer rounded-full bg-secondary px-5 py-2 text-sm font-bold
-          text-white shadow-sm transition-colors
-        "
-      >
-        {t("media-page.filter-all")}
-      </button>
-      <button
-        type="button"
-        data-media-filter="khutbah"
-        class="
-          cursor-pointer rounded-full border border-slate-300 bg-white px-5 py-2
-          text-sm font-semibold text-slate-700 transition-colors
-          hover:bg-slate-100
-          dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200
-        "
-      >
-        {t("media-page.filter-khutbah")}
-      </button>
-      <button
-        type="button"
-        data-media-filter="podcast"
-        class="
-          cursor-pointer rounded-full border border-slate-300 bg-white px-5 py-2
-          text-sm font-semibold text-slate-700 transition-colors
-          hover:bg-slate-100
-          dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200
-        "
-      >
-        {t("media-page.filter-podcast")}
-      </button>
-      <button
-        type="button"
-        data-media-filter="video"
-        class="
-          cursor-pointer rounded-full border border-slate-300 bg-white px-5 py-2
-          text-sm font-semibold text-slate-700 transition-colors
-          hover:bg-slate-100
-          dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200
-        "
-      >
-        {t("media-page.filter-video")}
-      </button>
+      {
+        [
+          { filter: "all", label: t("media-page.filter-all"), pressed: true },
+          {
+            filter: "khutbah",
+            label: t("media-page.filter-khutbah"),
+            pressed: false,
+          },
+          {
+            filter: "podcast",
+            label: t("media-page.filter-podcast"),
+            pressed: false,
+          },
+          {
+            filter: "video",
+            label: t("media-page.filter-video"),
+            pressed: false,
+          },
+        ].map(({ filter, label, pressed }) => (
+          <button
+            type="button"
+            data-media-filter={filter}
+            aria-pressed={pressed ? "true" : "false"}
+            class="
+              cursor-pointer rounded-full border px-5 py-2 text-sm
+              transition-colors
+              focus-visible:ring-2 focus-visible:ring-secondary
+              focus-visible:ring-offset-2 focus-visible:outline-none
+              aria-[pressed=false]:border-slate-300
+              aria-[pressed=false]:bg-white aria-[pressed=false]:font-semibold
+              aria-[pressed=false]:text-slate-700
+              aria-[pressed=false]:hover:border-slate-400
+              aria-[pressed=false]:hover:bg-slate-100
+              aria-[pressed=false]:hover:text-slate-900
+              aria-[pressed=true]:border-secondary
+              aria-[pressed=true]:bg-secondary aria-[pressed=true]:font-bold
+              aria-[pressed=true]:text-white aria-[pressed=true]:shadow-sm
+              aria-[pressed=true]:hover:border-secondary
+              aria-[pressed=true]:hover:bg-secondary/90
+              dark:aria-[pressed=false]:border-slate-700
+              dark:aria-[pressed=false]:bg-slate-900
+              dark:aria-[pressed=false]:text-slate-200
+              dark:aria-[pressed=false]:hover:bg-slate-800
+              dark:aria-[pressed=false]:hover:text-white
+              dark:aria-[pressed=true]:border-secondary
+              dark:aria-[pressed=true]:bg-secondary
+              dark:aria-[pressed=true]:hover:bg-secondary/90
+            "
+          >
+            {label}
+          </button>
+        ))
+      }
     </div>
 
     <div class="
@@ -235,10 +255,8 @@ const spotlightItem = mediaItems[0];
 </div>
 
 <script>
-
   import { initMediaFilters } from "./media-archive.controller";
 
   initMediaFilters();
   document.addEventListener("astro:after-swap", initMediaFilters);
-
 </script>

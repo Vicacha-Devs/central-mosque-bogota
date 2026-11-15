@@ -64,42 +64,52 @@ const { album, photosCountLabel, mediaFolderLabel } = Astro.props as Props;
 
 <Card
   class="
-    flex flex-col justify-between gap-0 overflow-hidden rounded-2xl
-    border-slate-200 bg-white py-0 shadow-sm transition-all
-    hover:shadow-md
-    dark:border-slate-800 dark:bg-slate-900
+    flex flex-col justify-between gap-0 overflow-hidden rounded-2xl border
+    border-border/60 bg-card py-0 shadow-none ring-0 transition-colors
+    hover:border-border
   "
 >
   <div>
-    <AspectRatio ratio={16 / 10} class="overflow-hidden">
-      <img
-        src={album.coverUrl}
-        alt={album.coverAlt}
-        loading="lazy"
-        class="
-          size-full object-cover transition-transform duration-300
-          hover:scale-105
-        "
-      />
+    <AspectRatio ratio={16 / 10} class="overflow-hidden bg-muted">
+      {
+        album.coverUrl && (
+          <img
+            src={album.coverUrl}
+            alt={album.coverAlt}
+            width={640}
+            height={400}
+            loading="lazy"
+            decoding="async"
+            class="
+              size-full object-cover transition-transform duration-300
+              hover:scale-105
+            "
+          />
+        )
+      }
       <div
         class="
           absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent
           to-transparent
         "
       />
-      <Badge
-        variant="secondary"
-        class="
-          absolute top-4 left-4 bg-secondary px-3 py-1 text-xs font-bold
-          text-white shadow-sm
-        "
-      >
-        {album.categoryLabel}
-      </Badge>
+      {
+        album.categoryLabel && (
+          <Badge
+            variant="secondary"
+            class="
+              absolute top-4 start-4 bg-secondary px-3 py-1 text-xs font-bold
+              text-white shadow-sm
+            "
+          >
+            {album.categoryLabel}
+          </Badge>
+        )
+      }
       <Badge
         variant="default"
         class="
-          absolute right-4 bottom-3 gap-1 rounded-md bg-slate-950/80 px-2.5 py-1
+          absolute end-4 bottom-3 gap-1 rounded-md bg-slate-950/80 px-2.5 py-1
           text-xs font-bold text-amber-300
         "
       >
@@ -151,18 +161,10 @@ const { album, photosCountLabel, mediaFolderLabel } = Astro.props as Props;
         dark:text-slate-400
       "
     >
-      <span>
-        {mediaFolderLabel}
-        :
+      <span>{mediaFolderLabel}</span>
+      <span class="font-medium text-foreground">
+        {album.categoryLabel || album.photographerCredit}
       </span>
-      <code
-        class="
-          rounded-sm bg-slate-100 px-2 py-0.5 font-mono text-[11px]
-          dark:bg-slate-800
-        "
-      >
-        {album.mediaFolderPath}
-      </code>
     </CardFooter>
   </div>
 </Card>

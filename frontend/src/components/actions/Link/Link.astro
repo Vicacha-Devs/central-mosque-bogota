@@ -1,6 +1,7 @@
 ---
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@utils/styles.utils";
+import { toSafeHref } from "@utils/url.utils";
 import type { HTMLAttributes } from "astro/types";
 
 /**
@@ -95,23 +96,25 @@ const linkVariants = cva(
         neutral: `
           text-slate-700
           hover:text-slate-900
-          focus-visible:outline-slate-300
+          focus-visible:outline-slate-400
+          dark:text-slate-200
+          dark:hover:text-white
         `,
         primary: `
           text-primary
-          hover:text-primary/90
+          hover:text-primary-accent
           focus-visible:outline-primary/40
-          dark:text-secondary
-          dark:hover:text-secondary/90
-          dark:focus-visible:outline-secondary/40
+          dark:text-[#f2746b]
+          dark:hover:text-[#ff968f]
+          dark:focus-visible:outline-[#f2746b]/50
         `,
         secondary: `
           text-secondary
-          hover:text-secondary/90
+          hover:text-secondary-accent
           focus-visible:outline-secondary/40
-          dark:text-primary
-          dark:hover:text-primary/90
-          dark:focus-visible:outline-primary/40
+          dark:text-blue-300
+          dark:hover:text-blue-200
+          dark:focus-visible:outline-blue-300/50
         `,
         accent: `
           text-amber-700
@@ -201,7 +204,7 @@ const classesMerged = cn(
 ---
 
 <a
-  href={disabled ? undefined : href}
+  href={disabled ? undefined : toSafeHref(href)}
   class={classesMerged}
   aria-disabled={disabled || undefined}
   aria-label={ariaLabel}

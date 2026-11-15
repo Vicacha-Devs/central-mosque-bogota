@@ -2,7 +2,7 @@ export const CUSTOM_VIEW_PORTS = {
   sm: {
     name: "Small",
     styles: {
-      width: "375px",
+      width: "365px",
       height: "800px",
     },
   },

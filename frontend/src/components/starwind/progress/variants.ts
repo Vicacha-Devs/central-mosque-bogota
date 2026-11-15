@@ -1,12 +1,7 @@
 import { tv } from "tailwind-variants";
 
 export const progress = tv({
-  base: [
-    "starwind-progress-bar",
-    `
-    h-2 w-full overflow-hidden rounded-full bg-muted
-  `,
-  ],
+  base: "bg-muted h-2 w-full overflow-hidden rounded-full",
   variants: {
     variant: {
       indeterminate: "relative",
@@ -14,14 +9,18 @@ export const progress = tv({
   },
 });
 
+export const progressTrack = tv({
+  base: "h-full w-full",
+});
+
 export const progressIndicator = tv({
   base: [
-    "starwind-progress-indicator",
-    "size-full flex-1 transition-transform",
+    "h-full w-full flex-1 transition-transform",
+    "data-instant:transition-none motion-reduce:transition-none",
   ],
   variants: {
     variant: {
-      indeterminate: "absolute inset-y-0 inset-s-0 w-3/4",
+      indeterminate: "absolute inset-y-0 start-0 w-3/4",
     },
     color: {
       primary: "bg-primary",
@@ -34,6 +33,6 @@ export const progressIndicator = tv({
     },
   },
   defaultVariants: {
-    color: "primary",
+    color: "default",
   },
 });

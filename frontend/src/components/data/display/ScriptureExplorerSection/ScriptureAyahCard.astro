@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/starwind/card";
 import { Separator } from "@/components/starwind/separator";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TScriptureAyahCard } from "@utils/islam-suite-mocks";
+import { toSafeHref } from "@utils/url.utils";
 
 /**
  * @component ScriptureAyahCard
@@ -88,7 +89,8 @@ const { ayah, listenRecitationLabel } = Astro.props;
 
       <p
         class="
-          notranslate text-right text-lg/loose font-bold text-slate-900
+          notranslate font-arabic-serif text-start text-xl/loose font-bold
+          text-slate-900
           dark:text-white
         "
         dir="rtl"
@@ -124,7 +126,7 @@ const { ayah, listenRecitationLabel } = Astro.props;
       "
       />
       <a
-        href={ayah.audioUrl}
+        href={toSafeHref(ayah.audioUrl)}
         target="_blank"
         rel="noopener noreferrer"
         class="

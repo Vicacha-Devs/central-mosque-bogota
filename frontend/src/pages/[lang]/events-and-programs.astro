@@ -26,12 +26,34 @@ const [eventEntries, cmsOccurrencesRes] = await Promise.all([
   }).catch(() => null),
 ]);
 
+const baseEvents: Array<TEvent>
+  = eventEntries.length > 0
+    ? eventEntries.map((entry) => entry.data)
+    : localizedMocks.events;
+
+const baseByTitle = new Map(
+  baseEvents.map((ev) => [ev.title.toLowerCase(), ev])
+);
+
 const allEvents: Array<TEvent>
   = Array.isArray(cmsOccurrencesRes?.data) && cmsOccurrencesRes.data.length > 0
-    ? cmsOccurrencesRes.data
-    : eventEntries.length > 0
-      ? eventEntries.map((entry) => entry.data)
-      : localizedMocks.events;
+    ? cmsOccurrencesRes.data.map((item, idx) => {
+        const fallback
+          = baseByTitle.get((item.title ?? "").toLowerCase())
+            ?? baseEvents[idx % baseEvents.length];
+        return {
+          ...fallback,
+          ...item,
+          image: item.image || fallback?.image || "",
+          date:
+            item.date?.month && item.date?.day
+              ? item.date
+              : (fallback?.date ?? { month: "", day: 1 }),
+          description: item.description || fallback?.description || "",
+          schedule: item.schedule || fallback?.schedule || "",
+        };
+      })
+    : baseEvents;
 ---
 
 <Layout

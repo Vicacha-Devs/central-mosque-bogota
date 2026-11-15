@@ -8,6 +8,7 @@ import {
   getUrgentAlertFallback,
   type TAlertBannerItem,
 } from "@utils/inbox-mocks";
+import { toSafeHref } from "@utils/url.utils";
 
 /**
  * @component UrgentAlertBanner
@@ -115,7 +116,7 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
       {
         banner.ctaLabel && banner.ctaUrl && (
           <a
-            href={banner.ctaUrl}
+            href={toSafeHref(banner.ctaUrl)}
             class="
               inline-flex items-center gap-1 rounded-lg bg-white/15 px-3 py-1
               text-xs font-bold text-white transition
@@ -123,7 +124,7 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
             "
           >
             <span>{banner.ctaLabel}</span>
-            <Icon name="arrow_forward" class="text-xs" />
+            <Icon name="arrow_forward" class="text-xs rtl:-scale-x-100" />
           </a>
         )
       }
@@ -132,14 +133,22 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
           <button
             type="button"
             id="mosque-alert-dismiss-btn"
-            aria-label="Cerrar aviso"
+            aria-label={
+              lang === "ar"
+                ? "إغلاق التنبيه"
+                : lang === "en"
+                  ? "Dismiss alert"
+                  : lang === "tr"
+                    ? "Uyarıyı kapat"
+                    : "Cerrar aviso"
+            }
             class="
               inline-flex size-6 items-center justify-center rounded-full
               bg-white/10 text-white transition
               hover:bg-white/20
             "
           >
-            ✕
+            <Icon name="close" class="text-sm" />
           </button>
         )
       }
@@ -148,10 +157,8 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
 </Alert>
 
 <script>
-
   import { initAlertBanner } from "./urgent-alert-banner.controller";
 
   initAlertBanner();
   document.addEventListener("astro:after-swap", initAlertBanner);
-
 </script>

@@ -60,29 +60,34 @@ const t = useTranslations(lang);
     dark:bg-slate-900
   "
 >
-  <div class="relative h-56 overflow-hidden">
-    <Image
-      width={512}
-      height={512}
-      class="
-        size-full object-cover transition-transform duration-500
-        group-hover:scale-105
-      "
-      layout="constrained"
-      data-alt={title}
-      alt={title}
-      src={image}
-    />
+  <div class="relative h-56 overflow-hidden bg-muted">
+    {
+      image && (
+        <Image
+          width={512}
+          height={512}
+          loading="lazy"
+          class="
+            size-full object-cover transition-transform duration-500
+            group-hover:scale-105
+          "
+          layout="constrained"
+          data-alt={title}
+          alt={title}
+          src={image}
+        />
+      )
+    }
     <div
       class="
-        absolute top-4 right-4 flex min-w-[60px] flex-col items-center
+        absolute top-4 end-4 flex min-w-[60px] flex-col items-center
         rounded-lg bg-primary p-3 text-white shadow-lg
       "
     >
       <span class="text-xs font-bold tracking-tighter uppercase">
-        {date.month}
+        {date?.month ?? ""}
       </span>
-      <span class="text-2xl font-black">{date.day}</span>
+      <span class="text-2xl font-black">{date?.day ?? ""}</span>
     </div>
   </div>
   <CardContent class="p-6">

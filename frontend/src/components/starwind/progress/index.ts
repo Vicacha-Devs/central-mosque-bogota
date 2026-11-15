@@ -1,9 +1,10 @@
 import Progress from "./Progress.astro";
-import { progress, progressIndicator } from "./variants";
+import { progress, progressIndicator, progressTrack } from "./variants";
 
 const ProgressVariants = {
   progress,
   progressIndicator,
+  progressTrack,
 };
 
 export { Progress, ProgressVariants };

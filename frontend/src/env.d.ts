@@ -12,3 +12,9 @@ declare module "@storybook-astro/renderer/entry-preview-docs" {
   import type { DecoratorFunction } from "storybook/internal/types";
   export const decorators: Array<DecoratorFunction>;
 }
+
+declare namespace App {
+  type Locals = {
+    cspNonce?: string;
+  };
+}

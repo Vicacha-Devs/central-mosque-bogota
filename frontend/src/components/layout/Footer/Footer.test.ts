@@ -136,6 +136,8 @@ describe("Footer", () => {
       const instagramLink = getByRole(root, "link", { name: "Instagram" });
       expect(instagramLink).toBeInTheDocument();
       expect(instagramLink.getAttribute("aria-label")).toBe("Instagram");
+      expect(instagramLink).toHaveClass("text-white");
+      expect(instagramLink).not.toHaveClass("dark:text-secondary");
     } finally {
       await close();
     }

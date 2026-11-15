@@ -30,7 +30,7 @@ describe("PhotoGalleriesSection", () => {
       ).toBeInTheDocument();
 
       expect(getByText(root, albums[0].title)).toBeInTheDocument();
-      expect(getByText(root, albums[0].mediaFolderPath)).toBeInTheDocument();
+      expect(getByText(root, albums[0].photographerCredit)).toBeInTheDocument();
     } finally {
       await close();
     }

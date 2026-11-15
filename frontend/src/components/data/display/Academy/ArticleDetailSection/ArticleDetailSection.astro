@@ -24,15 +24,10 @@ import {
   type TDetailedArticle,
 } from "@utils/localized-mocks";
 
-type TArticleDetail = TDetailedArticle & {
-  content?: string;
-  authorSlug?: string;
-};
-
 interface Props {
   lang?: TLang;
-  article?: TArticleDetail;
-  relatedArticles?: Array<TArticleDetail>;
+  article?: TDetailedArticle & { content?: string; authorSlug?: string };
+  relatedArticles?: Array<TDetailedArticle & { content?: string; authorSlug?: string }>;
 }
 
 const {
@@ -49,8 +44,11 @@ const article = articleProp ?? fallbackArticles[0];
 const relatedArticles
   = relatedArticlesProp
     ?? fallbackArticles.filter((a) => a.slug !== article.slug);
+const articleWithAuthorSlug = article as typeof article & {
+  authorSlug?: string;
+};
 const inferredAuthorSlug
-  = article.authorSlug
+  = articleWithAuthorSlug.authorSlug
     || (article.authorName.toLowerCase().includes("mansoor")
       || article.authorName.toLowerCase().includes("منصور")
       ? "sheikh-ahmad-al-mansoor"
@@ -79,7 +77,7 @@ const authorProfileHref = inferredAuthorSlug
             dark:text-blue-300
           "
         >
-          <Icon name="arrow_back" class="text-base" />
+          <Icon name="arrow_back" class="text-base rtl:-scale-x-100" />
           <span>{t("article-detail.back")}</span>
         </BreadcrumbLink>
       </BreadcrumbItem>
@@ -112,6 +110,11 @@ const authorProfileHref = inferredAuthorSlug
         <img
           src={article.imageUrl}
           alt={article.imageAlt}
+          width={800}
+          height={600}
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
           class="size-full object-cover"
         />
         <div
@@ -121,7 +124,7 @@ const authorProfileHref = inferredAuthorSlug
           "
         >
         </div>
-        <div class="absolute top-6 left-6">
+        <div class="absolute top-6 start-6">
           <Badge
             variant="primary"
             class="
@@ -216,9 +219,9 @@ const authorProfileHref = inferredAuthorSlug
                     <a
                       href={authorProfileHref}
                       class="
-                        transition-colors
-                        hover:text-primary hover:underline
-                      "
+                    transition-colors
+                    hover:text-primary hover:underline
+                  "
                     >
                       {article.authorName}
                     </a>

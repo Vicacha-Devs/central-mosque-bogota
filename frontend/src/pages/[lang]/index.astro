@@ -71,20 +71,24 @@ const [
   cmsSpotlightsRes,
   cmsDailyInspiration,
   cmsCampaignsRes,
+  live,
 ] = await Promise.all([
   getCollection("articles", (entry) => entry.data.locale === lang),
   getCollection("events", (entry) => entry.data.locale === lang),
   getCollection("communityServices", (entry) => entry.data.locale === lang),
   getCollection("mediaHighlights", (entry) => entry.data.locale === lang),
-  fetchStrapiData<{ data?: TEventSpotlight[] }>("events/spotlights", {
+  fetchStrapiData<{ data?: Array<TEventSpotlight> }>("events/spotlights", {
     locale: lang,
   }).catch(() => null),
   fetchIslamSuiteFromStrapi<TCmsDailyInspirationPayload>("daily-inspiration", {
     locale: lang,
   }),
-  fetchStrapiData<{ data?: TCmsCampaignSummary[] }>("donations/campaigns", {
+  fetchStrapiData<{ data?: Array<TCmsCampaignSummary> }>("donations/campaigns", {
     locale: lang,
   }).catch(() => null),
+  getLiveEntry("prayerTimes", {
+    languageCode: lang,
+  }).catch(() => ({ entry: null })),
 ]);
 
 const dailyDua: TDailyDua
@@ -104,11 +108,11 @@ const dailyDua: TDailyDua
             cmsDailyInspiration.ayahOfTheDay.translations?.[lang]
             ?? cmsDailyInspiration.ayahOfTheDay.translations?.es
             ?? fallbackDailyDua.translation,
-          reference:
+          source:
             cmsDailyInspiration.ayahOfTheDay.surahNameTranslit
             && cmsDailyInspiration.ayahOfTheDay.referenceKey
               ? `${cmsDailyInspiration.ayahOfTheDay.surahNameTranslit} (${cmsDailyInspiration.ayahOfTheDay.referenceKey})`
-              : fallbackDailyDua.reference,
+              : fallbackDailyDua.source,
         }
       : fallbackDailyDua;
 
@@ -120,7 +124,9 @@ const primaryCmsCampaign
 const featuredDonation
   = primaryCmsCampaign?.title
     && typeof primaryCmsCampaign.goalAmount === "number"
+    && Number.isFinite(primaryCmsCampaign.goalAmount)
     && typeof primaryCmsCampaign.raisedAmount === "number"
+    && Number.isFinite(primaryCmsCampaign.raisedAmount)
     ? {
         title: primaryCmsCampaign.title,
         description:
@@ -137,7 +143,7 @@ const featuredDonation
       }
     : fallbackFeaturedDonation;
 
-const eventSpotlights: TEventSpotlight[]
+const eventSpotlights: Array<TEventSpotlight>
   = Array.isArray(cmsSpotlightsRes?.data) && cmsSpotlightsRes.data.length > 0
     ? cmsSpotlightsRes.data
     : fallbackSpotlights;
@@ -167,22 +173,38 @@ const mediaHighlights: Array<TMediaHighlight>
       }))
     : localizedMocks.mediaHighlights;
 
-const live = await getLiveEntry("prayerTimes", {
-  languageCode: lang,
-});
-
 const { entry } = live;
 
-const { times, location, hijriDate, currentDate } = entry!.data || {};
+const fallbackTimes = {
+  fajr: "04:45",
+  sunrise: "05:56",
+  dhuhr: "11:50",
+  asr: "15:10",
+  maghrib: "17:45",
+  isha: "18:55",
+};
+
+const {
+  times = fallbackTimes,
+  location = "Bogotá, Colombia",
+  hijriDate = "",
+  currentDate = "",
+} = entry?.data ?? {};
 ---
 
 <Layout>
   <HeroHijri
+    slot="hero"
     imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuDdlrd8AprY013bVQSvLjSWaOwTysETvmudIyet1ui8bdnFC2mjZ1b5okpi2OJ9rqogESejmF4lJRn8efBrCuCrJcxw9DU7VIr03J1sT4lIhkty48r2AqpqaH069FoNZ5-xcE2ZXPcFDt2HXcaLaHtFY5swEUTuMeikRCAw6RFG_iB1VLOJMmIOLxfFbwudkXDYHFbFajgfAC6WR6QPpMCSmvGVwiv1G7w56_9SUpKGblDJo4l4GYZLxuc-WOiJFjPnUpSaZYKovL4"
     imageAlt={t("home.hero-image-alt")}
+    title={t("brand.title")}
     hijriDate={hijriDate}
     currentDate={currentDate}
     phrase={heroPhrase}
+    primaryCtaLabel={t("footer.contact")}
+    primaryCtaHref={translatePath("/contact-and-visit")}
+    secondaryCtaLabel={t("pray-schedule.title")}
+    secondaryCtaHref={translatePath("/prayer-information")}
   />
   <DailyPrayerTime
     lang={lang}

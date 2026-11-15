@@ -1,4 +1,3 @@
-import type { TAcademyArticle } from "./models/academy";
 import type { TEvent } from "./models/events";
 import type { TCommunityService } from "./models/services";
 
@@ -146,7 +145,7 @@ export const mediaHighlights = [
   },
 ];
 
-export const academyCourses: Array<Omit<TAcademyArticle, "ctaLabel">> = [
+export const academyCourses = [
   {
     badgeLabel: "Fundacional",
     badgeTone: "primary",
@@ -319,8 +318,7 @@ export const aboutPageData = {
       bio: "Custodio y encargado operativo (Qayyim) de la Mezquita Central Abu Bakr As-Siddiq. Supervisa la apertura puntual para las cinco oraciones diarias, el llamado al Adhan y la recepción hospitalaria de la comunidad y visitantes.",
       credentials:
         "Servicio Comunitario y Custodia de Mezquita desde 2012 · Muadhin Residente",
-      officeHours:
-        "Todos los días durante los horarios de las 5 oraciones diarias",
+      officeHours: "Todos los días durante los horarios de las 5 oraciones diarias",
       languagesSpoken: "Árabe, Español",
       showInStaffDirectory: true,
       hasDedicatedPage: true,

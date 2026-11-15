@@ -21,6 +21,12 @@ describe("media-archive.controller", () => {
 
     expect(root.querySelector("#c1")?.classList.contains("hidden")).toBe(true);
     expect(root.querySelector("#c2")?.classList.contains("hidden")).toBe(false);
+    expect(podcastBtn?.getAttribute("aria-pressed")).toBe("true");
+    expect(
+      root
+        .querySelector<HTMLButtonElement>("[data-media-filter=\u0022all\u0022]")
+        ?.getAttribute("aria-pressed")
+    ).toBe("false");
     await close();
   });
 });

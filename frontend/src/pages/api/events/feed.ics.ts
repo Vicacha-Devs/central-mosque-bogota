@@ -1,20 +1,10 @@
 import type { TLang } from "@i18n/ui";
+import { fetchStrapiRaw, resolveApiLang } from "@services/strapi";
+import { pad2, sanitizeIcsText } from "@utils/ics.utils";
 import { getDetailedEvents } from "@utils/localized-mocks";
 import type { APIRoute } from "astro";
-import { STRAPI_API_URL } from "astro:env/client";
-import { getSecret } from "astro:env/server";
 
 export const prerender = false;
-
-const ALLOWED_LANGS = new Set<TLang>(["es", "en", "ar", "tr"]);
-
-function sanitizeIcsText(input: string): string {
-  return input.replace(/[\r\n,;\\]+/g, " ").trim();
-}
-
-function pad2(num: number): string {
-  return String(num).padStart(2, "0");
-}
 
 function buildFallbackEventsIcs(lang: TLang): string {
   const events = getDetailedEvents(lang);
@@ -31,9 +21,10 @@ function buildFallbackEventsIcs(lang: TLang): string {
   ];
 
   events.forEach((ev, idx) => {
-    const day = pad2(ev.date.day || 15 + idx * 2);
+    const rawDay = ev.date.day || 15 + (idx % 8) * 2;
+    const day = pad2(Math.min(31, Math.max(1, rawDay)));
     const dateCompact = `202610${day}`;
-    const startHour = 18 - idx;
+    const startHour = Math.max(8, 18 - (idx % 10));
     const endHour = startHour + 2;
     const summary = sanitizeIcsText(ev.title);
     const description = sanitizeIcsText(ev.description);
@@ -62,36 +53,24 @@ function buildFallbackEventsIcs(lang: TLang): string {
  * when Strapi v5 is online, with a deterministic RFC 5545 `VCALENDAR` fallback when offline.
  */
 export const GET: APIRoute = async ({ url }) => {
-  const rawLang = (
-    url.searchParams.get("locale") ??
-    url.searchParams.get("lang") ??
-    "es"
-  ).toLowerCase();
-  const safeLang: TLang = ALLOWED_LANGS.has(rawLang as TLang)
-    ? (rawLang as TLang)
-    : "es";
-
+  const safeLang = resolveApiLang(url);
   let icsBody: string | null = null;
 
-  const upstreamPaths = ["/api/events/feed.ics", "/api/calendar/feed.ics"];
-  for (const upstreamPath of upstreamPaths) {
+  const upstreamEndpoints = ["events/feed.ics", "calendar/feed.ics"];
+  for (const endpoint of upstreamEndpoints) {
     try {
-      const baseUrl = STRAPI_API_URL || "http://127.0.0.1:1337";
-      const token = getSecret("STRAPI_API_TOKEN");
-      const targetUrl = new URL(upstreamPath, baseUrl);
-      targetUrl.searchParams.set("locale", safeLang);
+      const res = await fetchStrapiRaw(
+        endpoint,
+        { locale: safeLang },
+        {
+          headers: { Accept: "text/calendar" },
+          timeoutMs: 2500,
+          skipDefaultPopulate: true,
+        }
+      );
 
-      const headers = new Headers({ Accept: "text/calendar" });
-      if (typeof token === "string" && token.trim()) {
-        headers.set("Authorization", `Bearer ${token.trim()}`);
-      }
-
-      const res = await fetch(targetUrl, {
-        headers,
-        signal: AbortSignal.timeout(2500),
-      });
-
-      if (res.ok) {
+      const contentType = res.headers.get("content-type") ?? "";
+      if (contentType.includes("text/calendar") || contentType.includes("text/plain")) {
         const upstreamText = await res.text();
         if (upstreamText.includes("BEGIN:VCALENDAR")) {
           icsBody = upstreamText;
@@ -110,6 +89,7 @@ export const GET: APIRoute = async ({ url }) => {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",
       "Content-Disposition": `attachment; filename="mezquita-central-bogota-eventos-${safeLang}.ics"`,
+      "Content-Security-Policy": "default-src 'none'; sandbox",
       "X-Content-Type-Options": "nosniff",
       "Cache-Control": "public, max-age=3600",
     },

@@ -1,81 +1,60 @@
+// TODO(https://github.com/starwind-ui/starwind-ui/issues/283): Local RTL-safe logical CSS utilities pending upstream full RTL release.
 import { tv } from "tailwind-variants";
 
-export const switchWrapper = tv({ base: "starwind-switch flex items-center" });
+export const switchWrapper = tv({
+  base: "flex items-center",
+});
 
 export const switchButton = tv({
   base: [
-    `
-      inline-flex h-(--height) w-(--width) items-center rounded-full border
-      border-input bg-muted
-    `,
-    `
-      group peer ring-offset-background transition outline-none
-      focus-visible:ring-3
-    `,
-    `
-      not-disabled:cursor-pointer
-      disabled:cursor-not-allowed disabled:opacity-50
-    `,
+    "border-input bg-muted inline-flex h-(--height) w-(--width) items-center rounded-full border",
+    "group peer ring-offset-background transition outline-none focus-visible:ring-3",
+    "data-error-visible:border-error data-error-visible:focus-visible:ring-error/40",
+    "not-disabled:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
   ],
   variants: {
     variant: {
-      primary: `
-        focus:ring-primary/50
-        focus-visible:border-primary/70
-        aria-checked:border-primary
-      `,
-      secondary: `
-          focus:ring-secondary/50
-          focus-visible:border-secondary/70
-          aria-checked:border-secondary
-        `,
-      default: `
-        focus:ring-outline/50
-        focus-visible:border-outline
-        aria-checked:border-foreground
-      `,
-      info: `
-        focus:ring-info/50
-        focus-visible:border-info/70
-        aria-checked:border-info
-      `,
-      success: `
-        focus:ring-success/50
-        focus-visible:border-success/70
-        aria-checked:border-success
-      `,
-      warning: `
-        focus:ring-warning/50
-        focus-visible:border-warning/70
-        aria-checked:border-warning
-      `,
-      error: `
-        focus:ring-error/50
-        focus-visible:border-error/70
-        aria-checked:border-error
-      `,
+      primary: "aria-checked:border-primary focus-visible:border-primary/70 focus:ring-primary/50",
+      secondary: "aria-checked:border-secondary focus-visible:border-secondary/70 focus:ring-secondary/50",
+      default: "aria-checked:border-foreground focus-visible:border-outline focus:ring-outline/50",
+      info: "aria-checked:border-info focus-visible:border-info/70 focus:ring-info/50",
+      success: "aria-checked:border-success focus-visible:border-success/70 focus:ring-success/50",
+      warning: "aria-checked:border-warning focus-visible:border-warning/70 focus:ring-warning/50",
+      error: "aria-checked:border-error focus-visible:border-error/70 focus:ring-error/50",
     },
   },
-  defaultVariants: { variant: "default" },
+  defaultVariants: {
+    variant: "default",
+  },
 });
 
 export const switchToggle = tv({
   base: [
-    "inline-block transform rounded-full bg-foreground transition-transform",
-    `
-      group-aria-checked:translate-x-(--translation)
-      group-aria-[checked=false]:translate-x-[calc(var(--padding)-var(--border-offset))]
-    `,
+    "bg-foreground inline-block transform rounded-full transition-transform",
+    "group-aria-checked:translate-x-(--translation) group-aria-[checked=false]:translate-x-[calc(var(--padding)-var(--border-offset))]",
   ],
-  variants: { size: { sm: "size-4", md: "size-5", lg: "size-6" } },
-  defaultVariants: { size: "md" },
+  variants: {
+    size: {
+      sm: "size-4",
+      md: "size-5",
+      lg: "size-6",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
 });
 
 export const switchLabel = tv({
-  base: `
-    ml-2 font-medium text-foreground
-    peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-  `,
-  variants: { size: { sm: "text-sm", md: "text-base", lg: "text-lg" } },
-  defaultVariants: { size: "md" },
+  base: "text-foreground ms-2 font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  variants: {
+    size: {
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
 });

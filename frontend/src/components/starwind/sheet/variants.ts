@@ -1,70 +1,39 @@
+// TODO(https://github.com/starwind-ui/starwind-ui/issues/283): Local RTL-safe logical CSS utilities pending upstream full RTL release.
 import { tv } from "tailwind-variants";
 
-export const sheet = tv({ base: "starwind-sheet" });
-
-export const sheetClose = tv({ base: "starwind-sheet-close" });
-
-export const sheetTrigger = tv({ base: "starwind-sheet-trigger" });
-
-export const dialogBackdrop = tv({
+export const sheetBackdrop = tv({
   base: [
-    `
-      starwind-dialog-backdrop fixed inset-0 top-0 left-0 z-50 hidden h-screen
-      w-screen bg-black/80
-    `,
-    `
-      fade-in
-      data-[state=open]:animate-in
-    `,
-    `
-      fade-out
-      data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards
-    `,
-    `
-      data-[state=closed]:duration-300
-      data-[state=open]:duration-500
-    `,
+    "fixed inset-0 top-0 left-0 z-50 hidden h-screen w-screen bg-black/80",
+    "data-starting-style:!animate-none data-starting-style:opacity-0",
+    "data-[state=open]:animate-in fade-in",
+    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out",
+    "data-[state=closed]:duration-300 data-[state=open]:duration-500",
   ],
 });
 
 export const sheetContent = tv({
   base: [
-    "starwind-dialog-content",
-    `
-      fixed z-50 flex-col gap-4 bg-background shadow-lg transition ease-in-out
-      open:flex
-    `,
-    `
-      data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards
-      data-[state=open]:animate-in
-    `,
-    `
-      data-[state=closed]:duration-300
-      data-[state=open]:duration-500
-    `,
+    "bg-background fixed z-50 flex-col gap-4 shadow-lg transition ease-in-out open:flex",
+    "data-starting-style:!animate-none data-starting-style:opacity-0",
+    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards",
+    "data-[state=closed]:duration-300 data-[state=open]:duration-500",
   ],
   variants: {
     side: {
       right: [
-        "slide-in-from-right slide-out-to-right",
-        `
-          inset-y-0 right-0 left-auto h-full max-h-dvh w-3/4 border-l
-          sm:max-w-sm
-        `,
+        "slide-out-to-right slide-in-from-right",
+        "inset-y-0 right-0 left-auto h-full max-h-[100dvh] w-3/4 border-l sm:max-w-sm",
       ],
       left: [
-        "slide-in-from-left slide-out-to-left",
-        `
-          inset-y-0 right-auto left-0 h-full max-h-dvh w-3/4 border-r
-          sm:max-w-sm
-        `,
+        "slide-out-to-left slide-in-from-left",
+        "inset-y-0 right-auto left-0 h-full max-h-[100dvh] w-3/4 border-r sm:max-w-sm",
       ],
       top: [
-        "slide-in-from-top slide-out-to-top",
+        "slide-out-to-top slide-in-from-top",
         "inset-x-0 top-0 bottom-auto h-auto w-full max-w-screen border-b",
       ],
       bottom: [
-        "slide-in-from-bottom slide-out-to-bottom",
+        "slide-out-to-bottom slide-in-from-bottom",
         "inset-x-0 top-auto bottom-0 h-auto w-full max-w-screen border-t",
       ],
     },
@@ -76,31 +45,31 @@ export const sheetContent = tv({
 
 export const sheetCloseButton = tv({
   base: [
-    "starwind-dialog-close",
-    `
-      absolute top-4 right-4 rounded-xs
-      [&>svg]:opacity-70
-      hover:[&>svg]:opacity-100
-    `,
-    `
-      transition-[color,box-shadow] outline-none
-      focus-visible:ring-3 focus-visible:ring-outline/50
-    `,
+    "absolute top-4 end-4 rounded-xs [&>svg]:opacity-70 hover:[&>svg]:opacity-100",
+    "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3",
   ],
 });
 
 export const sheetDescription = tv({
-  base: ["text-sm text-muted-foreground"],
+  base: [
+    "text-muted-foreground text-sm",
+  ],
 });
 
 export const sheetFooter = tv({
-  base: ["mt-auto flex flex-col gap-2 p-4"],
+  base: [
+    "mt-auto flex flex-col gap-2 p-4",
+  ],
 });
 
 export const sheetHeader = tv({
-  base: ["flex flex-col gap-1.5 p-4"],
+  base: [
+    "flex flex-col gap-1.5 p-4",
+  ],
 });
 
 export const sheetTitle = tv({
-  base: ["starwind-sheet-title", "font-heading font-semibold text-foreground"],
+  base: [
+    "text-foreground font-heading font-semibold",
+  ],
 });

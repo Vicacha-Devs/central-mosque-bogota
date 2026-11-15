@@ -54,10 +54,10 @@ interface Props {
 
 const { content, theme, blocks, class: className = "" } = Astro.props;
 
-const mergedBlocks: TiptapBlockUserComponents = {
+const mergedBlocks = {
   beforeAfterSlider: BeforeAfterSlider,
   ...blocks,
-};
+} as unknown as TiptapBlockUserComponents;
 
 const mosqueTheme: TiptapBlockUserTheme = {
   overwrite: {

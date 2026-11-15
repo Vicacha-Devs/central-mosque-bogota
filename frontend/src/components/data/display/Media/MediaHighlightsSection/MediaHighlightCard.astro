@@ -76,6 +76,7 @@ const { title, href, imageUrl, imageAlt, ctaLabel } = Astro.props as Props;
     <Image
       src={imageUrl}
       alt={imageAlt}
+      loading="lazy"
       class="
         absolute inset-0 size-full object-cover grayscale transition-all
         duration-700
@@ -95,7 +96,7 @@ const { title, href, imageUrl, imageAlt, ctaLabel } = Astro.props as Props;
     <div class="absolute inset-x-6 top-6">
       <h3 class="text-xl/snug font-bold text-white uppercase">{title}</h3>
     </div>
-    <div class="absolute bottom-6 left-6 flex items-center gap-2">
+    <div class="absolute start-6 bottom-6 flex items-center gap-2">
       <div
         class="flex size-8 items-center justify-center rounded-full bg-primary"
       >

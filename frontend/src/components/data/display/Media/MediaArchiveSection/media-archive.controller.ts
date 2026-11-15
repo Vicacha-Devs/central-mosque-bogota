@@ -16,10 +16,7 @@ export function initMediaFilters(): void {
 
       buttons.forEach((b) => {
         const isActive = b === btn;
-        b.classList.toggle("bg-secondary", isActive);
-        b.classList.toggle("text-white", isActive);
-        b.classList.toggle("bg-white", !isActive);
-        b.classList.toggle("text-slate-700", !isActive);
+        b.setAttribute("aria-pressed", String(isActive));
       });
 
       cards.forEach((card) => {

@@ -129,13 +129,14 @@ const translatePath = useTranslatedPath(lang);
         </div>
       </a>
       <!-- Mosque lemma -->
-      {lemma && <p class="mb-6 leading-relaxed text-blue-100/70">{lemma}</p>}
+      {lemma && <p class="mb-6 leading-relaxed text-white/85">{lemma}</p>}
       <!-- Mosque social networks -->
       <ul class="flex gap-4">
         {
           socialNetworkLinks.map(({ label, href, icon }) => (
             <li>
               <Link
+                color="navbar"
                 class="
                   flex size-10 items-center justify-center rounded-full
                   bg-white/10 text-white
@@ -152,8 +153,8 @@ const translatePath = useTranslatedPath(lang);
       </ul>
     </div>
     <div class="col-span-1">
-      <h4 class="mb-6 text-lg font-bold">{t("footer.quick-links")}</h4>
-      <ul class="space-y-4 text-blue-100/70">
+      <h2 class="mb-6 text-lg font-bold">{t("footer.quick-links")}</h2>
+      <ul class="space-y-4 text-white/85">
         {
           fastLinks.map(({ label, href }) => (
             <li>
@@ -166,32 +167,44 @@ const translatePath = useTranslatedPath(lang);
       </ul>
     </div>
     <div class="col-span-1">
-      <h4 class="mb-6 text-lg font-bold">{t("footer.contact")}</h4>
-      <ul class="space-y-4 text-blue-100/70">
+      <h2 class="mb-6 text-lg font-bold">{t("footer.contact")}</h2>
+      <ul class="space-y-4 text-white/85">
         <li class="flex items-center gap-3">
           <Icon
             name="location_on"
-            class="items-baseline text-sm text-blue-400"
+            class="items-baseline text-sm text-blue-300"
           />
           <address class="not-italic">{contactInfo.address}</address>
         </li>
         <li class="flex items-center gap-3">
-          <Icon name="phone" class="text-sm text-blue-400" />
-          <phone>{contactInfo.phone}</phone>
+          <Icon name="phone" class="text-sm text-blue-300" />
+          <a
+            href={`tel:${contactInfo.phone.replace(/[^\d+]/g, "")}`}
+            class="transition-colors hover:text-white"
+          >
+            {contactInfo.phone}
+          </a>
         </li>
         <li class="flex items-center gap-3">
-          <Icon name="email" class="text-sm text-blue-400" />
-          <email>{contactInfo.email}</email>
+          <Icon name="email" class="text-sm text-blue-300" />
+          <a
+            href={`mailto:${contactInfo.email}`}
+            class="transition-colors hover:text-white"
+          >
+            {contactInfo.email}
+          </a>
         </li>
       </ul>
     </div>
     <div class="col-span-1">
-      <h4 class="mb-6 text-lg font-bold">{t("footer.newsletter")}</h4>
-      <p class="mb-4 text-sm text-blue-100/70">
+      <h2 class="mb-6 text-lg font-bold">{t("footer.newsletter")}</h2>
+      <p class="mb-4 text-sm text-white/85">
         {t("footer.newsletter-description")}
       </p>
       <form
         id="footer-newsletter-form"
+        method="POST"
+        action="/api/submissions"
         data-locale={lang}
         data-success-msg={t("footer.newsletter-success")}
         data-invalid-msg={t("footer.newsletter-invalid-email")}
@@ -201,12 +214,22 @@ const translatePath = useTranslatedPath(lang);
         <div class="hidden" aria-hidden="true">
           <input name="website" type="text" tabindex="-1" autocomplete="off" />
         </div>
+        <label
+          for="footer-newsletter-email"
+          class="text-xs font-semibold text-white/90"
+        >
+          {t("footer.email-placeholder")}
+        </label>
         <Input
+          id="footer-newsletter-email"
           name="email"
           required
+          autocomplete="email"
+          inputmode="email"
+          enterkeyhint="send"
           class="
-            rounded-lg border-white/20 bg-white/10 px-4 py-2 text-sm text-white
-            placeholder:text-blue-100/30
+            rounded-lg border-white/25 bg-white/10 px-4 py-2 text-base
+            text-white placeholder:text-white/60
           "
           placeholder={t("footer.email-placeholder")}
           type="email"
@@ -229,12 +252,12 @@ const translatePath = useTranslatedPath(lang);
     lg:px-8
   "
   >
-    <Separator class="bg-white/10" />
+    <Separator class="bg-white/15" />
   </div>
   <section
     class="
       mx-auto mt-10 flex max-w-7xl flex-col justify-between px-4 text-sm
-      text-blue-100/40
+      text-white/75
       sm:px-6
       md:flex-row md:items-center
       lg:px-8
@@ -262,10 +285,8 @@ const translatePath = useTranslatedPath(lang);
 </footer>
 
 <script>
-
   import { initFooterNewsletter } from "./footer-newsletter.controller";
 
   initFooterNewsletter();
   document.addEventListener("astro:after-swap", () => initFooterNewsletter());
-
 </script>
