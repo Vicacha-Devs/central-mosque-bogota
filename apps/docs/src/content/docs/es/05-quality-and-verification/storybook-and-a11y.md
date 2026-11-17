@@ -28,3 +28,10 @@ pnpm storybook
 # Compilar paquete estático en apps/frontend/storybook-static/
 ./node_modules/.bin/storybook build
 ```
+
+---
+
+## 3. Viewports y Sincronización RTL
+
+- **Viewports (`.storybook/constants.ts`)**: `Mobile Small (320px)`, `Mobile (365px)`, `Tablet (768px)`, `Desktop (1024px)` y `Desktop Wide (1440px)` están configurados en `CUSTOM_VIEW_PORTS`.
+- **Selector RTL en Barra Superior (`.storybook/preview.ts`)**: `applyDocumentDirection` sincroniza `globals.addonRtl` (`"ltr"` / `"rtl"`) sobre `document.documentElement.dir`, `document.body.dir` y `#storybook-root.dir` mediante el canal de globals y el decorador de preview para que las reglas `[dir="rtl"]` y las utilidades `rtl:` de Tailwind funcionen en todas las historias Astro.

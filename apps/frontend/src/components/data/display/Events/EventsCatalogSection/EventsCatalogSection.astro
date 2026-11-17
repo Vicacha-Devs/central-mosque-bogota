@@ -30,10 +30,12 @@ const categories = Array.from(new Set(allEvents.map((e) => e.category)));
   >
     <button
       type="button"
+      role="tab"
+      aria-selected="true"
       data-event-filter="all"
       class="
-        cursor-pointer rounded-full bg-secondary px-5 py-2 text-sm font-bold
-        text-white shadow-sm transition-colors
+        cursor-pointer rounded-full border border-transparent bg-secondary px-5
+        py-2 text-sm font-bold text-white shadow-sm transition-colors
       "
     >
       {t("events-page.filter-all")}
@@ -42,6 +44,8 @@ const categories = Array.from(new Set(allEvents.map((e) => e.category)));
       categories.map((cat) => (
         <button
           type="button"
+          role="tab"
+          aria-selected="false"
           data-event-filter={cat}
           class="
             cursor-pointer rounded-full border border-slate-300 bg-white px-5

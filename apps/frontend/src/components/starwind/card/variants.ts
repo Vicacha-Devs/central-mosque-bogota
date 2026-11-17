@@ -30,7 +30,7 @@ export const cardDescription = tv({
 });
 
 export const cardFooter = tv({
-  base: "bg-muted/50 flex items-center rounded-b-xl border-t p-(--card-spacing)",
+  base: "bg-muted/50 border-border flex items-center rounded-b-xl border-t p-(--card-spacing)",
 });
 
 export const cardHeader = tv({

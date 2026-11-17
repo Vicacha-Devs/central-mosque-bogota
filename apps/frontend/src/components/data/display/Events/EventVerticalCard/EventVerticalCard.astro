@@ -1,7 +1,6 @@
 ---
 import { Badge } from "@/components/starwind/badge";
 import { Card, CardContent, CardFooter } from "@/components/starwind/card";
-import { Separator } from "@/components/starwind/separator";
 import Link from "@components/actions/Link/Link.astro";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
@@ -80,7 +79,7 @@ const t = useTranslations(lang);
     }
     <div
       class="
-        absolute top-4 end-4 flex min-w-[60px] flex-col items-center
+        absolute inset-e-4 top-4 flex min-w-[60px] flex-col items-center
         rounded-lg bg-primary p-3 text-white shadow-lg
       "
     >
@@ -117,13 +116,6 @@ const t = useTranslations(lang);
       {description}
     </p>
   </CardContent>
-  <div class="px-6">
-    <Separator class="
-      bg-secondary/5
-      dark:bg-slate-800
-    "
-    />
-  </div>
   <CardFooter class="flex items-center justify-between px-6 py-4">
     <div
       class="

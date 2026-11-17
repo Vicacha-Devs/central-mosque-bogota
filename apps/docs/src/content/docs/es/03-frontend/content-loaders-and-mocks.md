@@ -74,3 +74,13 @@ Por defecto, `strapiLoader` consulta un único idioma desde un endpoint REST de 
 | `media-mocks.ts` | Destacados multimedia, archivo filtrable de audio/video/documentos y canales de difusión |
 | `institutional-mocks.ts` | Línea de tiempo histórica, misión/visión, perfiles de liderazgo y normas de etiqueta |
 | `inbox-mocks.ts` | Flujos de ventanilla única (Khutbah, Nikah, Janazah, Shahada, Certificados) |
+
+---
+
+## 4. Clasificación: Datos CMS en Producción vs. Datos Mock
+
+| Categoría | Endpoints / Archivos | Regla en Producción |
+| :--- | :--- | :--- |
+| **Obligatorio en Producción (Strapi v5)** | `inbox/alerts`, `inbox/channels`, `inbox/broadcasts`, `events/occurrences`, `events/spotlights`, `donations/campaigns`, facturas de servicios públicos, `media-feeds/episodes`, `resources/galleries`, `resources/publications`, `resources/glossary`, `POST /api/submissions` | Deben servirse desde Strapi v5; si Strapi no responde en producción, mostrar estado vacío/no disponible en lugar de fechas, montos o canales ficticios |
+| **Solo Mock (Dev, Storybook, Tests)** | `data.mocks.ts`, `event-mocks.ts`, `spotlight-mocks.ts`, `donation-mocks.ts`, `utility-invoice-mocks.ts`, `inbox-mocks.ts`, `media-mocks.ts`, `article-mocks.ts` | Uso exclusivo para historias de Storybook, pruebas en Vitest y desarrollo local sin conexión |
+| **Semilla Inicial / Referencia Estática** | `resources-mocks.ts` (sembrar en Strapi), `islam-suite-mocks.ts` (Cinco Pilares, Aleyas/Hadices, Tasbih, Qibla/Hijri), `institutional-mocks.ts`, `localized-mocks.ts` | Sembrar publicaciones y glosario una vez en Strapi; el contenido religioso canónico y la copia institucional estática pueden permanecer en código/i18n |

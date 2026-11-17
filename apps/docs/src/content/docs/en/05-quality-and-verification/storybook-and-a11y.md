@@ -59,3 +59,10 @@ export const ArabicRTL = {
   },
 };
 ```
+
+---
+
+## 4. Viewports & RTL Synchronization
+
+- **Viewports (`.storybook/constants.ts`)**: `Mobile Small (320px)`, `Mobile (365px)`, `Tablet (768px)`, `Desktop (1024px)`, and `Desktop Wide (1440px)` are configured in `CUSTOM_VIEW_PORTS`.
+- **RTL Toolbar Toggle (`.storybook/preview.ts`)**: `applyDocumentDirection` syncs `globals.addonRtl` (`"ltr"` / `"rtl"`) onto `document.documentElement.dir`, `document.body.dir`, and `#storybook-root.dir` via Storybook's globals channel and preview decorator so `[dir="rtl"]` CSS and Tailwind `rtl:` utilities work across Astro stories.

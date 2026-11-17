@@ -50,3 +50,25 @@ Instead of shipping heavy React/Vue hydration bundles, interactive components pa
 1. **Idempotent Initialization**: Every controller exports `init*(root: ParentNode = document)` and guards against double-binding via `dataset.*Initialized = "true"`.
 2. **Safe DOM Manipulation**: Uses `textContent`, `setAttribute`, `classList`, and `DOMParser`—never `innerHTML`.
 3. **Unit Testability**: Because `init*` accepts a `root` parameter, Vitest tests can render the `.astro` component with `renderAstroComponentToDom()` and invoke `init*(root)` directly in Happy DOM.
+
+---
+
+## 5. Responsive Screen Sizes & Starwind Customizations
+
+### Breakpoint Scale (`src/styles/global.css`)
+
+| Tier | Token(s) | Min-Width | Layout Rule |
+| :--- | :--- | :--- | :--- |
+| **Mobile** | `mobile` (`sm: 365px`) | `320px` | Single-column stacks (`grid-cols-1`), wrapped badges/buttons, mobile drawer nav |
+| **Tablet** | `tablet` / `md` | `768px` | 2-column grids (`md:grid-cols-2` for events, publications, glossary, broadcast channels) |
+| **Desktop** | `desktop` / `lg` | `1024px` | Full top navigation bar, 3-column grids (`lg:grid-cols-3`), single-row `UrgentAlertBanner` |
+| **Desktop Wide** | `xl` / `2xl` | `1440px` / `1536px` | Max-width `1280px–1440px` containers and secondary metadata badges |
+
+> **Rule:** Because `--breakpoint-sm` is `365px`, multi-column grids must break at `md:` (`768px`) or `lg:` (`1024px`), not `sm:`.
+
+### Local Starwind UI Customizations (`src/components/starwind/`)
+
+- **`badge/variants.ts`**: Uses `max-w-full flex-wrap justify-center whitespace-normal text-center md:whitespace-nowrap` so long localized badges wrap cleanly on `320px–390px` phones.
+- **`button/variants.ts`**: Uses `max-w-full whitespace-normal text-center lg:whitespace-nowrap` and `min-h-*` with vertical padding so CTA buttons wrap without clipping or overflowing narrow tablet/mobile cards.
+- **`card/variants.ts`**: `cardFooter` includes `border-border` alongside `border-t` so dividers use `--border` instead of `currentColor`.
+

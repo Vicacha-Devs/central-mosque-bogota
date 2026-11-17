@@ -48,3 +48,24 @@ flowchart TD
 1. **Inicialización Idempotente**: Todo controlador exporta `init*(root: ParentNode = document)` y evita doble enlace mediante `dataset.*Initialized = "true"`.
 2. **Manipulación Segura del DOM**: Utiliza `textContent`, `setAttribute`, `classList` y `DOMParser`, nunca `innerHTML`.
 3. **Pruebas Unitarias Directas**: Al recibir `root`, las pruebas en Vitest renderizan el componente con `renderAstroComponentToDom()` e invocan `init*(root)` directamente en Happy DOM.
+
+---
+
+## 5. Tamaños de Pantalla y Personalizaciones de Starwind
+
+### Escala de Breakpoints (`src/styles/global.css`)
+
+| Nivel | Token(s) | Min-Width | Regla de Layout |
+| :--- | :--- | :--- | :--- |
+| **Móvil** | `mobile` (`sm: 365px`) | `320px` | Columnas apiladas (`grid-cols-1`), badges/botones con ajuste de línea, menú móvil en cajón |
+| **Tablet** | `tablet` / `md` | `768px` | Grillas de 2 columnas (`md:grid-cols-2` en eventos, publicaciones, glosario y canales) |
+| **Escritorio** | `desktop` / `lg` | `1024px` | Barra de navegación superior completa, grillas de 3 columnas (`lg:grid-cols-3`), `UrgentAlertBanner` en una sola fila |
+| **Escritorio Amplio** | `xl` / `2xl` | `1440px` / `1536px` | Contenedores `1280px–1440px` y etiquetas secundarias visibles |
+
+> **Regla:** Como `--breakpoint-sm` es `365px`, las grillas multicolumna deben activarse en `md:` (`768px`) o `lg:` (`1024px`), nunca en `sm:`.
+
+### Personalizaciones Locales de Starwind UI (`src/components/starwind/`)
+
+- **`badge/variants.ts`**: Usa `max-w-full flex-wrap justify-center whitespace-normal text-center md:whitespace-nowrap` para que las etiquetas largas se ajusten sin desbordar pantallas de `320px–390px`.
+- **`button/variants.ts`**: Usa `max-w-full whitespace-normal text-center lg:whitespace-nowrap` y `min-h-*` con relleno vertical para evitar recortes o desbordes en tarjetas estrechas.
+- **`card/variants.ts`**: `cardFooter` incluye `border-border` junto a `border-t` para usar `--border` en lugar de `currentColor`.

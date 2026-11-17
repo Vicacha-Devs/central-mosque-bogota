@@ -47,9 +47,10 @@ pre.prismjs {
   border-color: var(--border, #1e293b);
 }
 
-[data-theme="dark"] .sbdocs :not(pre) > code {
+[data-theme="dark"] .sbdocs.sbdocs-wrapper :not(pre) > code {
   background-color: var(--muted, #262626);
   border-color: var(--border, #1e293b);
+  color: var(--foreground, #fafafa);
 }
 
 [data-theme="dark"] .sbdocs :is(input, textarea, select) {

@@ -68,7 +68,7 @@ if (!propBanner) {
 }
 
 const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
-  info: "bg-slate-900 text-white border-b border-slate-800",
+  info: "bg-secondary text-white border-b border-secondary/40",
   warning: "bg-amber-600 text-white border-b border-amber-500",
   urgent: "bg-red-700 text-white border-b border-red-600",
   celebration: "bg-emerald-900 text-emerald-50 border-b border-emerald-800",
@@ -86,24 +86,40 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
   `}
 >
   <div
-    class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3"
+    class="
+      relative mx-auto flex max-w-7xl flex-col gap-2
+      md:flex-row md:items-center md:justify-between md:gap-3
+      lg:flex-nowrap
+    "
   >
-    <div class="flex flex-wrap items-center gap-2">
+    <div
+      class="
+        flex min-w-0 flex-1 flex-col items-start gap-1.5 pe-8
+        md:flex-row md:flex-wrap md:items-center md:gap-2 md:pe-0
+      "
+    >
       <Badge
         class="
-          inline-flex items-center gap-1 rounded-full border-none bg-white/15
-          px-2.5 py-0.5 text-[11px] font-bold tracking-wide text-white uppercase
+          inline-flex flex-nowrap items-center justify-start gap-1.5 rounded-lg
+          border-none bg-white/15 px-2.5 py-1 text-start text-[11px]
+          leading-snug font-bold tracking-wide text-white uppercase
         "
       >
-        <Icon name="campaign" class="text-xs" />
+        <Icon name="campaign" class="shrink-0 text-xs" />
         <span>{banner.title}</span>
       </Badge>
-      <span class="font-medium opacity-95">{banner.message}</span>
+      <span class="
+        text-xs/relaxed font-medium opacity-95
+        sm:text-sm/snug
+      "
+      >
+        {banner.message}
+      </span>
       {
         banner.secondaryDateLabel && (
           <span class="
             hidden rounded-md bg-black/20 px-2 py-0.5 text-[11px] opacity-85
-            lg:inline-block
+            xl:inline-block
           "
           >
             {banner.secondaryDateLabel}
@@ -112,19 +128,29 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
       }
     </div>
 
-    <div class="flex items-center gap-3">
+    <div class="
+      flex shrink-0 items-center justify-between gap-3
+      md:justify-end
+    "
+    >
       {
         banner.ctaLabel && banner.ctaUrl && (
           <a
             href={toSafeHref(banner.ctaUrl)}
             class="
-              inline-flex items-center gap-1 rounded-lg bg-white/15 px-3 py-1
+              inline-flex items-center gap-1 rounded-lg bg-white/15 px-3 py-1.5
               text-xs font-bold text-white transition
               hover:bg-white/25
             "
           >
             <span>{banner.ctaLabel}</span>
-            <Icon name="arrow_forward" class="text-xs rtl:-scale-x-100" />
+            <Icon
+              name="arrow_forward"
+              class="
+                text-xs
+                rtl:-scale-x-100
+              "
+            />
           </a>
         )
       }
@@ -143,9 +169,10 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
                     : "Cerrar aviso"
             }
             class="
-              inline-flex size-6 items-center justify-center rounded-full
-              bg-white/10 text-white transition
+              absolute inset-e-0 top-0 inline-flex size-7 items-center
+              justify-center rounded-full bg-white/10 text-white transition
               hover:bg-white/20
+              md:static md:size-6
             "
           >
             <Icon name="close" class="text-sm" />
