@@ -48,12 +48,19 @@ flowchart TB
 | `strapi-cache` | `^1.13.0` | Caché REST LRU / Redis / Valkey con invalidación automática al publicar y traducciones nativas del Admin en `en`, `es`, `ar`, `tr` y `de` |
 | `@vicacha-devs/strapi-plugin-global-search` | `file:` | Búsqueda global tipo Spotlight (`Cmd/Ctrl + K`) en todos los tipos `api::*` y `plugin::*` (`en`, `es`, `ar`, `tr`, `fr`) |
 | `@vicacha-devs/strapi-plugin-tiptap-editor` | `file:` | Editor TipTap v3 con presets, tema, field bindings y sincronización relacional de medios/enlaces (`en`, `es`, `ar`, `tr` +7 idiomas) |
-| `@vicacha-devs/strapi-plugin-seo` | `file:` | Componente SEO y analizador SERP en vivo (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
+| `@vicacha-devs/strapi-plugin-seo` | `file:` | Componente SEO, `autoPopulateOnSave` / generadores localizados (`apps/backend/config/plugins/seo.plugin.ts`) y analizador SERP/JSON-LD en vivo (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Indexación en tiempo real hacia Typesense |
 | `strapi-plugin-navigation` | `^3.4.2` | Constructor de menús jerárquicos compatible con modelos `api::*` y `plugin::*` |
 | `strapi-plugin-content-manager-organizer` | `^2.0.3` | Organiza los 28 modelos visibles en 8 carpetas temáticas en la barra lateral |
 | `strapi-plugin-email-designer-5` | `^0.0.10` | Diseñador visual Unlayer para plantillas de correo transaccional |
+| `strapi-plugin-form-builder-cms` | `1.1.0-rc.2` | Constructor visual de formularios sincronizado con `@vicacha-devs/strapi-plugin-inbox` (incluyendo metadatos de campos `file`) |
 | `@vicacha-devs/strapi-plugin-sitemap` | `file:` | Generador dinámico de sitemap e índice de sitemaps XML multilingüe (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `strapi-plugin-publisher` | `^2.0.9` | Publicación y despublicación programada |
 | `strapi-plugin-config-sync` | `^3.2.0` | Sincronización de configuración entre entornos (`en`, `es`, `ar`, `tr` +18 idiomas) |
 | `strapi-plugin-preview-button` | `^3.0.2` | Botones de vista previa de borrador y vista en vivo en Content Manager (`en`, `es`, `tr`, `fr`, `ru`, `ja` nativos + `ar` en `src/admin/translations.ts`) |
+
+---
+
+## 4. Configuración Automatizada de Metadatos SEO (`apps/backend/config/plugins/seo.plugin.ts`)
+
+`buildSeoPluginConfig(env)` configura `@vicacha-devs/strapi-plugin-seo` con `autoCreateComponent: true`, `autoPopulateOnSave: true` y cuatro generadores localizados (`generateTitle`, `generateDescription`, `generateImage`, `generateURL`) usando `PUBLIC_SITE_URL` y el nombre institucional de la mezquita por idioma (`es`, `en`, `ar`, `tr`) para páginas estáticas (`homepage`, `about-page`, `islam-faith-page`, `donations-page`, `contact-page`) y prefijos de colección (`/articles`, `/services`, `/leaders`, `/events`, `/donations`, `/media`, `/media/series`, `/islam-and-faith`, `/gallery`, `/bookings`).

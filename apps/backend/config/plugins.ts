@@ -2,6 +2,7 @@ import { buildCoreInfrastructurePlugins } from "./plugins/core.plugins";
 import { buildEmailDesignerPluginConfig } from "./plugins/email-designer.plugin";
 import { buildNavigationAndPreviewPlugins } from "./plugins/navigation-preview.plugins";
 import { buildSearchAndCachePlugins } from "./plugins/search-cache.plugins";
+import { buildSeoPluginConfig } from "./plugins/seo.plugin";
 import { buildTiptapEditorPluginConfig } from "./plugins/tiptap.plugin";
 import { buildVicachaPluginsConfig } from "./vicachaPlugins";
 
@@ -22,9 +23,7 @@ export default ({ env }: { env: StrapiEnvFn }) => ({
   ...buildCoreInfrastructurePlugins(env),
 
   // 3. SEO Plugin (@vicacha-devs/strapi-plugin-seo)
-  seo: {
-    enabled: true,
-  },
+  seo: buildSeoPluginConfig(env),
 
   // 4. Tiptap Rich Text Editor (@vicacha-devs/strapi-plugin-tiptap-editor)
   "tiptap-editor": buildTiptapEditorPluginConfig(),
