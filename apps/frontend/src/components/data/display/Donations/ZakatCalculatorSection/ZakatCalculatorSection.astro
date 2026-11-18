@@ -297,7 +297,9 @@ const formatCop = (value: number) =>
         </div>
 
         <div class="
-          flex flex-col justify-between rounded-2xl bg-secondary p-8 text-white
+          flex min-w-0 flex-col justify-between rounded-2xl bg-secondary p-8
+          text-secondary-foreground shadow-lg
+          lg:sticky lg:top-24 lg:self-start
         "
         >
           <div class="space-y-4">
@@ -305,14 +307,14 @@ const formatCop = (value: number) =>
               {t.summaryTitle}
             </h3>
             <div class="
-              flex justify-between border-b border-white/10 pb-3 text-sm
+              flex justify-between gap-2 border-b border-white/10 pb-3 text-sm
             "
             >
               <span class="text-blue-100/80">{t.netWorthLabel}</span>
-              <span id="zakat-net-worth" class="font-bold">$ 0 COP</span>
+              <span id="zakat-net-worth" class="font-bold tabular-nums">$ 0 COP</span>
             </div>
             <div class="
-              flex justify-between border-b border-white/10 pb-3 text-sm
+              flex justify-between gap-2 border-b border-white/10 pb-3 text-sm
             "
             >
               <span class="text-blue-100/80">{t.nisabStatusLabel}</span>
@@ -323,7 +325,7 @@ const formatCop = (value: number) =>
           </div>
 
           <div class="mt-8 space-y-4">
-            <div class="rounded-xl bg-white/10 p-6 text-center">
+            <div class="min-w-0 rounded-xl bg-white/10 p-6 text-center">
               <span class="
                 block text-xs font-bold tracking-wider text-blue-200 uppercase
               "
@@ -334,8 +336,9 @@ const formatCop = (value: number) =>
                 id="zakat-due-amount"
                 data-raw-zakat="0"
                 class="
-                  mt-2 block text-3xl font-extrabold text-white
-                  sm:text-4xl
+                  mt-2 block text-2xl font-extrabold wrap-break-word text-white
+                  tabular-nums
+                  sm:text-3xl
                 "
               >
                 $ 0 COP
@@ -515,8 +518,28 @@ const formatCop = (value: number) =>
 </section>
 
 <script>
+
+
+
+
+
+
+
+
+
+
   import { initZakatCalculator } from "./zakat-calculator.controller";
 
   initZakatCalculator();
   document.addEventListener("astro:after-swap", initZakatCalculator);
+
+
+
+
+
+
+
+
+
+
 </script>

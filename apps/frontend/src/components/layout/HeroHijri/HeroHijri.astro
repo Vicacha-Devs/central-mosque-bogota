@@ -45,61 +45,79 @@ const headingText = title ?? hijriDate;
 
 <section
   class="
-    relative flex min-h-[540px] w-full items-center overflow-hidden
-    lg:min-h-[600px]
+    relative w-full overflow-hidden bg-secondary text-white
+    lg:grid lg:min-h-[560px] lg:grid-cols-12
   "
 >
-  <Image
-    src={imageUrl}
-    alt={imageAlt}
-    class="absolute inset-0 size-full object-cover"
-    fetchpriority="high"
-    loading="eager"
-    layout="constrained"
-    width={1600}
-    height={900}
-  />
-  <div class="hero-overlay absolute inset-0"></div>
   <div
     class="
-      relative mx-auto w-full max-w-5xl px-4 pt-16 pb-24 text-center
-      sm:px-6 sm:pb-28
-      lg:px-8 lg:pb-32
+      relative min-h-[320px] overflow-hidden
+      sm:min-h-[380px]
+      lg:col-span-7 lg:min-h-[560px]
+    "
+  >
+    <Image
+      src={imageUrl}
+      alt={imageAlt}
+      class="absolute inset-0 size-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+      layout="constrained"
+      width={1600}
+      height={900}
+    />
+    <div class="hero-overlay absolute inset-0"></div>
+    <div
+      class="
+        relative z-10 flex h-full items-end p-5
+        sm:p-8
+        lg:p-10
+      "
+    >
+      <Badge
+        variant="outline"
+        class="
+          inline-flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-2xl
+          border border-white/25 bg-slate-950/60 px-4 py-2.5 text-sm
+          text-white/95 shadow-lg backdrop-blur-md
+        "
+      >
+        <Icon name="calendar_month" class="text-base text-amber-300" />
+        <span class="font-semibold tracking-wide">{hijriDate}</span>
+        <span class="text-white/60" aria-hidden="true">•</span>
+        <time class="font-medium tabular-nums">{currentDate}</time>
+      </Badge>
+    </div>
+  </div>
+
+  <div
+    class="
+      relative flex flex-col justify-center bg-secondary px-6 pt-10 pb-24
+      text-start
+      sm:px-10 sm:pt-12 sm:pb-28
+      lg:col-span-5 lg:px-12 lg:py-16 lg:pb-28
     "
   >
     <h1
       class="
-        mx-auto mb-5 max-w-4xl text-4xl/tight font-extrabold tracking-tight
-        text-white drop-shadow-lg
-        sm:text-5xl/tight
-        lg:text-6xl/tight
+        mb-4 text-3xl/tight font-extrabold tracking-tight text-white
+        sm:text-4xl/tight
+        lg:text-5xl/tight
       "
     >
       {headingText}
     </h1>
-    <Badge
-      variant="outline"
-      class="
-        mx-auto mb-6 inline-flex flex-wrap items-center justify-center gap-x-3
-        gap-y-1.5 rounded-full border border-white/20 bg-white/10 px-5 py-2
-        text-sm text-white/95 backdrop-blur-sm
-      "
-    >
-      <span class="font-semibold tracking-wide">{hijriDate}</span>
-      <span class="text-white/60" aria-hidden="true">•</span>
-      <time class="font-medium tabular-nums">{currentDate}</time>
-    </Badge>
     <p
       class="
-        mx-auto max-w-2xl text-lg/relaxed font-medium text-white/95
-        lg:text-xl/relaxed
+        max-w-xl text-base/relaxed font-medium text-white/90
+        lg:text-lg/relaxed
       "
     >
       {phrase}
     </p>
     {
       (primaryCtaHref || secondaryCtaHref) && (
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <div class="mt-8 flex flex-wrap items-center gap-3.5">
           {
             primaryCtaHref && primaryCtaLabel && (
               <Button
@@ -109,7 +127,13 @@ const headingText = title ?? hijriDate;
                 class="rounded-full px-7 shadow-lg"
               >
                 <span>{primaryCtaLabel}</span>
-                <Icon name="arrow_forward" class="text-base rtl:-scale-x-100" />
+                <Icon
+                  name="arrow_forward"
+                  class="
+                    text-base
+                    rtl:-scale-x-100
+                  "
+                />
               </Button>
             )
           }

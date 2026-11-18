@@ -68,10 +68,10 @@ if (!propBanner) {
 }
 
 const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
-  info: "bg-secondary-accent text-white border-b border-secondary/40 dark:bg-secondary",
-  warning: "bg-amber-600 text-white border-b border-amber-500",
-  urgent: "bg-red-700 text-white border-b border-red-600",
-  celebration: "bg-emerald-900 text-emerald-50 border-b border-emerald-800",
+  info: "bg-secondary-accent text-white border-b border-secondary/40 dark:bg-secondary-accent",
+  warning: "bg-amber-600 text-white border-b border-amber-500 dark:bg-amber-600",
+  urgent: "bg-red-700 text-white border-b border-red-600 dark:bg-red-700",
+  celebration: "bg-emerald-900 text-emerald-50 border-b border-emerald-800 dark:bg-emerald-900",
 };
 ---
 
@@ -94,8 +94,8 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
   >
     <div
       class="
-        flex min-w-0 flex-1 flex-col items-start gap-1.5 pe-8
-        md:flex-row md:flex-wrap md:items-center md:gap-2 md:pe-0
+        flex min-w-0 flex-1 flex-col items-start gap-1.5 pr-8
+        md:flex-row md:flex-wrap md:items-center md:gap-2 md:pr-0
       "
     >
       <Badge
@@ -108,11 +108,7 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
         <Icon name="campaign" class="shrink-0 text-xs" />
         <span>{banner.title}</span>
       </Badge>
-      <span class="
-        text-xs/relaxed font-medium opacity-95
-        sm:text-sm/snug
-      "
-      >
+      <span class="text-xs/relaxed font-medium opacity-95 sm:text-sm/snug">
         {banner.message}
       </span>
       {
@@ -128,11 +124,7 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
       }
     </div>
 
-    <div class="
-      flex shrink-0 items-center justify-between gap-3
-      md:justify-end
-    "
-    >
+    <div class="flex shrink-0 items-center justify-between gap-3 md:justify-end">
       {
         banner.ctaLabel && banner.ctaUrl && (
           <a
@@ -144,13 +136,7 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
             "
           >
             <span>{banner.ctaLabel}</span>
-            <Icon
-              name="arrow_forward"
-              class="
-                text-xs
-                rtl:-scale-x-100
-              "
-            />
+            <Icon name="arrow_forward" class="text-xs rtl:-scale-x-100" />
           </a>
         )
       }
@@ -169,10 +155,11 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
                     : "Cerrar aviso"
             }
             class="
-              absolute inset-e-0 top-0 inline-flex size-7 items-center
+              absolute top-0 right-0 inline-flex size-7 items-center
               justify-center rounded-full bg-white/10 text-white transition
               hover:bg-white/20
               md:static md:size-6
+              rtl:right-auto rtl:left-0
             "
           >
             <Icon name="close" class="text-sm" />

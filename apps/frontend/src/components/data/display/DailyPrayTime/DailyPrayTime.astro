@@ -146,6 +146,9 @@ const items = PRAYER_ITEMS.map(({ key, label }) => ({
   data-prayer-schedule
   data-timezone={timeZone}
   data-sunrise={schedule.sunrise ?? ""}
+  data-status-passed={t("pray-schedule.status-passed")}
+  data-status-now={t("pray-schedule.status-now")}
+  data-status-next={t("pray-schedule.status-next")}
 >
   <Card
     class="
@@ -197,6 +200,17 @@ const items = PRAYER_ITEMS.map(({ key, label }) => ({
         {" • "}
         {hijriDate}
       </p>
+      <div
+        data-prayer-countdown
+        class="
+          mt-3 hidden items-center gap-2 rounded-full bg-primary/10 px-3 py-1
+          text-xs font-bold text-primary tabular-nums
+        "
+      >
+        <Icon name="schedule" class="text-sm" />
+        <span>{t("pray-schedule.next-in")}</span>
+        <span data-prayer-countdown-value>--:--</span>
+      </div>
     </div>
     <ul
       class="
@@ -249,6 +263,7 @@ const items = PRAYER_ITEMS.map(({ key, label }) => ({
             >
               {item.time}
             </time>
+            <span data-prayer-status class="hidden"></span>
           </li>
         ))
       }
@@ -257,10 +272,30 @@ const items = PRAYER_ITEMS.map(({ key, label }) => ({
 </section>
 
 <script>
+
+
+
+
+
+
+
+
+
+
   import { initDailyPrayerTimes } from "./daily-pray-time.controller";
 
   const setup = () => initDailyPrayerTimes();
 
   document.addEventListener("DOMContentLoaded", setup);
   document.addEventListener("astro:after-swap", setup);
+
+
+
+
+
+
+
+
+
+
 </script>

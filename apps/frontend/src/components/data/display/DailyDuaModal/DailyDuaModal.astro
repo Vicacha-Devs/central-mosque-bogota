@@ -46,10 +46,9 @@ const copiedLabel = t("daily-dua.copied");
 <section
   data-daily-dua
   class="
-    rounded-3xl border border-slate-200 bg-linear-to-r from-secondary
-    to-slate-900 p-6 text-white shadow-lg
+    rounded-3xl border border-border bg-linear-to-r from-secondary
+    to-secondary-accent p-6 text-secondary-foreground shadow-lg
     sm:p-8
-    dark:border-slate-800
   "
 >
   <div class="
@@ -87,8 +86,8 @@ const copiedLabel = t("daily-dua.copied");
       <DialogTrigger
         class="
           inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-full
-          bg-primary px-6 py-3 text-sm font-bold text-white shadow-md
-          transition-transform
+          bg-primary px-6 py-3 text-sm font-bold text-primary-foreground
+          shadow-md transition-transform
           hover:scale-105
         "
       >
@@ -96,7 +95,11 @@ const copiedLabel = t("daily-dua.copied");
         <span>{triggerLabel}</span>
       </DialogTrigger>
 
-      <DialogContent class="max-w-2xl rounded-3xl bg-slate-900 p-8 text-white">
+      <DialogContent class="
+        max-w-2xl rounded-3xl border border-white/15 bg-secondary-accent p-8
+        text-secondary-foreground shadow-2xl
+      "
+      >
         <DialogHeader class="text-center">
           <span
             class="
@@ -179,8 +182,28 @@ const copiedLabel = t("daily-dua.copied");
 </section>
 
 <script>
+
+
+
+
+
+
+
+
+
+
   import { initCopyDuaButtons } from "./daily-dua-modal.controller";
 
   initCopyDuaButtons();
   document.addEventListener("astro:after-swap", () => initCopyDuaButtons());
+
+
+
+
+
+
+
+
+
+
 </script>

@@ -65,7 +65,11 @@ interface Props {
 const { title, services } = Astro.props as Props;
 ---
 
-<section class="hero-pattern flex flex-col gap-16">
+<section class="
+  hero-pattern flex flex-col gap-12 rounded-3xl bg-surface-sand p-6
+  sm:p-10
+"
+>
   <header class="flex flex-col gap-4 text-center">
     <h2 class="font-display text-4xl font-bold">{title}</h2>
     <div class="mx-auto h-1 w-20 rounded-full bg-primary"></div>

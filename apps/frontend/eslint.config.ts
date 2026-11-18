@@ -126,8 +126,8 @@ export default defineConfig([
       },
     },
     rules: {
-      // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980 (autofix mangles <script> blocks, so disabled until fixed upstream)
-      "@stylistic/jsx-one-expression-per-line": "off",
+      // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
+      "@stylistic/jsx-one-expression-per-line": "warn",
     },
   },
   {

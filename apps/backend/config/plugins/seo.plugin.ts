@@ -39,7 +39,10 @@ function firstNonEmptyString(...candidates: unknown[]): string | null {
 }
 
 export function buildSeoPluginConfig(env: StrapiEnvFn) {
-  const siteUrl = env("PUBLIC_SITE_URL", "https://mezquitabogota.org").replace(/\/+$/, "");
+  const siteUrl = env("PUBLIC_SITE_URL", "https://mezquitabogota.org").replace(
+    /\/+$/,
+    ""
+  );
 
   return {
     enabled: true,
@@ -60,7 +63,7 @@ export function buildSeoPluginConfig(env: StrapiEnvFn) {
           doc.heroTitle,
           doc.name,
           doc.question,
-          doc.term,
+          doc.term
         );
         if (!title) return brand;
         const combined = `${title} — ${brand}`;
@@ -74,7 +77,7 @@ export function buildSeoPluginConfig(env: StrapiEnvFn) {
           doc.heroSubtitle,
           doc.bio,
           doc.answer,
-          doc.definition,
+          doc.definition
         ),
       generateImage: ({ doc }: { doc: Record<string, unknown> }) =>
         doc.coverImage ?? doc.image ?? doc.poster ?? doc.photo ?? doc.thumbnail ?? null,

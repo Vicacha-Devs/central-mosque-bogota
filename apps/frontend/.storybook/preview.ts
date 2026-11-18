@@ -1,8 +1,13 @@
-import { definePreview, type AstroRenderer } from "@storybook-astro/framework";
+import {
+  definePreview,
+  type AstroRenderer,
+} from "@storybook-astro/framework";
 import { decorators as astroDocsDecorators } from "@storybook-astro/renderer/entry-preview-docs";
 import addonA11y from "@storybook/addon-a11y";
 import addonDocs from "@storybook/addon-docs";
-import addonThemes, { withThemeByDataAttribute } from "@storybook/addon-themes";
+import addonThemes, {
+  withThemeByDataAttribute,
+} from "@storybook/addon-themes";
 import {
   DOCS_RENDERED,
   GLOBALS_UPDATED,
@@ -91,10 +96,10 @@ if (typeof document !== "undefined") {
   }
 }
 
-const figmaUrl
-  = typeof process !== "undefined" ? process.env.STORYBOOK_FIGMA_URL : undefined;
-const figmaToken
-  = typeof process !== "undefined"
+const figmaUrl =
+  typeof process !== "undefined" ? process.env.STORYBOOK_FIGMA_URL : undefined;
+const figmaToken =
+  typeof process !== "undefined"
     ? process.env.STORYBOOK_FIGMA_ACCESS_TOKEN
     : undefined;
 
@@ -106,12 +111,9 @@ export default definePreview({
   },
   decorators: [
     ...astroDocsDecorators,
-    (
-      story: () => unknown,
-      context: { globals: GlobalsPayload["globals"] }
-    ): unknown => {
-      const dir
-        = context.globals?.addonRtl === "rtl" ? "rtl" : currentDirection;
+    (story, context) => {
+      const dir =
+        context.globals?.addonRtl === "rtl" ? "rtl" : currentDirection;
       applyDocumentDirection(dir);
       return story();
     },

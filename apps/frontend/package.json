@@ -26,6 +26,7 @@
   "dependencies": {
     "@astrojs/node": "11.0.2",
     "@astrojs/sitemap": "3.7.4",
+    "@astrojs/vercel": "^11.0.22",
     "@sensinum/astro-strapi-loader": "^1.0.7",
     "@starwind-ui/astro": "^1.5.0",
     "@tabler/icons": "^3.37.1",

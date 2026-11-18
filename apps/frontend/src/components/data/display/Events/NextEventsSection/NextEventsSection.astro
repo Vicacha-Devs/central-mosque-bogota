@@ -64,7 +64,11 @@ const resolvedCalendarHref
   description={description}
   ctaLabel={ctaLabel}
   ctaHref={resolvedCalendarHref}
-  bodyClass="grid grid-cols-1 md:grid-cols-3 gap-8"
+  class="
+    rounded-3xl bg-surface-sand p-6
+    sm:p-10
+  "
+  bodyClass="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12 [&>li:first-child]:lg:col-span-6 [&>li:not(:first-child)]:lg:col-span-3"
 >
   {
     events.map((event) => (
