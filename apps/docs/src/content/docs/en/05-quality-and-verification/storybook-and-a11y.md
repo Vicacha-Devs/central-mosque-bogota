@@ -5,7 +5,7 @@ description: How to develop, preview, and audit components in Storybook 10 acros
 
 ## 1. Storybook 10 Setup (`apps/frontend/.storybook/`)
 
-Our Storybook environment uses `@storybook-astro/framework` (`1.8.0`) and `storybook` (`10.4.6`) to render native `.astro` components directly in Vite.
+Our Storybook environment uses `@storybook-astro/framework` (`1.17.0`) and `storybook` (`10.6.5`) to render native `.astro` components directly in Vite.
 
 | Addon | Package | Purpose |
 | :--- | :--- | :--- |

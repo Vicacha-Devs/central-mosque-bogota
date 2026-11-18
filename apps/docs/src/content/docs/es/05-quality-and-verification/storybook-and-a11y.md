@@ -5,7 +5,7 @@ description: Cómo desarrollar, previsualizar y auditar componentes en Storybook
 
 ## 1. Configuración de Storybook 10 (`apps/frontend/.storybook/`)
 
-Nuestro entorno Storybook utiliza `@storybook-astro/framework` (`1.8.0`) y `storybook` (`10.4.6`) para renderizar componentes `.astro` nativos directamente sobre Vite.
+Nuestro entorno Storybook utiliza `@storybook-astro/framework` (`1.17.0`) y `storybook` (`10.6.5`) para renderizar componentes `.astro` nativos directamente sobre Vite.
 
 | Addon | Paquete | Propósito |
 | :--- | :--- | :--- |
