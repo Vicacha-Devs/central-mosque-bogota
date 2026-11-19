@@ -1,0 +1,593 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/starwind/tabs";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl } from "@i18n/utils";
+import { fetchIslamSuiteFromStrapi } from "@services/strapi";
+import {
+  getFallbackScriptureBundle,
+  getIslamSuiteCopy,
+  type TAsmaUlHusnaCard,
+  type TScriptureAyahCard,
+  type TScriptureHadithCard,
+  type TTasbihPresetCard,
+} from "@utils/islam-suite-mocks";
+
+import ScriptureAyahCard from "./ScriptureAyahCard.astro";
+import ScriptureHadithCard from "./ScriptureHadithCard.astro";
+import TasbihCounterCard from "./TasbihCounterCard.astro";
+
+/**
+ * @component ScriptureExplorerSection
+ * @title Scripture Explorer & Digital Tasbih Section
+ * @description Tabbed spiritual workspace featuring Daily Quran Ayah & Hadith inspiration, interactive Digital Tasbih counter, and Asma ul-Husna (99 Names of Allah) powered by `@vicacha-devs/strapi-plugin-islam`.
+ *
+ * Props
+ * - `lang`: optional active locale (`es`, `en`, `ar`, `tr`)
+ * - `ayatOverride`: optional preloaded list of Quranic Ayat (skips Strapi fetch when all overrides provided)
+ * - `hadithsOverride`: optional preloaded list of Hadiths
+ * - `asmaOverride`: optional preloaded Name of Allah of the Day
+ * - `tasbihPresetsOverride`: optional preloaded Tasbih presets
+ *
+ * @preview
+ *
+ * <ScriptureExplorerSection lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import ScriptureExplorerSection from "@components/data/display/ScriptureExplorerSection/ScriptureExplorerSection.astro";
+ * ---
+ *
+ * <ScriptureExplorerSection lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang?: TLang;
+  /**
+   * Optional override for curated Quranic Ayat.
+   */
+  ayatOverride?: Array<TScriptureAyahCard>;
+  /**
+   * Optional override for authenticated Hadiths.
+   */
+  hadithsOverride?: Array<TScriptureHadithCard>;
+  /**
+   * Optional override for Name of Allah (Asma-ul-Husna) of the Day.
+   */
+  asmaOverride?: TAsmaUlHusnaCard;
+  /**
+   * Optional override for Digital Tasbih presets.
+   */
+  tasbihPresetsOverride?: Array<TTasbihPresetCard>;
+}
+
+const {
+  lang: langProp,
+  ayatOverride,
+  hadithsOverride,
+  asmaOverride,
+  tasbihPresetsOverride,
+} = Astro.props;
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const copy = getIslamSuiteCopy(lang);
+const fallback = getFallbackScriptureBundle(lang);
+
+interface TStrapiDailyInspirationResponse {
+  ayahOfTheDay?: {
+    id: string;
+    referenceKey: string;
+    surahNameAr: string;
+    surahNameTranslit: string;
+    arabicUthmani: string;
+    transliteration: string;
+    translations?: Record<string, string>;
+    reflections?: Record<string, string>;
+    audioUrl?: string;
+  };
+  hadithOfTheDay?: {
+    id: string;
+    collectionNames?: Record<string, string>;
+    hadithNumber: string;
+    grading: "Sahih" | "Hasan";
+    narrator?: Record<string, string>;
+    arabicText: string;
+    translations?: Record<string, string>;
+    keyTakeaways?: Record<string, string>;
+  };
+  nameOfAllahOfTheDay?: {
+    number: number;
+    arabic: string;
+    transliteration: string;
+    meanings?: Record<string, string>;
+    reflections?: Record<string, string>;
+    quranReference: string;
+  };
+}
+
+let ayat: Array<TScriptureAyahCard> = ayatOverride ?? fallback.ayat;
+let hadiths: Array<TScriptureHadithCard> = hadithsOverride ?? fallback.hadiths;
+let asmaOfTheDay: TAsmaUlHusnaCard = asmaOverride ?? fallback.asmaOfTheDay;
+const tasbihPresets: Array<TTasbihPresetCard>
+  = tasbihPresetsOverride ?? fallback.tasbihPresets;
+
+if (!ayatOverride || !hadithsOverride || !asmaOverride) {
+  const liveDaily
+    = await fetchIslamSuiteFromStrapi<TStrapiDailyInspirationResponse>(
+      "scripture/daily",
+      { locale: lang }
+    );
+
+  if (!ayatOverride && liveDaily?.ayahOfTheDay?.referenceKey) {
+    const rawAyah = liveDaily.ayahOfTheDay;
+    const mappedDailyAyah: TScriptureAyahCard = {
+      id: rawAyah.id,
+      referenceKey: rawAyah.referenceKey,
+      surahNameAr: rawAyah.surahNameAr,
+      surahNameTranslit: rawAyah.surahNameTranslit,
+      arabicUthmani: rawAyah.arabicUthmani,
+      transliteration: rawAyah.transliteration,
+      translation:
+        rawAyah.translations?.[lang]
+        ?? rawAyah.translations?.es
+        ?? fallback.ayat[0].translation,
+      reflection:
+        rawAyah.reflections?.[lang]
+        ?? rawAyah.reflections?.es
+        ?? fallback.ayat[0].reflection,
+      audioUrl: rawAyah.audioUrl ?? fallback.ayat[0].audioUrl,
+    };
+    ayat = [
+      mappedDailyAyah,
+      ...fallback.ayat.filter(
+        (a) => a.referenceKey !== mappedDailyAyah.referenceKey
+      ),
+    ];
+  }
+
+  if (!hadithsOverride && liveDaily?.hadithOfTheDay?.arabicText) {
+    const rawHadith = liveDaily.hadithOfTheDay;
+    const mappedDailyHadith: TScriptureHadithCard = {
+      id: rawHadith.id,
+      collectionName:
+        rawHadith.collectionNames?.[lang]
+        ?? rawHadith.collectionNames?.es
+        ?? fallback.hadiths[0].collectionName,
+      hadithNumber: rawHadith.hadithNumber,
+      grading: rawHadith.grading,
+      narrator:
+        rawHadith.narrator?.[lang]
+        ?? rawHadith.narrator?.es
+        ?? fallback.hadiths[0].narrator,
+      arabicText: rawHadith.arabicText,
+      translation:
+        rawHadith.translations?.[lang]
+        ?? rawHadith.translations?.es
+        ?? fallback.hadiths[0].translation,
+      keyTakeaway:
+        rawHadith.keyTakeaways?.[lang]
+        ?? rawHadith.keyTakeaways?.es
+        ?? fallback.hadiths[0].keyTakeaway,
+    };
+    hadiths = [
+      mappedDailyHadith,
+      ...fallback.hadiths.filter((h) => h.id !== mappedDailyHadith.id),
+    ];
+  }
+
+  if (!asmaOverride && liveDaily?.nameOfAllahOfTheDay?.arabic) {
+    const rawAsma = liveDaily.nameOfAllahOfTheDay;
+    asmaOfTheDay = {
+      number: rawAsma.number,
+      arabic: rawAsma.arabic,
+      transliteration: rawAsma.transliteration,
+      meaning:
+        rawAsma.meanings?.[lang]
+        ?? rawAsma.meanings?.es
+        ?? fallback.asmaOfTheDay.meaning,
+      reflection:
+        rawAsma.reflections?.[lang]
+        ?? rawAsma.reflections?.es
+        ?? fallback.asmaOfTheDay.reflection,
+      quranReference: rawAsma.quranReference,
+    };
+  }
+}
+
+const featuredAyah = ayat[0];
+const featuredHadith = hadiths[0];
+---
+
+<section class="space-y-8" data-scripture-explorer>
+  <div class="text-center">
+    <Badge
+      variant="primary"
+      class="
+        mb-3 gap-1.5 rounded-full bg-primary/10 px-4 py-1 text-xs font-extrabold
+        tracking-wider text-primary uppercase
+      "
+    >
+      <Icon name="auto_stories" class="text-sm" />
+      <span>{copy.scriptureBadge}</span>
+    </Badge>
+    <h2 class="
+      text-3xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {copy.scriptureTitle}
+    </h2>
+    <p
+      class="
+        mx-auto mt-2 max-w-2xl text-sm text-slate-600
+        dark:text-slate-400
+      "
+    >
+      {copy.scriptureSubtitle}
+    </p>
+  </div>
+
+  <Tabs defaultValue="daily" class="w-full">
+    <div class="mb-6 flex justify-center">
+      <TabsList
+        class="
+          flex h-auto flex-wrap gap-1.5 rounded-2xl bg-slate-100 p-1.5
+          dark:bg-slate-800/80
+        "
+      >
+        <TabsTrigger
+          value="daily"
+          class="
+            rounded-xl px-4 py-2 text-xs font-bold
+            sm:text-sm
+          "
+        >
+          {copy.tabDailyInspiration}
+        </TabsTrigger>
+        <TabsTrigger
+          value="quran"
+          class="
+            rounded-xl px-4 py-2 text-xs font-bold
+            sm:text-sm
+          "
+        >
+          {copy.tabQuranAyat}
+        </TabsTrigger>
+        <TabsTrigger
+          value="hadith"
+          class="
+            rounded-xl px-4 py-2 text-xs font-bold
+            sm:text-sm
+          "
+        >
+          {copy.tabHadith}
+        </TabsTrigger>
+        <TabsTrigger
+          value="tasbih"
+          class="
+            rounded-xl px-4 py-2 text-xs font-bold
+            sm:text-sm
+          "
+        >
+          {copy.tabTasbih}
+        </TabsTrigger>
+      </TabsList>
+    </div>
+
+    <!-- Tab 1: Daily Inspiration (Ayah, Hadith & Asma-ul-Husna of the Day) -->
+    <TabsContent value="daily" class="mt-0">
+      <div class="
+        grid grid-cols-1 gap-6
+        lg:grid-cols-3
+      "
+      >
+        <!-- Ayah of the Day -->
+        <Card
+          class="
+            flex flex-col justify-between rounded-2xl border border-slate-200
+            bg-white p-0 shadow-sm
+            dark:border-slate-800 dark:bg-slate-900
+          "
+        >
+          <CardContent class="flex h-full flex-col justify-between p-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <Badge
+                  variant="secondary"
+                  class="
+                    rounded-full bg-secondary px-3 py-1 text-xs font-bold
+                    text-white
+                  "
+                >
+                  {copy.ayahOfDayLabel}
+                </Badge>
+                <span class="text-xs font-extrabold text-primary">
+                  {featuredAyah.surahNameTranslit}
+                  {" "}
+                  (
+                  {featuredAyah.referenceKey}
+                  )
+                </span>
+              </div>
+
+              <p
+                class="
+                  notranslate text-right text-xl/loose font-bold text-slate-900
+                  dark:text-white
+                "
+                dir="rtl"
+                lang="ar"
+                translate="no"
+              >
+                {featuredAyah.arabicUthmani}
+              </p>
+
+              <p
+                class="
+                  notranslate text-sm/relaxed font-medium text-slate-700
+                  dark:text-slate-200
+                "
+                translate="no"
+              >
+                “
+                {featuredAyah.translation}
+                ”
+              </p>
+            </div>
+
+            <div class="mt-6 space-y-3">
+              <Separator class="
+                bg-slate-100
+                dark:bg-slate-800
+              "
+              />
+              <p class="
+                text-xs text-slate-500
+                dark:text-slate-400
+              "
+              >
+                <strong class="
+                  text-slate-700
+                  dark:text-slate-200
+                "
+                >
+                  {copy.reflectionLabel}
+                  :
+                </strong>
+                {" "}
+                {featuredAyah.reflection}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Hadith of the Day -->
+        <Card
+          class="
+            flex flex-col justify-between rounded-2xl border border-slate-200
+            bg-white p-0 shadow-sm
+            dark:border-slate-800 dark:bg-slate-900
+          "
+        >
+          <CardContent class="flex h-full flex-col justify-between p-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <Badge
+                  variant="primary"
+                  class="
+                    rounded-full bg-primary/15 px-3 py-1 text-xs font-bold
+                    text-primary
+                  "
+                >
+                  {copy.hadithOfDayLabel}
+                </Badge>
+                <Badge
+                  variant="success"
+                  class="rounded-full px-2.5 py-0.5 text-[11px] font-bold"
+                >
+                  {featuredHadith.grading}
+                </Badge>
+              </div>
+
+              <p
+                class="
+                  text-right text-xl/loose font-bold text-slate-900
+                  dark:text-white
+                "
+                dir="rtl"
+                lang="ar"
+              >
+                {featuredHadith.arabicText}
+              </p>
+
+              <p
+                class="
+                  text-sm/relaxed font-medium text-slate-700
+                  dark:text-slate-200
+                "
+              >
+                “
+                {featuredHadith.translation}
+                ”
+              </p>
+            </div>
+
+            <div class="mt-6 space-y-2">
+              <Separator class="
+                bg-slate-100
+                dark:bg-slate-800
+              "
+              />
+              <p
+                class="
+                  text-xs font-semibold text-secondary
+                  dark:text-blue-300
+                "
+              >
+                {featuredHadith.collectionName}
+                {" "}
+                •
+                {featuredHadith.narrator}
+              </p>
+              <p class="
+                text-xs text-slate-500
+                dark:text-slate-400
+              "
+              >
+                <strong class="
+                  text-slate-700
+                  dark:text-slate-200
+                "
+                >
+                  {copy.takeawayLabel}
+                  :
+                </strong>
+                {" "}
+                {featuredHadith.keyTakeaway}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <!-- Name of Allah (Asma-ul-Husna) of the Day -->
+        <Card
+          class="
+            flex flex-col justify-between rounded-2xl border-0 bg-secondary p-0
+            text-white shadow-lg
+          "
+        >
+          <CardContent class="flex h-full flex-col justify-between p-6">
+            <div class="space-y-4 text-center">
+              <div class="flex items-center justify-between">
+                <Badge
+                  variant="outline"
+                  class="
+                    rounded-full border-0 bg-white/15 px-3 py-1 text-xs
+                    font-bold text-amber-300
+                  "
+                >
+                  {copy.asmaOfDayLabel}
+                </Badge>
+                <span class="text-xs font-bold text-blue-200">
+                  #
+                  {asmaOfTheDay.number}
+                  {" "}
+                  / 99
+                </span>
+              </div>
+
+              <div class="py-4">
+                <p
+                  class="
+                    text-4xl font-extrabold text-amber-300
+                    sm:text-5xl
+                  "
+                  dir="rtl"
+                  lang="ar"
+                >
+                  {asmaOfTheDay.arabic}
+                </p>
+                <p class="mt-2 text-lg font-extrabold text-white">
+                  {asmaOfTheDay.transliteration}
+                </p>
+                <p class="mt-1 text-sm font-semibold text-blue-100">
+                  {asmaOfTheDay.meaning}
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="space-y-2 rounded-xl bg-white/10 p-4 text-xs text-blue-100"
+            >
+              <p>{asmaOfTheDay.reflection}</p>
+              <p class="font-bold text-amber-300">
+                Ref:
+                {" "}
+                {asmaOfTheDay.quranReference}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </TabsContent>
+
+    <!--
+      Tab 2: Curated Quranic Ayat (with Translation Integrity notranslate)
+    -->
+    <TabsContent value="quran" class="mt-0">
+      <div class="
+        grid grid-cols-1 gap-6
+        md:grid-cols-3
+      "
+      >
+        {
+          ayat.map((item) => (
+            <ScriptureAyahCard
+              ayah={item}
+              listenRecitationLabel={copy.listenRecitationLabel}
+            />
+          ))
+        }
+      </div>
+    </TabsContent>
+
+    <!-- Tab 3: Authentic Hadiths -->
+    <TabsContent value="hadith" class="mt-0">
+      <div class="
+        grid grid-cols-1 gap-6
+        md:grid-cols-2
+      "
+      >
+        {
+          hadiths.map((hadith) => (
+            <ScriptureHadithCard
+              hadith={hadith}
+              takeawayLabel={copy.takeawayLabel}
+            />
+          ))
+        }
+      </div>
+    </TabsContent>
+
+    <!-- Tab 4: Interactive Digital Tasbih & Adhkar Counter -->
+    <TabsContent value="tasbih" class="mt-0">
+      <div
+        class="
+          grid grid-cols-1 gap-6
+          md:grid-cols-2
+        "
+        data-tasbih-completed-text={copy.tasbihCompletedLabel}
+      >
+        {
+          tasbihPresets.map((preset) => (
+            <TasbihCounterCard
+              preset={preset}
+              completedLabel={copy.tasbihCompletedLabel}
+              incrementLabel={copy.tasbihIncrementLabel}
+              resetLabel={copy.tasbihResetLabel}
+            />
+          ))
+        }
+      </div>
+    </TabsContent>
+  </Tabs>
+</section>
+
+<script>
+  import { initTasbihCounters } from "./scripture-explorer.controller";
+
+  initTasbihCounters();
+  document.addEventListener("astro:after-swap", () => initTasbihCounters());
+</script>

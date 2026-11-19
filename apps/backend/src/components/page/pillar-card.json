@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_page_pillar_cards",
+  "info": {
+    "displayName": "Pillar Card",
+    "icon": "star",
+    "description": "Five Pillars of Islam educational card"
+  },
+  "options": {},
+  "attributes": {
+    "number": {
+      "type": "integer",
+      "required": true
+    },
+    "arabicName": {
+      "type": "string",
+      "required": true
+    },
+    "transliteration": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "default": "mosque"
+    }
+  }
+}

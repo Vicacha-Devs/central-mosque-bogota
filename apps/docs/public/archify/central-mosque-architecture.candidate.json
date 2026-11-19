@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Central Mosque of Bogotá — Full-Stack Architecture",
+    "locale": "en",
+    "output": ".archify/architecture-central-mosque-20261022-154400/central-mosque-architecture.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "visitor-ssr-flow",
+        "label": "Visitor SSR & Resilient Fallback",
+        "focus": ["visitor", "astro_ssr", "content_layer", "mock_fallback", "islamic_api"],
+        "note": "Astro 7 SSR serves 4 locales (es, en, ar RTL, tr) and falls back to deterministic mock stores when Strapi is offline."
+      },
+      {
+        "id": "bff-and-cms",
+        "label": "BFF Forms & Strapi v5 CMS",
+        "focus": ["visitor", "astro_ssr", "bff_endpoints", "content_layer", "strapi_cms", "postgres_db"],
+        "note": "Server-only BFF endpoints validate submissions with Zod and forward to Strapi v5 with bearer token auth."
+      },
+      {
+        "id": "editorial-and-docs",
+        "label": "Editorial Plugins & Starlight Docs",
+        "focus": ["cms_editors", "strapi_cms", "strapi_plugins", "seed_bootstrap", "starlight_docs"],
+        "note": "10 custom Strapi v5 plugins power editorial workflows while Starlight + Pele + TypeDoc document the monorepo."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "visitor",
+      "type": "external",
+      "label": "Community Visitor",
+      "sublabel": "ES / EN / AR (RTL) / TR",
+      "pos": [40, 230],
+      "size": [145, 62]
+    },
+    {
+      "id": "starlight_docs",
+      "type": "frontend",
+      "label": "Starlight + Pele Docs",
+      "sublabel": "Bilingual EN/ES + TypeDoc",
+      "pos": [295, 60],
+      "size": [155, 62],
+      "tag": "<= 500 lines/file"
+    },
+    {
+      "id": "islamic_api",
+      "type": "external",
+      "label": "IslamicAPI Engine",
+      "sublabel": "Prayer, Hijri & Zakat",
+      "pos": [570, 60],
+      "size": [160, 62]
+    },
+    {
+      "id": "cms_editors",
+      "type": "security",
+      "label": "Mosque Staff & Imam",
+      "sublabel": "Strapi Admin RBAC",
+      "pos": [855, 60],
+      "size": [160, 62]
+    },
+    {
+      "id": "astro_ssr",
+      "type": "frontend",
+      "label": "Astro 7 SSR Server",
+      "sublabel": "Node Standalone :4321",
+      "pos": [295, 230],
+      "size": [155, 62],
+      "tag": "Starwind + Tailwind 4"
+    },
+    {
+      "id": "content_layer",
+      "type": "backend",
+      "label": "Content & API Layer",
+      "sublabel": "10 Collection Loaders",
+      "pos": [570, 230],
+      "size": [160, 62]
+    },
+    {
+      "id": "strapi_cms",
+      "type": "backend",
+      "label": "Strapi v5 Headless CMS",
+      "sublabel": "REST API + i18n :1337",
+      "pos": [855, 230],
+      "size": [160, 62]
+    },
+    {
+      "id": "strapi_plugins",
+      "type": "backend",
+      "label": "10 Custom Plugins",
+      "sublabel": "Tiptap, QR, Prayer, CSV",
+      "pos": [1125, 230],
+      "size": [155, 62],
+      "tag": "@vicacha-strapi/*"
+    },
+    {
+      "id": "bff_endpoints",
+      "type": "security",
+      "label": "BFF API Endpoints",
+      "sublabel": "Contact, Visits, Donate",
+      "pos": [295, 400],
+      "size": [155, 62],
+      "tag": "Zod Validated"
+    },
+    {
+      "id": "mock_fallback",
+      "type": "database",
+      "label": "4-Locale Mock Store",
+      "sublabel": "Offline-First Fallback",
+      "pos": [570, 400],
+      "size": [160, 62]
+    },
+    {
+      "id": "postgres_db",
+      "type": "database",
+      "label": "PostgreSQL 16",
+      "sublabel": "17 Content-Types :5432",
+      "pos": [855, 400],
+      "size": [160, 62]
+    },
+    {
+      "id": "seed_bootstrap",
+      "type": "backend",
+      "label": "Bootstrap Seeder",
+      "sublabel": "Idempotent 4-Locale Seed",
+      "pos": [1125, 400],
+      "size": [155, 62]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Astro 7 Frontend & BFF Workspace (:4321)",
+      "wraps": ["astro_ssr", "content_layer", "bff_endpoints", "mock_fallback"]
+    },
+    {
+      "kind": "security-group",
+      "label": "Strapi v5 Backend & Data Tier (:1337 / :5432)",
+      "wraps": ["strapi_cms", "strapi_plugins", "postgres_db", "seed_bootstrap"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "visitor-to-astro",
+      "from": "visitor",
+      "to": "astro_ssr",
+      "label": "HTTPS SSR",
+      "variant": "emphasis"
+    },
+    {
+      "id": "docs-to-astro",
+      "from": "starlight_docs",
+      "to": "astro_ssr",
+      "label": "TypeDoc AST",
+      "variant": "dashed"
+    },
+    {
+      "id": "astro-to-bff",
+      "from": "astro_ssr",
+      "to": "bff_endpoints",
+      "label": "POST /api/*",
+      "variant": "security"
+    },
+    {
+      "id": "astro-to-content",
+      "from": "astro_ssr",
+      "to": "content_layer",
+      "label": "getCollection",
+      "variant": "emphasis"
+    },
+    {
+      "id": "content-to-islamic-api",
+      "from": "content_layer",
+      "to": "islamic_api",
+      "label": "live loader"
+    },
+    {
+      "id": "content-to-mocks",
+      "from": "content_layer",
+      "to": "mock_fallback",
+      "label": "fallback",
+      "variant": "dashed"
+    },
+    {
+      "id": "content-to-strapi",
+      "from": "content_layer",
+      "to": "strapi_cms",
+      "label": "REST JSON",
+      "variant": "emphasis"
+    },
+    {
+      "id": "editors-to-strapi",
+      "from": "cms_editors",
+      "to": "strapi_cms",
+      "label": "Admin JWT",
+      "variant": "security"
+    },
+    {
+      "id": "strapi-to-plugins",
+      "from": "strapi_cms",
+      "to": "strapi_plugins",
+      "label": "Document API"
+    },
+    {
+      "id": "strapi-to-postgres",
+      "from": "strapi_cms",
+      "to": "postgres_db",
+      "label": "SQL :5432"
+    },
+    {
+      "id": "seed-to-postgres",
+      "from": "seed_bootstrap",
+      "to": "postgres_db",
+      "label": "seed 4 locales",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Astro 7 SSR & 4-Locale i18n",
+      "items": [
+        "Serves es, en, ar (logical CSS RTL), and tr routes via @astrojs/node standalone",
+        "10 Content Layer collections + 2 Live Collections (prayerTimes, zakatNisab)",
+        "Deterministic 4-locale mock fallback guarantees 100% uptime if Strapi is offline"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Strapi v5 & 10 Custom Extensions",
+      "items": [
+        "17 Content-Types (6 Single-Types, 11 Collection-Types) backed by PostgreSQL 16",
+        "10 local plugins: Tiptap rich text, QR builder, Prayer CSV importer, Media hub, Dashboard",
+        "Idempotent bootstrap seeds initial 4-locale records and configures Public find permissions"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Security, BFF & Quality Gates",
+      "items": [
+        "BFF endpoints (/api/contact, /api/visits, /api/donations) validate payloads with Zod",
+        "Zero innerHTML policy; Tiptap HTML sanitized with sanitize-html",
+        "98.26% statement coverage across 92 Vitest unit test suites + Starlight/Pele docs"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+---
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import {
+  getDonatePageStrings,
+  getLocalizedUtilityInvoices,
+  type UtilityInvoiceMock,
+} from "@utils/donation-mocks";
+import UtilityInvoiceCard from "./UtilityInvoiceCard.astro";
+
+/**
+ * @component UtilityInvoicesSection
+ * @title Mosque Utility Invoices Section
+ * @description Renders a 2-column crowdfunding grid of `UtilityInvoiceCard` items for monthly mosque utility bills (electricity, water, gas, internet, security).
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `invoices`: optional list of utility invoices (`UtilityInvoiceMock[]`)
+ *
+ * @preview
+ *
+ * <UtilityInvoicesSection lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import UtilityInvoicesSection from "@components/data/display/Donations/UtilityInvoicesSection/UtilityInvoicesSection.astro";
+ * import { getLocalizedUtilityInvoices } from "@utils/donation-mocks";
+ *
+ * const invoices = getLocalizedUtilityInvoices("es");
+ * ---
+ *
+ * <UtilityInvoicesSection lang="es" invoices={invoices} />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Optional list of utility bills to render; falls back to localized mocks when omitted.
+   */
+  invoices?: UtilityInvoiceMock[];
+}
+
+const { lang, invoices } = Astro.props as Props;
+const t = getDonatePageStrings(lang);
+const items
+  = invoices && invoices.length > 0
+    ? invoices
+    : getLocalizedUtilityInvoices(lang);
+---
+
+<section
+  id="utility-invoices"
+  class="
+    space-y-8 rounded-3xl border border-emerald-200/70 bg-linear-to-br
+    from-emerald-50/70 via-white to-amber-50/40 p-6 shadow-sm
+    sm:p-10
+    dark:border-emerald-900/40 dark:from-slate-900 dark:via-slate-900
+    dark:to-slate-950
+  "
+>
+  <div class="text-center">
+    <span
+      class="
+        mb-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3.5
+        py-1 text-xs font-bold tracking-wider text-emerald-900 uppercase
+        dark:bg-emerald-950/70 dark:text-emerald-200
+      "
+    >
+      <Icon name="receipt_long" class="text-sm" />
+      <span>{t.invoicesBadge}</span>
+    </span>
+    <h2
+      class="
+        text-2xl font-extrabold text-slate-900
+        sm:text-3xl
+        dark:text-white
+      "
+    >
+      {t.invoicesTitle}
+    </h2>
+    <p
+      class="
+        mx-auto mt-2 max-w-2xl text-sm text-slate-600
+        sm:text-base
+        dark:text-slate-400
+      "
+    >
+      {t.invoicesSub}
+    </p>
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-6
+    md:grid-cols-2
+  "
+  >
+    {items.map((inv) => <UtilityInvoiceCard lang={lang} invoice={inv} />)}
+  </div>
+</section>

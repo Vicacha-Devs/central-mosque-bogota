@@ -1,0 +1,124 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import MediaArchiveSection from "@components/data/display/Media/MediaArchiveSection/MediaArchiveSection.astro";
+import RamadanScheduleBanner from "@components/data/display/RamadanScheduleBanner/RamadanScheduleBanner.astro";
+import PhotoGalleriesSection from "@components/data/display/Resources/PhotoGalleriesSection/PhotoGalleriesSection.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { fetchStrapiData } from "@services/strapi";
+import {
+  getDetailedMediaHighlights,
+  type TDetailedMediaItem,
+} from "@utils/localized-mocks";
+import {
+  getLocalizedGalleryAlbums,
+  type TResourceGalleryAlbum,
+} from "@utils/resources-mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const fallbackMediaItems = getDetailedMediaHighlights(lang);
+const fallbackGalleryAlbums = getLocalizedGalleryAlbums(lang);
+
+const [mediaEntries, cmsEpisodesRes, cmsGalleriesRes] = await Promise.all([
+  getCollection("mediaHighlights", (entry) => entry.data.locale === lang),
+  fetchStrapiData<{ data?: Array<TDetailedMediaItem> }>("media-feeds/episodes", {
+    locale: lang,
+  }).catch(() => null),
+  fetchStrapiData<{ data?: Array<TResourceGalleryAlbum> }>("resources/galleries", {
+    locale: lang,
+  }).catch(() => null),
+]);
+
+const baseMediaItems: Array<TDetailedMediaItem>
+  = mediaEntries.length > 0
+    ? mediaEntries.map((entry) => entry.data)
+    : fallbackMediaItems;
+
+const mediaByTitle = new Map(
+  baseMediaItems.map((item) => [item.title.toLowerCase(), item])
+);
+
+const mediaItems: Array<TDetailedMediaItem>
+  = Array.isArray(cmsEpisodesRes?.data) && cmsEpisodesRes.data.length > 0
+    ? cmsEpisodesRes.data.map((item, idx) => {
+        const fallback
+          = mediaByTitle.get((item.title ?? "").toLowerCase())
+            ?? baseMediaItems[idx % baseMediaItems.length]
+            ?? fallbackMediaItems[idx % fallbackMediaItems.length];
+        return {
+          ...fallback,
+          ...item,
+          imageUrl: item.imageUrl || fallback?.imageUrl || "",
+          imageAlt: item.imageAlt || item.title || fallback?.imageAlt || "",
+          providerLabel: item.providerLabel || fallback?.providerLabel || "",
+          typeLabel: item.typeLabel || fallback?.typeLabel || item.type,
+          speakerName: item.speakerName || fallback?.speakerName || "",
+          publishedDate: item.publishedDate || fallback?.publishedDate || "",
+          duration: item.duration || fallback?.duration || "",
+          watchUrl: item.watchUrl || fallback?.watchUrl || "#",
+        };
+      })
+    : baseMediaItems;
+
+const galleryByTitle = new Map(
+  fallbackGalleryAlbums.map((album) => [album.title.toLowerCase(), album])
+);
+
+const galleryAlbums: Array<TResourceGalleryAlbum>
+  = Array.isArray(cmsGalleriesRes?.data) && cmsGalleriesRes.data.length > 0
+    ? cmsGalleriesRes.data.map((album, idx) => {
+        const fallback
+          = galleryByTitle.get((album.title ?? "").toLowerCase())
+            ?? fallbackGalleryAlbums[idx % fallbackGalleryAlbums.length];
+        return {
+          ...fallback,
+          ...album,
+          coverUrl: album.coverUrl || fallback?.coverUrl || "",
+          coverAlt: album.coverAlt || album.title || fallback?.coverAlt || "",
+          categoryLabel: album.categoryLabel || fallback?.categoryLabel || "",
+          photoCount:
+            typeof album.photoCount === "number" && album.photoCount > 0
+              ? album.photoCount
+              : (fallback?.photoCount ?? 0),
+          photographerCredit:
+            album.photographerCredit || fallback?.photographerCredit || "",
+          secondaryDateFormatted:
+            album.secondaryDateFormatted
+            || fallback?.secondaryDateFormatted
+            || "",
+          mediaFolderPath:
+            album.mediaFolderPath || fallback?.mediaFolderPath || "",
+        };
+      })
+    : fallbackGalleryAlbums;
+---
+
+<Layout
+  title={t("media-page.title")}
+  description={t("media-page.subtitle")}
+>
+  <!-- Hero Section -->
+  <PageHeroBanner
+    badgeIcon="podcasts"
+    badgeLabel={t("media-page.badge")}
+    title={t("media-page.title")}
+    subtitle={t("media-page.subtitle")}
+  />
+
+  <!-- Live Stream Spotlight & Filterable Media Archive -->
+  <MediaArchiveSection lang={lang} items={mediaItems} />
+
+  <!-- Photo Galleries -->
+  <PhotoGalleriesSection lang={lang} albums={galleryAlbums} />
+
+  <!-- Ramadan Suhoor & Iftar Reference Banner Component -->
+  <RamadanScheduleBanner lang={lang} />
+</Layout>

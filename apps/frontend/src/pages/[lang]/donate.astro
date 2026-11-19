@@ -1,0 +1,119 @@
+---
+import { getCollection, getLiveEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import UtilityInvoicesSection from "@components/data/display/Donations/UtilityInvoicesSection/UtilityInvoicesSection.astro";
+import DonationCampaignsSection from "@components/data/display/Donations/DonationCampaignsSection/DonationCampaignsSection.astro";
+import ZakatCalculatorSection from "@components/data/display/Donations/ZakatCalculatorSection/ZakatCalculatorSection.astro";
+import PaymentChannelsSection from "@components/data/display/Donations/PaymentChannelsSection/PaymentChannelsSection.astro";
+import DonationSubmissionForm from "@components/actions/DonationSubmissionForm/DonationSubmissionForm.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { fetchStrapiData } from "@services/strapi";
+import { getLocalizedMocks } from "@utils/localized-mocks";
+import {
+  getLocalizedUtilityInvoices,
+  type UtilityInvoiceMock,
+} from "@utils/donation-mocks";
+
+export function getStaticPaths() {
+  const langs = Object.keys(ui) as Array<TLang>;
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const localizedMocks = getLocalizedMocks(lang);
+const fallbackUtilityInvoices = getLocalizedUtilityInvoices(lang);
+
+const [campaignEntries, donationsPageEntries, cmsUtilityInvoicesRes]
+  = await Promise.all([
+    getCollection("donationCampaigns", (entry) => entry.data.locale === lang),
+    getCollection("donationsPage", (entry) => entry.data.locale === lang),
+    fetchStrapiData<{ data?: UtilityInvoiceMock[] }>(
+      "donations/utility-invoices",
+      { locale: lang }
+    ).catch(() => null),
+  ]);
+
+const utilityInvoices: UtilityInvoiceMock[]
+  = Array.isArray(cmsUtilityInvoicesRes?.data)
+    && cmsUtilityInvoicesRes.data.length > 0
+    ? cmsUtilityInvoicesRes.data
+    : fallbackUtilityInvoices;
+
+const campaigns
+  = campaignEntries.length > 0
+    ? campaignEntries.map((entry) => entry.data)
+    : localizedMocks.donationCampaigns;
+
+const cmsMethods = donationsPageEntries[0]?.data.paymentMethods;
+const methods = cmsMethods ?? localizedMocks.paymentMethods;
+
+const liveZakatCop = await getLiveEntry("zakatNisab", {
+  standard: "common",
+  currency: "cop",
+  unit: "g",
+});
+
+const zakatData = liveZakatCop.entry?.data ?? {
+  standard: "common",
+  currency: "cop",
+  weightUnit: "gram",
+  zakatRate: 0.025,
+  gold: {
+    weightGrams: 85,
+    unitPrice: 385000,
+    nisabAmount: 32725000,
+  },
+  silver: {
+    weightGrams: 595,
+    unitPrice: 4400,
+    nisabAmount: 2618000,
+  },
+};
+---
+
+<Layout
+  title={t("donate-page.heroTitle")}
+  description={t("donate-page.heroSub")}
+>
+  <!-- Hero Banner -->
+  <PageHeroBanner
+    badgeIcon="volunteer_activism"
+    badgeLabel={t("donate-page.heroBadge")}
+    title={t("donate-page.heroTitle")}
+    subtitle={t("donate-page.heroSub")}
+  />
+
+  <!--
+    Mosque Utility Invoices & Micro-Donations
+    (Electricity, Gas, Internet, Water)
+  -->
+  <UtilityInvoicesSection lang={lang} invoices={utilityInvoices} />
+
+  <!-- Major Crowdfunding & Waqf Campaigns -->
+  <DonationCampaignsSection lang={lang} campaigns={campaigns} />
+
+  <!-- Interactive Zakat Calculator -->
+  <ZakatCalculatorSection
+    lang={lang}
+    goldWeightGrams={zakatData.gold.weightGrams}
+    goldNisabAmount={zakatData.gold.nisabAmount}
+    silverWeightGrams={zakatData.silver.weightGrams}
+    silverNisabAmount={zakatData.silver.nisabAmount}
+  />
+
+  <!-- Official Bank & Digital Wallet Payment Channels -->
+  <PaymentChannelsSection lang={lang} methods={methods} />
+
+  <!--
+    Donation & Utility Bill Payment Registration +
+    DIAN Tax Certificate Request
+  -->
+  <DonationSubmissionForm
+    lang={lang}
+    invoices={utilityInvoices}
+    campaigns={campaigns}
+  />
+</Layout>

@@ -1,0 +1,42 @@
+---
+import { Button } from "@/components/starwind/button";
+import Layout from "@layouts/Layout.astro";
+import PageHeroBanner from "@components/data/display/PageHeroBanner/PageHeroBanner.astro";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Layout title={t("not-found.title")} description={t("not-found.subtitle")}>
+  <PageHeroBanner
+    badgeIcon="explore_off"
+    badgeLabel={t("not-found.badge")}
+    title={t("not-found.title")}
+    subtitle={t("not-found.subtitle")}
+  >
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <Button href={`/${lang}`} variant="primary">
+        {t("not-found.home-cta")}
+      </Button>
+      <Button href={translatePath("prayer-information")} variant="secondary">
+        {t("not-found.prayer-cta")}
+      </Button>
+      <Button
+        href={translatePath("/search")}
+        variant="outline"
+        class="
+          border-white/30 text-white
+          hover:bg-white/10
+        "
+      >
+        {t("not-found.search-cta")}
+      </Button>
+    </div>
+  </PageHeroBanner>
+</Layout>

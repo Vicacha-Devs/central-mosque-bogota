@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import EventDetailSection from "@components/data/display/Events/EventDetailSection/EventDetailSection.astro";
+import { getLangFromUrl } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import { getDetailedEvents, type TDetailedEvent } from "@utils/localized-mocks";
+
+export async function getStaticPaths() {
+  const collectionEntries = await getCollection("events");
+  if (collectionEntries.length > 0) {
+    return collectionEntries.map((entry) => ({
+      params: { lang: entry.data.locale, slug: entry.data.slug },
+      props: { eventItem: entry.data },
+    }));
+  }
+
+  const langs = Object.keys(ui) as Array<TLang>;
+  const paths: Array<{
+    params: { lang: TLang; slug: string };
+    props: { eventItem: TDetailedEvent & { richDescription?: string } };
+  }> = [];
+
+  for (const lang of langs) {
+    const localizedEvents = getDetailedEvents(lang);
+    for (const eventItem of localizedEvents) {
+      paths.push({
+        params: { lang, slug: eventItem.slug },
+        props: { eventItem },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const { eventItem } = Astro.props as {
+  eventItem: TDetailedEvent & { richDescription?: string };
+};
+const localizedEventEntries = await getCollection(
+  "events",
+  (entry) => entry.data.locale === lang && entry.data.slug !== eventItem.slug
+);
+const relatedEvents
+  = localizedEventEntries.length > 0
+    ? localizedEventEntries.map((entry) => entry.data)
+    : getDetailedEvents(lang).filter((ev) => ev.slug !== eventItem.slug);
+---
+
+<Layout
+  title={eventItem.title}
+  description={eventItem.description}
+>
+  <EventDetailSection
+    lang={lang}
+    eventItem={eventItem}
+    relatedEvents={relatedEvents}
+  />
+</Layout>

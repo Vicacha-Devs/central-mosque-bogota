@@ -1,0 +1,54 @@
+import { Meta, ColorPalette, ColorItem } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Color Palette" />
+
+# Color Palette · Mezquita Central de Bogotá
+
+The Central Mosque of Bogotá design system pairs institutional crimson (`#c13026`) and deep sapphire (`#212e80`) with warm neutral sand (`#f6f5f1`) and clean light/dark surfaces.
+
+<ColorPalette>
+  <ColorItem
+    title="Brand Colors"
+    subtitle="Primary & Secondary Identity"
+    colors={{
+      "Primary (--primary)": "#c13026",
+      "Primary Accent (--primary-accent)": "#a6251c",
+      "Secondary (--secondary)": "#212e80",
+      "Secondary Accent (--secondary-accent)": "#1a2466",
+    }}
+  />
+  <ColorItem
+    title="Light & Warm Surfaces"
+    subtitle="Default Canvas, Cards & Sand Accents"
+    colors={{
+      "Background (--background)": "#f8fafc",
+      "Card / Popover (--card)": "#ffffff",
+      "Neutral Sand (--color-neutral-sand)": "#f6f5f1",
+      "Accent Surface (--accent)": "#f1f5f9",
+      "Foreground (--foreground)": "#0a0a0a",
+    }}
+  />
+  <ColorItem
+    title="Dark Mode Surfaces"
+    subtitle="Slate Night Canvas & Elevated Cards"
+    colors={{
+      "Dark Background (.dark --background)": "#0f172a",
+      "Dark Card / Popover (.dark --card)": "#1e293b",
+      "Dark Primary Accent (.dark --primary-accent)": "#e0483e",
+      "Dark Secondary Accent (.dark --secondary-accent)": "#93c5fd",
+      "Dark Foreground (.dark --foreground)": "#fafafa",
+    }}
+  />
+  <ColorItem
+    title="Semantic & Border Tokens"
+    subtitle="Feedback States, Inputs & Outlines"
+    colors={{
+      "Info (--info)": "#0284c7",
+      "Success (--success)": "#059669",
+      "Warning (--warning)": "#f59e0b",
+      "Error (--error)": "#dc2626",
+      "Border (--border)": "#e2e8f0",
+      "Input (--input)": "#cbd5e1",
+    }}
+  />
+</ColorPalette>

@@ -1,0 +1,139 @@
+---
+import { Button } from "@/components/starwind/button";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { ComponentProps } from "astro/types";
+import { cn } from "@utils/styles.utils";
+
+/**
+ * @component DownloadPDF
+ * @title Download PDF
+ * @description Action button that exports a DOM element to a single-page PDF (Letter, portrait).
+ *
+ * Requirements
+ * - The printable element must exist in the document and be selectable by an attribute selector.
+ * - By default, it looks for `[data-document-prayer-calendar-table]`.
+ *
+ * Behavior
+ * - Captures the target element with `html2canvas-pro`.
+ * - Generates a PDF with `jspdf` using Letter portrait.
+ * - Scales down as needed so the full content fits on a single page.
+ *
+ * @preview
+ *
+ * <DownloadPDF documentTitle="Calendario de Oración" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import DownloadPDF from "@components/actions/DownloadPDF/DownloadPDF.astro";
+ * ---
+ *
+ * <DownloadPDF
+ *   documentTitle="Calendario de Oración"
+ *   labels={{ button: "Descargar PDF", aria: "Descargar PDF" }}
+ * />
+ *
+ * <section data-document-prayer-calendar-table>
+ *   <!-- content to export -->
+ * </section>
+ * ```
+ */
+
+/**
+ * UI labels rendered by the download button. Provided (and translated) by the
+ * parent so this component stays free of i18n concerns.
+ */
+type DownloadPDFLabels = {
+  /**
+   * The visible button text.
+   * @default "Download"
+   */
+  button: string;
+  /**
+   * The accessible label applied to the button (`aria-label`).
+   * @default "Download"
+   */
+  aria: string;
+  /**
+   * Status text announced while the PDF is being generated.
+   * @default "Loading"
+   */
+  loading: string;
+  /**
+   * Status text announced when PDF generation fails.
+   * @default "Error"
+   */
+  error: string;
+};
+
+interface DownloadPDFProps extends Pick<
+  ComponentProps<typeof Button>,
+  "class" | "variant" | "size"
+> {
+  /**
+   * The title of the document to be downloaded.
+   */
+  documentTitle: string;
+  /**
+   * The attribute selector to find the printable element.
+   */
+  targetAttr?: string;
+  /**
+   * The margin in millimeters to apply to the PDF.
+   */
+  marginMm?: number;
+  /**
+   * All UI labels rendered by the button, normally translated by the parent.
+   * Falls back to a plain English label set when the prop is omitted entirely.
+   */
+  labels?: Partial<DownloadPDFLabels>;
+  /**
+   * Legacy alias for labels
+   */
+  label?: Partial<DownloadPDFLabels>;
+}
+
+const {
+  documentTitle,
+  targetAttr = "data-document-prayer-calendar-table",
+  marginMm = 10,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  labels,
+  label,
+} = Astro.props as DownloadPDFProps;
+
+const effectiveLabels = labels ?? label ?? {
+  aria: "Download",
+  button: "Download",
+  loading: "Loading",
+  error: "Error",
+};
+---
+
+<Button
+  variant={variant}
+  size={size}
+  data-action="download-pdf"
+  class={cn("print:hidden", className)}
+  data-document-title={documentTitle}
+  data-target-attr={targetAttr}
+  data-pdf-margin-mm={marginMm}
+  data-loading-label={effectiveLabels.loading}
+  data-error-label={effectiveLabels.error}
+  aria-label={effectiveLabels.aria}
+>
+  <Icon name="picture_as_pdf" />
+  <span>{effectiveLabels.button}</span>
+</Button>
+
+<script>
+  import { initDownloadPdfButtons } from "./download-pdf.controller";
+
+  const setup = () => initDownloadPdfButtons();
+
+  document.addEventListener("DOMContentLoaded", setup);
+  document.addEventListener("astro:after-swap", setup);
+</script>

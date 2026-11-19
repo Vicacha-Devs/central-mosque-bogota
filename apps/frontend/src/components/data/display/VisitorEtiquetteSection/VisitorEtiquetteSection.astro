@@ -1,0 +1,140 @@
+---
+/**
+ * Organism: VisitorEtiquetteSection
+ *
+ * Renders visitor etiquette guidelines and public transit / driving directions
+ * for visiting the Central Mosque in Bogotá, using `useTranslations(lang)` and `getLocalizedMocks(lang)`.
+ */
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { useTranslations } from "@i18n/utils";
+import type { TLang } from "@i18n/ui";
+import { getLocalizedMocks } from "@utils/localized-mocks";
+
+export interface TEtiquetteItem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface TTransitDirection {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface Props {
+  lang?: TLang;
+  etiquetteItems?: TEtiquetteItem[];
+  transitDirections?: TTransitDirection[];
+}
+
+const { lang = "es", etiquetteItems, transitDirections } = Astro.props;
+const t = useTranslations(lang);
+const { contactVisitData } = getLocalizedMocks(lang);
+const resolvedEtiquette = etiquetteItems ?? contactVisitData.visitorEtiquette;
+const resolvedDirections
+  = transitDirections ?? contactVisitData.transitDirections;
+---
+
+<div class="space-y-12">
+  <!-- Visitor Etiquette Guidelines -->
+  <section class="space-y-8">
+    <div class="text-center">
+      <h2 class="
+        text-3xl font-extrabold text-slate-900
+        dark:text-white
+      "
+      >
+        {t("contact-page.etiquette-title")}
+      </h2>
+      <p class="
+        mt-2 text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {t("contact-page.etiquette-subtitle")}
+      </p>
+    </div>
+
+    <div class="
+      grid grid-cols-1 gap-6
+      sm:grid-cols-2
+      lg:grid-cols-4
+    "
+    >
+      {
+        resolvedEtiquette.map((item) => (
+          <div class="
+            rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+            dark:border-slate-800 dark:bg-slate-900
+          "
+          >
+            <div class="
+              mb-4 inline-flex size-12 items-center justify-center rounded-xl
+              bg-secondary/10 text-secondary
+              dark:bg-blue-500/20 dark:text-blue-300
+            "
+            >
+              <Icon name={item.icon as any} class="text-2xl" />
+            </div>
+            <h3 class="
+              mb-2 text-lg font-bold text-slate-900
+              dark:text-white
+            "
+            >
+              {item.title}
+            </h3>
+            <p class="
+              text-sm/relaxed text-slate-600
+              dark:text-slate-400
+            "
+            >
+              {item.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Directions & Transit -->
+  <section class="
+    grid grid-cols-1 gap-6
+    md:grid-cols-2
+  "
+  >
+    {
+      resolvedDirections.map((dir) => (
+        <div class="
+          flex gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+          dark:border-slate-800 dark:bg-slate-900
+        "
+        >
+          <div class="
+            inline-flex size-12 shrink-0 items-center justify-center rounded-xl
+            bg-primary/10 text-primary
+          "
+          >
+            <Icon name={dir.icon as any} class="text-2xl" />
+          </div>
+          <div>
+            <h3 class="
+              text-lg font-bold text-slate-900
+              dark:text-white
+            "
+            >
+              {dir.title}
+            </h3>
+            <p class="
+              mt-1 text-sm/relaxed text-slate-600
+              dark:text-slate-400
+            "
+            >
+              {dir.description}
+            </p>
+          </div>
+        </div>
+      ))
+    }
+  </section>
+</div>

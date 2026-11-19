@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120" role="img" aria-label="Türkiye Bursları YTB Scholarship Poster">
+  <defs>
+    <linearGradient id="ytbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7f1d1d" />
+      <stop offset="55%" stop-color="#991b1b" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fde68a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="1120" fill="url(#ytbBg)" rx="24" />
+  <circle cx="700" cy="140" r="240" fill="#ffffff" fill-opacity="0.04" />
+  <circle cx="100" cy="960" r="280" fill="#f59e0b" fill-opacity="0.06" />
+
+  <!-- Top Header Badge -->
+  <rect x="60" y="56" width="680" height="64" rx="32" fill="#ffffff" fill-opacity="0.12" stroke="#fca5a5" stroke-opacity="0.35" />
+  <text x="400" y="96" text-anchor="middle" fill="#fef3c7" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="3">
+    TÜRKIYE SCHOLARSHIPS • YTB
+  </text>
+
+  <!-- Crescent & Star Emblem -->
+  <circle cx="400" cy="220" r="64" fill="#ffffff" fill-opacity="0.12" stroke="url(#goldAccent)" stroke-width="3" />
+  <path d="M412 182 A42 42 0 1 0 412 258 A33 33 0 1 1 412 182 Z" fill="#ffffff" />
+  <polygon points="432,220 442,226 439,214 448,207 436,206 432,195 428,206 416,207 425,214 422,226" fill="#fde68a" />
+
+  <!-- Main Title -->
+  <text x="400" y="348" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="900">
+    TÜRKİYE BURSLARI
+  </text>
+  <text x="400" y="396" text-anchor="middle" fill="#fde68a" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" letter-spacing="1.5">
+    BECAS DEL GOBIERNO DE TURQUÍA
+  </text>
+
+  <!-- Divider -->
+  <rect x="240" y="424" width="320" height="4" rx="2" fill="url(#goldAccent)" />
+
+  <!-- Program Levels -->
+  <rect x="80" y="460" width="640" height="90" rx="18" fill="#000000" fill-opacity="0.25" stroke="#ffffff" stroke-opacity="0.18" />
+  <text x="400" y="500" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">
+    PREGRADO • MAESTRÍA • DOCTORADO
+  </text>
+  <text x="400" y="532" text-anchor="middle" fill="#fecaca" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="500">
+    Undergraduate • Master’s • PhD Full Scholarships
+  </text>
+
+  <!-- Benefits Grid -->
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" fill="#ffffff">
+    <rect x="80" y="582" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="232" y="620" text-anchor="middle" fill="#fde68a">✓ Matrícula 100%</text>
+    <text x="232" y="648" text-anchor="middle" font-size="16" font-weight="500" fill="#fee2e2">University Tuition Covered</text>
+
+    <rect x="415" y="582" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="567" y="620" text-anchor="middle" fill="#fde68a">✓ Tiquetes Aéreos</text>
+    <text x="567" y="648" text-anchor="middle" font-size="16" font-weight="500" fill="#fee2e2">Round-Trip Flight Tickets</text>
+
+    <rect x="80" y="684" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="232" y="722" text-anchor="middle" fill="#fde68a">✓ Alojamiento y Salud</text>
+    <text x="232" y="750" text-anchor="middle" font-size="16" font-weight="500" fill="#fee2e2">Dormitory &amp; Health Insurance</text>
+
+    <rect x="415" y="684" width="305" height="84" rx="14" fill="#ffffff" fill-opacity="0.1" />
+    <text x="567" y="722" text-anchor="middle" fill="#fde68a">✓ Estipendio + Idioma</text>
+    <text x="567" y="750" text-anchor="middle" font-size="16" font-weight="500" fill="#fee2e2">Monthly Stipend + 1 Yr Turkish</text>
+  </g>
+
+  <!-- Application Window Callout -->
+  <rect x="80" y="804" width="640" height="128" rx="20" fill="url(#goldAccent)" />
+  <text x="400" y="852" text-anchor="middle" fill="#450a0a" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="1.5">
+    PERIODO DE INSCRIPCIÓN / APPLICATION PERIOD
+  </text>
+  <text x="400" y="902" text-anchor="middle" fill="#7f1d1d" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="900">
+    10 ENERO – 20 FEBRERO
+  </text>
+
+  <!-- Footer -->
+  <text x="400" y="988" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800">
+    turkiyeburslari.gov.tr
+  </text>
+  <text x="400" y="1032" text-anchor="middle" fill="#fecaca" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600">
+    Orientación Gratuita • Mezquita Central Abu Bakr As-Siddiq de Bogotá
+  </text>
+</svg>

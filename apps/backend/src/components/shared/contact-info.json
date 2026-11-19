@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_shared_contact_infos",
+  "info": {
+    "displayName": "Contact Info",
+    "icon": "pinMap",
+    "description": "Mosque physical address, phone, email, and coordinates"
+  },
+  "options": {},
+  "attributes": {
+    "address": {
+      "type": "string",
+      "required": true,
+      "default": "Calle 80 # 30-15, Barrios Unidos"
+    },
+    "city": {
+      "type": "string",
+      "required": true,
+      "default": "Bogotá D.C."
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "default": "Colombia"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "whatsapp": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "googleMapsUrl": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "float",
+      "default": 4.6685
+    },
+    "longitude": {
+      "type": "float",
+      "default": -74.0758
+    },
+    "openingHours": {
+      "type": "string",
+      "default": "Abierto todos los días: 4:30 AM – 8:30 PM"
+    }
+  }
+}

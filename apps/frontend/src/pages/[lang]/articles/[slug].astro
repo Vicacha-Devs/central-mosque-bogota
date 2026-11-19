@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import ArticleDetailSection from "@components/data/display/Academy/ArticleDetailSection/ArticleDetailSection.astro";
+import { getLangFromUrl } from "@i18n/utils";
+import { ui, type TLang } from "@i18n/ui";
+import {
+  getDetailedArticles,
+  type TDetailedArticle,
+} from "@utils/localized-mocks";
+
+export async function getStaticPaths() {
+  const collectionEntries = await getCollection("articles");
+  if (collectionEntries.length > 0) {
+    return collectionEntries.map((entry) => ({
+      params: { lang: entry.data.locale, slug: entry.data.slug },
+      props: { article: entry.data },
+    }));
+  }
+
+  const langs = Object.keys(ui) as Array<TLang>;
+  const paths: Array<{
+    params: { lang: TLang; slug: string };
+    props: { article: TDetailedArticle & { content?: string } };
+  }> = [];
+
+  for (const lang of langs) {
+    const articles = getDetailedArticles(lang);
+    for (const article of articles) {
+      paths.push({
+        params: { lang, slug: article.slug },
+        props: { article },
+      });
+    }
+  }
+
+  return paths;
+}
+
+interface Props {
+  article: TDetailedArticle & { content?: string };
+}
+
+const lang = getLangFromUrl(Astro.url);
+const { article } = Astro.props;
+const localizedEntries = await getCollection(
+  "articles",
+  (entry) => entry.data.locale === lang && entry.data.slug !== article.slug
+);
+const allArticles
+  = localizedEntries.length > 0
+    ? localizedEntries.map((entry) => entry.data)
+    : getDetailedArticles(lang).filter((a) => a.slug !== article.slug);
+---
+
+<Layout
+  title={article.title}
+  description={article.description}
+>
+  <ArticleDetailSection
+    lang={lang}
+    article={article}
+    relatedArticles={allArticles}
+  />
+</Layout>

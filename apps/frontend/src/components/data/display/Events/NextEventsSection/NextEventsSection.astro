@@ -1,0 +1,89 @@
+---
+import HomeSection from "@components/layout/HomeSection/HomeSection.astro";
+import EventVerticalCard from "@components/data/display/Events/EventVerticalCard/EventVerticalCard.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl, useTranslatedPath } from "@i18n/utils";
+import type { TEvent } from "@utils/models/events";
+
+/**
+ * @component NextEventsSection
+ * @title Next Events Section
+ * @description Section that renders a header (title + description), a CTA link to the events calendar, and a grid of event cards.
+ *
+ * Props
+ * - `title`: section heading
+ * - `description`: supporting text shown below the heading
+ * - `events`: list of events to render
+ * - `ctaLabel`: CTA label text
+ * - `calendarHref`: optional URL for the CTA link (defaults to localized `/events-and-programs`)
+ */
+interface Props {
+  /**
+   * Optional language override. Falls back to URL locale.
+   */
+  lang?: TLang;
+  /**
+   * Title of the section
+   */
+  title: string;
+  /**
+   * Description of the section
+   */
+  description: string;
+  /**
+   * Array of events to display
+   */
+  events: Array<TEvent>;
+  /**
+   * Label of the CTA button
+   */
+  ctaLabel: string;
+  /**
+   * URL to the calendar page
+   */
+  calendarHref?: string;
+}
+
+const {
+  lang: langProp,
+  title,
+  description,
+  ctaLabel,
+  events,
+  calendarHref,
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const resolvedCalendarHref
+  = calendarHref ?? translatePath("/events-and-programs");
+---
+
+<HomeSection
+  title={title}
+  description={description}
+  ctaLabel={ctaLabel}
+  ctaHref={resolvedCalendarHref}
+  class="
+    rounded-3xl bg-surface-sand p-6
+    sm:p-10
+  "
+  bodyClass="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+>
+  {
+    events.map((event) => (
+      <li>
+        <EventVerticalCard
+          lang={lang}
+          category={event.category}
+          title={event.title}
+          description={event.description}
+          schedule={event.schedule}
+          date={event.date}
+          image={event.image}
+          url={event.url}
+        />
+      </li>
+    ))
+  }
+</HomeSection>

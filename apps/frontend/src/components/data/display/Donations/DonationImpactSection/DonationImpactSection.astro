@@ -1,0 +1,208 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Progress } from "@/components/starwind/progress";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { calculateProgress } from "@utils/maths.utils";
+import { Image } from "astro:assets";
+
+/**
+ * @component DonationImpactSection
+ * @title Donation Impact Section
+ * @description Donation CTA section with a project label, progress indicator, and a localized "donate now" button.
+ *
+ * i18n keys
+ * - `donations.impact`: section heading
+ * - `donations.project`: "Project:" prefix for the progress label
+ * - `donations.goal`: "Goal:" prefix in the summary line
+ * - `donations.raised`: "Raised:" prefix in the summary line
+ * - `donations.cta`: button label
+ *
+ * Progress calculation
+ * - `progress` is derived from `goal` and `raised` via `calculateProgress(goal, raised)`.
+ * - Amounts can be formatted strings like "$75.000.000 COP" (non-digit characters are ignored).
+ *
+ * @preview
+ *
+ * <DonationImpactSection
+ *   title="Remodelación Sala de Oración"
+ *   description="Tu generosidad permite que la Mezquita Central siga siendo un faro de luz en Bogotá."
+ *   goal="$100.000.000 COP"
+ *   raised="$75.000.000 COP"
+ *   ctaHref="/donate"
+ *   imageUrl="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=80"
+ *   imageAlt="Inside Mosque"
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import DonationImpactSection from "@components/data/display/Donations/DonationImpactSection/DonationImpactSection.astro";
+ * ---
+ *
+ * <DonationImpactSection
+ *   title="Proyecto: Mantenimiento"
+ *   description="Tu aporte sostiene nuestros programas y espacios comunitarios."
+ *   goal="$10.000.000 COP"
+ *   raised="$2.500.000 COP"
+ *   ctaHref="/donate"
+ *   imageUrl="/images/donations.jpg"
+ *   imageAlt="Community at the mosque"
+ * />
+ * ```
+ */
+interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * Project title used in the progress label (prefixed with `donations.project`).
+   */
+  title: string;
+  /**
+   * Supporting text describing the impact of donations.
+   */
+  description: string;
+  /**
+   * Goal amount as a display string, e.g. "$100.000.000 COP". Must have the same currency as `raised`.
+   */
+  goal: string;
+  /**
+   * Raised amount as a display string, e.g. "$75.000.000 COP". Must have the same currency as `goal`.
+   */
+  raised: string;
+  /**
+   * Link target for the donation call-to-action button.
+   */
+  ctaHref: string;
+  /**
+   * Background image URL for the right-side panel.
+   */
+  imageUrl: string;
+  /**
+   * Alt text for the image.
+   */
+  imageAlt: string;
+}
+
+const {
+  lang: langProp,
+  title,
+  description,
+  goal,
+  raised,
+  ctaHref,
+  imageUrl,
+  imageAlt,
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const goalLabel = `${t("donations.goal")} ${goal} • ${t("donations.raised")} ${raised}`;
+const projectLabel = `${t("donations.project")} ${title}`;
+const progress = calculateProgress(goal, raised);
+---
+
+<section>
+  <div
+    class="
+      flex flex-col overflow-hidden rounded-3xl bg-secondary shadow-2xl
+      lg:flex-row
+    "
+  >
+    <div class="
+      p-12 text-white
+      lg:w-1/2
+    "
+    >
+      <h2 class="mb-6 font-display text-4xl font-bold">
+        {t("donations.impact")}
+      </h2>
+      <p class="mb-8 text-lg/relaxed text-white/80">{description}</p>
+
+      <div class="mb-10 space-y-6">
+        <div>
+          <div class="mb-2 flex justify-between">
+            <span class="text-sm font-medium">{projectLabel}</span>
+            <span class="text-sm font-bold">
+              {progress}
+              %
+            </span>
+          </div>
+          <Progress
+            value={progress}
+            max={100}
+            variant="primary"
+            aria-label={projectLabel}
+            class="h-3 bg-white/20"
+          />
+        </div>
+        <p class="text-xs text-white/70">{goalLabel}</p>
+      </div>
+
+      <div class="mb-8 grid grid-cols-2 gap-3">
+        <div class="
+          rounded-2xl border border-white/15 bg-white/10 p-3.5 text-center
+          backdrop-blur-xs
+        "
+        >
+          <span class="block text-2xl font-extrabold text-white tabular-nums">90%</span>
+          <span class="
+            text-xs font-semibold tracking-wide text-white/80 uppercase
+          "
+          >
+            {t("donations.programs-share")}
+          </span>
+        </div>
+        <div class="
+          rounded-2xl border border-white/15 bg-white/10 p-3.5 text-center
+          backdrop-blur-xs
+        "
+        >
+          <span class="block text-2xl font-extrabold text-white tabular-nums">10%</span>
+          <span class="
+            text-xs font-semibold tracking-wide text-white/80 uppercase
+          "
+          >
+            {t("donations.admin-share")}
+          </span>
+        </div>
+      </div>
+
+      <Button
+        href={ctaHref}
+        size="lg"
+        class="
+          w-full justify-center gap-3 rounded-xl bg-white text-secondary
+          hover:bg-slate-100
+        "
+      >
+        <Icon name="favorite" class="text-base" />
+        {t("donations.cta")}
+      </Button>
+    </div>
+
+    <div class="
+      relative min-h-[400px] bg-blue-100
+      lg:w-1/2
+    "
+    >
+      <Image
+        src={imageUrl}
+        alt={imageAlt}
+        loading="lazy"
+        class="absolute inset-0 size-full object-cover"
+        layout="constrained"
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        width={1200}
+        height={800}
+      />
+      <div class="absolute inset-0 bg-primary/20"></div>
+    </div>
+  </div>
+</section>

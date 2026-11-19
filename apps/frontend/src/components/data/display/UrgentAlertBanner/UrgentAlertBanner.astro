@@ -1,0 +1,178 @@
+---
+import { Alert } from "@/components/starwind/alert";
+import { Badge } from "@/components/starwind/badge";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { fetchStrapiData } from "@services/strapi";
+import type { TLang } from "@i18n/ui";
+import {
+  getUrgentAlertFallback,
+  type TAlertBannerItem,
+} from "@utils/inbox-mocks";
+import { toSafeHref } from "@utils/url.utils";
+
+/**
+ * @component UrgentAlertBanner
+ * @title Urgent Community Alert Banner
+ * @description Top-of-page dismissible alert bar (`inbox/alerts`) for Friday Jumu'ah notices, Ramadan moon-sighting statements, or urgent Janazah announcements.
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ * - `banner`: optional preloaded `TAlertBannerItem` (bypasses Strapi network call when provided)
+ *
+ * @preview
+ *
+ * <UrgentAlertBanner lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import UrgentAlertBanner from "@components/data/display/UrgentAlertBanner/UrgentAlertBanner.astro";
+ * ---
+ *
+ * <UrgentAlertBanner lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+  /**
+   * Optional preloaded alert banner item (skips Strapi network call when provided).
+   */
+  banner?: TAlertBannerItem;
+}
+
+const { lang, banner: propBanner } = Astro.props;
+
+let banner: TAlertBannerItem = propBanner ?? getUrgentAlertFallback(lang);
+
+if (!propBanner) {
+  try {
+    const cmsAlerts = await fetchStrapiData<TAlertBannerItem[]>(
+      "inbox/alerts",
+      { locale: lang }
+    );
+    if (
+      Array.isArray(cmsAlerts)
+      && cmsAlerts.length > 0
+      && cmsAlerts[0]?.title
+    ) {
+      banner = cmsAlerts[0];
+    }
+  }
+  catch {
+    // Use localized fallback banner when Strapi server is offline
+  }
+}
+
+const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
+  info: "bg-secondary-accent text-white border-b border-secondary/40 dark:bg-secondary-accent",
+  warning: "bg-amber-600 text-white border-b border-amber-500 dark:bg-amber-600",
+  urgent: "bg-red-700 text-white border-b border-red-600 dark:bg-red-700",
+  celebration: "bg-emerald-900 text-emerald-50 border-b border-emerald-800 dark:bg-emerald-900",
+};
+---
+
+<Alert
+  id="mosque-urgent-alert-banner"
+  data-alert-code={banner.code}
+  aria-label={banner.title}
+  class={`
+    w-full rounded-none border-x-0 border-t-0 px-4 py-2.5 text-xs transition-all
+    sm:text-sm
+    ${SEVERITY_STYLES[banner.severity] || SEVERITY_STYLES.info}
+  `}
+>
+  <div
+    class="
+      relative mx-auto flex max-w-7xl flex-col gap-2
+      md:flex-row md:items-center md:justify-between md:gap-3
+      lg:flex-nowrap
+    "
+  >
+    <div
+      class="
+        flex min-w-0 flex-1 flex-col items-start gap-1.5 pr-8
+        md:flex-row md:flex-wrap md:items-center md:gap-2 md:pr-0
+      "
+    >
+      <Badge
+        class="
+          inline-flex flex-nowrap items-center justify-start gap-1.5 rounded-lg
+          border-none bg-white/15 px-2.5 py-1 text-start text-[11px]
+          leading-snug font-bold tracking-wide text-white uppercase
+        "
+      >
+        <Icon name="campaign" class="shrink-0 text-xs" />
+        <span>{banner.title}</span>
+      </Badge>
+      <span class="text-xs/relaxed font-medium opacity-95 sm:text-sm/snug">
+        {banner.message}
+      </span>
+      {
+        banner.secondaryDateLabel && (
+          <span class="
+            hidden rounded-md bg-black/20 px-2 py-0.5 text-[11px] opacity-85
+            xl:inline-block
+          "
+          >
+            {banner.secondaryDateLabel}
+          </span>
+        )
+      }
+    </div>
+
+    <div class="flex shrink-0 items-center justify-between gap-3 md:justify-end">
+      {
+        banner.ctaLabel && banner.ctaUrl && (
+          <a
+            href={toSafeHref(banner.ctaUrl)}
+            class="
+              inline-flex items-center gap-1 rounded-lg bg-white/15 px-3 py-1.5
+              text-xs font-bold text-white transition
+              hover:bg-white/25
+            "
+          >
+            <span>{banner.ctaLabel}</span>
+            <Icon name="arrow_forward" class="text-xs rtl:-scale-x-100" />
+          </a>
+        )
+      }
+      {
+        banner.dismissible && (
+          <button
+            type="button"
+            id="mosque-alert-dismiss-btn"
+            aria-label={
+              lang === "ar"
+                ? "إغلاق التنبيه"
+                : lang === "en"
+                  ? "Dismiss alert"
+                  : lang === "tr"
+                    ? "Uyarıyı kapat"
+                    : "Cerrar aviso"
+            }
+            class="
+              absolute top-0 right-0 inline-flex size-7 items-center
+              justify-center rounded-full bg-white/10 text-white transition
+              hover:bg-white/20
+              md:static md:size-6
+              rtl:right-auto rtl:left-0
+            "
+          >
+            <Icon name="close" class="text-sm" />
+          </button>
+        )
+      }
+    </div>
+  </div>
+</Alert>
+
+<script>
+  import { initAlertBanner } from "./urgent-alert-banner.controller";
+
+  initAlertBanner();
+  document.addEventListener("astro:after-swap", initAlertBanner);
+</script>

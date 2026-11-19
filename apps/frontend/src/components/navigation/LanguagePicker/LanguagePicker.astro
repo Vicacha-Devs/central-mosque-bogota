@@ -1,0 +1,133 @@
+---
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "@/components/starwind/dropdown";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { languages, localeFlags, type TLang } from "@i18n/ui";
+import {
+  buildAlternateLangHref,
+  getLangFromUrl,
+  useTranslations,
+} from "@i18n/utils";
+import type { TDropdownAlign, TDropdownPosition } from "@utils/models/types";
+
+/**
+ * @component LanguagePicker
+ * @title Language Picker Dropdown
+ * @description Accessible language switcher dropdown (`es`, `en`, `ar`, `tr`) built on Starwind `Dropdown` that preserves the active route slug across locales.
+ *
+ * Props
+ * - `lang`: optional locale override (`es`, `en`, `ar`, `tr`)
+ * - `side`: dropdown placement side (`top`, `bottom`, `left`, `right`)
+ * - `align`: dropdown alignment (`start`, `center`, `end`)
+ *
+ * @preview
+ *
+ * <LanguagePicker side="bottom" align="end" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import LanguagePicker from "@components/navigation/LanguagePicker/LanguagePicker.astro";
+ * ---
+ *
+ * <LanguagePicker side="bottom" align="end" />
+ * ```
+ */
+interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * Position of the dropdown menu relative to its trigger element.
+   * @default bottom
+   */
+  side?: TDropdownPosition;
+  /**
+   * Alignment of the dropdown menu relative to its trigger element.
+   * @default end
+   */
+  align?: TDropdownAlign;
+}
+
+const { lang: langProp, side, align } = Astro.props as Props;
+
+const currentLang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const url = Astro.url;
+const buildLangHref = (targetLang: TLang): string =>
+  buildAlternateLangHref(url, targetLang, currentLang);
+---
+
+<Dropdown>
+  <DropdownTrigger
+    aria-label={t("language-picker.label")}
+    class="
+      flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-2 text-sm
+      font-bold text-white transition-all
+      hover:bg-white/20
+      focus-visible:ring-2 focus-visible:ring-slate-500
+      focus-visible:ring-offset-2 focus-visible:outline-none
+      dark:bg-slate-900 dark:text-slate-50
+      [&[aria-expanded='true']_[data-language-chevron]]:rotate-180
+    "
+  >
+    <Icon name="language" class="text-[18px]" />
+    <span>{currentLang.toUpperCase()}</span>
+    <Icon
+      name="expand_more"
+      class="
+        text-[16px] opacity-60 transition-transform duration-150
+        motion-reduce:transition-none
+      "
+      data-language-chevron
+    />
+  </DropdownTrigger>
+  <DropdownContent
+    align={align}
+    side={side}
+    sideOffset={8}
+    class="
+      min-w-44 overflow-hidden rounded-xl border border-slate-100 bg-white py-2
+      text-slate-900 shadow-xl
+      dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50
+    "
+  >
+    {
+      localeFlags.map(({ code, flag }) => (
+        <DropdownItem class="p-0">
+          <a
+            href={buildLangHref(code)}
+            class="
+              flex w-full cursor-pointer items-center gap-3 px-4 py-2 text-sm
+              font-semibold text-slate-700 transition-colors
+              hover:bg-slate-200
+              focus-visible:bg-slate-50
+              motion-reduce:cursor-default
+              dark:text-slate-200
+              dark:hover:bg-white/20
+              dark:focus-visible:bg-slate-800
+            "
+            aria-current={code === currentLang ? "page" : undefined}
+          >
+            <span
+              class="
+                flex h-5 w-7 shrink-0 items-center justify-center rounded-sm
+                bg-slate-200 text-xs font-bold tracking-wider
+                dark:bg-slate-700
+              "
+            >
+              {flag}
+            </span>
+            <span>{languages[code]}</span>
+          </a>
+        </DropdownItem>
+      ))
+    }
+  </DropdownContent>
+</Dropdown>

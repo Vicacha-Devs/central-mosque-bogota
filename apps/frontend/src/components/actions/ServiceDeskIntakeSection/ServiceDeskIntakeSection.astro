@@ -1,0 +1,309 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+import { NativeSelect, NativeSelectOption } from "@/components/starwind/native-select";
+import { Textarea } from "@/components/starwind/textarea";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getServiceDeskCopy } from "@utils/inbox-mocks";
+
+/**
+ * @component ServiceDeskIntakeSection
+ * @title Official Service Desk & Casework Intake Section
+ * @description Interactive service desk application form (`POST /api/service-desk`) with dynamic document verification checklists for Nikah, Shahada, Consular Hajj/Umrah certificates, Halal inspection, and urgent Janazah coordination.
+ *
+ * Props
+ * - `lang`: active locale (`es`, `en`, `ar`, `tr`)
+ *
+ * @preview
+ *
+ * <ServiceDeskIntakeSection lang="es" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import ServiceDeskIntakeSection from "@components/actions/ServiceDeskIntakeSection/ServiceDeskIntakeSection.astro";
+ * ---
+ *
+ * <ServiceDeskIntakeSection lang="es" />
+ * ```
+ */
+interface Props {
+  /**
+   * Active UI locale code.
+   */
+  lang: TLang;
+}
+
+const { lang } = Astro.props;
+const COPY = getServiceDeskCopy(lang);
+---
+
+<section
+  id="service-desk-intake"
+  class="
+    rounded-3xl border border-slate-200 bg-white p-8 shadow-sm
+    sm:p-10
+    dark:border-slate-800 dark:bg-slate-900
+  "
+>
+  <div class="mb-8 text-center">
+    <span
+      class="
+        mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1
+        text-xs font-bold tracking-wider text-primary uppercase
+      "
+    >
+      <Icon name="fact_check" class="text-sm" />
+      <span>{COPY.badge}</span>
+    </span>
+    <h2 class="
+      text-2xl font-extrabold text-slate-900
+      sm:text-3xl
+      dark:text-white
+    "
+    >
+      {COPY.title}
+    </h2>
+    <p class="
+      mx-auto mt-2 max-w-3xl text-sm text-slate-600
+      sm:text-base
+      dark:text-slate-400
+    "
+    >
+      {COPY.subtitle}
+    </p>
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-8
+    lg:grid-cols-12
+  "
+  >
+    <!-- Dynamic Document Checklist Panel -->
+    <div
+      class="
+        rounded-2xl border border-emerald-500/20 bg-emerald-50/50 p-6
+        lg:col-span-5
+        dark:bg-emerald-950/20
+      "
+      id="service-desk-checklist-card"
+      data-checklists={JSON.stringify(COPY.checklists)}
+    >
+      <div class="mb-4 flex items-center gap-2.5">
+        <div
+          class="
+            flex size-10 items-center justify-center rounded-xl bg-emerald-600
+            text-white
+          "
+        >
+          <Icon name="assignment_turned_in" class="text-xl" />
+        </div>
+        <h3 class="
+          text-lg font-bold text-slate-900
+          dark:text-white
+        "
+        >
+          {COPY.checklistTitle}
+        </h3>
+      </div>
+
+      <ul
+        id="service-desk-checklist-items"
+        class="
+          space-y-3 text-sm text-slate-700
+          dark:text-slate-300
+        "
+      >
+        {
+          COPY.checklists.nikah.map((item) => (
+            <li class="flex items-start gap-2.5">
+              <span class="
+                mt-0.5 text-emerald-600
+                dark:text-emerald-400
+              "
+              >
+                ✓
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Service-Desk Intake Form -->
+    <form
+      id="service-desk-form"
+      data-locale={lang}
+      data-sending={COPY.sendingText}
+      data-success-prefix={COPY.successPrefix}
+      data-error={COPY.errorText}
+      class="
+        space-y-4
+        lg:col-span-7
+      "
+    >
+      <div class="hidden" aria-hidden="true">
+        <label for="sd-website">Website</label>
+        <input id="sd-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        <div>
+          <Label
+            for="sd-service-type"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {COPY.serviceTypeLabel}
+          </Label>
+          <NativeSelect
+            id="sd-service-type"
+            name="serviceType"
+            required
+            class="w-full rounded-xl"
+          >
+            {
+              COPY.services.map((svc) => (
+                <NativeSelectOption value={svc.value}>
+                  {svc.label}
+                </NativeSelectOption>
+              ))
+            }
+          </NativeSelect>
+        </div>
+
+        <div>
+          <Label
+            for="sd-preferred-date"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {COPY.dateLabel}
+          </Label>
+          <Input
+            id="sd-preferred-date"
+            name="preferredDate"
+            type="date"
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-3
+      "
+      >
+        <div>
+          <Label
+            for="sd-applicant-name"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {COPY.nameLabel}
+          </Label>
+          <Input
+            id="sd-applicant-name"
+            name="applicantName"
+            type="text"
+            required
+            maxlength={140}
+            class="rounded-xl"
+          />
+        </div>
+
+        <div>
+          <Label
+            for="sd-applicant-email"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {COPY.emailLabel}
+          </Label>
+          <Input
+            id="sd-applicant-email"
+            name="applicantEmail"
+            type="email"
+            required
+            maxlength={160}
+            class="rounded-xl"
+          />
+        </div>
+
+        <div>
+          <Label
+            for="sd-applicant-phone"
+            class="
+              mb-1 block text-sm font-semibold text-slate-700
+              dark:text-slate-300
+            "
+          >
+            {COPY.phoneLabel}
+          </Label>
+          <Input
+            id="sd-applicant-phone"
+            name="applicantPhone"
+            type="tel"
+            required
+            maxlength={40}
+            class="rounded-xl"
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label
+          for="sd-details"
+          class="
+            mb-1 block text-sm font-semibold text-slate-700
+            dark:text-slate-300
+          "
+        >
+          {COPY.detailsLabel}
+        </Label>
+        <Textarea
+          id="sd-details"
+          name="details"
+          rows={3}
+          required
+          maxlength={2500}
+          class="rounded-xl"
+        />
+      </div>
+
+      <p
+        id="service-desk-status"
+        role="status"
+        class="hidden rounded-xl px-4 py-2.5 text-sm font-semibold"
+      >
+      </p>
+
+      <Button type="submit" variant="primary" class="w-full">
+        {COPY.submitLabel}
+      </Button>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { initServiceDeskIntake } from "./service-desk-intake.controller";
+
+  initServiceDeskIntake();
+  document.addEventListener("astro:after-swap", initServiceDeskIntake);
+</script>
