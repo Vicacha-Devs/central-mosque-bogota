@@ -1,5 +1,4 @@
 ---
-import { Badge } from "@/components/starwind/badge";
 import { Button } from "@/components/starwind/button";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import { Image } from "astro:assets";
@@ -11,10 +10,10 @@ type Props = {
   imageAlt: string;
   /** Editorial hero headline. Falls back to `hijriDate` if omitted. */
   title?: string;
-  /** Hijri date label shown in the metadata pill. */
-  hijriDate: string;
-  /** Gregorian date label shown next to the Hijri date. */
-  currentDate: string;
+  /** Optional Hijri date fallback when `title` is omitted. */
+  hijriDate?: string;
+  /** Deprecated: kept for caller compatibility. */
+  currentDate?: string;
   /** Supporting sentence shown under the headline. */
   phrase: string;
   /** Optional primary CTA label (e.g. Plan Your Visit). */
@@ -32,7 +31,6 @@ const {
   imageAlt,
   title,
   hijriDate,
-  currentDate,
   phrase,
   primaryCtaLabel,
   primaryCtaHref,
@@ -46,56 +44,35 @@ const headingText = title ?? hijriDate;
 <section
   class="
     relative w-full overflow-hidden bg-secondary text-white
-    lg:grid lg:min-h-[560px] lg:grid-cols-12
+    lg:min-h-[560px]
   "
 >
+  <Image
+    src={imageUrl}
+    alt={imageAlt}
+    class="absolute inset-0 size-full object-cover"
+    fetchpriority="high"
+    loading="eager"
+    layout="constrained"
+    widths={[640, 1024, 1600]}
+    sizes="100vw"
+    width={1600}
+    height={900}
+  />
   <div
     class="
-      relative min-h-[320px] overflow-hidden
-      sm:min-h-[380px]
-      lg:col-span-7 lg:min-h-[560px]
+      hero-overlay absolute inset-0 bg-linear-to-b from-secondary/55
+      via-secondary/75 to-secondary/95
     "
   >
-    <Image
-      src={imageUrl}
-      alt={imageAlt}
-      class="absolute inset-0 size-full object-cover"
-      fetchpriority="high"
-      loading="eager"
-      layout="constrained"
-      width={1600}
-      height={900}
-    />
-    <div class="hero-overlay absolute inset-0"></div>
-    <div
-      class="
-        relative z-10 flex h-full items-end p-5
-        sm:p-8
-        lg:p-10
-      "
-    >
-      <Badge
-        variant="outline"
-        class="
-          inline-flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-2xl
-          border border-white/25 bg-slate-950/60 px-4 py-2.5 text-sm
-          text-white/95 shadow-lg backdrop-blur-md
-        "
-      >
-        <Icon name="calendar_month" class="text-base text-amber-300" />
-        <span class="font-semibold tracking-wide">{hijriDate}</span>
-        <span class="text-white/60" aria-hidden="true">•</span>
-        <time class="font-medium tabular-nums">{currentDate}</time>
-      </Badge>
-    </div>
   </div>
 
   <div
     class="
-      relative flex flex-col justify-center bg-secondary px-6 pt-10 pb-24
-      text-start
-      sm:px-10 sm:pt-12 sm:pb-28
-      lg:col-span-5 lg:px-12 lg:py-16 lg:pb-28
+      relative z-10 mx-auto flex min-h-[480px] max-w-4xl flex-col items-center
+      justify-center px-6 pt-16 pb-28 text-center
+      sm:min-h-[520px] sm:px-10 sm:pb-32
+      lg:min-h-[560px] lg:px-12 lg:pb-36
     "
   >
     <h1
@@ -109,7 +86,7 @@ const headingText = title ?? hijriDate;
     </h1>
     <p
       class="
-        max-w-xl text-base/relaxed font-medium text-white/90
+        max-w-2xl text-base/relaxed font-medium text-white/90
         lg:text-lg/relaxed
       "
     >
@@ -117,7 +94,7 @@ const headingText = title ?? hijriDate;
     </p>
     {
       (primaryCtaHref || secondaryCtaHref) && (
-        <div class="mt-8 flex flex-wrap items-center gap-3.5">
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3.5">
           {
             primaryCtaHref && primaryCtaLabel && (
               <Button

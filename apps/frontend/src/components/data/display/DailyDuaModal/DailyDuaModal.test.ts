@@ -1,4 +1,4 @@
-import { getByText } from "@testing-library/dom";
+import { getAllByText, getByText } from "@testing-library/dom";
 import { getLocalizedMocks } from "@utils/localized-mocks";
 import { renderAstroComponentToDom } from "@utils/test.helpers";
 
@@ -12,7 +12,7 @@ describe("DailyDuaModal", () => {
     });
 
     try {
-      expect(getByText(root, dua.arabic)).toBeInTheDocument();
+      expect(getAllByText(root, dua.arabic).length).toBeGreaterThanOrEqual(1);
       expect(getByText(root, dua.source)).toBeInTheDocument();
       expect(getByText(root, "Leer Súplica del Día")).toBeInTheDocument();
       expect(getByText(root, "Copiar Súplica")).toBeInTheDocument();

@@ -13,7 +13,7 @@ The repository is a TypeScript monorepo with **3 workspaces**:
 
 | Workspace | Path | Tech Stack | Default Port |
 | :--- | :--- | :--- | :--- |
-| **Frontend** | `apps/frontend/` | Astro 7 SSR (`@astrojs/node`), Tailwind CSS v4, Starwind UI, Vitest, Storybook 10 | `http://localhost:4321` |
+| **Frontend** | `apps/frontend/` | Astro 7 SSR (`@astrojs/node` / `@astrojs/vercel`), Tailwind CSS v4, Starwind UI, Vitest, Storybook 10 | `http://localhost:4321` |
 | **Backend (CMS)** | `apps/backend/` | Strapi v5 (`5.61.1`), SQLite (local) / PostgreSQL 16 (Docker), `strapi-cache` (`^1.13.0`), 15 `@vicacha-devs/strapi-plugin-*` extensions | `http://127.0.0.1:1337` |
 | **Documentation** | `apps/docs/` | Astro Starlight (`en` + `es`), Pele SVG diagrams (`https://pele.run/`), TypeDoc | `http://localhost:4322` |
 
@@ -67,6 +67,7 @@ pnpm verify
 | Update offline mock fallback data | `apps/frontend/src/utils/*-mocks.ts` (`localized-mocks.ts`, `islam-suite-mocks.ts`, etc.) |
 | Edit Strapi v5 CMS schemas | `apps/backend/src/api/<content-type>/content-types/<name>/schema.json` |
 | Edit first-boot CMS seed data & permissions | `apps/backend/src/index.ts` |
+| Review product goals, design tokens & layout rules | `apps/frontend/PRODUCT.md` and `apps/frontend/DESIGN.md` |
 
 ---
 

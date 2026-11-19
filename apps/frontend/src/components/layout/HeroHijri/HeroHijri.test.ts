@@ -1,10 +1,10 @@
-import { getAllByText, getByRole, getByText } from "@testing-library/dom";
+import { getByRole, getByText } from "@testing-library/dom";
 import { renderAstroComponentToDom } from "@utils/test.helpers";
 
 import HeroHijri from "./HeroHijri.astro";
 
 describe("HeroHijri", () => {
-  it("should render background image, dates and phrase when all props are provided", async () => {
+  it("should render background image, heading and phrase when all props are provided", async () => {
     const props = {
       imageUrl: "https://example.com/mosque.jpg",
       imageAlt: "Beautiful Mosque Architecture",
@@ -30,8 +30,6 @@ describe("HeroHijri", () => {
       expect(image.getAttribute("alt")).toBe(props.imageAlt);
       expect(image.getAttribute("fetchpriority")).toBe("high");
 
-      expect(getAllByText(root, props.hijriDate).length).toBe(2);
-      expect(getByText(root, props.currentDate)).toBeInTheDocument();
       expect(getByText(root, props.phrase)).toBeInTheDocument();
 
       const overlay = root.querySelector(".hero-overlay");

@@ -13,7 +13,7 @@ El repositorio es un monorepo en TypeScript dividido en **3 paquetes**:
 
 | Paquete | Ruta | Stack Tecnológico | Puerto Local |
 | :--- | :--- | :--- | :--- |
-| **Frontend** | `apps/frontend/` | Astro 7 SSR (`@astrojs/node`), Tailwind CSS v4, Starwind UI, Vitest, Storybook 10 | `http://localhost:4321` |
+| **Frontend** | `apps/frontend/` | Astro 7 SSR (`@astrojs/node` / `@astrojs/vercel`), Tailwind CSS v4, Starwind UI, Vitest, Storybook 10 | `http://localhost:4321` |
 | **Backend (CMS)** | `apps/backend/` | Strapi v5 (`5.61.1`), SQLite (local) / PostgreSQL 16 (Docker), `strapi-cache` (`^1.13.0`), 15 plugins `@vicacha-devs/strapi-plugin-*` | `http://127.0.0.1:1337` |
 | **Documentación** | `apps/docs/` | Astro Starlight (`en` + `es`), diagramas SVG con Pele (`https://pele.run/`), TypeDoc | `http://localhost:4322` |
 
@@ -67,6 +67,7 @@ pnpm verify
 | Actualizar datos mock para modo offline | `apps/frontend/src/utils/*-mocks.ts` (`localized-mocks.ts`, `islam-suite-mocks.ts`, etc.) |
 | Editar esquemas de contenido en Strapi v5 | `apps/backend/src/api/<content-type>/content-types/<name>/schema.json` |
 | Editar semilla inicial y permisos públicos del CMS | `apps/backend/src/index.ts` |
+| Revisar visión de producto, tokens de diseño y reglas de layout | `apps/frontend/PRODUCT.md` y `apps/frontend/DESIGN.md` |
 
 ---
 

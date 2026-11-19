@@ -35,10 +35,10 @@ flowchart TD
 
 | Grupo de Dominio | Componentes | Características Clave |
 | :--- | :--- | :--- |
-| **Oración y Calendario Hijri** | `DailyPrayTime`, `MonthlyPrayTime`, `DailyDuaModal`, `QiblaAndObservancesSection`, `RamadanScheduleBanner` | Resaltado en vivo de la oración activa, audio de pronunciación de la súplica diaria, tabla mensual desplegable, rumbo Qibla (`65.24° ENE`) |
-| **Eventos y Spotlights** | `NextEventsSection`, `EventsCatalogSection`, `EventDetailSection`, `EventVerticalCard`, `EventSpotlightDock` | Filtros por categoría/audiencia, exportación `.ics`, dock flotante en esquina con visor de póster y cuenta regresiva |
+| **Oración y Calendario Hijri** | `DailyPrayTime`, `MonthlyPrayTime`, `DailyDuaModal`, `QiblaAndObservancesSection`, `RamadanScheduleBanner` | Resaltado en vivo, cuenta regresiva y estados `Passed / Now / Up Next`, audio de súplica diaria, tabla mensual desplegable, rumbo Qibla (`65.24° ENE`) |
+| **Eventos y Spotlights** | `NextEventsSection`, `EventsCatalogSection`, `EventDetailSection`, `EventVerticalCard`, `EventSpotlightDock` | Filtros por categoría/audiencia, vista `Lista \| Calendario` (`events-catalog.controller.ts`) mensual y agenda diaria, exportación `.ics`, dock flotante con visor de póster |
 | **Academia y Fe** | `AcademyCoursesSection`, `ArticleDetailSection`, `FivePillarsSection`, `ScriptureExplorerSection`, `VisitorEtiquetteSection`, `FaqAccordionSection` | Explorador de aleyas y hadices por tema, contador interactivo Tasbih 33/99 (`scripture-explorer.controller.ts`), bloques Tiptap |
-| **Donaciones y Zakat** | `DonationImpactSection`, `DonationCampaignsSection`, `ZakatCalculatorSection`, `PaymentChannelsSection`, `UtilityInvoicesSection` | Calculadora de Nisab en Oro/Plata (`zakat-calculator.controller.ts`), copiado de cuentas bancarias en un clic, apadrinamiento de recibos |
+| **Donaciones y Zakat** | `DonationImpactSection`, `DonationCampaignsSection`, `ZakatCalculatorSection`, `PaymentChannelsSection`, `UtilityInvoicesSection` | Calculadora de Nisab en Oro/Plata con resumen fijo en COP (`zakat-calculator.controller.ts`), transparencia 90%/10%, copiado bancario en un clic |
 | **Medios, Recursos y Comunidad** | `MediaHighlightsSection`, `MediaArchiveSection`, `PublicationsAndGlossarySection`, `PhotoGalleriesSection`, `CommunityBroadcastChannelsSection`, `CommunityServicesSection`, `AboutInstitutionalSections`, `SiteSearchSection`, `UrgentAlertBanner`, `TiptapContent` | Búsqueda y filtros en cliente, canales de WhatsApp/Telegram, banner de alerta urgente persistente en `localStorage` |
 
 ---

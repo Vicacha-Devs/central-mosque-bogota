@@ -35,10 +35,10 @@ flowchart TD
 
 | Domain Group | Components | Key Features |
 | :--- | :--- | :--- |
-| **Prayer & Hijri** | `DailyPrayTime`, `MonthlyPrayTime`, `DailyDuaModal`, `QiblaAndObservancesSection`, `RamadanScheduleBanner` | Live active prayer highlight, audio pronunciation for Daily Dua, collapsible monthly table, Qibla bearing (`65.24° ENE`), Hijri observance cards |
-| **Events & Spotlights** | `NextEventsSection`, `EventsCatalogSection`, `EventDetailSection`, `EventVerticalCard`, `EventSpotlightDock` | Category/audience filtering, `.ics` calendar export link, floating corner dock with poster lightbox and countdown |
+| **Prayer & Hijri** | `DailyPrayTime`, `MonthlyPrayTime`, `DailyDuaModal`, `QiblaAndObservancesSection`, `RamadanScheduleBanner` | Live active prayer highlight, countdown & `Passed / Now / Up Next` badges, audio pronunciation for Daily Dua, collapsible monthly table, Qibla bearing (`65.24° ENE`), Hijri observance cards |
+| **Events & Spotlights** | `NextEventsSection`, `EventsCatalogSection`, `EventDetailSection`, `EventVerticalCard`, `EventSpotlightDock` | Category/audience filtering, `List \| Calendar` (`events-catalog.controller.ts`) monthly grid & daily agenda, `.ics` export, floating corner dock with poster lightbox |
 | **Academy & Faith** | `AcademyCoursesSection`, `ArticleDetailSection`, `FivePillarsSection`, `ScriptureExplorerSection`, `VisitorEtiquetteSection`, `FaqAccordionSection` | Quran/Hadith topic explorer, interactive 33/99 Tasbih counter (`scripture-explorer.controller.ts`), Tiptap rich text rendering |
-| **Donations & Zakat** | `DonationImpactSection`, `DonationCampaignsSection`, `ZakatCalculatorSection`, `PaymentChannelsSection`, `UtilityInvoicesSection` | Live Gold/Silver Nisab calculator (`zakat-calculator.controller.ts`), one-click bank account copy, utility bill sponsorship |
+| **Donations & Zakat** | `DonationImpactSection`, `DonationCampaignsSection`, `ZakatCalculatorSection`, `PaymentChannelsSection`, `UtilityInvoicesSection` | Live Gold/Silver Nisab calculator with sticky COP summary rail (`zakat-calculator.controller.ts`), 90%/10% impact transparency, one-click bank copy, utility bill sponsorship |
 | **Media, Resources & Community** | `MediaHighlightsSection`, `MediaArchiveSection`, `PublicationsAndGlossarySection`, `PhotoGalleriesSection`, `CommunityBroadcastChannelsSection`, `CommunityServicesSection`, `AboutInstitutionalSections`, `SiteSearchSection`, `UrgentAlertBanner`, `TiptapContent` | Client-side search & category filters, WhatsApp/Telegram broadcast directory, dismissible `localStorage` urgent alert banner |
 
 ---

@@ -77,6 +77,16 @@ const copiedLabel = t("daily-dua.copied");
       >
         {dua.title}
       </h2>
+      <p
+        class="
+          pt-1 font-arabic text-xl/relaxed font-bold text-amber-300
+          sm:text-2xl/relaxed
+        "
+        dir="rtl"
+        lang="ar"
+      >
+        {dua.arabic}
+      </p>
       <p class="max-w-2xl text-sm text-blue-100/85">
         {dua.translation}
       </p>
@@ -182,28 +192,8 @@ const copiedLabel = t("daily-dua.copied");
 </section>
 
 <script>
-
-
-
-
-
-
-
-
-
-
   import { initCopyDuaButtons } from "./daily-dua-modal.controller";
 
   initCopyDuaButtons();
   document.addEventListener("astro:after-swap", () => initCopyDuaButtons());
-
-
-
-
-
-
-
-
-
-
 </script>

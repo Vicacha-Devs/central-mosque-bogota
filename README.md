@@ -8,7 +8,7 @@ Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en
 
 | Workspace | Path | Stack & Responsibilities | Default Port |
 | :--- | :--- | :--- | :--- |
-| **Frontend (`frontend`)** | [`./frontend`](./apps/frontend/README.md) | **Astro 7 SSR** (`@astrojs/node`), Tailwind CSS v4, Starwind UI, `@sensinum/astro-strapi-loader`, `@vicacha-devs/astro-tiptap-blocks`, IslamicAPI prayer & Zakat engine, Vitest, and Storybook 10. | `http://localhost:4321` |
+| **Frontend (`frontend`)** | [`./frontend`](./apps/frontend/README.md) | **Astro 7 SSR** (`@astrojs/node` / `@astrojs/vercel`), Tailwind CSS v4, Starwind UI, `@sensinum/astro-strapi-loader`, `@vicacha-devs/astro-tiptap-blocks`, IslamicAPI prayer & Zakat engine, Vitest, and Storybook 10. | `http://localhost:4321` |
 | **Backend (`@central-mosque-bogota/backend`)** | [`./backend`](./apps/backend/README.md) | **Strapi v5 Headless CMS** (`5.61.1`), SQLite (local dev) / PostgreSQL 16 (production), Cloudinary CDN, `strapi-cache` (`^1.13.0`), and 15 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions (including `tiptap-editor`, `seo`, `sitemap`, `global-search`, and `notes`). | `http://127.0.0.1:1337` |
 | **Docs (`@central-mosque-bogota/docs`)** | [`./docs`](./apps/docs/README.md) | **Astro Starlight** bilingual (`en` + `es`) handbook with **Pele** (`https://pele.run/`) build-time SVG Mermaid diagrams, **Archify** interactive HTML explainers, and **TypeDoc** API reference generation (`<= 500 lines` per file). | `http://localhost:4322` |
 

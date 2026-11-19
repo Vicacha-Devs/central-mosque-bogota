@@ -29,6 +29,7 @@ cd apps/frontend
 pnpm build
 HOST=127.0.0.1 PORT=4321 node ./dist/server/entry.mjs
 ```
+- **Despliegue en Vercel**: `apps/frontend/astro.config.ts` selecciona automáticamente `@astrojs/vercel` cuando la variable `VERCEL` está definida, junto con `apps/frontend/vercel.json` (`installCommand: "pnpm install --filter frontend..."`, `buildCommand: "pnpm build"`).
 
 ---
 

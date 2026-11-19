@@ -66,6 +66,8 @@ const {
       group-hover:scale-110
     "
     layout="constrained"
+    widths={[320, 480]}
+    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
     width={380}
     height={450}
   />
@@ -75,7 +77,7 @@ const {
     "
   >
   </div>
-  <div class="absolute top-6 start-6">
+  <div class="absolute inset-s-6 top-6">
     <Badge
       variant={badgeTone === "secondary" ? "secondary" : "primary"}
       class="
