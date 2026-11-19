@@ -129,7 +129,10 @@ export default defineConfig([
       // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
       "@stylistic/jsx-one-expression-per-line": "off",
       // `dark` is the Tailwind v4 custom-variant scope class (see PageHeroBanner).
-      "better-tailwindcss/no-unknown-classes": ["warn", { ignore: ["^dark$"] }],
+      "better-tailwindcss/no-unknown-classes": [
+        "error",
+        { ignore: ["^dark$"] },
+      ],
     },
   },
   {
