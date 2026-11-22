@@ -27,8 +27,8 @@ const serviceEntries = await getCollection(
   "communityServices",
   (entry) => entry.data.locale === lang
 );
-const defaultServices
-  = serviceEntries.length > 0
+const defaultServices =
+  serviceEntries.length > 0
     ? serviceEntries.map((entry) => entry.data)
     : localizedMocks.defaultServices;
 ---

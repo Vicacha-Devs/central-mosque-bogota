@@ -98,7 +98,7 @@ const { album, photosCountLabel, mediaFolderLabel } = Astro.props as Props;
           <Badge
             variant="secondary"
             class="
-              absolute top-4 start-4 bg-secondary px-3 py-1 text-xs font-bold
+              absolute inset-s-4 top-4 bg-secondary px-3 py-1 text-xs font-bold
               text-white shadow-sm
             "
           >
@@ -109,8 +109,8 @@ const { album, photosCountLabel, mediaFolderLabel } = Astro.props as Props;
       <Badge
         variant="default"
         class="
-          absolute end-4 bottom-3 gap-1 rounded-md bg-slate-950/80 px-2.5 py-1
-          text-xs font-bold text-amber-300
+          absolute inset-e-4 bottom-3 gap-1 rounded-md bg-slate-950/80 px-2.5
+          py-1 text-xs font-bold text-amber-300
         "
       >
         <Icon name="collections" class="text-xs" />

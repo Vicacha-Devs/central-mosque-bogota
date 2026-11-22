@@ -34,10 +34,12 @@ export const en = {
   "pray-schedule.status-now": "Now",
   "pray-schedule.status-next": "Up next",
   "search-page.recovery-title": "Not what you were looking for?",
-  "search-page.recovery-desc": "Explore our daily prayer schedule, upcoming community events, or contact us directly.",
+  "search-page.recovery-desc":
+    "Explore our daily prayer schedule, upcoming community events, or contact us directly.",
   "donate-page.waqf-badge": "Permanent Waqf",
   "donate-page.waqf-title": "Sadaqah Jariyah — Endowment Fund",
-  "donate-page.waqf-desc": "Invest in an ongoing legacy that sustains Islamic education, community welfare, and mosque upkeep.",
+  "donate-page.waqf-desc":
+    "Invest in an ongoing legacy that sustains Islamic education, community welfare, and mosque upkeep.",
   "donate-page.waqf-cta": "Support Waqf",
   "media-page.companion-takeaways": "Key Takeaways",
   "media-page.companion-verses": "Mentioned Verses",
@@ -346,7 +348,8 @@ export const en = {
   "islam-suite.asmaOfDayLabel": "Name of Allah of the Day",
   "islam-suite.reflectionLabel": "Spiritual reflection",
   "islam-suite.takeawayLabel": "Key takeaway",
-  "islam-suite.listenRecitationLabel": "Listen to recitation (Mishari Rashid al-`Afasy)",
+  "islam-suite.listenRecitationLabel":
+    "Listen to recitation (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Reset",
   "islam-suite.tasbihIncrementLabel": "Count Dhikr (+1)",
   "islam-suite.tasbihCompletedLabel": "Target reached! Alhamdulillah",

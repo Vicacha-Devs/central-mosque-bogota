@@ -5,13 +5,13 @@ import type { VariantProps } from "tailwind-variants";
 import { toggle } from "./variants";
 
 type Props = Omit<HTMLAttributes<"button">, "aria-pressed" | "defaultPressed" | "disabled" | "onChange" | "type" | "value"> & VariantProps<typeof toggle> & {
-  defaultPressed?: boolean;
-  disabled?: boolean;
-  nativeButton?: boolean;
+  "defaultPressed"?: boolean;
+  "disabled"?: boolean;
+  "nativeButton"?: boolean;
   "data-slot"?: string;
-  pressed?: boolean;
-  syncGroup?: string;
-  value?: string;
+  "pressed"?: boolean;
+  "syncGroup"?: string;
+  "value"?: string;
 };
 
 const {

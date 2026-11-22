@@ -7,13 +7,13 @@ import type { VariantProps } from "tailwind-variants";
 import { themeToggle } from "./variants";
 
 type Props = Omit<HTMLAttributes<"button">, "aria-pressed" | "defaultPressed" | "disabled" | "onChange" | "type" | "value"> & VariantProps<typeof themeToggle> & {
-  ariaLabel?: string;
-  defaultPressed?: boolean;
-  disabled?: boolean;
+  "ariaLabel"?: string;
+  "defaultPressed"?: boolean;
+  "disabled"?: boolean;
   "data-slot"?: string;
-  pressed?: boolean;
-  syncGroup?: string;
-  value?: string;
+  "pressed"?: boolean;
+  "syncGroup"?: string;
+  "value"?: string;
 };
 
 const {
@@ -57,7 +57,10 @@ const initialPressed = pressed ?? defaultPressed ?? false;
     <span class="size-5" data-theme-icon-wrapper>
       <slot name="light-icon">
         <Sun
-          class="hidden size-5 group-data-[state=off]:data-ready:block"
+          class="
+            hidden size-5
+            group-data-[state=off]:data-ready:block
+          "
           aria-hidden="true"
           data-theme-icon
         />
@@ -65,7 +68,10 @@ const initialPressed = pressed ?? defaultPressed ?? false;
 
       <slot name="dark-icon">
         <Moon
-          class="hidden size-5 group-data-[state=on]:data-ready:block"
+          class="
+            hidden size-5
+            group-data-[state=on]:data-ready:block
+          "
           aria-hidden="true"
           data-theme-icon
         />

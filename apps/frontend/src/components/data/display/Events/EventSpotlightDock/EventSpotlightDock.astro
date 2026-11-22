@@ -54,9 +54,9 @@ function toSafeHref(rawUrl: string | undefined): string {
   try {
     const parsed = new URL(trimmed);
     if (
-      parsed.protocol === "https:"
-      || parsed.protocol === "http:"
-      || parsed.protocol === "mailto:"
+      parsed.protocol === "https:" ||
+      parsed.protocol === "http:" ||
+      parsed.protocol === "mailto:"
     ) {
       return trimmed;
     }
@@ -92,11 +92,11 @@ const minimizeLabel = t("event-spotlight.minimize");
 const expandLabel = t("event-spotlight.expand");
 const daysRemainingLabel = t("event-spotlight.days-remaining");
 
-const effectivePosition: TEventSpotlightPosition
-  = position ?? activeSpotlights[0]?.spotlightConfig?.position ?? "bottom-end";
+const effectivePosition: TEventSpotlightPosition =
+  position ?? activeSpotlights[0]?.spotlightConfig?.position ?? "bottom-end";
 
-const positionClass
-  = effectivePosition === "bottom-start"
+const positionClass =
+  effectivePosition === "bottom-start"
     ? "bottom-4 start-4 sm:bottom-6 sm:start-6"
     : "bottom-4 end-4 sm:bottom-6 sm:end-6";
 
@@ -244,8 +244,8 @@ const storageKey = `mosque_spotlight_min_${activeSpotlights.map((s) => s.id).joi
                     <span>{item.spotlightConfig.badgeText}</span>
                   </span>
                 )}
-                {item.spotlightConfig.showCountdown
-                  && item.spotlightConfig.endAt && (
+                {item.spotlightConfig.showCountdown &&
+                  item.spotlightConfig.endAt && (
                   <span
                     data-spotlight-countdown={item.spotlightConfig.endAt}
                     class="

@@ -22,10 +22,10 @@ const [globalEntries, contactPageEntries] = await Promise.all([
   getCollection("contactPage", (entry) => entry.data.locale === lang),
 ]);
 
-const contactInfo
-  = globalEntries[0]?.data.contactInfo ?? localizedMocks.contactInfo;
-const contactPageData
-  = contactPageEntries[0]?.data ?? localizedMocks.contactVisitData;
+const contactInfo =
+  globalEntries[0]?.data.contactInfo ?? localizedMocks.contactInfo;
+const contactPageData =
+  contactPageEntries[0]?.data ?? localizedMocks.contactVisitData;
 ---
 
 <Layout

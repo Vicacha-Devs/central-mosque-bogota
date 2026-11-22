@@ -55,9 +55,9 @@ if (!propBanner) {
       { locale: lang }
     );
     if (
-      Array.isArray(cmsAlerts)
-      && cmsAlerts.length > 0
-      && cmsAlerts[0]?.title
+      Array.isArray(cmsAlerts) &&
+      cmsAlerts.length > 0 &&
+      cmsAlerts[0]?.title
     ) {
       banner = cmsAlerts[0];
     }
@@ -108,7 +108,11 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
         <Icon name="campaign" class="shrink-0 text-xs" />
         <span>{banner.title}</span>
       </Badge>
-      <span class="text-xs/relaxed font-medium opacity-95 sm:text-sm/snug">
+      <span class="
+        text-xs/relaxed font-medium opacity-95
+        sm:text-sm/snug
+      "
+      >
         {banner.message}
       </span>
       {
@@ -124,7 +128,11 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
       }
     </div>
 
-    <div class="flex shrink-0 items-center justify-between gap-3 md:justify-end">
+    <div class="
+      flex shrink-0 items-center justify-between gap-3
+      md:justify-end
+    "
+    >
       {
         banner.ctaLabel && banner.ctaUrl && (
           <a
@@ -136,7 +144,13 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
             "
           >
             <span>{banner.ctaLabel}</span>
-            <Icon name="arrow_forward" class="text-xs rtl:-scale-x-100" />
+            <Icon
+              name="arrow_forward"
+              class="
+                text-xs
+                rtl:-scale-x-100
+              "
+            />
           </a>
         )
       }

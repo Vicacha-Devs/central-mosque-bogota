@@ -59,13 +59,13 @@ const [
 ]);
 
 const cmsPubs = cmsPublicationsRes?.data;
-const digitalPublications: TResourcePublication[]
-  = Array.isArray(cmsPubs) && cmsPubs.length > 0
+const digitalPublications: TResourcePublication[] =
+  Array.isArray(cmsPubs) && cmsPubs.length > 0
     ? cmsPubs
     : fallbackPublications;
 
-const glossaryTerms: TResourceGlossaryTerm[]
-  = Array.isArray(cmsGlossaryRes?.data) && cmsGlossaryRes.data.length > 0
+const glossaryTerms: TResourceGlossaryTerm[] =
+  Array.isArray(cmsGlossaryRes?.data) && cmsGlossaryRes.data.length > 0
     ? cmsGlossaryRes.data
     : fallbackGlossaryTerms;
 
@@ -73,13 +73,13 @@ const islamFaithData: Omit<typeof localizedMocks.islamFaithData, "faqs"> & {
   introText?: string;
 } = islamFaithEntries[0]?.data ?? localizedMocks.islamFaithData;
 
-const academyCourses
-  = articleEntries.length > 0
+const academyCourses =
+  articleEntries.length > 0
     ? articleEntries.map((entry) => entry.data)
     : localizedMocks.academyCourses;
 
-const mediaHighlights: Array<TMediaHighlight>
-  = mediaEntries.length > 0
+const mediaHighlights: Array<TMediaHighlight> =
+  mediaEntries.length > 0
     ? mediaEntries.map((entry) => ({
         title: entry.data.title,
         href: entry.data.href,
@@ -88,8 +88,8 @@ const mediaHighlights: Array<TMediaHighlight>
       }))
     : localizedMocks.mediaHighlights;
 
-const faqs
-  = faqEntries.length > 0
+const faqs =
+  faqEntries.length > 0
     ? faqEntries.map((entry) => entry.data)
     : localizedMocks.islamFaithData.faqs;
 ---

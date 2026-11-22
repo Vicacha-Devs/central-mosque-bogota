@@ -74,11 +74,11 @@ export function bindJsonFormSubmission(options: TBindJsonFormOptions): void {
   if (boundForms.has(form)) return;
   boundForms.add(form);
 
-  const submitBtn
-    = options.submitButton
-      ?? form.querySelector<HTMLButtonElement>(
-        "button[type=\"submit\"], button:not([type]), input[type=\"submit\"]"
-      );
+  const submitBtn =
+    options.submitButton ??
+    form.querySelector<HTMLButtonElement>(
+      'button[type="submit"], button:not([type]), input[type="submit"]'
+    );
 
   let isSubmitting = false;
 

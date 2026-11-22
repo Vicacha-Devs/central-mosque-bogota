@@ -1,5 +1,5 @@
-import { randomBytes } from "node:crypto";
 import { defineMiddleware } from "astro:middleware";
+import { randomBytes } from "node:crypto";
 
 /**
  * Applies security headers and a per-request CSP nonce to every SSR response.

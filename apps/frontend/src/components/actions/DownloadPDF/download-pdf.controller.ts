@@ -167,8 +167,8 @@ async function handleClick(
       windowHeight: Math.max(element.scrollHeight, element.clientHeight),
       ignoreElements: (el) => {
         return (
-          el.matches("[data-action='download-pdf']")
-          || el.matches("[data-action='show-more']")
+          el.matches("[data-action='download-pdf']") ||
+          el.matches("[data-action='show-more']")
         );
       },
     });

@@ -26,8 +26,8 @@ const t = useTranslations(lang);
 const localizedMocks = getLocalizedMocks(lang);
 const fallbackUtilityInvoices = getLocalizedUtilityInvoices(lang);
 
-const [campaignEntries, donationsPageEntries, cmsUtilityInvoicesRes]
-  = await Promise.all([
+const [campaignEntries, donationsPageEntries, cmsUtilityInvoicesRes] =
+  await Promise.all([
     getCollection("donationCampaigns", (entry) => entry.data.locale === lang),
     getCollection("donationsPage", (entry) => entry.data.locale === lang),
     fetchStrapiData<{ data?: UtilityInvoiceMock[] }>(
@@ -36,14 +36,14 @@ const [campaignEntries, donationsPageEntries, cmsUtilityInvoicesRes]
     ).catch(() => null),
   ]);
 
-const utilityInvoices: UtilityInvoiceMock[]
-  = Array.isArray(cmsUtilityInvoicesRes?.data)
-    && cmsUtilityInvoicesRes.data.length > 0
+const utilityInvoices: UtilityInvoiceMock[] =
+  Array.isArray(cmsUtilityInvoicesRes?.data) &&
+    cmsUtilityInvoicesRes.data.length > 0
     ? cmsUtilityInvoicesRes.data
     : fallbackUtilityInvoices;
 
-const campaigns
-  = campaignEntries.length > 0
+const campaigns =
+  campaignEntries.length > 0
     ? campaignEntries.map((entry) => entry.data)
     : localizedMocks.donationCampaigns;
 

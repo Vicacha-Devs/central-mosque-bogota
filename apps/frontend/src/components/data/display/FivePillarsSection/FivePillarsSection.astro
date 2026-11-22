@@ -27,8 +27,8 @@ export interface Props {
 
 const { lang = "es", pillars } = Astro.props;
 const t = useTranslations(lang);
-const resolvedPillars
-  = pillars ?? getLocalizedMocks(lang).islamFaithData.fivePillars;
+const resolvedPillars =
+  pillars ?? getLocalizedMocks(lang).islamFaithData.fivePillars;
 ---
 
 <section class="space-y-10">

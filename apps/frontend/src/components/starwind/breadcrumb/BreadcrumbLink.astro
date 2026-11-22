@@ -11,16 +11,18 @@ const { asChild = false, class: className, ...rest } = Astro.props;
 ---
 
 {
-  asChild ? (
-    <slot />
-  ) : (
-    <a
-      {...rest}
-      data-sw-breadcrumb-link
-      class={breadcrumbLink({ class: className })}
-      data-slot="breadcrumb-link"
-    >
-      <slot />
-    </a>
-  )
+  asChild
+    ? (
+        <slot />
+      )
+    : (
+        <a
+          {...rest}
+          data-sw-breadcrumb-link
+          class={breadcrumbLink({ class: className })}
+          data-slot="breadcrumb-link"
+        >
+          <slot />
+        </a>
+      )
 }

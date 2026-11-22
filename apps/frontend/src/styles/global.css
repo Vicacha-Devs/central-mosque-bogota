@@ -302,7 +302,10 @@
 /* eslint-enable css/use-baseline */
 
 @layer components {
-  .material-symbols-outlined {
+  /* Only one symbols font is bundled, so all variants share these styles. */
+  .material-symbols-outlined,
+  .material-symbols-rounded,
+  .material-symbols-sharp {
     font-variation-settings:
       "FILL" 0,
       "wght" 400,

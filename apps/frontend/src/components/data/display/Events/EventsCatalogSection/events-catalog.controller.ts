@@ -55,12 +55,22 @@ function renderCalendar(
 ): void {
   const lang = root.dataset.lang ?? "es";
   const noEventsLabel = root.dataset.noEventsLabel ?? "No events scheduled.";
-  const monthLabelEl = root.querySelector<HTMLElement>("[data-cal-month-label]");
-  const weekdaysDesktop = root.querySelector<HTMLElement>("[data-cal-weekdays-desktop]");
-  const gridDesktop = root.querySelector<HTMLElement>("[data-cal-grid-desktop]");
-  const weekdaysMobile = root.querySelector<HTMLElement>("[data-cal-weekdays-mobile]");
+  const monthLabelEl = root.querySelector<HTMLElement>(
+    "[data-cal-month-label]"
+  );
+  const weekdaysDesktop = root.querySelector<HTMLElement>(
+    "[data-cal-weekdays-desktop]"
+  );
+  const gridDesktop = root.querySelector<HTMLElement>(
+    "[data-cal-grid-desktop]"
+  );
+  const weekdaysMobile = root.querySelector<HTMLElement>(
+    "[data-cal-weekdays-mobile]"
+  );
   const gridMobile = root.querySelector<HTMLElement>("[data-cal-grid-mobile]");
-  const mobileAgenda = root.querySelector<HTMLElement>("[data-cal-mobile-agenda]");
+  const mobileAgenda = root.querySelector<HTMLElement>(
+    "[data-cal-mobile-agenda]"
+  );
 
   if (!monthLabelEl || !gridDesktop || !gridMobile || !mobileAgenda) return;
 
@@ -108,7 +118,8 @@ function renderCalendar(
 
   for (let i = 0; i < firstDow; i++) {
     const blankDesktop = document.createElement("div");
-    blankDesktop.className = "min-h-24 border-e border-b border-border bg-muted/30";
+    blankDesktop.className =
+      "min-h-24 border-e border-b border-border bg-muted/30";
     gridDesktop.appendChild(blankDesktop);
 
     const blankMobile = document.createElement("div");
@@ -180,13 +191,15 @@ function renderCalendar(
 
   // Mobile agenda list
   mobileAgenda.replaceChildren();
-  const agendaEvents = selectedDay !== null
-    ? eventsByDay.get(selectedDay) ?? []
-    : filteredEvents;
+  const agendaEvents =
+    selectedDay !== null
+      ? (eventsByDay.get(selectedDay) ?? [])
+      : filteredEvents;
 
   if (agendaEvents.length === 0) {
     const empty = document.createElement("p");
-    empty.className = "rounded-xl border border-border bg-card p-4 text-center text-sm text-muted-foreground";
+    empty.className =
+      "rounded-xl border border-border bg-card p-4 text-center text-sm text-muted-foreground";
     empty.textContent = noEventsLabel;
     mobileAgenda.appendChild(empty);
     return;
@@ -195,7 +208,8 @@ function renderCalendar(
   agendaEvents.forEach((ev) => {
     const item = document.createElement("a");
     item.href = ev.url || "#";
-    item.className = "flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-3.5 text-start transition-colors hover:bg-muted/50";
+    item.className =
+      "flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-3.5 text-start transition-colors hover:bg-muted/50";
 
     const info = document.createElement("div");
     info.className = "min-w-0";
@@ -208,7 +222,8 @@ function renderCalendar(
     info.append(title, meta);
 
     const badge = document.createElement("span");
-    badge.className = "shrink-0 rounded-full bg-secondary/10 px-2.5 py-0.5 text-[11px] font-bold text-secondary dark:text-secondary-accent";
+    badge.className =
+      "shrink-0 rounded-full bg-secondary/10 px-2.5 py-0.5 text-[11px] font-bold text-secondary dark:text-secondary-accent";
     badge.textContent = ev.category;
 
     item.append(info, badge);
@@ -225,10 +240,16 @@ export function initEventFilters(): void {
     "[data-event-filter]"
   );
   const cards = document.querySelectorAll<HTMLElement>("[data-event-category]");
-  const catalogRoot = document.querySelector<HTMLElement>("[data-events-catalog]");
+  const catalogRoot = document.querySelector<HTMLElement>(
+    "[data-events-catalog]"
+  );
   const listGrid = document.getElementById("events-grid");
-  const calendarPanel = document.querySelector<HTMLElement>("[data-events-calendar-panel]");
-  const viewTabs = document.querySelectorAll<HTMLButtonElement>("[data-events-view-tab]");
+  const calendarPanel = document.querySelector<HTMLElement>(
+    "[data-events-calendar-panel]"
+  );
+  const viewTabs = document.querySelectorAll<HTMLButtonElement>(
+    "[data-events-view-tab]"
+  );
 
   let selectedCategory = "all";
   let currentDate = new Date();
@@ -246,7 +267,11 @@ export function initEventFilters(): void {
   }
 
   const syncCalendar = (): void => {
-    if (!catalogRoot || !calendarPanel || calendarPanel.classList.contains("hidden")) {
+    if (
+      !catalogRoot ||
+      !calendarPanel ||
+      calendarPanel.classList.contains("hidden")
+    ) {
       return;
     }
     renderCalendar(
@@ -316,8 +341,10 @@ export function initEventFilters(): void {
     });
   });
 
-  const prevBtn = catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-prev]");
-  const nextBtn = catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-next]");
+  const prevBtn =
+    catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-prev]");
+  const nextBtn =
+    catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-next]");
   if (prevBtn && prevBtn.dataset.bound !== "true") {
     prevBtn.dataset.bound = "true";
     prevBtn.addEventListener("click", () => {

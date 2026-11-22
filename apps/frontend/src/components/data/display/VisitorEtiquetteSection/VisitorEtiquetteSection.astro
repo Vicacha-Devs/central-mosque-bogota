@@ -32,8 +32,8 @@ const { lang = "es", etiquetteItems, transitDirections } = Astro.props;
 const t = useTranslations(lang);
 const { contactVisitData } = getLocalizedMocks(lang);
 const resolvedEtiquette = etiquetteItems ?? contactVisitData.visitorEtiquette;
-const resolvedDirections
-  = transitDirections ?? contactVisitData.transitDirections;
+const resolvedDirections =
+  transitDirections ?? contactVisitData.transitDirections;
 ---
 
 <div class="space-y-12">

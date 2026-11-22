@@ -30,6 +30,7 @@
   "ignorePatterns": [
     "coverage",
     "dist",
+    "src/components/starwind",
     "storybook-static",
     "node_modules",
     "yarn.lock",

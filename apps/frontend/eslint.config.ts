@@ -28,12 +28,14 @@ export default defineConfig([
   globalIgnores([
     "coverage",
     "dist",
+    "src/components/starwind",
     "storybook-static",
     "node_modules",
     ".astro",
     ".github",
     ".vscode",
     "!.storybook",
+    ".vercel",
   ]),
   {
     ...sonarjs.recommended,
@@ -64,15 +66,9 @@ export default defineConfig([
     },
     rules: {
       "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }],
-      "@stylistic/function-paren-newline": ["warn", "consistent"],
+      "@stylistic/function-paren-newline": "off", // oxfmt owns this
       "@stylistic/implicit-arrow-linebreak": "off",
-      "@stylistic/operator-linebreak": "warn",
-      "@stylistic/object-curly-newline": [
-        "error",
-        {
-          ExportDeclaration: { multiline: true, minProperties: 5 },
-        },
-      ],
+      "@stylistic/object-curly-newline": "off", // oxfmt owns this
       "@typescript-eslint/array-type": [
         "error",
         {
@@ -138,6 +134,23 @@ export default defineConfig([
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,astro}"],
     rules: {
+      // oxfmt (prettier-style) keeps operators at the end of the line, so match it
+      "@stylistic/operator-linebreak": [
+        "warn",
+        "after",
+        {
+          overrides: {
+            "?": "before",
+            ":": "before",
+            "|": "before",
+            "&": "before",
+          },
+        },
+      ],
+      // Whitespace/indentation is owned by oxfmt; these conflict with it
+      "@stylistic/indent": "off",
+      "@stylistic/indent-binary-ops": "off",
+      "@stylistic/no-multiple-empty-lines": "off",
       "@stylistic/arrow-parens": ["error", "always"],
       "@stylistic/comma-dangle": [
         "error",
@@ -159,7 +172,7 @@ export default defineConfig([
         },
       ],
       "@stylistic/quote-props": ["error", "consistent"],
-      "@stylistic/quotes": ["error", "double"],
+      "@stylistic/quotes": ["error", "double", { avoidEscape: true }],
       "@stylistic/semi": ["error", "always"],
       "eol-last": ["error", "always"],
       "max-len": [

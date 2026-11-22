@@ -41,7 +41,7 @@ export function initFooterNewsletter(root: ParentNode = document): void {
   form.setAttribute("data-newsletter-bound", "true");
 
   const submitBtn = form.querySelector<HTMLButtonElement>(
-    "button[type=\"submit\"], button:not([type])"
+    'button[type="submit"], button:not([type])'
   );
   let isSubmitting = false;
 

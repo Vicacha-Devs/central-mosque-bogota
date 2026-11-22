@@ -21,8 +21,8 @@ type Props = {
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const { title: pageTitleProp, description: pageDescriptionProp }
-  = Astro.props as Props;
+const { title: pageTitleProp, description: pageDescriptionProp } =
+  Astro.props as Props;
 
 const defaultSiteTitle = t("seo.default-title");
 const pageTitle = pageTitleProp
@@ -61,8 +61,8 @@ const fastLinks = globalSetting?.fastLinks ?? localizedMocks.fastLinks;
 const lemma = globalSetting?.lemma ?? localizedMocks.lemma;
 const navLinks = globalSetting?.navLinks ?? localizedMocks.navLinks;
 const rightsText = globalSetting?.rightsText ?? localizedMocks.rightsText;
-const socialNetworkLinks
-  = globalSetting?.socialNetworkLinks ?? localizedMocks.socialNetworkLinks;
+const socialNetworkLinks =
+  globalSetting?.socialNetworkLinks ?? localizedMocks.socialNetworkLinks;
 const cspNonce = Astro.locals.cspNonce;
 const hasHeroSlot = Astro.slots.has("hero");
 ---
@@ -173,9 +173,9 @@ const hasHeroSlot = Astro.slots.has("hero");
       href="#main-content"
       class="
         sr-only
-        focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100]
-        focus:rounded-xl focus:bg-secondary focus:px-4 focus:py-2.5 focus:text-sm
-        focus:font-semibold focus:text-white focus:shadow-lg
+        focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4 focus:z-100
+        focus:rounded-xl focus:bg-secondary focus:px-4 focus:py-2.5
+        focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg
       "
     >
       {
@@ -202,7 +202,10 @@ const hasHeroSlot = Astro.slots.has("hero");
           sm:px-6
           lg:mb-16 lg:px-8
         `,
-        !hasHeroSlot && "mt-12 lg:mt-16",
+        !hasHeroSlot && `
+          mt-12
+          lg:mt-16
+        `,
       ]}
     >
       <slot />

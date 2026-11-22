@@ -24,14 +24,14 @@ function bindSubmissionForm(
     },
     getMessages: (currentForm) => ({
       sending:
-        currentForm.getAttribute("data-sending-text")
-        ?? "Enviando solicitud...",
+        currentForm.getAttribute("data-sending-text") ??
+        "Enviando solicitud...",
       error:
-        currentForm.getAttribute("data-error-text")
-        ?? "Por favor verifica los campos obligatorios e inténtalo de nuevo.",
+        currentForm.getAttribute("data-error-text") ??
+        "Por favor verifica los campos obligatorios e inténtalo de nuevo.",
       formatSuccess: () =>
-        currentForm.getAttribute("data-success-text")
-        ?? "¡Gracias! Tu mensaje ha sido registrado en nuestro sistema.",
+        currentForm.getAttribute("data-success-text") ??
+        "¡Gracias! Tu mensaje ha sido registrado en nuestro sistema.",
     }),
   });
 }

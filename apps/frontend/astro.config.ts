@@ -1,6 +1,6 @@
 import node from "@astrojs/node";
-import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField, fontProviders } from "astro/config";
 

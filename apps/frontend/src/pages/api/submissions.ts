@@ -1,6 +1,6 @@
-import { randomBytes } from "node:crypto";
 import { fetchStrapiData } from "@services/strapi";
 import type { APIRoute } from "astro";
+import { randomBytes } from "node:crypto";
 
 export const prerender = false;
 
@@ -96,10 +96,7 @@ function sanitizeText(input: unknown, maxLength: number): string {
   return input.trim().slice(0, maxLength);
 }
 
-function jsonResponse(
-  body: Record<string, unknown>,
-  status = 200
-): Response {
+function jsonResponse(body: Record<string, unknown>, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
@@ -119,8 +116,8 @@ function generateReferenceCode(prefix: string): string {
 function isUpstreamHttpRejection(err: unknown): boolean {
   if (!(err instanceof Error)) return false;
   if (
-    "status" in err
-    && typeof (err as { status?: unknown }).status === "number"
+    "status" in err &&
+    typeof (err as { status?: unknown }).status === "number"
   ) {
     return (err as { status: number }).status >= 400;
   }
@@ -215,10 +212,10 @@ async function handleVisit(
   const notes = sanitizeText(body.notes, 2000);
 
   if (
-    !visitorName
-    || !EMAIL_REGEX.test(email)
-    || !phone
-    || !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)
+    !visitorName ||
+    !EMAIL_REGEX.test(email) ||
+    !phone ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)
   ) {
     return jsonResponse(
       { ok: false, error: "Invalid visit booking fields" },
@@ -303,13 +300,13 @@ async function handleDonation(
       ? "utility_invoice"
       : "major_campaign";
   const coversRemainingBalance =
-    body.coversRemainingBalance === true
-    || body.coversRemainingBalance === "on"
-    || body.coversRemainingBalance === "true";
+    body.coversRemainingBalance === true ||
+    body.coversRemainingBalance === "on" ||
+    body.coversRemainingBalance === "true";
   const requestsTaxCertificate =
-    body.requestsTaxCertificate === true
-    || body.requestsTaxCertificate === "on"
-    || body.requestsTaxCertificate === "true";
+    body.requestsTaxCertificate === true ||
+    body.requestsTaxCertificate === "on" ||
+    body.requestsTaxCertificate === "true";
   const notes = sanitizeText(body.notes, 2000);
   const fallbackReferenceCode = generateReferenceCode(
     campaignKind === "utility_invoice" ? "INV" : "DON"
@@ -425,10 +422,10 @@ async function handleServiceDesk(
         }
       );
       const upstreamRef =
-        certRes.data?.referenceCode
-        ?? certRes.data?.serialNumber
-        ?? certRes.referenceCode
-        ?? certRes.serialNumber;
+        certRes.data?.referenceCode ??
+        certRes.data?.serialNumber ??
+        certRes.referenceCode ??
+        certRes.serialNumber;
       if (typeof upstreamRef === "string" && upstreamRef.trim()) {
         referenceCode = upstreamRef.trim();
       }
@@ -531,13 +528,11 @@ const SUBMISSION_HANDLERS: Record<
  */
 export const POST: APIRoute = async ({ request, url, clientAddress }) => {
   try {
-    const contentType = request.headers.get("content-type")?.toLowerCase() ?? "";
+    const contentType =
+      request.headers.get("content-type")?.toLowerCase() ?? "";
     const mediaType = contentType.split(";")[0]?.trim() ?? "";
     if (mediaType !== "application/json") {
-      return jsonResponse(
-        { ok: false, error: "Unsupported Media Type" },
-        415
-      );
+      return jsonResponse({ ok: false, error: "Unsupported Media Type" }, 415);
     }
 
     if (!isOriginAllowed(request, url)) {
@@ -549,17 +544,14 @@ export const POST: APIRoute = async ({ request, url, clientAddress }) => {
       .get("x-forwarded-for")
       ?.split(",")[0]
       ?.trim();
-    const clientKey
-      = addr.length > 0
+    const clientKey =
+      addr.length > 0
         ? addr
         : forwardedIp && forwardedIp.length > 0
           ? forwardedIp
           : "unknown";
     if (isRateLimited(clientKey)) {
-      return jsonResponse(
-        { ok: false, error: "Too many requests" },
-        429
-      );
+      return jsonResponse({ ok: false, error: "Too many requests" }, 429);
     }
 
     let rawBody: unknown;

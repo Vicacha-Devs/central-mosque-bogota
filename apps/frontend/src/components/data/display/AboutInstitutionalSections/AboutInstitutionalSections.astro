@@ -266,12 +266,12 @@ const t = useTranslations(lang);
         content.leaders
           .filter((leader) => leader.showInStaffDirectory !== false)
           .map((leader) => {
-            const profileHref
-              = leader.slug && leader.hasDedicatedPage !== false
+            const profileHref =
+              leader.slug && leader.hasDedicatedPage !== false
                 ? `/${lang}/staff/${leader.slug}`
                 : undefined;
-            const categoryIcon
-              = leader.memberCategory === "imam_scholar"
+            const categoryIcon =
+              leader.memberCategory === "imam_scholar"
                 ? "mosque"
                 : leader.memberCategory === "instructor"
                   ? "school"
@@ -320,9 +320,9 @@ const t = useTranslations(lang);
                             <a
                               href={profileHref}
                               class="
-                            transition-colors
-                            hover:text-primary
-                          "
+                                transition-colors
+                                hover:text-primary
+                              "
                             >
                               {leader.name}
                             </a>

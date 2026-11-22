@@ -37,8 +37,8 @@ const [mediaEntries, cmsEpisodesRes, cmsGalleriesRes] = await Promise.all([
   }).catch(() => null),
 ]);
 
-const baseMediaItems: Array<TDetailedMediaItem>
-  = mediaEntries.length > 0
+const baseMediaItems: Array<TDetailedMediaItem> =
+  mediaEntries.length > 0
     ? mediaEntries.map((entry) => entry.data)
     : fallbackMediaItems;
 
@@ -46,13 +46,13 @@ const mediaByTitle = new Map(
   baseMediaItems.map((item) => [item.title.toLowerCase(), item])
 );
 
-const mediaItems: Array<TDetailedMediaItem>
-  = Array.isArray(cmsEpisodesRes?.data) && cmsEpisodesRes.data.length > 0
+const mediaItems: Array<TDetailedMediaItem> =
+  Array.isArray(cmsEpisodesRes?.data) && cmsEpisodesRes.data.length > 0
     ? cmsEpisodesRes.data.map((item, idx) => {
-        const fallback
-          = mediaByTitle.get((item.title ?? "").toLowerCase())
-            ?? baseMediaItems[idx % baseMediaItems.length]
-            ?? fallbackMediaItems[idx % fallbackMediaItems.length];
+        const fallback =
+          mediaByTitle.get((item.title ?? "").toLowerCase()) ??
+            baseMediaItems[idx % baseMediaItems.length] ??
+            fallbackMediaItems[idx % fallbackMediaItems.length];
         return {
           ...fallback,
           ...item,
@@ -72,12 +72,12 @@ const galleryByTitle = new Map(
   fallbackGalleryAlbums.map((album) => [album.title.toLowerCase(), album])
 );
 
-const galleryAlbums: Array<TResourceGalleryAlbum>
-  = Array.isArray(cmsGalleriesRes?.data) && cmsGalleriesRes.data.length > 0
+const galleryAlbums: Array<TResourceGalleryAlbum> =
+  Array.isArray(cmsGalleriesRes?.data) && cmsGalleriesRes.data.length > 0
     ? cmsGalleriesRes.data.map((album, idx) => {
-        const fallback
-          = galleryByTitle.get((album.title ?? "").toLowerCase())
-            ?? fallbackGalleryAlbums[idx % fallbackGalleryAlbums.length];
+        const fallback =
+          galleryByTitle.get((album.title ?? "").toLowerCase()) ??
+            fallbackGalleryAlbums[idx % fallbackGalleryAlbums.length];
         return {
           ...fallback,
           ...album,
@@ -91,9 +91,9 @@ const galleryAlbums: Array<TResourceGalleryAlbum>
           photographerCredit:
             album.photographerCredit || fallback?.photographerCredit || "",
           secondaryDateFormatted:
-            album.secondaryDateFormatted
-            || fallback?.secondaryDateFormatted
-            || "",
+            album.secondaryDateFormatted ||
+            fallback?.secondaryDateFormatted ||
+            "",
           mediaFolderPath:
             album.mediaFolderPath || fallback?.mediaFolderPath || "",
         };

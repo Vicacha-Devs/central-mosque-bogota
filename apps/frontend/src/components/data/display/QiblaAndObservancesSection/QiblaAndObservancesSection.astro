@@ -95,8 +95,8 @@ interface TStrapiHijriResponse {
 }
 
 let qibla: TQiblaSummary = qiblaOverride ?? { ...DEFAULT_BOGOTA_QIBLA };
-let observances: Array<THijriObservanceCard>
-  = observancesOverride ?? getFallbackObservances(lang);
+let observances: Array<THijriObservanceCard> =
+  observancesOverride ?? getFallbackObservances(lang);
 
 if (!qiblaOverride || !observancesOverride) {
   const [liveQibla, liveHijri] = await Promise.all([

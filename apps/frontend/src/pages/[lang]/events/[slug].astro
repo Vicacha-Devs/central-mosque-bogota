@@ -42,8 +42,8 @@ const localizedEventEntries = await getCollection(
   "events",
   (entry) => entry.data.locale === lang && entry.data.slug !== eventItem.slug
 );
-const relatedEvents
-  = localizedEventEntries.length > 0
+const relatedEvents =
+  localizedEventEntries.length > 0
     ? localizedEventEntries.map((entry) => entry.data)
     : getDetailedEvents(lang).filter((ev) => ev.slug !== eventItem.slug);
 ---

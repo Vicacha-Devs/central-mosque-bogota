@@ -34,10 +34,12 @@ export const ar = {
   "pray-schedule.status-now": "الآن",
   "pray-schedule.status-next": "التالية",
   "search-page.recovery-title": "لم تجد ما تبحث عنه؟",
-  "search-page.recovery-desc": "تصفح مواقيت الصلاة اليومية أو الفعاليات القادمة أو تواصل معنا مباشرة.",
+  "search-page.recovery-desc":
+    "تصفح مواقيت الصلاة اليومية أو الفعاليات القادمة أو تواصل معنا مباشرة.",
   "donate-page.waqf-badge": "وقف دائم",
   "donate-page.waqf-title": "صدقة جارية — صندوق الوقف",
-  "donate-page.waqf-desc": "ساهم في أثر مستدام يدعم التعليم الإسلامي والرعاية المجتمعية وصيانة المسجد.",
+  "donate-page.waqf-desc":
+    "ساهم في أثر مستدام يدعم التعليم الإسلامي والرعاية المجتمعية وصيانة المسجد.",
   "donate-page.waqf-cta": "ساهم في الوقف",
   "media-page.companion-takeaways": "أبرز النقاط",
   "media-page.companion-verses": "الآيات المذكورة",

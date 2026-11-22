@@ -33,9 +33,9 @@ const ALLOWED_API_LANGS = new Set(["es", "en", "ar", "tr"]);
  */
 export function resolveApiLang(url: URL): "es" | "en" | "ar" | "tr" {
   const raw = (
-    url.searchParams.get("locale")
-    ?? url.searchParams.get("lang")
-    ?? "es"
+    url.searchParams.get("locale") ??
+    url.searchParams.get("lang") ??
+    "es"
   )
     .trim()
     .toLowerCase();
@@ -72,9 +72,9 @@ export function optimizeCloudinaryUrl(
   }
 
   if (
-    parsed.protocol !== "https:"
-    || parsed.hostname !== "res.cloudinary.com"
-    || !parsed.pathname.includes("/upload/")
+    parsed.protocol !== "https:" ||
+    parsed.hostname !== "res.cloudinary.com" ||
+    !parsed.pathname.includes("/upload/")
   ) {
     return rawUrl;
   }
@@ -180,9 +180,9 @@ export const fetchStrapiData = async <
 };
 
 /**
-  * Fetches Mosque prayer calculation parameters from `@vicacha-devs/strapi-plugin-islam`
-  * (`/api/islam/prayer-times`), with resilient fallback if Strapi is offline.
-  */
+ * Fetches Mosque prayer calculation parameters from `@vicacha-devs/strapi-plugin-islam`
+ * (`/api/islam/prayer-times`), with resilient fallback if Strapi is offline.
+ */
 export async function fetchPrayerSettingsFromStrapi(
   locale = "es"
 ): Promise<TStrapiPrayerSettings> {
