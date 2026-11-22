@@ -14,7 +14,20 @@
     "test:coverage": "pnpm --filter frontend test:unit --run --coverage",
     "test:backend": "pnpm --filter @central-mosque-bogota/backend test",
     "typecheck:backend": "pnpm --filter @central-mosque-bogota/backend typecheck",
-    "verify": "node ./scripts/verify-all.ts"
+    "verify": "node ./scripts/verify-all.ts",
+    "qa:doctor": "node ./scripts/qa/doctor.ts",
+    "qa:judges": "node ./scripts/qa/judges.ts",
+    "qa:verify": "node ./scripts/qa/verify.ts",
+    "qa:verify:full": "node ./scripts/qa/verify.ts --full",
+    "qa:report": "node ./scripts/qa/report.ts",
+    "qa:smoke": "node ./scripts/qa/smoke.ts",
+    "qa:link:status": "node ./scripts/qa/link-plugins.ts --status",
+    "qa:link:local": "node ./scripts/qa/link-plugins.ts --local",
+    "qa:link:npm": "node ./scripts/qa/link-plugins.ts --npm",
+    "qa:dev:local": "node ./scripts/qa/dev-local.ts",
+    "qa:e2e": "pnpm --filter frontend exec playwright test --config playwright.config.ts",
+    "qa:docker:up": "docker compose -f docker-compose.qa.yml --env-file .env.qa up -d",
+    "qa:docker:down": "docker compose -f docker-compose.qa.yml down"
   },
   "engines": {
     "node": ">=24",
