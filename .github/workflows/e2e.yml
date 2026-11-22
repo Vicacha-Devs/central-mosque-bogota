@@ -35,13 +35,19 @@ jobs:
           node-version: 24
           cache: pnpm
 
+      - name: Resolve relative local plugin links for standalone CI
+        run: |
+          if ! node ./scripts/qa/link-plugins.ts --check-ci; then
+            node ./scripts/qa/link-plugins.ts --npm
+          fi
+
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Install Playwright Chromium browser
         if: ${{ hashFiles('apps/frontend/e2e/**') != '' }}
         working-directory: ./apps/frontend
-        run: npx playwright install --with-deps chromium
+        run: pnpm dlx --package=@playwright/test@1.53.0 playwright install --with-deps chromium
 
       - name: Build Astro SSR Frontend
         run: pnpm build:frontend
@@ -49,7 +55,7 @@ jobs:
       - name: Run Playwright E2E tests
         if: ${{ hashFiles('apps/frontend/e2e/**') != '' }}
         working-directory: ./apps/frontend
-        run: npx playwright test
+        run: pnpm dlx --package=@playwright/test@1.53.0 playwright test --config playwright.config.ts
 
       - name: Upload Playwright HTML Report
         uses: actions/upload-artifact@v4

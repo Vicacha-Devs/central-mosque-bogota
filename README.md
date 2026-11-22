@@ -9,7 +9,7 @@ Full-stack multilingual (`es`, `en`, `ar`, `tr`) web platform and bilingual (`en
 | Workspace | Path | Stack & Responsibilities | Default Port |
 | :--- | :--- | :--- | :--- |
 | **Frontend (`frontend`)** | [`./frontend`](./apps/frontend/README.md) | **Astro 7 SSR** (`@astrojs/node` / `@astrojs/vercel`), Tailwind CSS v4, Starwind UI, `@sensinum/astro-strapi-loader`, `@vicacha-devs/astro-tiptap-blocks`, IslamicAPI prayer & Zakat engine, Vitest, and Storybook 10. | `http://localhost:4321` |
-| **Backend (`@central-mosque-bogota/backend`)** | [`./backend`](./apps/backend/README.md) | **Strapi v5 Headless CMS** (`5.61.1`), SQLite (local dev) / PostgreSQL 16 (production), Cloudinary CDN, `strapi-cache` (`^1.13.0`), and 15 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions (including `tiptap-editor`, `seo`, `sitemap`, `global-search`, and `notes`). | `http://127.0.0.1:1337` |
+| **Backend (`@central-mosque-bogota/backend`)** | [`./backend`](./apps/backend/README.md) | **Strapi v5 Headless CMS** (`5.61.1`), SQLite (local dev) / PostgreSQL 16 (production), Cloudinary CDN, `strapi-cache` (`^1.13.0`), and 17 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions (including `tiptap-editor`, `seo`, `sitemap`, `global-search`, `opentelemetry`, and `notes`). | `http://127.0.0.1:1337` |
 | **Docs (`@central-mosque-bogota/docs`)** | [`./docs`](./apps/docs/README.md) | **Astro Starlight** bilingual (`en` + `es`) handbook with **Pele** (`https://pele.run/`) build-time SVG Mermaid diagrams, **Archify** interactive HTML explainers, and **TypeDoc** API reference generation (`<= 500 lines` per file). | `http://localhost:4322` |
 
 ---
@@ -122,7 +122,25 @@ Executes [`scripts/verify-all.ts`](./scripts/verify-all.ts), which enforces:
 | `pnpm build:docs` | `pnpm --filter @central-mosque-bogota/docs build` | Sync TypeDoc API docs and build Starlight site |
 | `pnpm test:unit` | `pnpm --filter frontend test:unit --run` | Run frontend unit & Astro Container test suite |
 | `pnpm test:coverage` | `pnpm --filter frontend test:unit --run --coverage` | Run frontend unit tests with V8 coverage report |
+| `pnpm test:backend` | `pnpm --filter @central-mosque-bogota/backend test` | Run backend config, lifecycle & 10-plugin runtime E2E tests |
 | `pnpm verify` | `node ./scripts/verify-all.ts` | Run all monorepo formatting, lint, test, and build gates |
+| `pnpm qa:doctor` | `node ./scripts/qa/doctor.ts` | Check Node version, plugin links, Strapi parity & loopback Compose security |
+| `pnpm qa:judges` | `node ./scripts/qa/judges.ts` | Run offline adversarial judges (doc `<= 500` lines, 4-locale parity, XSS `set:html`, E2E suite) |
+| `pnpm qa:verify` | `node ./scripts/qa/verify.ts` | Run doctor + judges + backend & frontend unit suites; emits `.qa/report.json` & `.qa/dashboard.html` |
+| `pnpm qa:report` | `node ./scripts/qa/report.ts` | Aggregate sibling Vicacha repos into multi-repo interactive HTML Control Center |
+| `pnpm qa:link:status` | `node ./scripts/qa/link-plugins.ts --status` | Inspect local `file:` vs npm semver mode for `@vicacha-devs/*` plugins & packages |
+| `pnpm qa:link:local` / `qa:link:npm` | `node ./scripts/qa/link-plugins.ts --local/--npm` | Switch `@vicacha-devs/*` deps between local sibling repos and `.qa-plugin-versions.json` npm ranges |
+| `pnpm qa:dev:local` | `node ./scripts/qa/dev-local.ts` | Watch linked sibling Strapi plugins + run Mosque backend & Astro frontend in one terminal (`-- --plugins=seo,inbox --build-first`) |
+| `pnpm qa:docker:up` / `qa:docker:down` | `docker compose -f docker-compose.qa.yml ...` | Start/stop port-isolated `127.0.0.1` QA stack (`5433/6380/8109/1026`) |
+| `pnpm qa:smoke` / `pnpm qa:e2e` | `scripts/qa/smoke.ts` / Playwright (`apps/frontend/e2e/`) | Live HTTP route/feed smoke checks & Playwright E2E + WCAG 2.2 AA accessibility suite |
+
+---
+
+## QA Automation, Local/NPM Link Switching & Cross-Repo CI
+
+- **Standalone CI vs. Local Plugin Development**: `scripts/qa/link-plugins.ts` switches all 17 `@vicacha-devs/strapi-plugin-*` packages, root `pnpm.overrides`, and `@vicacha-devs/astro-tiptap-blocks` cleanly between local `file:` paths and published npm versions. `.github/workflows/ci.yml` and `.github/workflows/e2e.yml` automatically fall back to `--npm` when sibling repos are absent, while `.github/workflows/qa-cross-repo.yml` checks out `strapi-v5-extensions` and `astro-tiptap-blocks` together for live cross-repo compatibility verification.
+- **Playwright E2E & Accessibility (`apps/frontend/e2e/`)**: Covers 4-locale & Arabic RTL rendering (`i18n-and-rtl.spec.ts`), core pages plus `.ics`/`.xml` feeds (`core-journeys.spec.ts`), and automated WCAG 2.2 AA checks (`accessibility.spec.ts`).
+- **Port-Isolated QA Docker Stack**: Copy `.env.qa.example` to `.env.qa` and run `pnpm qa:docker:up` for loopback-only (`127.0.0.1`) Postgres (`5433`), Valkey (`6380`), Typesense (`8109`), and Mailpit (`1026`/`8026`) with zero collision against other local Vicacha projects.
 
 ---
 
