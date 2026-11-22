@@ -4,10 +4,7 @@ import {
   bindAuthorProfileRelations,
   registerAuthorProfileLifecycles,
 } from './bootstrap/author-profile-lifecycles';
-import {
-  patchAndSeedContentManagerOrganizer,
-  syncContentStructureGroupsFile,
-} from './bootstrap/content-manager-organizer';
+import { syncContentStructureGroupsFile } from './bootstrap/content-structure';
 import { registerPluginEmailLifecycles } from './bootstrap/email-lifecycles';
 import { enrichContentManagerFieldMetadata } from './bootstrap/field-metadata-enricher';
 import {
@@ -28,12 +25,10 @@ export default {
     syncContentStructureGroupsFile(strapi);
     bindAuthorProfileRelations(strapi);
     patchContentManagerAndPreviewLocalization(strapi);
-    await patchAndSeedContentManagerOrganizer(strapi, false);
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await seedTiptapEditorConfig(strapi);
-    await patchAndSeedContentManagerOrganizer(strapi, true);
     registerAuthorProfileLifecycles(strapi);
     registerPluginEmailLifecycles(strapi);
     await ensureLocales(strapi);
