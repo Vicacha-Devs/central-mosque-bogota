@@ -22,31 +22,31 @@ Multilingual (`es`, `en`, `ar`, `tr`) SSR web application for the **Central Mosq
 
 ### Localized SSR Pages (`src/pages/[lang]/`)
 
-| Route | File | Description |
-| :--- | :--- | :--- |
-| `/[lang]` | `src/pages/[lang]/index.astro` | Homepage with urgent alert banner, prayer times widget, featured spotlight, events, and services |
-| `/[lang]/[prayerInformation]` | `src/pages/[lang]/[prayerInformation].astro` | Dedicated monthly prayer timetable, Jumu'ah schedule, Qibla compass, and PDF/ICS export |
-| `/[lang]/islam-and-faith` | `src/pages/[lang]/islam-and-faith.astro` | Pillars of Islam, faith foundations, Shahada certificate verification, and educational resources |
-| `/[lang]/about-us` | `src/pages/[lang]/about-us.astro` | Mosque history, mission, leadership directory, and institutional governance |
-| `/[lang]/events-and-programs` | `src/pages/[lang]/events-and-programs.astro` | Upcoming community events, recurring study circles, and ICS calendar subscription |
-| `/[lang]/events/[slug]` | `src/pages/[lang]/events/[slug].astro` | Individual event detail page with Tiptap rich text body and registration details |
-| `/[lang]/articles/[slug]` | `src/pages/[lang]/articles/[slug].astro` | Khutbah & article detail page with Tiptap rich text rendering and author metadata |
-| `/[lang]/staff/[slug]` | `src/pages/[lang]/staff/[slug].astro` | Imam, scholar, and board member profile page with biography and authored articles |
-| `/[lang]/community-services` | `src/pages/[lang]/community-services.astro` | Nikah, Janazah, Shahada, counseling, and educational service offerings |
-| `/[lang]/media` | `src/pages/[lang]/media.astro` | Audio/video khutbah highlights, livestream broadcasts, publications library, and RSS feed |
-| `/[lang]/donate` | `src/pages/[lang]/donate.astro` | Active donation campaigns, utility invoice transparency, Zakat calculator, and pledge form |
-| `/[lang]/contact-and-visit` | `src/pages/[lang]/contact-and-visit.astro` | General contact form, guided visit booking form, visitor etiquette, and directions |
-| `/[lang]/search` | `src/pages/[lang]/search.astro` | Cross-collection multilingual search across articles, events, services, and FAQs |
+| Route                         | File                                         | Description                                                                                      |
+| :---------------------------- | :------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| `/[lang]`                     | `src/pages/[lang]/index.astro`               | Homepage with urgent alert banner, prayer times widget, featured spotlight, events, and services |
+| `/[lang]/[prayerInformation]` | `src/pages/[lang]/[prayerInformation].astro` | Dedicated monthly prayer timetable, Jumu'ah schedule, Qibla compass, and PDF/ICS export          |
+| `/[lang]/islam-and-faith`     | `src/pages/[lang]/islam-and-faith.astro`     | Pillars of Islam, faith foundations, Shahada certificate verification, and educational resources |
+| `/[lang]/about-us`            | `src/pages/[lang]/about-us.astro`            | Mosque history, mission, leadership directory, and institutional governance                      |
+| `/[lang]/events-and-programs` | `src/pages/[lang]/events-and-programs.astro` | Upcoming community events, recurring study circles, and ICS calendar subscription                |
+| `/[lang]/events/[slug]`       | `src/pages/[lang]/events/[slug].astro`       | Individual event detail page with Tiptap rich text body and registration details                 |
+| `/[lang]/articles/[slug]`     | `src/pages/[lang]/articles/[slug].astro`     | Khutbah & article detail page with Tiptap rich text rendering and author metadata                |
+| `/[lang]/staff/[slug]`        | `src/pages/[lang]/staff/[slug].astro`        | Imam, scholar, and board member profile page with biography and authored articles                |
+| `/[lang]/community-services`  | `src/pages/[lang]/community-services.astro`  | Nikah, Janazah, Shahada, counseling, and educational service offerings                           |
+| `/[lang]/media`               | `src/pages/[lang]/media.astro`               | Audio/video khutbah highlights, livestream broadcasts, publications library, and RSS feed        |
+| `/[lang]/donate`              | `src/pages/[lang]/donate.astro`              | Active donation campaigns, utility invoice transparency, Zakat calculator, and pledge form       |
+| `/[lang]/contact-and-visit`   | `src/pages/[lang]/contact-and-visit.astro`   | General contact form, guided visit booking form, visitor etiquette, and directions               |
+| `/[lang]/search`              | `src/pages/[lang]/search.astro`              | Cross-collection multilingual search across articles, events, services, and FAQs                 |
 
 ### Astro BFF API Endpoints (`src/pages/api/`)
 
-| Endpoint | File | Purpose |
-| :--- | :--- | :--- |
-| `POST /api/submissions` | `src/pages/api/submissions.ts` | Validates, sanitizes, and forwards contact, visit-booking, donation, and newsletter submissions to Strapi v5 |
-| `GET /api/prayer-calendar.ics` | `src/pages/api/prayer-calendar.ics.ts` | Generates an iCalendar (`.ics`) feed of daily prayer times for Bogotá |
-| `GET /api/events/feed.ics` | `src/pages/api/events/feed.ics.ts` | Generates a localized iCalendar (`.ics`) feed of upcoming mosque events |
-| `GET /api/media-feeds/rss.xml` | `src/pages/api/media-feeds/rss.xml.ts` | Generates an RSS 2.0 XML feed of articles and media broadcasts |
-| `GET /api/resources/publications/[slug]/download` | `src/pages/api/resources/publications/[slug]/download.ts` | Tracks download metrics and redirects/streams downloadable mosque publications |
+| Endpoint                                          | File                                                      | Purpose                                                                                                      |
+| :------------------------------------------------ | :-------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| `POST /api/submissions`                           | `src/pages/api/submissions.ts`                            | Validates, sanitizes, and forwards contact, visit-booking, donation, and newsletter submissions to Strapi v5 |
+| `GET /api/prayer-calendar.ics`                    | `src/pages/api/prayer-calendar.ics.ts`                    | Generates an iCalendar (`.ics`) feed of daily prayer times for Bogotá                                        |
+| `GET /api/events/feed.ics`                        | `src/pages/api/events/feed.ics.ts`                        | Generates a localized iCalendar (`.ics`) feed of upcoming mosque events                                      |
+| `GET /api/media-feeds/rss.xml`                    | `src/pages/api/media-feeds/rss.xml.ts`                    | Generates an RSS 2.0 XML feed of articles and media broadcasts                                               |
+| `GET /api/resources/publications/[slug]/download` | `src/pages/api/resources/publications/[slug]/download.ts` | Tracks download metrics and redirects/streams downloadable mosque publications                               |
 
 ---
 
@@ -71,9 +71,11 @@ apps/frontend/
 │   │   └── strapi/                 # Strapi v5 REST client (api.ts), Content Layer loader.ts, and tiptap-sanitizer.ts
 │   ├── content.config.ts           # Astro Content Layer collections
 │   └── utils/                      # Domain types, Hijri/date helpers, and 4-locale offline mocks (*-mocks.ts)
+├── e2e/                            # Playwright E2E & WCAG 2.2 AA specs (i18n-and-rtl, core-journeys, accessibility)
 ├── astro.config.ts
 ├── eslint.config.ts
 ├── package.json
+├── playwright.config.ts
 └── vitest.config.ts
 ```
 
@@ -81,18 +83,20 @@ apps/frontend/
 
 ## Scripts
 
-| Command | Description |
-| :--- | :--- |
-| `pnpm install` | Install frontend dependencies |
-| `pnpm dev` | Start local Astro SSR dev server at `http://localhost:4321` |
-| `pnpm build` | Build production Node SSR bundle to `./dist/` |
-| `pnpm preview` | Preview production SSR build locally |
-| `pnpm test:unit` | Run unit and Astro Container tests via Vitest (`--project=unit`) |
-| `pnpm test:coverage` | Run unit tests with V8 coverage thresholds |
-| `pnpm storybook` | Launch Storybook 10 component explorer on `http://localhost:6006` |
-| `pnpm build:storybook` | Build static Storybook bundle to `./storybook-static/` |
-| `pnpm lint` | Run ESLint (`eslint .`) across TypeScript, Astro, CSS, JSON, and Markdown |
-| `pnpm format:check` | Verify formatting with `oxfmt --check` |
+| Command                | Description                                                               |
+| :--------------------- | :------------------------------------------------------------------------ |
+| `pnpm install`         | Install frontend dependencies                                             |
+| `pnpm dev`             | Start local Astro SSR dev server at `http://localhost:4321`               |
+| `pnpm build`           | Build production Node SSR bundle to `./dist/`                             |
+| `pnpm preview`         | Preview production SSR build locally                                      |
+| `pnpm test:unit`       | Run unit and Astro Container tests via Vitest (`--project=unit`)          |
+| `pnpm test:coverage`   | Run unit tests with V8 coverage thresholds                                |
+| `pnpm storybook`       | Launch Storybook 10 component explorer on `http://localhost:6006`         |
+| `pnpm build:storybook` | Build static Storybook bundle to `./storybook-static/`                    |
+| `pnpm lint`            | Run ESLint (`eslint .`) across TypeScript, Astro, CSS, JSON, and Markdown |
+| `pnpm format:check`    | Verify formatting with `oxfmt --check`                                    |
+
+From the monorepo root, you can also run `pnpm qa:verify` (offline judges + Vitest + backend tests + `.qa/dashboard.html`), `pnpm qa:smoke` (live HTTP route/iCal/RSS checks), and `pnpm qa:e2e` (Playwright E2E + `@axe-core/playwright` WCAG 2.2 AA suite in `apps/frontend/e2e/`).
 
 ---
 
@@ -100,12 +104,12 @@ apps/frontend/
 
 Declared in `src/styles/global.css` (`@theme`) and synced with Storybook viewports in `.storybook/constants.ts`:
 
-| Tier | Token(s) | Min-Width | Layout Role |
-| :--- | :--- | :--- | :--- |
-| **Mobile** | `mobile` / base (`sm: 365px`) | `320px` | Single-column stacks, wrapped badges/buttons, mobile sheet nav |
-| **Tablet** | `tablet` / `md` | `768px` | 2-column grids (events, publications, glossary, broadcast channels) |
-| **Desktop** | `desktop` / `lg` | `1024px` | Full top navigation bar, 3-column grids, single-row alert banner |
-| **Desktop Wide** | `xl` / `2xl` | `1440px` / `1536px` | Max-width `1280px–1440px` containers with secondary metadata |
+| Tier             | Token(s)                      | Min-Width           | Layout Role                                                         |
+| :--------------- | :---------------------------- | :------------------ | :------------------------------------------------------------------ |
+| **Mobile**       | `mobile` / base (`sm: 365px`) | `320px`             | Single-column stacks, wrapped badges/buttons, mobile sheet nav      |
+| **Tablet**       | `tablet` / `md`               | `768px`             | 2-column grids (events, publications, glossary, broadcast channels) |
+| **Desktop**      | `desktop` / `lg`              | `1024px`            | Full top navigation bar, 3-column grids, single-row alert banner    |
+| **Desktop Wide** | `xl` / `2xl`                  | `1440px` / `1536px` | Max-width `1280px–1440px` containers with secondary metadata        |
 
 ---
 
@@ -115,4 +119,3 @@ Declared in `src/styles/global.css` (`@theme`) and synced with Storybook viewpor
 - **Mock / Static / Offline Fallbacks (`src/utils/*-mocks.ts`):**
   - **Mock only (Storybook, tests, offline dev):** `data.mocks.ts`, `event-mocks.ts`, `spotlight-mocks.ts`, `donation-mocks.ts`, `utility-invoice-mocks.ts`, `inbox-mocks.ts`, `media-mocks.ts`, `article-mocks.ts`.
   - **Seed once / keep as static reference:** `resources-mocks.ts` (seed glossary/publications into Strapi), `islam-suite-mocks.ts` (Five Pillars, Ayah/Hadith, Tasbih, Qibla/Hijri reference), and `institutional-mocks.ts` / `localized-mocks.ts` (etiquette, FAQs, institutional copy).
-

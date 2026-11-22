@@ -35,6 +35,7 @@ export type BuildPrayerDataParams = {
   country: string;
   date: Date;
   languageCode?: string;
+  timeZone?: string;
   fetchedAt?: string;
 };
 
@@ -44,13 +45,14 @@ export const buildPrayerData = ({
   country,
   date,
   languageCode = "es",
+  timeZone = "America/Bogota",
   fetchedAt = new Date().toISOString(),
 }: BuildPrayerDataParams) => {
-  const today = isToday(date, "UTC");
+  const today = isToday(date, timeZone);
   const parsedTimes = parsePrayerTimes(times);
   const activePray = today
     ? (calculateActivePrayer(
-        getCurrentMinutes("UTC"),
+        getCurrentMinutes(timeZone),
         parsePrayerTimesToNumber(parsedTimes),
         parseTimeToMinutes(parsedTimes.sunrise)
       ) ?? undefined)
@@ -59,8 +61,8 @@ export const buildPrayerData = ({
   return {
     fetchedAt,
     location: `${city}, ${country}`,
-    currentDate: formatLongDate(date, "UTC", languageCode),
-    hijriDate: formatHijriDate(date, "UTC", languageCode),
+    currentDate: formatLongDate(date, timeZone, languageCode),
+    hijriDate: formatHijriDate(date, timeZone, languageCode),
     isToday: today,
     activePray,
     times: parsedTimes,

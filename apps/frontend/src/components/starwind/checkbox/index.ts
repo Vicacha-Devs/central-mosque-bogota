@@ -1,5 +1,10 @@
 import Checkbox from "./Checkbox.astro";
-import { checkbox, checkboxIndicator, checkboxLabel, checkboxWrapper } from "./variants";
+import {
+  checkbox,
+  checkboxIndicator,
+  checkboxLabel,
+  checkboxWrapper,
+} from "./variants";
 
 const CheckboxVariants = {
   checkbox,

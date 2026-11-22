@@ -123,8 +123,20 @@ export function initMonthlyPrayTimeTable(root: HTMLElement): void {
     });
   };
 
-  window.addEventListener("resize", onResize, { passive: true });
-  window.addEventListener("load", onResize, { passive: true });
+  const listenerController = new AbortController();
+  window.addEventListener("resize", onResize, {
+    passive: true,
+    signal: listenerController.signal,
+  });
+  window.addEventListener("load", onResize, {
+    passive: true,
+    signal: listenerController.signal,
+  });
+  document.addEventListener(
+    "astro:before-swap",
+    () => { listenerController.abort(); },
+    { once: true, signal: listenerController.signal }
+  );
 }
 
 /**

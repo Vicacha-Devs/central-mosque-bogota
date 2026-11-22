@@ -1,5 +1,5 @@
-import { randomBytes } from "node:crypto";
 import { defineMiddleware } from "astro:middleware";
+import { randomBytes } from "node:crypto";
 
 /**
  * Applies security headers and a per-request CSP nonce to every SSR response.
@@ -17,6 +17,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     "Permissions-Policy",
     "geolocation=(self), camera=(), microphone=()"
   );
+  if (context.url.protocol === "https:") {
+    response.headers.set(
+      "Strict-Transport-Security",
+      "max-age=31536000; includeSubDomains"
+    );
+  }
 
   // Preserve stricter sandbox CSP if an API route already set one
   if (!response.headers.has("Content-Security-Policy")) {

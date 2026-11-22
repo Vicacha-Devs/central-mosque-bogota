@@ -31,7 +31,14 @@ function populateDonationFormWithZakat(rawAmount: number): void {
   if (typeSelect) typeSelect.value = "zakat";
   if (campaignSelect) campaignSelect.value = "";
   if (coversCheck) coversCheck.checked = false;
-  formSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const prefersReducedMotion
+    = typeof window !== "undefined"
+      && typeof window.matchMedia === "function"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  formSection?.scrollIntoView({
+    behavior: prefersReducedMotion ? "auto" : "smooth",
+    block: "start",
+  });
 }
 
 export function initZakatCalculator(): void {
@@ -46,8 +53,8 @@ export function initZakatCalculator(): void {
       calcRoot.getAttribute("data-silver-nisab") ?? 2618000
     );
     const belowText = calcRoot.getAttribute("data-below-text") ?? "Below Nisab";
-    const aboveText =
-      calcRoot.getAttribute("data-above-text") ?? "Meets Nisab (2.5%)";
+    const aboveText
+      = calcRoot.getAttribute("data-above-text") ?? "Meets Nisab (2.5%)";
 
     const standardSelect = document.getElementById(
       "zakat-standard-select"
@@ -72,8 +79,8 @@ export function initZakatCalculator(): void {
       const debts = Math.max(0, Number(debtsInput?.value ?? 0));
       const net = Math.max(0, cash + inv - debts);
 
-      const threshold =
-        standardSelect?.value === "silver" ? silverNisab : goldNisab;
+      const threshold
+        = standardSelect?.value === "silver" ? silverNisab : goldNisab;
       const meetsNisab = net >= threshold;
       const zakatDue = meetsNisab ? Math.round(net * 0.025) : 0;
 
@@ -141,8 +148,8 @@ export function initZakatCalculator(): void {
       );
 
       const fitranaSub = members * fitranaRate;
-      const fidyahKaffarahSub =
-        fidyahDays * fidyahRate + kaffarahCount * kaffarahRate;
+      const fidyahKaffarahSub
+        = fidyahDays * fidyahRate + kaffarahCount * kaffarahRate;
       const total = fitranaSub + fidyahKaffarahSub;
 
       if (fitranaSubEl) {

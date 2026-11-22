@@ -2,8 +2,8 @@ import type { TAcademyArticle } from "./models/academy";
 import type { TEvent } from "./models/events";
 import type { TCommunityService } from "./models/services";
 
-export const lemma =
-  "La primera y principal mezquita de Bogotá, brindando servicios espirituales y sociales a la comunidad desde hace más de 30 años.";
+export const lemma
+  = "La primera y principal mezquita de Bogotá, brindando servicios espirituales y sociales a la comunidad desde hace más de 30 años.";
 
 export const contactInfo = {
   address: "Calle 80 #30-45, Bogotá D.C., Colombia",
@@ -319,7 +319,8 @@ export const aboutPageData = {
       bio: "Custodio y encargado operativo (Qayyim) de la Mezquita Central Abu Bakr As-Siddiq. Supervisa la apertura puntual para las cinco oraciones diarias, el llamado al Adhan y la recepción hospitalaria de la comunidad y visitantes.",
       credentials:
         "Servicio Comunitario y Custodia de Mezquita desde 2012 · Muadhin Residente",
-      officeHours: "Todos los días durante los horarios de las 5 oraciones diarias",
+      officeHours:
+        "Todos los días durante los horarios de las 5 oraciones diarias",
       languagesSpoken: "Árabe, Español",
       showInStaffDirectory: true,
       hasDedicatedPage: true,

@@ -56,10 +56,10 @@ export function initFooterNewsletter(root: ParentNode = document): void {
     const locale = form.getAttribute("data-locale") ?? "es";
     const fallback = FALLBACK_MESSAGES[locale] ?? FALLBACK_MESSAGES.es;
 
-    const successMsg =
-      form.getAttribute("data-success-msg") ?? fallback.success;
-    const invalidMsg =
-      form.getAttribute("data-invalid-msg") ?? fallback.invalid;
+    const successMsg
+      = form.getAttribute("data-success-msg") ?? fallback.success;
+    const invalidMsg
+      = form.getAttribute("data-invalid-msg") ?? fallback.invalid;
     const errorMsg = form.getAttribute("data-error-msg") ?? fallback.error;
 
     if (submitBtn) {

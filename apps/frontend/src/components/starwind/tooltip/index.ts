@@ -1,7 +1,12 @@
 import Tooltip from "./Tooltip.astro";
 import TooltipContent from "./TooltipContent.astro";
 import TooltipTrigger from "./TooltipTrigger.astro";
-import { tooltip, tooltipCaret, tooltipContent, tooltipPositioner } from "./variants";
+import {
+  tooltip,
+  tooltipCaret,
+  tooltipContent,
+  tooltipPositioner,
+} from "./variants";
 
 const TooltipVariants = {
   tooltip,

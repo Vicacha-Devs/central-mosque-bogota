@@ -113,8 +113,13 @@ function buildFallbackIcs(yearMonth: string, lang: string): string {
 
 export const GET: APIRoute = async ({ url }) => {
   const rawYm = url.searchParams.get("ym") ?? "";
-  const now = new Date();
-  const defaultYm = `${String(now.getUTCFullYear())}-${pad2(now.getUTCMonth() + 1)}`;
+  const bogotaYmd = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Bogota",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+  const defaultYm = bogotaYmd.slice(0, 7);
   const safeYm = /^\d{4}-(0[1-9]|1[0-2])$/.test(rawYm) ? rawYm : defaultYm;
   const safeLang = resolveApiLang(url);
 
@@ -132,7 +137,10 @@ export const GET: APIRoute = async ({ url }) => {
     );
 
     const contentType = res.headers.get("content-type") ?? "";
-    if (contentType.includes("text/calendar") || contentType.includes("text/plain")) {
+    if (
+      contentType.includes("text/calendar")
+      || contentType.includes("text/plain")
+    ) {
       const upstreamText = await res.text();
       if (upstreamText.includes("BEGIN:VCALENDAR")) {
         icsBody = upstreamText;

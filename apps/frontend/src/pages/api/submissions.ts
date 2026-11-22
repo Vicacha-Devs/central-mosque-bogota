@@ -1,6 +1,6 @@
-import { randomBytes } from "node:crypto";
 import { fetchStrapiData } from "@services/strapi";
 import type { APIRoute } from "astro";
+import { randomBytes } from "node:crypto";
 
 export const prerender = false;
 
@@ -96,10 +96,7 @@ function sanitizeText(input: unknown, maxLength: number): string {
   return input.trim().slice(0, maxLength);
 }
 
-function jsonResponse(
-  body: Record<string, unknown>,
-  status = 200
-): Response {
+function jsonResponse(body: Record<string, unknown>, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
@@ -127,6 +124,30 @@ function isUpstreamHttpRejection(err: unknown): boolean {
   return /Strapi API request failed \(\d+\)/.test(err.message);
 }
 
+function handleUpstreamSubmissionError(
+  err: unknown,
+  rejectedMessage: string
+): Response | null {
+  if (isUpstreamHttpRejection(err)) {
+    return jsonResponse({ ok: false, error: rejectedMessage }, 502);
+  }
+  const allowOfflineFallback
+    = !import.meta.env.PROD
+      || process.env.ALLOW_OFFLINE_MOCK_SUBMISSIONS === "true";
+  if (!allowOfflineFallback) {
+    return jsonResponse(
+      { ok: false, error: "Upstream submission service unavailable" },
+      503
+    );
+  }
+  return null;
+}
+
+function getTurnstileToken(body: Record<string, unknown>): string | undefined {
+  const token = sanitizeText(body.turnstileToken, 4096);
+  return token || undefined;
+}
+
 function isOriginAllowed(request: Request, url?: URL): boolean {
   if (!url) return true;
   const origin = request.headers.get("origin");
@@ -140,6 +161,10 @@ function isOriginAllowed(request: Request, url?: URL): boolean {
     } catch {
       return false;
     }
+  }
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
+    return false;
   }
   return true;
 }
@@ -180,16 +205,16 @@ async function handleContact(
           subject,
           message,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream service rejected submission" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream service rejected submission"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -252,21 +277,21 @@ async function handleVisit(
           preferredGuideLanguage: locale,
           notes,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
-    const upstreamRef =
-      reserveRes.data?.referenceCode ?? reserveRes.referenceCode;
+    const upstreamRef
+      = reserveRes.data?.referenceCode ?? reserveRes.referenceCode;
     if (typeof upstreamRef === "string" && upstreamRef.trim()) {
       referenceCode = upstreamRef.trim();
     }
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream booking service rejected request" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream booking service rejected request"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -302,14 +327,14 @@ async function handleDonation(
     : donationType === "utility_bills"
       ? "utility_invoice"
       : "major_campaign";
-  const coversRemainingBalance =
-    body.coversRemainingBalance === true
-    || body.coversRemainingBalance === "on"
-    || body.coversRemainingBalance === "true";
-  const requestsTaxCertificate =
-    body.requestsTaxCertificate === true
-    || body.requestsTaxCertificate === "on"
-    || body.requestsTaxCertificate === "true";
+  const coversRemainingBalance
+    = body.coversRemainingBalance === true
+      || body.coversRemainingBalance === "on"
+      || body.coversRemainingBalance === "true";
+  const requestsTaxCertificate
+    = body.requestsTaxCertificate === true
+      || body.requestsTaxCertificate === "on"
+      || body.requestsTaxCertificate === "true";
   const notes = sanitizeText(body.notes, 2000);
   const fallbackReferenceCode = generateReferenceCode(
     campaignKind === "utility_invoice" ? "INV" : "DON"
@@ -356,21 +381,21 @@ async function handleDonation(
           donorNotes: notes,
           notes,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
-    const upstreamRef =
-      pledgeRes.data?.referenceCode ?? pledgeRes.referenceCode;
+    const upstreamRef
+      = pledgeRes.data?.referenceCode ?? pledgeRes.referenceCode;
     if (typeof upstreamRef === "string" && upstreamRef.trim()) {
       referenceCode = upstreamRef.trim();
     }
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream donation service rejected request" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream donation service rejected request"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -424,11 +449,11 @@ async function handleServiceDesk(
           }),
         }
       );
-      const upstreamRef =
-        certRes.data?.referenceCode
-        ?? certRes.data?.serialNumber
-        ?? certRes.referenceCode
-        ?? certRes.serialNumber;
+      const upstreamRef
+        = certRes.data?.referenceCode
+          ?? certRes.data?.serialNumber
+          ?? certRes.referenceCode
+          ?? certRes.serialNumber;
       if (typeof upstreamRef === "string" && upstreamRef.trim()) {
         referenceCode = upstreamRef.trim();
       }
@@ -452,16 +477,16 @@ async function handleServiceDesk(
           preferredDate,
           details,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream service-desk rejected application" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream service-desk rejected application"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -474,8 +499,8 @@ async function handleNewsletter(
   const email = sanitizeText(body.email, 160);
   const fullName = sanitizeText(body.fullName, 120);
   const phone = sanitizeText(body.phone, 40);
-  const sourceFormSlug =
-    sanitizeText(body.sourceFormSlug, 60) || "footer-newsletter";
+  const sourceFormSlug
+    = sanitizeText(body.sourceFormSlug, 60) || "footer-newsletter";
   const topics = Array.isArray(body.topics)
     ? body.topics.map((t) => sanitizeText(t, 30)).filter(Boolean)
     : ["announcements", "events"];
@@ -498,16 +523,16 @@ async function handleNewsletter(
           locale,
           topics,
           sourceFormSlug,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream subscription service rejected request" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream subscription service rejected request"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, status: "pending" });
@@ -531,13 +556,11 @@ const SUBMISSION_HANDLERS: Record<
  */
 export const POST: APIRoute = async ({ request, url, clientAddress }) => {
   try {
-    const contentType = request.headers.get("content-type")?.toLowerCase() ?? "";
+    const contentType
+      = request.headers.get("content-type")?.toLowerCase() ?? "";
     const mediaType = contentType.split(";")[0]?.trim() ?? "";
     if (mediaType !== "application/json") {
-      return jsonResponse(
-        { ok: false, error: "Unsupported Media Type" },
-        415
-      );
+      return jsonResponse({ ok: false, error: "Unsupported Media Type" }, 415);
     }
 
     if (!isOriginAllowed(request, url)) {
@@ -545,10 +568,10 @@ export const POST: APIRoute = async ({ request, url, clientAddress }) => {
     }
 
     const addr = (clientAddress as string | undefined) ?? "";
-    const forwardedIp = request.headers
-      .get("x-forwarded-for")
-      ?.split(",")[0]
-      ?.trim();
+    const trustProxy = process.env.TRUST_PROXY === "true";
+    const forwardedIp = trustProxy
+      ? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      : undefined;
     const clientKey
       = addr.length > 0
         ? addr
@@ -556,10 +579,7 @@ export const POST: APIRoute = async ({ request, url, clientAddress }) => {
           ? forwardedIp
           : "unknown";
     if (isRateLimited(clientKey)) {
-      return jsonResponse(
-        { ok: false, error: "Too many requests" },
-        429
-      );
+      return jsonResponse({ ok: false, error: "Too many requests" }, 429);
     }
 
     let rawBody: unknown;
