@@ -19,5 +19,14 @@
     "verbatimModuleSyntax": true
   },
   "include": [".astro/types.d.ts", "**/*", ".storybook/**/*"],
-  "exclude": ["coverage", "dist", "node_modules", "storybook-static"]
+  "exclude": [
+    "coverage",
+    "dist",
+    "e2e",
+    "node_modules",
+    "playwright-report",
+    "playwright.config.ts",
+    "storybook-static",
+    "test-results"
+  ]
 }
