@@ -91,8 +91,8 @@ const [
   }).catch(() => ({ entry: null })),
 ]);
 
-const dailyDua: TDailyDua
-  = cmsDailyInspiration?.arabic && cmsDailyInspiration?.translation
+const dailyDua: TDailyDua =
+  cmsDailyInspiration?.arabic && cmsDailyInspiration?.translation
     ? {
         ...fallbackDailyDua,
         ...cmsDailyInspiration,
@@ -102,69 +102,69 @@ const dailyDua: TDailyDua
           ...fallbackDailyDua,
           arabic: cmsDailyInspiration.ayahOfTheDay.arabicUthmani,
           transliteration:
-            cmsDailyInspiration.ayahOfTheDay.transliteration
-            ?? fallbackDailyDua.transliteration,
+            cmsDailyInspiration.ayahOfTheDay.transliteration ??
+            fallbackDailyDua.transliteration,
           translation:
-            cmsDailyInspiration.ayahOfTheDay.translations?.[lang]
-            ?? cmsDailyInspiration.ayahOfTheDay.translations?.es
-            ?? fallbackDailyDua.translation,
+            cmsDailyInspiration.ayahOfTheDay.translations?.[lang] ??
+            cmsDailyInspiration.ayahOfTheDay.translations?.es ??
+            fallbackDailyDua.translation,
           source:
-            cmsDailyInspiration.ayahOfTheDay.surahNameTranslit
-            && cmsDailyInspiration.ayahOfTheDay.referenceKey
+            cmsDailyInspiration.ayahOfTheDay.surahNameTranslit &&
+            cmsDailyInspiration.ayahOfTheDay.referenceKey
               ? `${cmsDailyInspiration.ayahOfTheDay.surahNameTranslit} (${cmsDailyInspiration.ayahOfTheDay.referenceKey})`
               : fallbackDailyDua.source,
         }
       : fallbackDailyDua;
 
-const primaryCmsCampaign
-  = Array.isArray(cmsCampaignsRes?.data) && cmsCampaignsRes.data.length > 0
+const primaryCmsCampaign =
+  Array.isArray(cmsCampaignsRes?.data) && cmsCampaignsRes.data.length > 0
     ? cmsCampaignsRes.data[0]
     : null;
 
-const featuredDonation
-  = primaryCmsCampaign?.title
-    && typeof primaryCmsCampaign.goalAmount === "number"
-    && Number.isFinite(primaryCmsCampaign.goalAmount)
-    && typeof primaryCmsCampaign.raisedAmount === "number"
-    && Number.isFinite(primaryCmsCampaign.raisedAmount)
+const featuredDonation =
+  primaryCmsCampaign?.title &&
+    typeof primaryCmsCampaign.goalAmount === "number" &&
+    Number.isFinite(primaryCmsCampaign.goalAmount) &&
+    typeof primaryCmsCampaign.raisedAmount === "number" &&
+    Number.isFinite(primaryCmsCampaign.raisedAmount)
     ? {
         title: primaryCmsCampaign.title,
         description:
-          primaryCmsCampaign.description
-          ?? fallbackFeaturedDonation.description,
+          primaryCmsCampaign.description ??
+          fallbackFeaturedDonation.description,
         goal: `$${primaryCmsCampaign.goalAmount.toLocaleString(lang)} ${primaryCmsCampaign.currency ?? "COP"}`,
         raised: `$${primaryCmsCampaign.raisedAmount.toLocaleString(lang)} ${primaryCmsCampaign.currency ?? "COP"}`,
         ctaHref: fallbackFeaturedDonation.ctaHref,
         imageAlt: primaryCmsCampaign.title,
         imageUrl:
-          primaryCmsCampaign.coverUrl
-          ?? primaryCmsCampaign.imageUrl
-          ?? fallbackFeaturedDonation.imageUrl,
+          primaryCmsCampaign.coverUrl ??
+          primaryCmsCampaign.imageUrl ??
+          fallbackFeaturedDonation.imageUrl,
       }
     : fallbackFeaturedDonation;
 
-const eventSpotlights: Array<TEventSpotlight>
-  = Array.isArray(cmsSpotlightsRes?.data) && cmsSpotlightsRes.data.length > 0
+const eventSpotlights: Array<TEventSpotlight> =
+  Array.isArray(cmsSpotlightsRes?.data) && cmsSpotlightsRes.data.length > 0
     ? cmsSpotlightsRes.data
     : fallbackSpotlights;
 
-const academyCourses
-  = articleEntries.length > 0
+const academyCourses =
+  articleEntries.length > 0
     ? articleEntries.map((entry) => entry.data)
     : localizedMocks.academyCourses;
 
-const events: Array<TEvent>
-  = eventEntries.length > 0
+const events: Array<TEvent> =
+  eventEntries.length > 0
     ? eventEntries.map((entry) => entry.data)
     : localizedMocks.events;
 
-const defaultServices: Array<TCommunityService>
-  = serviceEntries.length > 0
+const defaultServices: Array<TCommunityService> =
+  serviceEntries.length > 0
     ? serviceEntries.map((entry) => entry.data)
     : localizedMocks.defaultServices;
 
-const mediaHighlights: Array<TMediaHighlight>
-  = mediaEntries.length > 0
+const mediaHighlights: Array<TMediaHighlight> =
+  mediaEntries.length > 0
     ? mediaEntries.map((entry) => ({
         title: entry.data.title,
         href: entry.data.href,

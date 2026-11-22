@@ -158,8 +158,8 @@ if (referer) {
 const { timeZone } = await getClientLocation();
 
 const rawDateParam = url.searchParams.get("date");
-const requestedYm: TIslamicApiDateYm | null
-  = rawDateParam && /^\d{4}-\d{2}$/.test(rawDateParam)
+const requestedYm: TIslamicApiDateYm | null =
+  rawDateParam && /^\d{4}-\d{2}$/.test(rawDateParam)
     ? (rawDateParam as TIslamicApiDateYm)
     : null;
 
@@ -174,9 +174,9 @@ const live = await getLiveCollection("prayerTimes", {
 });
 const entries = live.entries ?? [];
 
-const location
-  = entries[0]?.data.location
-    ?? `${BOGOTA_LOCATION.city}, ${BOGOTA_LOCATION.country}`;
+const location =
+  entries[0]?.data.location ??
+    `${BOGOTA_LOCATION.city}, ${BOGOTA_LOCATION.country}`;
 
 const resolved = {
   title: title ?? t("pray-calendar.title"),
@@ -198,9 +198,9 @@ const monthLabel = buildMonthLabel(monthAnchorDate, lang, resolved.timeZone);
 
 const rows = entries.map(({ data }) => {
   const activePrayRaw = data.activePray;
-  const activePray
-    = typeof activePrayRaw === "string"
-      && PRAYER_KEYS.includes(activePrayRaw as keyof TDailyPrayerSchedule)
+  const activePray =
+    typeof activePrayRaw === "string" &&
+      PRAYER_KEYS.includes(activePrayRaw as keyof TDailyPrayerSchedule)
       ? (activePrayRaw as keyof TDailyPrayerSchedule)
       : undefined;
 
@@ -455,6 +455,7 @@ const getCellClasses = (
 </section>
 
 <style>
+
   [data-action="show-more"] [data-monthly-toggle-less] {
     display: none;
   }
@@ -487,6 +488,7 @@ const getCellClasses = (
       transition: none;
     }
   }
+
 </style>
 
 <script>

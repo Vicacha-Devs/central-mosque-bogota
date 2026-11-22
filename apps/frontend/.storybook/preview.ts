@@ -1,13 +1,8 @@
-import {
-  definePreview,
-  type AstroRenderer,
-} from "@storybook-astro/framework";
+import { definePreview, type AstroRenderer } from "@storybook-astro/framework";
 import { decorators as astroDocsDecorators } from "@storybook-astro/renderer/entry-preview-docs";
 import addonA11y from "@storybook/addon-a11y";
 import addonDocs from "@storybook/addon-docs";
-import addonThemes, {
-  withThemeByDataAttribute,
-} from "@storybook/addon-themes";
+import addonThemes, { withThemeByDataAttribute } from "@storybook/addon-themes";
 import {
   DOCS_RENDERED,
   GLOBALS_UPDATED,
@@ -112,10 +107,10 @@ export default definePreview({
   decorators: [
     ...astroDocsDecorators,
     (story, context) => {
-      const dir =
-        context.globals?.addonRtl === "rtl" ? "rtl" : currentDirection;
+      const globals = context.globals as GlobalsPayload["globals"];
+      const dir = globals?.addonRtl === "rtl" ? "rtl" : currentDirection;
       applyDocumentDirection(dir);
-      return story();
+      return story() as unknown;
     },
     withThemeByDataAttribute<AstroRenderer>({
       themes: {

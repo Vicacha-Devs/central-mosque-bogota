@@ -37,13 +37,13 @@ export function buildFallbackPublicationPdf(
   publication: TResourcePublication,
   lang: TLang
 ): Uint8Array<ArrayBuffer> {
-  const title
-    = escapePdfText(publication.title) || escapePdfText(publication.slug);
-  const author
-    = escapePdfText(publication.authorName) || "Central Mosque Bogota";
-  const summary
-    = escapePdfText(publication.summary)
-      || "Official digital publication from Abu Bakr As-Siddiq Central Mosque Bogota.";
+  const title =
+    escapePdfText(publication.title) || escapePdfText(publication.slug);
+  const author =
+    escapePdfText(publication.authorName) || "Central Mosque Bogota";
+  const summary =
+    escapePdfText(publication.summary) ||
+    "Official digital publication from Abu Bakr As-Siddiq Central Mosque Bogota.";
   const metaLine = escapePdfText(
     `${publication.categoryLabel} | ${publication.publishedAtDate} (${publication.secondaryDateFormatted}) | Locale: ${lang.toUpperCase()}`
   );
@@ -114,9 +114,9 @@ export const GET: APIRoute = async ({ params, url }) => {
   }
 
   const rawLocale = (
-    url.searchParams.get("locale")
-    ?? url.searchParams.get("lang")
-    ?? "es"
+    url.searchParams.get("locale") ??
+    url.searchParams.get("lang") ??
+    "es"
   ).toLowerCase() as TLang;
   const safeLang: TLang = ALLOWED_LANGS.has(rawLocale) ? rawLocale : "es";
 
@@ -147,11 +147,11 @@ export const GET: APIRoute = async ({ params, url }) => {
         const buffer = await res.arrayBuffer();
         const bytes = new Uint8Array(buffer);
         if (
-          bytes.length > 4
-          && bytes[0] === 0x25
-          && bytes[1] === 0x50
-          && bytes[2] === 0x44
-          && bytes[3] === 0x46
+          bytes.length > 4 &&
+          bytes[0] === 0x25 &&
+          bytes[1] === 0x50 &&
+          bytes[2] === 0x44 &&
+          bytes[3] === 0x46
         ) {
           return new Response(buffer, {
             status: 200,

@@ -180,7 +180,10 @@ const translatePath = useTranslatedPath(lang);
           <Icon name="phone" class="text-sm text-blue-300" />
           <a
             href={`tel:${contactInfo.phone.replace(/[^\d+]/g, "")}`}
-            class="transition-colors hover:text-white"
+            class="
+              transition-colors
+              hover:text-white
+            "
           >
             {contactInfo.phone}
           </a>
@@ -189,7 +192,10 @@ const translatePath = useTranslatedPath(lang);
           <Icon name="email" class="text-sm text-blue-300" />
           <a
             href={`mailto:${contactInfo.email}`}
-            class="transition-colors hover:text-white"
+            class="
+              transition-colors
+              hover:text-white
+            "
           >
             {contactInfo.email}
           </a>
@@ -229,7 +235,8 @@ const translatePath = useTranslatedPath(lang);
           enterkeyhint="send"
           class="
             rounded-lg border-white/25 bg-white/10 px-4 py-2 text-base
-            text-white placeholder:text-white/60
+            text-white
+            placeholder:text-white/60
           "
           placeholder={t("footer.email-placeholder")}
           type="email"

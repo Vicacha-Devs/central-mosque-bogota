@@ -71,8 +71,8 @@ export const GET: APIRoute = async ({ url }) => {
 
       const contentType = res.headers.get("content-type") ?? "";
       if (
-        contentType.includes("text/calendar")
-        || contentType.includes("text/plain")
+        contentType.includes("text/calendar") ||
+        contentType.includes("text/plain")
       ) {
         const upstreamText = await res.text();
         if (upstreamText.includes("BEGIN:VCALENDAR")) {

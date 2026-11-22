@@ -62,12 +62,12 @@ const {
 } = Astro.props;
 const copy = getBroadcastChannelsCopy(lang);
 
-let channels: TPublicChannelItem[]
-  = propChannels && propChannels.length > 0
+let channels: TPublicChannelItem[] =
+  propChannels && propChannels.length > 0
     ? propChannels
     : FALLBACK_BROADCAST_CHANNELS;
-let archiveItems: TArchiveBroadcastItem[]
-  = propArchiveItems && propArchiveItems.length > 0
+let archiveItems: TArchiveBroadcastItem[] =
+  propArchiveItems && propArchiveItems.length > 0
     ? propArchiveItems
     : FALLBACK_BROADCAST_ARCHIVE;
 
@@ -78,9 +78,9 @@ if (!propChannels || !propArchiveItems) {
         publicChannelLinks?: TPublicChannelItem[];
       }>("broadcasts/public/channels", { locale: lang });
       if (
-        cmsChannels?.publicChannelLinks
-        && Array.isArray(cmsChannels.publicChannelLinks)
-        && cmsChannels.publicChannelLinks.length > 0
+        cmsChannels?.publicChannelLinks &&
+        Array.isArray(cmsChannels.publicChannelLinks) &&
+        cmsChannels.publicChannelLinks.length > 0
       ) {
         channels = cmsChannels.publicChannelLinks;
       }
@@ -198,8 +198,7 @@ if (!propChannels || !propArchiveItems) {
     <!-- Right Column: Segmented Topic Subscription Form -->
     <div
       class="
-        flex flex-col rounded-2xl border border-emerald-200 bg-emerald-50/40
-        p-6
+        flex flex-col rounded-2xl border border-emerald-200 bg-emerald-50/40 p-6
         lg:col-span-5
         dark:border-emerald-900/50 dark:bg-emerald-950/20
       "

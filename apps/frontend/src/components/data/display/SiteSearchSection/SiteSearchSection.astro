@@ -93,10 +93,7 @@ const filterTabs = [
 <section data-site-search class="space-y-8">
   <!-- Search Input Box -->
   <div class="mx-auto max-w-3xl">
-    <InputGroup class="
-      h-14 rounded-2xl bg-card shadow-sm
-    "
-    >
+    <InputGroup class="h-14 rounded-2xl bg-card shadow-sm">
       <InputGroupAddon align="inline-start" class="ps-4">
         <Icon name="search" class="text-2xl text-slate-400" />
       </InputGroupAddon>
@@ -135,7 +132,11 @@ const filterTabs = [
           ]}
         >
           <span>{tab.label}</span>
-          <span aria-hidden="true" class="text-xs opacity-75 tabular-nums">({tab.count})</span>
+          <span aria-hidden="true" class="text-xs tabular-nums opacity-75">
+            (
+            {tab.count}
+            )
+          </span>
         </button>
       ))
     }
@@ -244,8 +245,8 @@ const filterTabs = [
       <a
         href={translatePath("/prayer-information")}
         class="
-          rounded-full border border-border bg-card px-4 py-2 text-xs
-          font-bold text-foreground transition-colors
+          rounded-full border border-border bg-card px-4 py-2 text-xs font-bold
+          text-foreground transition-colors
           hover:bg-muted
         "
       >
@@ -254,8 +255,8 @@ const filterTabs = [
       <a
         href={translatePath("/events-and-programs")}
         class="
-          rounded-full border border-border bg-card px-4 py-2 text-xs
-          font-bold text-foreground transition-colors
+          rounded-full border border-border bg-card px-4 py-2 text-xs font-bold
+          text-foreground transition-colors
           hover:bg-muted
         "
       >

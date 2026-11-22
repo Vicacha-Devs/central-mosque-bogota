@@ -55,8 +55,8 @@ const {
 
 const lang = langProp ?? getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
-const resolvedCalendarHref
-  = calendarHref ?? translatePath("/events-and-programs");
+const resolvedCalendarHref =
+  calendarHref ?? translatePath("/events-and-programs");
 ---
 
 <HomeSection

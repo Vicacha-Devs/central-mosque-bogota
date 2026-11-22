@@ -34,16 +34,16 @@ const asStr = (...values: Array<unknown>): string => {
 const inferProfileSlug = (nameOrSlug: string): string => {
   const lower = nameOrSlug.toLowerCase();
   if (
-    lower.includes("mansoor")
-    || lower.includes("mansur")
-    || lower.includes("منصور")
+    lower.includes("mansoor") ||
+    lower.includes("mansur") ||
+    lower.includes("منصور")
   ) {
     return "sheikh-ahmad-al-mansoor";
   }
   if (
-    lower.includes("tariq")
-    || lower.includes("tarık")
-    || lower.includes("طارق")
+    lower.includes("tariq") ||
+    lower.includes("tarık") ||
+    lower.includes("طارق")
   ) {
     return "ustadh-tariq-ramirez";
   }
@@ -51,9 +51,9 @@ const inferProfileSlug = (nameOrSlug: string): string => {
     return "dra-amina-gomez";
   }
   if (
-    lower.includes("ibrahim")
-    || lower.includes("إبراهيم")
-    || lower.includes("khatib")
+    lower.includes("ibrahim") ||
+    lower.includes("إبراهيم") ||
+    lower.includes("khatib")
   ) {
     return "hajj-ibrahim-al-khatib";
   }
@@ -79,8 +79,8 @@ const articlesCollection = defineCollection({
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getDetailedArticles(lang)[0];
       const slug = asStr(raw.slug, defaults.slug);
-      const rawContent
-        = typeof raw.content === "string" && raw.content.trim()
+      const rawContent =
+        typeof raw.content === "string" && raw.content.trim()
           ? raw.content
           : defaults.contentParagraphs.map((p) => `<p>${p}</p>`).join("\n");
       const authorName = asStr(raw.author, defaults.authorName);
@@ -99,8 +99,8 @@ const articlesCollection = defineCollection({
         authorName,
         authorSlug,
         readingTimeMinutes:
-          Number.parseInt(asStr(raw.readingTime), 10)
-          || defaults.readingTimeMinutes,
+          Number.parseInt(asStr(raw.readingTime), 10) ||
+          defaults.readingTimeMinutes,
         instructorRole: defaults.instructorRole,
         scheduleLabel: defaults.scheduleLabel,
         contentParagraphs: defaults.contentParagraphs,
@@ -148,14 +148,14 @@ const eventsCollection = defineCollection({
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getDetailedEvents(lang)[0];
       const slug = asStr(raw.slug, defaults.slug);
-      const startDate
-        = typeof raw.startDate === "string"
+      const startDate =
+        typeof raw.startDate === "string"
           ? new Date(raw.startDate)
           : new Date();
       const month = startDate.toLocaleString(lang, { month: "short" });
       const day = startDate.getUTCDate();
-      const richDescription
-        = typeof raw.description === "string" && raw.description.trim()
+      const richDescription =
+        typeof raw.description === "string" && raw.description.trim()
           ? raw.description
           : defaults.fullDescription.map((p) => `<p>${p}</p>`).join("\n");
       const speaker = asStr(raw.speaker, defaults.speaker);
@@ -279,8 +279,8 @@ const mediaHighlightsCollection = defineCollection({
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getDetailedMediaHighlights(lang)[0];
       const rawType = asStr(raw.type, defaults.type);
-      const type: TDetailedMediaItem["type"]
-        = rawType === "khutbah" || rawType === "podcast" || rawType === "video"
+      const type: TDetailedMediaItem["type"] =
+        rawType === "khutbah" || rawType === "podcast" || rawType === "video"
           ? rawType
           : defaults.type;
       const speakerName = asStr(
@@ -388,8 +388,8 @@ const donationCampaignsCollection = defineCollection({
       const defaults = getLocalizedMocks(lang).donationCampaigns[0];
       const goalAmount = Number(raw.goalAmount ?? defaults.goalAmount);
       const raisedAmount = Number(raw.raisedAmount ?? defaults.raisedAmount);
-      const percent
-        = goalAmount > 0
+      const percent =
+        goalAmount > 0
           ? Math.min(100, Math.round((raisedAmount / goalAmount) * 100))
           : defaults.percent;
       return {
@@ -500,8 +500,8 @@ const aboutPageCollection = defineCollection({
           ? (raw.architectureHighlights as typeof defaultHighlights)
           : defaultHighlights,
         architectureDescription:
-          typeof raw.architectureDescription === "string"
-          && raw.architectureDescription.trim()
+          typeof raw.architectureDescription === "string" &&
+          raw.architectureDescription.trim()
             ? raw.architectureDescription
             : undefined,
         leaders: Array.isArray(raw.leaders)
@@ -702,11 +702,11 @@ const donationsPageCollection = defineCollection({
           (item: Record<string, unknown>, idx: number) => {
             const fallbackItem = defaults[idx % defaults.length];
             const rawInstructions = item.instructions;
-            const instructions
-              = rawInstructions
-                && typeof rawInstructions === "object"
-                && typeof (rawInstructions as Record<string, unknown>)[lang]
-                === "string"
+            const instructions =
+              rawInstructions &&
+              typeof rawInstructions === "object" &&
+              typeof (rawInstructions as Record<string, unknown>)[lang] ===
+                "string"
                 ? String((rawInstructions as Record<string, unknown>)[lang])
                 : asStr(rawInstructions, fallbackItem.instructions);
 

@@ -41,8 +41,8 @@ function updateUI(root: HTMLElement): void {
     (v): v is number => v !== null
   );
   const nextToday = orderedTimes.find((t) => t > now);
-  const nextPrayerKey
-    = DAILY_PRAYERS.find((k) => times[k] === nextToday) ?? null;
+  const nextPrayerKey =
+    DAILY_PRAYERS.find((k) => times[k] === nextToday) ?? null;
 
   const passedLabel = root.dataset.statusPassed ?? "Passed";
   const nowLabel = root.dataset.statusNow ?? "Now";
@@ -65,16 +65,16 @@ function updateUI(root: HTMLElement): void {
       const tVal = times[key];
       if (isActive) {
         statusEl.textContent = nowLabel;
-        statusEl.className
-          = "mt-1.5 inline-block rounded-full bg-primary px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-primary-foreground uppercase";
+        statusEl.className =
+          "mt-1.5 inline-block rounded-full bg-primary px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-primary-foreground uppercase";
       } else if (key === nextPrayerKey) {
         statusEl.textContent = nextLabel;
-        statusEl.className
-          = "mt-1.5 inline-block rounded-full bg-secondary/12 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-secondary uppercase dark:bg-secondary-accent/15 dark:text-secondary-accent";
+        statusEl.className =
+          "mt-1.5 inline-block rounded-full bg-secondary/12 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-secondary uppercase dark:bg-secondary-accent/15 dark:text-secondary-accent";
       } else if (tVal !== null && tVal < now) {
         statusEl.textContent = passedLabel;
-        statusEl.className
-          = "mt-1.5 inline-block rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold tracking-wider text-muted-foreground uppercase";
+        statusEl.className =
+          "mt-1.5 inline-block rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold tracking-wider text-muted-foreground uppercase";
       } else {
         statusEl.textContent = "";
         statusEl.className = "hidden";

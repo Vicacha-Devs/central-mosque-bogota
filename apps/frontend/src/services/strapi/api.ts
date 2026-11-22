@@ -33,9 +33,9 @@ const ALLOWED_API_LANGS = new Set(["es", "en", "ar", "tr"]);
  */
 export function resolveApiLang(url: URL): "es" | "en" | "ar" | "tr" {
   const raw = (
-    url.searchParams.get("locale")
-    ?? url.searchParams.get("lang")
-    ?? "es"
+    url.searchParams.get("locale") ??
+    url.searchParams.get("lang") ??
+    "es"
   )
     .trim()
     .toLowerCase();
@@ -72,9 +72,9 @@ export function optimizeCloudinaryUrl(
   }
 
   if (
-    parsed.protocol !== "https:"
-    || parsed.hostname !== "res.cloudinary.com"
-    || !parsed.pathname.includes("/upload/")
+    parsed.protocol !== "https:" ||
+    parsed.hostname !== "res.cloudinary.com" ||
+    !parsed.pathname.includes("/upload/")
   ) {
     return rawUrl;
   }
@@ -203,11 +203,11 @@ export async function fetchPrayerSettingsFromStrapi(
       defaultLon:
         response.data.defaultLon ?? DEFAULT_PRAYER_SETTINGS.defaultLon,
       jumuahKhutbahTime:
-        response.data.jumuahKhutbahTime
-        ?? DEFAULT_PRAYER_SETTINGS.jumuahKhutbahTime,
+        response.data.jumuahKhutbahTime ??
+        DEFAULT_PRAYER_SETTINGS.jumuahKhutbahTime,
       jumuahPrayerTime:
-        response.data.jumuahPrayerTime
-        ?? DEFAULT_PRAYER_SETTINGS.jumuahPrayerTime,
+        response.data.jumuahPrayerTime ??
+        DEFAULT_PRAYER_SETTINGS.jumuahPrayerTime,
     };
   } catch {
     return DEFAULT_PRAYER_SETTINGS;

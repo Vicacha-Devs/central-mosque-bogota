@@ -98,8 +98,8 @@ const fetchPrayerTimes = async ({
     const lon = clientLoc.lon || String(strapiPrayerSettings.defaultLon);
 
     if (isMonthly) {
-      const strapiMonthly
-        = await fetchIslamSuiteFromStrapi<TStrapiIslamMonthlyTimetable>(
+      const strapiMonthly =
+        await fetchIslamSuiteFromStrapi<TStrapiIslamMonthlyTimetable>(
           "prayer-times/monthly",
           {
             yearMonth: date,
@@ -134,8 +134,8 @@ const fetchPrayerTimes = async ({
         };
       }
     } else {
-      const strapiDaily
-        = await fetchIslamSuiteFromStrapi<TStrapiIslamDailyTimetable>(
+      const strapiDaily =
+        await fetchIslamSuiteFromStrapi<TStrapiIslamDailyTimetable>(
           "prayer-times",
           {
             date,
@@ -183,8 +183,8 @@ const fetchPrayerTimes = async ({
     };
 
     if (isMonthly) {
-      const { data }
-        = await fetchIslamicData<TIslamicApiPrayerTimeMonthResponse>(
+      const { data } =
+        await fetchIslamicData<TIslamicApiPrayerTimeMonthResponse>(
           endpoint,
           params
         );
@@ -205,8 +205,8 @@ const fetchPrayerTimes = async ({
         })),
       };
     } else {
-      const { data }
-        = await fetchIslamicData<TIslamicApiPrayerTimeSingleResponse>(
+      const { data } =
+        await fetchIslamicData<TIslamicApiPrayerTimeSingleResponse>(
           endpoint,
           params
         );

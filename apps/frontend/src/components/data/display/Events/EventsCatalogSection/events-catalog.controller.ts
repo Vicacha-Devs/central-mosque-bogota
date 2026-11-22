@@ -41,7 +41,8 @@ function getWeekdayLabels(lang: string): Array<string> {
   const fmt = new Intl.DateTimeFormat(lang, { weekday: "short" });
   // 2024-01-01 is a Monday
   return Array.from({ length: 7 }, (_, i) =>
-    fmt.format(new Date(2024, 0, 1 + i)));
+    fmt.format(new Date(2024, 0, 1 + i))
+  );
 }
 
 function renderCalendar(
@@ -117,8 +118,8 @@ function renderCalendar(
 
   for (let i = 0; i < firstDow; i++) {
     const blankDesktop = document.createElement("div");
-    blankDesktop.className
-      = "min-h-24 border-e border-b border-border bg-muted/30";
+    blankDesktop.className =
+      "min-h-24 border-e border-b border-border bg-muted/30";
     gridDesktop.appendChild(blankDesktop);
 
     const blankMobile = document.createElement("div");
@@ -190,15 +191,15 @@ function renderCalendar(
 
   // Mobile agenda list
   mobileAgenda.replaceChildren();
-  const agendaEvents
-    = selectedDay !== null
+  const agendaEvents =
+    selectedDay !== null
       ? (eventsByDay.get(selectedDay) ?? [])
       : filteredEvents;
 
   if (agendaEvents.length === 0) {
     const empty = document.createElement("p");
-    empty.className
-      = "rounded-xl border border-border bg-card p-4 text-center text-sm text-muted-foreground";
+    empty.className =
+      "rounded-xl border border-border bg-card p-4 text-center text-sm text-muted-foreground";
     empty.textContent = noEventsLabel;
     mobileAgenda.appendChild(empty);
     return;
@@ -207,8 +208,8 @@ function renderCalendar(
   agendaEvents.forEach((ev) => {
     const item = document.createElement("a");
     item.href = ev.url || "#";
-    item.className
-      = "flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-3.5 text-start transition-colors hover:bg-muted/50";
+    item.className =
+      "flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-3.5 text-start transition-colors hover:bg-muted/50";
 
     const info = document.createElement("div");
     info.className = "min-w-0";
@@ -221,8 +222,8 @@ function renderCalendar(
     info.append(title, meta);
 
     const badge = document.createElement("span");
-    badge.className
-      = "shrink-0 rounded-full bg-secondary/10 px-2.5 py-0.5 text-[11px] font-bold text-secondary dark:text-secondary-accent";
+    badge.className =
+      "shrink-0 rounded-full bg-secondary/10 px-2.5 py-0.5 text-[11px] font-bold text-secondary dark:text-secondary-accent";
     badge.textContent = ev.category;
 
     item.append(info, badge);
@@ -267,9 +268,9 @@ export function initEventFilters(): void {
 
   const syncCalendar = (): void => {
     if (
-      !catalogRoot
-      || !calendarPanel
-      || calendarPanel.classList.contains("hidden")
+      !catalogRoot ||
+      !calendarPanel ||
+      calendarPanel.classList.contains("hidden")
     ) {
       return;
     }
@@ -340,10 +341,10 @@ export function initEventFilters(): void {
     });
   });
 
-  const prevBtn
-    = catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-prev]");
-  const nextBtn
-    = catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-next]");
+  const prevBtn =
+    catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-prev]");
+  const nextBtn =
+    catalogRoot?.querySelector<HTMLButtonElement>("[data-cal-next]");
   if (prevBtn && prevBtn.dataset.bound !== "true") {
     prevBtn.dataset.bound = "true";
     prevBtn.addEventListener("click", () => {

@@ -116,8 +116,8 @@ function generateReferenceCode(prefix: string): string {
 function isUpstreamHttpRejection(err: unknown): boolean {
   if (!(err instanceof Error)) return false;
   if (
-    "status" in err
-    && typeof (err as { status?: unknown }).status === "number"
+    "status" in err &&
+    typeof (err as { status?: unknown }).status === "number"
   ) {
     return (err as { status: number }).status >= 400;
   }
@@ -131,9 +131,9 @@ function handleUpstreamSubmissionError(
   if (isUpstreamHttpRejection(err)) {
     return jsonResponse({ ok: false, error: rejectedMessage }, 502);
   }
-  const allowOfflineFallback
-    = !import.meta.env.PROD
-      || process.env.ALLOW_OFFLINE_MOCK_SUBMISSIONS === "true";
+  const allowOfflineFallback =
+    !import.meta.env.PROD ||
+    process.env.ALLOW_OFFLINE_MOCK_SUBMISSIONS === "true";
   if (!allowOfflineFallback) {
     return jsonResponse(
       { ok: false, error: "Upstream submission service unavailable" },
@@ -240,10 +240,10 @@ async function handleVisit(
   const notes = sanitizeText(body.notes, 2000);
 
   if (
-    !visitorName
-    || !EMAIL_REGEX.test(email)
-    || !phone
-    || !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)
+    !visitorName ||
+    !EMAIL_REGEX.test(email) ||
+    !phone ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)
   ) {
     return jsonResponse(
       { ok: false, error: "Invalid visit booking fields" },
@@ -281,8 +281,8 @@ async function handleVisit(
         }),
       }
     );
-    const upstreamRef
-      = reserveRes.data?.referenceCode ?? reserveRes.referenceCode;
+    const upstreamRef =
+      reserveRes.data?.referenceCode ?? reserveRes.referenceCode;
     if (typeof upstreamRef === "string" && upstreamRef.trim()) {
       referenceCode = upstreamRef.trim();
     }
@@ -327,14 +327,14 @@ async function handleDonation(
     : donationType === "utility_bills"
       ? "utility_invoice"
       : "major_campaign";
-  const coversRemainingBalance
-    = body.coversRemainingBalance === true
-      || body.coversRemainingBalance === "on"
-      || body.coversRemainingBalance === "true";
-  const requestsTaxCertificate
-    = body.requestsTaxCertificate === true
-      || body.requestsTaxCertificate === "on"
-      || body.requestsTaxCertificate === "true";
+  const coversRemainingBalance =
+    body.coversRemainingBalance === true ||
+    body.coversRemainingBalance === "on" ||
+    body.coversRemainingBalance === "true";
+  const requestsTaxCertificate =
+    body.requestsTaxCertificate === true ||
+    body.requestsTaxCertificate === "on" ||
+    body.requestsTaxCertificate === "true";
   const notes = sanitizeText(body.notes, 2000);
   const fallbackReferenceCode = generateReferenceCode(
     campaignKind === "utility_invoice" ? "INV" : "DON"
@@ -385,8 +385,8 @@ async function handleDonation(
         }),
       }
     );
-    const upstreamRef
-      = pledgeRes.data?.referenceCode ?? pledgeRes.referenceCode;
+    const upstreamRef =
+      pledgeRes.data?.referenceCode ?? pledgeRes.referenceCode;
     if (typeof upstreamRef === "string" && upstreamRef.trim()) {
       referenceCode = upstreamRef.trim();
     }
@@ -449,11 +449,11 @@ async function handleServiceDesk(
           }),
         }
       );
-      const upstreamRef
-        = certRes.data?.referenceCode
-          ?? certRes.data?.serialNumber
-          ?? certRes.referenceCode
-          ?? certRes.serialNumber;
+      const upstreamRef =
+        certRes.data?.referenceCode ??
+        certRes.data?.serialNumber ??
+        certRes.referenceCode ??
+        certRes.serialNumber;
       if (typeof upstreamRef === "string" && upstreamRef.trim()) {
         referenceCode = upstreamRef.trim();
       }
@@ -499,8 +499,8 @@ async function handleNewsletter(
   const email = sanitizeText(body.email, 160);
   const fullName = sanitizeText(body.fullName, 120);
   const phone = sanitizeText(body.phone, 40);
-  const sourceFormSlug
-    = sanitizeText(body.sourceFormSlug, 60) || "footer-newsletter";
+  const sourceFormSlug =
+    sanitizeText(body.sourceFormSlug, 60) || "footer-newsletter";
   const topics = Array.isArray(body.topics)
     ? body.topics.map((t) => sanitizeText(t, 30)).filter(Boolean)
     : ["announcements", "events"];
@@ -556,8 +556,8 @@ const SUBMISSION_HANDLERS: Record<
  */
 export const POST: APIRoute = async ({ request, url, clientAddress }) => {
   try {
-    const contentType
-      = request.headers.get("content-type")?.toLowerCase() ?? "";
+    const contentType =
+      request.headers.get("content-type")?.toLowerCase() ?? "";
     const mediaType = contentType.split(";")[0]?.trim() ?? "";
     if (mediaType !== "application/json") {
       return jsonResponse({ ok: false, error: "Unsupported Media Type" }, 415);
@@ -572,8 +572,8 @@ export const POST: APIRoute = async ({ request, url, clientAddress }) => {
     const forwardedIp = trustProxy
       ? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
       : undefined;
-    const clientKey
-      = addr.length > 0
+    const clientKey =
+      addr.length > 0
         ? addr
         : forwardedIp && forwardedIp.length > 0
           ? forwardedIp

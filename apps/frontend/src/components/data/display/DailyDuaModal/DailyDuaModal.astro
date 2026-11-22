@@ -193,10 +193,8 @@ const copiedLabel = t("daily-dua.copied");
 </section>
 
 <script>
-
   import { initCopyDuaButtons } from "./daily-dua-modal.controller";
 
   initCopyDuaButtons();
   document.addEventListener("astro:after-swap", () => initCopyDuaButtons());
-
 </script>

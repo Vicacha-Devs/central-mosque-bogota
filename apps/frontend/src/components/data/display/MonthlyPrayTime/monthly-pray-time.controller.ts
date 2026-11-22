@@ -134,7 +134,9 @@ export function initMonthlyPrayTimeTable(root: HTMLElement): void {
   });
   document.addEventListener(
     "astro:before-swap",
-    () => { listenerController.abort(); },
+    () => {
+      listenerController.abort();
+    },
     { once: true, signal: listenerController.signal }
   );
 }

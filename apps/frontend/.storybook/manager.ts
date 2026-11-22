@@ -1,4 +1,8 @@
 import {
+  defaultConfig,
+  type TagBadgeParameters,
+} from "storybook-addon-tag-badges/manager-helpers";
+import {
   DOCS_RENDERED,
   GLOBALS_UPDATED,
   SET_CURRENT_STORY,
@@ -6,10 +10,6 @@ import {
   STORY_RENDERED,
 } from "storybook/internal/core-events";
 import { addons } from "storybook/manager-api";
-import {
-  defaultConfig,
-  type TagBadgeParameters,
-} from "storybook-addon-tag-badges/manager-helpers";
 
 import { websiteThemeDark, websiteThemeLight } from "./theme";
 

@@ -52,39 +52,39 @@ const [
   }).catch(() => null),
 ]);
 
-const articles
-  = articleEntries.length > 0
+const articles =
+  articleEntries.length > 0
     ? articleEntries.map((entry) => entry.data)
     : mocks.academyCourses;
 
-const events
-  = eventEntries.length > 0
+const events =
+  eventEntries.length > 0
     ? eventEntries.map((entry) => entry.data)
     : mocks.events;
 
-const services
-  = serviceEntries.length > 0
+const services =
+  serviceEntries.length > 0
     ? serviceEntries.map((entry) => entry.data)
     : mocks.defaultServices;
 
-const media
-  = mediaEntries.length > 0
+const media =
+  mediaEntries.length > 0
     ? mediaEntries.map((entry) => entry.data)
     : mocks.mediaHighlights;
 
-const faqs
-  = faqEntries.length > 0
+const faqs =
+  faqEntries.length > 0
     ? faqEntries.map((entry) => entry.data)
     : mocks.islamFaithData.faqs;
 
 const cmsPubs = cmsPublicationsRes?.data;
-const publications: TResourcePublication[]
-  = Array.isArray(cmsPubs) && cmsPubs.length > 0
+const publications: TResourcePublication[] =
+  Array.isArray(cmsPubs) && cmsPubs.length > 0
     ? cmsPubs
     : getLocalizedPublications(lang);
 
-const glossaryTerms: TResourceGlossaryTerm[]
-  = Array.isArray(cmsGlossaryRes?.data) && cmsGlossaryRes.data.length > 0
+const glossaryTerms: TResourceGlossaryTerm[] =
+  Array.isArray(cmsGlossaryRes?.data) && cmsGlossaryRes.data.length > 0
     ? cmsGlossaryRes.data
     : getLocalizedGlossaryTerms(lang);
 

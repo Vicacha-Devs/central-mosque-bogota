@@ -31,6 +31,7 @@ export default defineConfig([
     "e2e",
     "playwright-report",
     "playwright.config.ts",
+    "src/components/starwind",
     "storybook-static",
     "test-results",
     "node_modules",
@@ -38,6 +39,7 @@ export default defineConfig([
     ".github",
     ".vscode",
     "!.storybook",
+    ".vercel",
   ]),
   {
     ...sonarjs.recommended,
@@ -68,15 +70,9 @@ export default defineConfig([
     },
     rules: {
       "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }],
-      "@stylistic/function-paren-newline": ["warn", "consistent"],
+      "@stylistic/function-paren-newline": "off", // oxfmt owns this
       "@stylistic/implicit-arrow-linebreak": "off",
-      "@stylistic/operator-linebreak": "warn",
-      "@stylistic/object-curly-newline": [
-        "error",
-        {
-          ExportDeclaration: { multiline: true, minProperties: 5 },
-        },
-      ],
+      "@stylistic/object-curly-newline": "off", // oxfmt owns this
       "@typescript-eslint/array-type": [
         "error",
         {
@@ -131,12 +127,34 @@ export default defineConfig([
     },
     rules: {
       // TODO: bug Astro support https://github.com/eslint-stylistic/eslint-stylistic/issues/259#issuecomment-4656201980
-      "@stylistic/jsx-one-expression-per-line": "warn",
+      "@stylistic/jsx-one-expression-per-line": "off",
+      // `dark` is the Tailwind v4 custom-variant scope class (see PageHeroBanner).
+      "better-tailwindcss/no-unknown-classes": [
+        "error",
+        { ignore: ["^dark$"] },
+      ],
     },
   },
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,astro}"],
     rules: {
+      // oxfmt (prettier-style) keeps operators at the end of the line, so match it
+      "@stylistic/operator-linebreak": [
+        "warn",
+        "after",
+        {
+          overrides: {
+            "?": "before",
+            ":": "before",
+            "|": "before",
+            "&": "before",
+          },
+        },
+      ],
+      // Whitespace/indentation is owned by oxfmt; these conflict with it
+      "@stylistic/indent": "off",
+      "@stylistic/indent-binary-ops": "off",
+      "@stylistic/no-multiple-empty-lines": "off",
       "@stylistic/arrow-parens": ["error", "always"],
       "@stylistic/comma-dangle": [
         "error",
@@ -158,7 +176,7 @@ export default defineConfig([
         },
       ],
       "@stylistic/quote-props": ["error", "consistent"],
-      "@stylistic/quotes": ["error", "double"],
+      "@stylistic/quotes": ["error", "double", { avoidEscape: true }],
       "@stylistic/semi": ["error", "always"],
       "eol-last": ["error", "always"],
       "max-len": [
@@ -194,6 +212,13 @@ export default defineConfig([
     language: "css/css",
     languageOptions: {
       customSyntax: tailwind4,
+    },
+    rules: {
+      // Tailwind v4 theme tokens and component-scoped custom properties
+      // are defined outside the linted file.
+      "css/no-invalid-properties": ["error", { allowUnknownVariables: true }],
+      // ::marker and content-visibility are progressive enhancements.
+      "css/use-baseline": "warn",
     },
   },
   {

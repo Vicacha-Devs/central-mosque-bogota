@@ -42,9 +42,9 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const fallbackEvents = getDetailedEvents(lang);
 const eventItem = eventItemProp ?? fallbackEvents[0];
-const relatedEvents
-  = relatedEventsProp
-    ?? fallbackEvents.filter((ev) => ev.slug !== eventItem.slug);
+const relatedEvents =
+  relatedEventsProp ??
+    fallbackEvents.filter((ev) => ev.slug !== eventItem.slug);
 ---
 
 <div class="space-y-10">
@@ -102,7 +102,7 @@ const relatedEvents
         />
         <div
           class="
-            absolute top-4 start-4 rounded-2xl bg-secondary/95 px-4 py-2
+            absolute inset-s-4 top-4 rounded-2xl bg-secondary/95 px-4 py-2
             text-center text-white shadow-lg backdrop-blur-sm
           "
         >

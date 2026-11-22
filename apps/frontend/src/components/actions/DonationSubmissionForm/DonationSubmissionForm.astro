@@ -52,8 +52,8 @@ interface Props {
 
 const { lang, invoices, campaigns = [] } = Astro.props;
 const t = getDonatePageStrings(lang);
-const invoiceItems
-  = invoices && invoices.length > 0
+const invoiceItems =
+  invoices && invoices.length > 0
     ? invoices
     : getLocalizedUtilityInvoices(lang);
 ---

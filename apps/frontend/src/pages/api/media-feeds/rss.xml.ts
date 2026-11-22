@@ -68,9 +68,9 @@ export const GET: APIRoute = async ({ url, site }) => {
 
     const contentType = res.headers.get("content-type") ?? "";
     if (
-      contentType.includes("xml")
-      || contentType.includes("rss")
-      || contentType.includes("text/plain")
+      contentType.includes("xml") ||
+      contentType.includes("rss") ||
+      contentType.includes("text/plain")
     ) {
       const upstreamXml = await res.text();
       if (upstreamXml.includes("<rss")) {

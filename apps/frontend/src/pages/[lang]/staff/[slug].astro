@@ -44,7 +44,9 @@ export async function getStaticPaths() {
   const leaderEntries = await getCollection("leaders");
   if (leaderEntries.length > 0) {
     return leaderEntries
-      .filter((entry) => entry.data.hasDedicatedPage !== false && entry.data.slug)
+      .filter(
+        (entry) => entry.data.hasDedicatedPage !== false && entry.data.slug
+      )
       .map((entry) => ({
         params: { lang: entry.data.locale, slug: entry.data.slug },
         props: { member: entry.data as StaffProfile },
@@ -97,9 +99,9 @@ const matchesMember = (
   const normalizedTarget = targetName.toLowerCase();
   const normalizedMember = member.name.toLowerCase();
   return (
-    normalizedTarget === normalizedMember
-    || normalizedTarget.includes(normalizedMember)
-    || normalizedMember.includes(normalizedTarget)
+    normalizedTarget === normalizedMember ||
+    normalizedTarget.includes(normalizedMember) ||
+    normalizedMember.includes(normalizedTarget)
   );
 };
 
@@ -121,13 +123,13 @@ const otherStaff = (
     : getLocalizedAboutPageData(lang).leaders
 ).filter(
   (item) =>
-    item.slug !== member.slug
-    && item.showInStaffDirectory !== false
-    && item.hasDedicatedPage !== false
+    item.slug !== member.slug &&
+    item.showInStaffDirectory !== false &&
+    item.hasDedicatedPage !== false
 );
 
-const categoryIcon
-  = member.memberCategory === "imam_scholar"
+const categoryIcon =
+  member.memberCategory === "imam_scholar"
     ? "mosque"
     : member.memberCategory === "instructor"
       ? "school"
@@ -224,7 +226,11 @@ const labels = labelsByLang[lang];
         dark:border-slate-800 dark:bg-slate-900
       "
     >
-      <CardContent class="p-8 sm:p-12">
+      <CardContent class="
+        p-8
+        sm:p-12
+      "
+      >
         <div class="
           grid grid-cols-1 gap-8
           lg:grid-cols-12 lg:items-center
@@ -278,7 +284,9 @@ const labels = labelsByLang[lang];
                 <span class="inline-flex items-center gap-1.5">
                   <Icon name="translate" class="text-base text-secondary" />
                   <span>
-                    {t("about-page.languages-label")}: {member.languagesSpoken}
+                    {t("about-page.languages-label")}
+                    :
+                    {member.languagesSpoken}
                   </span>
                 </span>
               </div>
@@ -317,7 +325,11 @@ const labels = labelsByLang[lang];
             {
               member.officeHours && (
                 <div>
-                  <Separator class="my-3 bg-slate-200 dark:bg-slate-700" />
+                  <Separator class="
+                    my-3 bg-slate-200
+                    dark:bg-slate-700
+                  "
+                  />
                   <p
                     class="
                       text-xs font-extrabold tracking-wider text-slate-400
@@ -328,8 +340,8 @@ const labels = labelsByLang[lang];
                   </p>
                   <p
                     class="
-                      mt-1 inline-flex items-center gap-1.5 text-sm font-semibold
-                      text-slate-800
+                      mt-1 inline-flex items-center gap-1.5 text-sm
+                      font-semibold text-slate-800
                       dark:text-slate-200
                     "
                   >
@@ -342,7 +354,11 @@ const labels = labelsByLang[lang];
           </div>
         </div>
 
-        <Separator class="my-8 bg-slate-100 dark:bg-slate-800" />
+        <Separator class="
+          my-8 bg-slate-100
+          dark:bg-slate-800
+        "
+        />
 
         <!-- Full Biography -->
         <div class="space-y-4">
@@ -355,8 +371,8 @@ const labels = labelsByLang[lang];
           </h2>
           <div
             class="
-              prose max-w-none text-base/relaxed text-slate-600
-              dark:prose-invert dark:text-slate-300
+              text-base/relaxed text-slate-600
+              dark:text-slate-300
             "
           >
             <TiptapContent content={member.bio} />
@@ -437,7 +453,9 @@ const labels = labelsByLang[lang];
                     "
                   >
                     <span>
-                      {article.readingTimeMinutes} {t("article-detail.reading-time")}
+                      {article.readingTimeMinutes}
+                      {" "}
+                      {t("article-detail.reading-time")}
                     </span>
                     <a
                       href={article.href}

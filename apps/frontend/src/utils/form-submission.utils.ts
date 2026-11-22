@@ -77,9 +77,9 @@ export function bindJsonFormSubmission(options: TBindJsonFormOptions): void {
   const syncFieldAriaInvalid = (target: EventTarget | null): void => {
     if (
       !(
-        target instanceof HTMLInputElement
-        || target instanceof HTMLTextAreaElement
-        || target instanceof HTMLSelectElement
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement
       )
     ) {
       return;
@@ -107,18 +107,18 @@ export function bindJsonFormSubmission(options: TBindJsonFormOptions): void {
   form.addEventListener("input", (e) => {
     const target = e.target;
     if (
-      target instanceof HTMLElement
-      && target.getAttribute("aria-invalid") === "true"
+      target instanceof HTMLElement &&
+      target.getAttribute("aria-invalid") === "true"
     ) {
       syncFieldAriaInvalid(target);
     }
   });
 
-  const submitBtn
-    = options.submitButton
-      ?? form.querySelector<HTMLButtonElement>(
-        "button[type=\"submit\"], button:not([type]), input[type=\"submit\"]"
-      );
+  const submitBtn =
+    options.submitButton ??
+    form.querySelector<HTMLButtonElement>(
+      'button[type="submit"], button:not([type]), input[type="submit"]'
+    );
 
   let isSubmitting = false;
 

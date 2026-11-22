@@ -27,7 +27,9 @@ import {
 interface Props {
   lang?: TLang;
   article?: TDetailedArticle & { content?: string; authorSlug?: string };
-  relatedArticles?: Array<TDetailedArticle & { content?: string; authorSlug?: string }>;
+  relatedArticles?: Array<
+    TDetailedArticle & { content?: string; authorSlug?: string }
+  >;
 }
 
 const {
@@ -41,22 +43,22 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const fallbackArticles = getDetailedArticles(lang);
 const article = articleProp ?? fallbackArticles[0];
-const relatedArticles
-  = relatedArticlesProp
-    ?? fallbackArticles.filter((a) => a.slug !== article.slug);
+const relatedArticles =
+  relatedArticlesProp ??
+    fallbackArticles.filter((a) => a.slug !== article.slug);
 const articleWithAuthorSlug = article as typeof article & {
   authorSlug?: string;
 };
-const inferredAuthorSlug
-  = articleWithAuthorSlug.authorSlug
-    || (article.authorName.toLowerCase().includes("mansoor")
-      || article.authorName.toLowerCase().includes("منصور")
+const inferredAuthorSlug =
+  articleWithAuthorSlug.authorSlug ||
+    (article.authorName.toLowerCase().includes("mansoor") ||
+      article.authorName.toLowerCase().includes("منصور")
       ? "sheikh-ahmad-al-mansoor"
-      : article.authorName.toLowerCase().includes("tariq")
-        || article.authorName.toLowerCase().includes("طارق")
+      : article.authorName.toLowerCase().includes("tariq") ||
+        article.authorName.toLowerCase().includes("طارق")
         ? "ustadh-tariq-ramirez"
-        : article.authorName.toLowerCase().includes("amina")
-          || article.authorName.toLowerCase().includes("أمينة")
+        : article.authorName.toLowerCase().includes("amina") ||
+          article.authorName.toLowerCase().includes("أمينة")
           ? "dra-amina-gomez"
           : "");
 const authorProfileHref = inferredAuthorSlug
@@ -77,7 +79,13 @@ const authorProfileHref = inferredAuthorSlug
             dark:text-blue-300
           "
         >
-          <Icon name="arrow_back" class="text-base rtl:-scale-x-100" />
+          <Icon
+            name="arrow_back"
+            class="
+              text-base
+              rtl:-scale-x-100
+            "
+          />
           <span>{t("article-detail.back")}</span>
         </BreadcrumbLink>
       </BreadcrumbItem>
@@ -124,7 +132,7 @@ const authorProfileHref = inferredAuthorSlug
           "
         >
         </div>
-        <div class="absolute top-6 start-6">
+        <div class="absolute inset-s-6 top-6">
           <Badge
             variant="primary"
             class="
@@ -219,9 +227,9 @@ const authorProfileHref = inferredAuthorSlug
                     <a
                       href={authorProfileHref}
                       class="
-                    transition-colors
-                    hover:text-primary hover:underline
-                  "
+                        transition-colors
+                        hover:text-primary hover:underline
+                      "
                     >
                       {article.authorName}
                     </a>

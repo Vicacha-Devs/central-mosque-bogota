@@ -1,6 +1,6 @@
-const ICS_CONTROL_CHARS_REGEX
+const ICS_CONTROL_CHARS_REGEX =
   // eslint-disable-next-line no-control-regex
-  = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+  /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
 
 /**
  * Escapes text for RFC 5545 iCalendar (ICS) property values and strips control characters.

@@ -26,8 +26,8 @@ const [eventEntries, cmsOccurrencesRes] = await Promise.all([
   }).catch(() => null),
 ]);
 
-const baseEvents: Array<TEvent>
-  = eventEntries.length > 0
+const baseEvents: Array<TEvent> =
+  eventEntries.length > 0
     ? eventEntries.map((entry) => entry.data)
     : localizedMocks.events;
 
@@ -35,12 +35,12 @@ const baseByTitle = new Map(
   baseEvents.map((ev) => [ev.title.toLowerCase(), ev])
 );
 
-const allEvents: Array<TEvent>
-  = Array.isArray(cmsOccurrencesRes?.data) && cmsOccurrencesRes.data.length > 0
+const allEvents: Array<TEvent> =
+  Array.isArray(cmsOccurrencesRes?.data) && cmsOccurrencesRes.data.length > 0
     ? cmsOccurrencesRes.data.map((item, idx) => {
-        const fallback
-          = baseByTitle.get((item.title ?? "").toLowerCase())
-            ?? baseEvents[idx % baseEvents.length];
+        const fallback =
+          baseByTitle.get((item.title ?? "").toLowerCase()) ??
+            baseEvents[idx % baseEvents.length];
         return {
           ...fallback,
           ...item,

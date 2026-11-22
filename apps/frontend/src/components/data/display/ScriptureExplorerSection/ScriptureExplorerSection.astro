@@ -120,12 +120,12 @@ interface TStrapiDailyInspirationResponse {
 let ayat: Array<TScriptureAyahCard> = ayatOverride ?? fallback.ayat;
 let hadiths: Array<TScriptureHadithCard> = hadithsOverride ?? fallback.hadiths;
 let asmaOfTheDay: TAsmaUlHusnaCard = asmaOverride ?? fallback.asmaOfTheDay;
-const tasbihPresets: Array<TTasbihPresetCard>
-  = tasbihPresetsOverride ?? fallback.tasbihPresets;
+const tasbihPresets: Array<TTasbihPresetCard> =
+  tasbihPresetsOverride ?? fallback.tasbihPresets;
 
 if (!ayatOverride || !hadithsOverride || !asmaOverride) {
-  const liveDaily
-    = await fetchIslamSuiteFromStrapi<TStrapiDailyInspirationResponse>(
+  const liveDaily =
+    await fetchIslamSuiteFromStrapi<TStrapiDailyInspirationResponse>(
       "scripture/daily",
       { locale: lang }
     );
@@ -140,13 +140,13 @@ if (!ayatOverride || !hadithsOverride || !asmaOverride) {
       arabicUthmani: rawAyah.arabicUthmani,
       transliteration: rawAyah.transliteration,
       translation:
-        rawAyah.translations?.[lang]
-        ?? rawAyah.translations?.es
-        ?? fallback.ayat[0].translation,
+        rawAyah.translations?.[lang] ??
+        rawAyah.translations?.es ??
+        fallback.ayat[0].translation,
       reflection:
-        rawAyah.reflections?.[lang]
-        ?? rawAyah.reflections?.es
-        ?? fallback.ayat[0].reflection,
+        rawAyah.reflections?.[lang] ??
+        rawAyah.reflections?.es ??
+        fallback.ayat[0].reflection,
       audioUrl: rawAyah.audioUrl ?? fallback.ayat[0].audioUrl,
     };
     ayat = [
@@ -162,24 +162,24 @@ if (!ayatOverride || !hadithsOverride || !asmaOverride) {
     const mappedDailyHadith: TScriptureHadithCard = {
       id: rawHadith.id,
       collectionName:
-        rawHadith.collectionNames?.[lang]
-        ?? rawHadith.collectionNames?.es
-        ?? fallback.hadiths[0].collectionName,
+        rawHadith.collectionNames?.[lang] ??
+        rawHadith.collectionNames?.es ??
+        fallback.hadiths[0].collectionName,
       hadithNumber: rawHadith.hadithNumber,
       grading: rawHadith.grading,
       narrator:
-        rawHadith.narrator?.[lang]
-        ?? rawHadith.narrator?.es
-        ?? fallback.hadiths[0].narrator,
+        rawHadith.narrator?.[lang] ??
+        rawHadith.narrator?.es ??
+        fallback.hadiths[0].narrator,
       arabicText: rawHadith.arabicText,
       translation:
-        rawHadith.translations?.[lang]
-        ?? rawHadith.translations?.es
-        ?? fallback.hadiths[0].translation,
+        rawHadith.translations?.[lang] ??
+        rawHadith.translations?.es ??
+        fallback.hadiths[0].translation,
       keyTakeaway:
-        rawHadith.keyTakeaways?.[lang]
-        ?? rawHadith.keyTakeaways?.es
-        ?? fallback.hadiths[0].keyTakeaway,
+        rawHadith.keyTakeaways?.[lang] ??
+        rawHadith.keyTakeaways?.es ??
+        fallback.hadiths[0].keyTakeaway,
     };
     hadiths = [
       mappedDailyHadith,
@@ -194,13 +194,13 @@ if (!ayatOverride || !hadithsOverride || !asmaOverride) {
       arabic: rawAsma.arabic,
       transliteration: rawAsma.transliteration,
       meaning:
-        rawAsma.meanings?.[lang]
-        ?? rawAsma.meanings?.es
-        ?? fallback.asmaOfTheDay.meaning,
+        rawAsma.meanings?.[lang] ??
+        rawAsma.meanings?.es ??
+        fallback.asmaOfTheDay.meaning,
       reflection:
-        rawAsma.reflections?.[lang]
-        ?? rawAsma.reflections?.es
-        ?? fallback.asmaOfTheDay.reflection,
+        rawAsma.reflections?.[lang] ??
+        rawAsma.reflections?.es ??
+        fallback.asmaOfTheDay.reflection,
       quranReference: rawAsma.quranReference,
     };
   }
