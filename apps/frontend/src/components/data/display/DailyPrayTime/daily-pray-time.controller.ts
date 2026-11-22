@@ -89,11 +89,13 @@ function updateUI(root: HTMLElement): void {
     "[data-prayer-countdown-value]"
   );
   if (countdownEl && countdownValEl && orderedTimes.length > 0) {
-    const untilNext = nextToday ?? 1440 + orderedTimes[0];
-    const diffMin = untilNext - now;
+    const diffMin =
+      nextToday !== undefined ? nextToday - now : 1440 - now + orderedTimes[0];
     const hrs = Math.floor(diffMin / 60);
     const mins = diffMin % 60;
-    countdownValEl.textContent = `${String(hrs).padStart(2, "0")}h ${String(mins).padStart(2, "0")}m`;
+    const hourUnit = root.dataset.hourUnit ?? "h";
+    const minuteUnit = root.dataset.minuteUnit ?? "m";
+    countdownValEl.textContent = `${String(hrs).padStart(2, "0")}${hourUnit} ${String(mins).padStart(2, "0")}${minuteUnit}`;
     countdownEl.classList.remove("hidden");
     countdownEl.classList.add("inline-flex");
   }

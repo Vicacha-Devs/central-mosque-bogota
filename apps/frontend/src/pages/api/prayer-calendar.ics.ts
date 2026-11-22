@@ -1,3 +1,5 @@
+import { defaultLang, ui, type TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import { fetchStrapiRaw, resolveApiLang } from "@services/strapi";
 import { pad2, sanitizeIcsText } from "@utils/ics.utils";
 import type { APIRoute } from "astro";
@@ -68,6 +70,8 @@ const BOGOTA_DAILY_PRAYERS: Array<{
 ];
 
 function buildFallbackIcs(yearMonth: string, lang: string): string {
+  const safeLang: TLang = lang in ui ? (lang as TLang) : defaultLang;
+  const t = useTranslations(safeLang);
   const [yearStr, monthStr] = yearMonth.split("-");
   const year = Number(yearStr);
   const month = Number(monthStr);
@@ -80,7 +84,7 @@ function buildFallbackIcs(yearMonth: string, lang: string): string {
     "PRODID:-//Mezquita Central Abu Bakr As-Siddiq Bogota//Prayer Calendar//ES",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "X-WR-CALNAME:Mezquita Central Bogota - Horarios de Oracion",
+    `X-WR-CALNAME:${sanitizeIcsText(t("ics.prayerCalName"))}`,
     "X-WR-TIMEZONE:America/Bogota",
   ];
 

@@ -1,3 +1,5 @@
+import { defaultLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import { renderAstroComponentToDom } from "@utils/test.helpers";
 import { describe, expect, it } from "vitest";
 
@@ -29,9 +31,12 @@ describe("DownloadPDF", () => {
       expect(classAttr).toMatch(/print:hidden/);
       expect(classAttr).toMatch(/custom-class/);
 
-      expect(btn.getAttribute("data-loading-label")).toBe("Loading");
-      expect(btn.getAttribute("data-error-label")).toMatch(/Error/i);
-      expect(btn.getAttribute("aria-label")).toBe("Download");
+      const t = useTranslations(defaultLang);
+      expect(btn.getAttribute("data-loading-label")).toBe(
+        t("download.preparing")
+      );
+      expect(btn.getAttribute("data-error-label")).toBe(t("download.error"));
+      expect(btn.getAttribute("aria-label")).toBe(t("download.download-pdf"));
     } finally {
       await close();
     }

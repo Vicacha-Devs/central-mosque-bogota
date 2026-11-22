@@ -216,15 +216,7 @@ const serializedJsonLd = JSON.stringify(structuredData).replace(/</g, "\\u003c")
         focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg
       "
     >
-      {
-        lang === "ar"
-          ? "انتقل إلى المحتوى"
-          : lang === "en"
-            ? "Skip to content"
-            : lang === "tr"
-              ? "İçeriğe geç"
-              : "Ir al contenido principal"
-      }
+      {t("common.skipToContent")}
     </a>
     <div class="sticky top-0 z-50">
       <UrgentAlertBanner lang={lang} />

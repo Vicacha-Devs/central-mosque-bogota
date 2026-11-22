@@ -137,57 +137,15 @@ const categoryIcon =
         ? "verified_user"
         : "person";
 
-const labelsByLang: Record<
-  TLang,
-  {
-    biographyTitle: string;
-    credentialsTitle: string;
-    officeHoursTitle: string;
-    authoredArticlesTitle: string;
-    deliveredMediaTitle: string;
-    ledEventsTitle: string;
-    otherStaffTitle: string;
-  }
-> = {
-  es: {
-    biographyTitle: "Biografía y Servicio en la Mezquita",
-    credentialsTitle: "Formación Académica y Credenciales",
-    officeHoursTitle: "Horario de Atención y Consejería",
-    authoredArticlesTitle: "Artículos y Cursos Publicados",
-    deliveredMediaTitle: "Jutbas, Conferencias y Multimedia",
-    ledEventsTitle: "Clases y Actividades Dirigidas",
-    otherStaffTitle: "Otros Miembros del Equipo y Liderazgo",
-  },
-  en: {
-    biographyTitle: "Biography & Mosque Service",
-    credentialsTitle: "Academic Credentials & Certifications",
-    officeHoursTitle: "Office Hours & Counseling",
-    authoredArticlesTitle: "Published Articles & Courses",
-    deliveredMediaTitle: "Khutbahs, Lectures & Media",
-    ledEventsTitle: "Classes & Mosque Events Led",
-    otherStaffTitle: "Other Mosque Leadership & Staff",
-  },
-  ar: {
-    biographyTitle: "السيرة الذاتية والخدمة في المسجد",
-    credentialsTitle: "المؤهلات العلمية والإجازات",
-    officeHoursTitle: "أوقات التواجد والإرشاد",
-    authoredArticlesTitle: "المقالات والدورات العلمية المنشورة",
-    deliveredMediaTitle: "الخطب والمحاضرات والمرئيات",
-    ledEventsTitle: "الدروس والأنشطة التي يشرف عليها",
-    otherStaffTitle: "أعضاء آخرون من إدارة وأئمة المسجد",
-  },
-  tr: {
-    biographyTitle: "Biyografi ve Cami Hizmeti",
-    credentialsTitle: "Akademik Eğitim ve İcazetler",
-    officeHoursTitle: "Görüşme ve Danışmanlık Saatleri",
-    authoredArticlesTitle: "Yayınlanan Makaleler ve Kurslar",
-    deliveredMediaTitle: "Hutbeler, Sohbetler ve Medya",
-    ledEventsTitle: "Yönetilen Dersler ve Etkinlikler",
-    otherStaffTitle: "Diğer Cami Görevlileri ve Yönetim",
-  },
+const labels = {
+  biographyTitle: t("staff-page.biographyTitle"),
+  credentialsTitle: t("staff-page.credentialsTitle"),
+  officeHoursTitle: t("staff-page.officeHoursTitle"),
+  authoredArticlesTitle: t("staff-page.authoredArticlesTitle"),
+  deliveredMediaTitle: t("staff-page.deliveredMediaTitle"),
+  ledEventsTitle: t("staff-page.ledEventsTitle"),
+  otherStaffTitle: t("staff-page.otherStaffTitle"),
 };
-
-const labels = labelsByLang[lang];
 ---
 
 <Layout
@@ -284,9 +242,7 @@ const labels = labelsByLang[lang];
                 <span class="inline-flex items-center gap-1.5">
                   <Icon name="translate" class="text-base text-secondary" />
                   <span>
-                    {t("about-page.languages-label")}
-                    :
-                    {member.languagesSpoken}
+                    {t("about-page.languages-label")}: {member.languagesSpoken}
                   </span>
                 </span>
               </div>
@@ -453,9 +409,7 @@ const labels = labelsByLang[lang];
                     "
                   >
                     <span>
-                      {article.readingTimeMinutes}
-                      {" "}
-                      {t("article-detail.reading-time")}
+                      {article.readingTimeMinutes} {t("article-detail.reading-time")}
                     </span>
                     <a
                       href={article.href}

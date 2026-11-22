@@ -1,4 +1,5 @@
 ---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import "img-comparison-slider/dist/styles.css";
 
 /**
@@ -81,12 +82,13 @@ const {
   class: className = "",
 } = Astro.props;
 
+const i18n = useTranslations(getLangFromUrl(Astro.url));
 const safeBeforeUrl = sanitizeUrl(beforeUrl ?? attrs?.beforeUrl);
 const safeAfterUrl = sanitizeUrl(afterUrl ?? attrs?.afterUrl);
-const rawBeforeAlt = (beforeAlt ?? attrs?.beforeAlt ?? "Antes").trim();
-const resolvedBeforeAlt = rawBeforeAlt || "Antes";
-const rawAfterAlt = (afterAlt ?? attrs?.afterAlt ?? "Después").trim();
-const resolvedAfterAlt = rawAfterAlt || "Después";
+const rawBeforeAlt = (beforeAlt ?? attrs?.beforeAlt ?? i18n("common.before")).trim();
+const resolvedBeforeAlt = rawBeforeAlt || i18n("common.before");
+const rawAfterAlt = (afterAlt ?? attrs?.afterAlt ?? i18n("common.after")).trim();
+const resolvedAfterAlt = rawAfterAlt || i18n("common.after");
 const resolvedCaption = (caption ?? attrs?.caption ?? "").trim();
 const rawValue = Number.isFinite(value) ? value : 50;
 const clampedValue = Math.min(100, Math.max(0, rawValue));

@@ -2,6 +2,7 @@
 import { Button } from "@/components/starwind/button";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { ComponentProps } from "astro/types";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { cn } from "@utils/styles.utils";
 
 /**
@@ -105,11 +106,12 @@ const {
   label,
 } = Astro.props as DownloadPDFProps;
 
+const i18n = useTranslations(getLangFromUrl(Astro.url));
 const effectiveLabels = labels ?? label ?? {
-  aria: "Download",
-  button: "Download",
-  loading: "Loading",
-  error: "Error",
+  aria: i18n("download.download-pdf"),
+  button: i18n("download.download-pdf"),
+  loading: i18n("download.preparing"),
+  error: i18n("download.error"),
 };
 ---
 

@@ -11,6 +11,7 @@ import {
   TabsTrigger,
 } from "@/components/starwind/tabs";
 import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import { getDonatePageStrings } from "@utils/donation-mocks";
 import { getIslamSuiteCopy } from "@utils/islam-suite-mocks";
 
@@ -476,7 +477,7 @@ const formatCop = (value: number) =>
               flex justify-between border-b border-white/10 pb-3 text-sm
             "
             >
-              <span class="text-blue-100/80">Zakat al-Fitr (Fitrana)</span>
+              <span class="text-blue-100/80">{useTranslations(lang)("donate-page.fitranaLabel")}</span>
               <span
                 id="fitrana-subtotal"
                 aria-live="polite"
@@ -491,7 +492,7 @@ const formatCop = (value: number) =>
               flex justify-between border-b border-white/10 pb-3 text-sm
             "
             >
-              <span class="text-blue-100/80">Fidyah & Kaffarah</span>
+              <span class="text-blue-100/80">{useTranslations(lang)("donate-page.fidyahLabel")}</span>
               <span
                 id="fidyah-kaffarah-subtotal"
                 aria-live="polite"
@@ -543,8 +544,28 @@ const formatCop = (value: number) =>
 </section>
 
 <script>
+
+
+
+
+
+
+
+
+
+
   import { initZakatCalculator } from "./zakat-calculator.controller";
 
   initZakatCalculator();
   document.addEventListener("astro:after-swap", initZakatCalculator);
+
+
+
+
+
+
+
+
+
+
 </script>

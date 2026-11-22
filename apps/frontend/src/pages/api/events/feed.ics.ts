@@ -1,4 +1,5 @@
 import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import { fetchStrapiRaw, resolveApiLang } from "@services/strapi";
 import { pad2, sanitizeIcsText } from "@utils/ics.utils";
 import { getDetailedEvents } from "@utils/localized-mocks";
@@ -7,6 +8,7 @@ import type { APIRoute } from "astro";
 export const prerender = false;
 
 function buildFallbackEventsIcs(lang: TLang): string {
+  const t = useTranslations(lang);
   const events = getDetailedEvents(lang);
   const dtStamp = "20260101T000000Z";
 
@@ -16,7 +18,7 @@ function buildFallbackEventsIcs(lang: TLang): string {
     "PRODID:-//Mezquita Central Abu Bakr As-Siddiq Bogota//Events Calendar//ES",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "X-WR-CALNAME:Mezquita Central Bogota - Eventos y Programas",
+    `X-WR-CALNAME:${sanitizeIcsText(t("ics.eventsCalName"))}`,
     "X-WR-TIMEZONE:America/Bogota",
   ];
 

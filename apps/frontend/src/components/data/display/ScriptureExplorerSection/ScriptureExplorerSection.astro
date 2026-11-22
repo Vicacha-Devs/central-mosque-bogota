@@ -10,7 +10,7 @@ import {
 } from "@/components/starwind/tabs";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
-import { getLangFromUrl } from "@i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { fetchIslamSuiteFromStrapi } from "@services/strapi";
 import {
   getFallbackScriptureBundle,
@@ -513,7 +513,7 @@ const featuredHadith = hadiths[0];
             >
               <p>{asmaOfTheDay.reflection}</p>
               <p class="font-bold text-amber-300">
-                Ref:
+                {useTranslations(lang)("common.refLabel")}
                 {" "}
                 {asmaOfTheDay.quranReference}
               </p>

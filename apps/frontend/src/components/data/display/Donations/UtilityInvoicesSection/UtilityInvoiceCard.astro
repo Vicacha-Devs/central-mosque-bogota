@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/starwind/card";
 import { Progress } from "@/components/starwind/progress";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import {
   getDonatePageStrings,
   type UtilityInvoiceMock,
@@ -110,7 +111,7 @@ const badgeVariant = isPaid
               dark:text-slate-500
             "
             >
-              Ref:
+              {useTranslations(lang)("common.refLabel")}
               {" "}
               {inv.invoiceReference}
               {" "}

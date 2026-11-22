@@ -4,6 +4,7 @@ import { Badge } from "@/components/starwind/badge";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import { fetchStrapiData } from "@services/strapi";
 import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import {
   getUrgentAlertFallback,
   type TAlertBannerItem,
@@ -159,15 +160,7 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
           <button
             type="button"
             id="mosque-alert-dismiss-btn"
-            aria-label={
-              lang === "ar"
-                ? "إغلاق التنبيه"
-                : lang === "en"
-                  ? "Dismiss alert"
-                  : lang === "tr"
-                    ? "Uyarıyı kapat"
-                    : "Cerrar aviso"
-            }
+            aria-label={useTranslations(lang)("common.dismissAlert")}
             class="
               absolute inset-e-0 -top-2 inline-flex size-11 items-center
               justify-center rounded-full bg-white/10 text-white transition

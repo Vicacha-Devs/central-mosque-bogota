@@ -1,4 +1,5 @@
 import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import {
   getLocalizedPublications,
   type TResourcePublication,
@@ -37,13 +38,15 @@ export function buildFallbackPublicationPdf(
   publication: TResourcePublication,
   lang: TLang
 ): Uint8Array<ArrayBuffer> {
+  const t = useTranslations(lang);
   const title =
     escapePdfText(publication.title) || escapePdfText(publication.slug);
   const author =
-    escapePdfText(publication.authorName) || "Central Mosque Bogota";
+    escapePdfText(publication.authorName) ||
+    escapePdfText(t("pdf.fallbackAuthor"));
   const summary =
     escapePdfText(publication.summary) ||
-    "Official digital publication from Abu Bakr As-Siddiq Central Mosque Bogota.";
+    escapePdfText(t("pdf.fallbackSummary"));
   const metaLine = escapePdfText(
     `${publication.categoryLabel} | ${publication.publishedAtDate} (${publication.secondaryDateFormatted}) | Locale: ${lang.toUpperCase()}`
   );
