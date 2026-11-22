@@ -37,10 +37,12 @@ export const es = {
   "pray-schedule.status-now": "Ahora",
   "pray-schedule.status-next": "Siguiente",
   "search-page.recovery-title": "¿No encontraste lo que buscabas?",
-  "search-page.recovery-desc": "Explora nuestros horarios de oración, eventos comunitarios o contáctanos directamente.",
+  "search-page.recovery-desc":
+    "Explora nuestros horarios de oración, eventos comunitarios o contáctanos directamente.",
   "donate-page.waqf-badge": "Waqf Permanente",
   "donate-page.waqf-title": "Sadaqah Jariyah — Fondo Perpetuo",
-  "donate-page.waqf-desc": "Contribuye a un legado continuo que sostiene la educación islámica, la asistencia social y el mantenimiento de la mezquita.",
+  "donate-page.waqf-desc":
+    "Contribuye a un legado continuo que sostiene la educación islámica, la asistencia social y el mantenimiento de la mezquita.",
   "donate-page.waqf-cta": "Contribuir al Waqf",
   "media-page.companion-takeaways": "Puntos Clave",
   "media-page.companion-verses": "Versículos Citados",
@@ -351,7 +353,8 @@ export const es = {
   "islam-suite.asmaOfDayLabel": "Nombre de Allah del Día",
   "islam-suite.reflectionLabel": "Reflexión espiritual",
   "islam-suite.takeawayLabel": "Enseñanza práctica",
-  "islam-suite.listenRecitationLabel": "Escuchar recitación (Mishari Rashid al-`Afasy)",
+  "islam-suite.listenRecitationLabel":
+    "Escuchar recitación (Mishari Rashid al-`Afasy)",
   "islam-suite.tasbihResetLabel": "Reiniciar",
   "islam-suite.tasbihIncrementLabel": "Contar Dhikr (+1)",
   "islam-suite.tasbihCompletedLabel": "¡Meta alcanzada! Alhamdulillah",

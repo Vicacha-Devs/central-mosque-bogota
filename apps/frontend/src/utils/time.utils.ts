@@ -28,7 +28,7 @@ export const getCurrentMinutes = (timeZone: string): number => {
       timeZone,
       hour: "numeric",
       minute: "numeric",
-      hour12: false,
+      hourCycle: "h23",
     };
 
     const parts = new Intl.DateTimeFormat("en-US", options).formatToParts(now);
@@ -36,7 +36,7 @@ export const getCurrentMinutes = (timeZone: string): number => {
       return Number(parts.find((part) => part.type === type)?.value);
     };
 
-    const h = getPart("hour");
+    const h = getPart("hour") % 24;
     const m = getPart("minute");
 
     if (isNaN(h) || isNaN(m)) throw new Error("Invalid time parts");
@@ -79,7 +79,7 @@ export const formatTime = (value: unknown): string => {
  * Formats a date into `YYYY-MM-DD` using the given IANA timezone.
  */
 export const formatYmd = (date: Date, timeZone: string): string => {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("en-CA", {
     timeZone,
     year: "numeric",
     month: "2-digit",

@@ -89,7 +89,8 @@ const mosqueTheme: TiptapBlockUserTheme = {
       ...theme?.overwrite?.paragraph,
     },
     quote: {
-      default: "border-s-4 border-primary ps-4 italic my-4",
+      default:
+        "rounded-xl border border-border/60 bg-muted/40 px-5 py-4 italic my-4",
       ...theme?.overwrite?.quote,
     },
     list: {
@@ -110,7 +111,7 @@ const mosqueTheme: TiptapBlockUserTheme = {
 };
 ---
 
-<Prose class="max-w-none">
+<Prose class="max-w-[70ch]">
   <TiptapBlocks
     data={content}
     theme={mosqueTheme}

@@ -14,13 +14,19 @@ export const switchButton = tv({
   ],
   variants: {
     variant: {
-      primary: "aria-checked:border-primary focus-visible:border-primary/70 focus:ring-primary/50",
-      secondary: "aria-checked:border-secondary focus-visible:border-secondary/70 focus:ring-secondary/50",
-      default: "aria-checked:border-foreground focus-visible:border-outline focus:ring-outline/50",
+      primary:
+        "aria-checked:border-primary focus-visible:border-primary/70 focus:ring-primary/50",
+      secondary:
+        "aria-checked:border-secondary focus-visible:border-secondary/70 focus:ring-secondary/50",
+      default:
+        "aria-checked:border-foreground focus-visible:border-outline focus:ring-outline/50",
       info: "aria-checked:border-info focus-visible:border-info/70 focus:ring-info/50",
-      success: "aria-checked:border-success focus-visible:border-success/70 focus:ring-success/50",
-      warning: "aria-checked:border-warning focus-visible:border-warning/70 focus:ring-warning/50",
-      error: "aria-checked:border-error focus-visible:border-error/70 focus:ring-error/50",
+      success:
+        "aria-checked:border-success focus-visible:border-success/70 focus:ring-success/50",
+      warning:
+        "aria-checked:border-warning focus-visible:border-warning/70 focus:ring-warning/50",
+      error:
+        "aria-checked:border-error focus-visible:border-error/70 focus:ring-error/50",
     },
   },
   defaultVariants: {

@@ -17,12 +17,20 @@ import "@styles/global.css";
 type Props = {
   title?: string;
   description?: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
 };
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const { title: pageTitleProp, description: pageDescriptionProp }
-  = Astro.props as Props;
+const {
+  title: pageTitleProp,
+  description: pageDescriptionProp,
+  ogType = "website",
+  ogImage: ogImageProp,
+  jsonLd: jsonLdProp,
+} = Astro.props as Props;
 
 const defaultSiteTitle = t("seo.default-title");
 const pageTitle = pageTitleProp
@@ -65,6 +73,23 @@ const socialNetworkLinks
   = globalSetting?.socialNetworkLinks ?? localizedMocks.socialNetworkLinks;
 const cspNonce = Astro.locals.cspNonce;
 const hasHeroSlot = Astro.slots.has("hero");
+const resolvedOgImage = ogImageProp
+  ? new URL(ogImageProp, siteOrigin).href
+  : undefined;
+const structuredData = jsonLdProp ?? {
+  "@context": "https://schema.org",
+  "@type": "Mosque",
+  "name": defaultSiteTitle,
+  "description": pageDescription,
+  "url": canonicalUrl,
+  "inLanguage": lang,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bogotá",
+    "addressCountry": "CO",
+  },
+};
+const serializedJsonLd = JSON.stringify(structuredData).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -79,10 +104,23 @@ const hasHeroSlot = Astro.slots.has("hero");
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={defaultSiteTitle} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:locale" content={lang} />
     <meta property="og:url" content={canonicalUrl} />
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    <meta
+      name="twitter:card"
+      content={resolvedOgImage ? "summary_large_image" : "summary"}
+    />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+    <script type="application/ld+json" is:inline nonce={cspNonce}>
+      {serializedJsonLd}
+    </script>
     <link rel="canonical" href={canonicalUrl} />
     {
       alternateLinks.map(({ hreflang, href }) => (
@@ -173,9 +211,9 @@ const hasHeroSlot = Astro.slots.has("hero");
       href="#main-content"
       class="
         sr-only
-        focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100]
-        focus:rounded-xl focus:bg-secondary focus:px-4 focus:py-2.5 focus:text-sm
-        focus:font-semibold focus:text-white focus:shadow-lg
+        focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4 focus:z-100
+        focus:rounded-xl focus:bg-secondary focus:px-4 focus:py-2.5
+        focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg
       "
     >
       {
@@ -202,7 +240,10 @@ const hasHeroSlot = Astro.slots.has("hero");
           sm:px-6
           lg:mb-16 lg:px-8
         `,
-        !hasHeroSlot && "mt-12 lg:mt-16",
+        !hasHeroSlot && `
+          mt-12
+          lg:mt-16
+        `,
       ]}
     >
       <slot />

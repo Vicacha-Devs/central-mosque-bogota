@@ -14,7 +14,8 @@ export const themeToggle = tv({
   variants: {
     variant: {
       default: "hover:bg-muted hover:text-foreground bg-transparent",
-      outline: "border-input hover:bg-muted hover:text-foreground border bg-transparent shadow-xs",
+      outline:
+        "border-input hover:bg-muted hover:text-foreground border bg-transparent shadow-xs",
     },
     size: {
       sm: "h-9 min-w-9 px-2 text-sm",

@@ -214,52 +214,62 @@ const {
     schedule={times}
   />
   <DailyDuaModal lang={lang} dua={dailyDua} />
-  <CommunityServicesSection
-    title={t("services.community-services")}
-    services={defaultServices}
-  />
+  <div class="below-fold-section">
+    <CommunityServicesSection
+      title={t("services.community-services")}
+      services={defaultServices}
+    />
+  </div>
   {
     academyCourses.length > 0 && (
-      <AcademyCoursesSection
-        title={t("academy.home-title")}
-        description={t("academy.home-description")}
-        ctaLabel={t("academy.home-cta-label")}
-        articleCtaLabel={t("academy.article-cta-label")}
-        academyHref={translatePath("/islam-and-faith")}
-        articles={academyCourses.map<TAcademyArticle>((courses) => ({
-          ...courses,
-          ctaLabel: t("academy.article-cta-label"),
-        }))}
-      />
+      <div class="below-fold-section">
+        <AcademyCoursesSection
+          title={t("academy.home-title")}
+          description={t("academy.home-description")}
+          ctaLabel={t("academy.home-cta-label")}
+          articleCtaLabel={t("academy.article-cta-label")}
+          academyHref={translatePath("/islam-and-faith")}
+          articles={academyCourses.map<TAcademyArticle>((courses) => ({
+            ...courses,
+            ctaLabel: t("academy.article-cta-label"),
+          }))}
+        />
+      </div>
     )
   }
   {
     events.length > 0 && (
-      <NextEventsSection
-        lang={lang}
-        title={t("events.next-events")}
-        description={t("events.join-us")}
-        ctaLabel={t("events.see-calendar")}
-        calendarHref={translatePath("/events-and-programs")}
-        events={events}
-      />
+      <div class="below-fold-section">
+        <NextEventsSection
+          lang={lang}
+          title={t("events.next-events")}
+          description={t("events.join-us")}
+          ctaLabel={t("events.see-calendar")}
+          calendarHref={translatePath("/events-and-programs")}
+          events={events}
+        />
+      </div>
     )
   }
   {
     mediaHighlights.length > 0 && (
-      <MediaHighlightsSection
-        title={t("media-highlights.title")}
-        description={t("media-highlights.description")}
-        cardCtaLabel={t("media-highlights.cta-card")}
-        ctaLabel={t("media-highlights.cta")}
-        mediaHref={translatePath("/media")}
-        highlights={mediaHighlights}
-      />
+      <div class="below-fold-section">
+        <MediaHighlightsSection
+          title={t("media-highlights.title")}
+          description={t("media-highlights.description")}
+          cardCtaLabel={t("media-highlights.cta-card")}
+          ctaLabel={t("media-highlights.cta")}
+          mediaHref={translatePath("/media")}
+          highlights={mediaHighlights}
+        />
+      </div>
     )
   }
   {
     featuredDonation && (
-      <DonationImpactSection lang={lang} {...featuredDonation} />
+      <div class="below-fold-section">
+        <DonationImpactSection lang={lang} {...featuredDonation} />
+      </div>
     )
   }
   {

@@ -54,6 +54,7 @@ const COPY = getServiceDeskCopy(lang);
       class="
         mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1
         text-xs font-bold tracking-wider text-primary uppercase
+        dark:text-primary-accent
       "
     >
       <Icon name="fact_check" class="text-sm" />
@@ -112,6 +113,7 @@ const COPY = getServiceDeskCopy(lang);
 
       <ul
         id="service-desk-checklist-items"
+        aria-live="polite"
         class="
           space-y-3 text-sm text-slate-700
           dark:text-slate-300
@@ -220,6 +222,7 @@ const COPY = getServiceDeskCopy(lang);
             id="sd-applicant-name"
             name="applicantName"
             type="text"
+            autocomplete="name"
             required
             maxlength={140}
             class="rounded-xl"
@@ -240,6 +243,8 @@ const COPY = getServiceDeskCopy(lang);
             id="sd-applicant-email"
             name="applicantEmail"
             type="email"
+            inputmode="email"
+            autocomplete="email"
             required
             maxlength={160}
             class="rounded-xl"
@@ -260,6 +265,8 @@ const COPY = getServiceDeskCopy(lang);
             id="sd-applicant-phone"
             name="applicantPhone"
             type="tel"
+            inputmode="tel"
+            autocomplete="tel"
             required
             maxlength={40}
             class="rounded-xl"

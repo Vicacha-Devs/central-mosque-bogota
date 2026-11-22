@@ -3,18 +3,16 @@ import { describe, expect, it } from "vitest";
 import { toSafeHref } from "./url.utils";
 
 describe("toSafeHref", () => {
-  it("allows relative paths and hash anchors", () => {
+  it("should allow relative paths and hash anchors when sanitizing", () => {
     expect(toSafeHref("/es/donate")).toBe("/es/donate");
     expect(toSafeHref("#main-content")).toBe("#main-content");
   });
 
-  it("allows http, https, mailto, and tel URLs", () => {
+  it("should allow http, https, mailto, and tel URLs when sanitizing", () => {
     expect(toSafeHref("https://mezquitabogota.org/es")).toBe(
       "https://mezquitabogota.org/es"
     );
-    expect(toSafeHref("http://127.0.0.1:1337")).toBe(
-      "http://127.0.0.1:1337/"
-    );
+    expect(toSafeHref("http://127.0.0.1:1337")).toBe("http://127.0.0.1:1337/");
     expect(toSafeHref("mailto:info@mezquitabogota.org")).toBe(
       "mailto:info@mezquitabogota.org"
     );
@@ -24,7 +22,7 @@ describe("toSafeHref", () => {
     );
   });
 
-  it("rejects javascript:, data:, vbscript:, protocol-relative, and empty URLs", () => {
+  it("should reject unsafe schemes and empty URLs when sanitizing", () => {
     expect(toSafeHref("javascript:alert(1)")).toBe("#");
     expect(toSafeHref("JAVASCRIPT:alert(1)")).toBe("#");
     expect(toSafeHref("data:text/html,<script>alert(1)</script>")).toBe("#");

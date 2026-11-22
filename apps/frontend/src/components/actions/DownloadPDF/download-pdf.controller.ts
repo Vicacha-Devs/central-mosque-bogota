@@ -97,8 +97,8 @@ const initializedButtons = new WeakSet<HTMLButtonElement>();
 type TInitPdfOpts = InitDownloadPdfButtonsOptions;
 
 export function initDownloadPdfButtons(options: TInitPdfOpts = {}): void {
-  const buttonSelector =
-    options.buttonSelector ?? "[data-action='download-pdf']";
+  const buttonSelector
+    = options.buttonSelector ?? "[data-action='download-pdf']";
 
   document
     .querySelectorAll<HTMLButtonElement>(buttonSelector)
@@ -113,10 +113,10 @@ async function handleClick(
   btn: HTMLButtonElement,
   options: InitDownloadPdfButtonsOptions
 ): Promise<void> {
-  const targetAttr =
-    btn.dataset.targetAttr ??
-    options.defaultTargetAttr ??
-    "data-document-prayer-calendar-table";
+  const targetAttr
+    = btn.dataset.targetAttr
+      ?? options.defaultTargetAttr
+      ?? "data-document-prayer-calendar-table";
 
   const element = document.querySelector<HTMLElement>(`[${targetAttr}]`);
   if (!element) {
@@ -128,8 +128,7 @@ async function handleClick(
   }
 
   const originalNodes = Array.from(btn.childNodes).map((node) =>
-    node.cloneNode(true)
-  );
+    node.cloneNode(true));
 
   const root = document.documentElement;
   const prevTheme = root.dataset.theme;

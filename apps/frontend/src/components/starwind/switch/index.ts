@@ -1,5 +1,10 @@
 import Switch from "./Switch.astro";
-import { switchButton, switchLabel, switchToggle, switchWrapper } from "./variants";
+import {
+  switchButton,
+  switchLabel,
+  switchToggle,
+  switchWrapper,
+} from "./variants";
 
 const SwitchVariants = {
   switchButton,
