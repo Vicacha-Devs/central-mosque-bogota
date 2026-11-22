@@ -269,7 +269,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
     assert.equal(createdDocsByUid['plugin::events.event']?.length, 20); // 5 events (2 spotlights + 3 community events) * 4 locales
     assert.equal(createdDocsByUid['plugin::donations.campaign']?.length, 20); // 5 campaigns (1 Waqf + 4 utility invoices) * 4 locales
     assert.equal(createdDocsByUid['plugin::media-feeds.media-item']?.length, 10); // 3 es + 3 en + 2 ar + 2 tr
-    assert.equal(createdEmailTemplates.length, 19); // 16 multilingual (4 types * es/en/ar/tr) + 3 admin alerts
+    assert.equal(createdEmailTemplates.length, 20); // 16 multilingual (4 types * es/en/ar/tr) + 3 admin alerts + 1 branded DocuSeal signature request (501)
 
     // 4. Verify idempotency: running bootstrap a second time must not duplicate documents or permissions
     const prevPermissionCount = createdPermissions.length;
@@ -278,7 +278,7 @@ describe('Central Mosque Backend — Security, Plugin Configurations, Bootstrap 
     assert.equal(createdDocsByUid['api::article.article']?.length, 12);
     assert.equal(createdDocsByUid['plugin::events.event']?.length, 20);
     assert.equal(createdDocsByUid['plugin::donations.campaign']?.length, 20);
-    assert.equal(createdEmailTemplates.length, 19);
+    assert.equal(createdEmailTemplates.length, 20);
   });
 
   it('verifies that every @vicacha-devs plugin controller action in backend/src/index.ts exists on the plugin server module', async () => {

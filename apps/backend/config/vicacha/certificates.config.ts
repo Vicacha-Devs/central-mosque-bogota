@@ -1,4 +1,16 @@
 export function buildMosqueCertificatesPluginConfig(env: any, hijriCalendar: any) {
+  const docusealBaseUrl = env('DOCUSEAL_BASE_URL', '');
+  const docusignAccountId = env('DOCUSIGN_ACCOUNT_ID', '');
+  const explicitProvider = env('ESIGN_PROVIDER', '').trim().toLowerCase();
+  const resolvedProvider =
+    explicitProvider === 'docuseal' || explicitProvider === 'docusign'
+      ? explicitProvider
+      : docusealBaseUrl
+        ? 'docuseal'
+        : docusignAccountId
+          ? 'docusign'
+          : 'none';
+
   return {
     enabled: true,
     config: {
@@ -15,16 +27,23 @@ export function buildMosqueCertificatesPluginConfig(env: any, hijriCalendar: any
       allowPublicApplications: true,
       secondaryCalendars: [hijriCalendar],
       esign: {
-        enabled: Boolean(env('DOCUSIGN_ACCOUNT_ID', '')),
-        provider: env('DOCUSIGN_ACCOUNT_ID', '') ? 'docusign' : 'none',
-        baseUrl: env(
-          'DOCUSIGN_BASE_URL',
-          'https://demo.docusign.net/restapi'
-        ),
-        accountId: env('DOCUSIGN_ACCOUNT_ID', ''),
+        enabled: resolvedProvider !== 'none',
+        provider: resolvedProvider,
+        baseUrl:
+          resolvedProvider === 'docuseal'
+            ? docusealBaseUrl || 'https://api.docuseal.com'
+            : env('DOCUSIGN_BASE_URL', 'https://demo.docusign.net/restapi'),
+        accountId: docusignAccountId,
         integrationKey: env('DOCUSIGN_INTEGRATION_KEY', ''),
         emailSubjectPrefix:
           'Mezquita Central de Bogotá — Firma de Certificado Oficial',
+        emailDeliveryMode:
+          env('ESIGN_EMAIL_DELIVERY_MODE', '').trim().toLowerCase() ||
+          (resolvedProvider === 'docuseal' ? 'strapi' : 'provider'),
+        emailDesignerTemplateId: env.int(
+          'ESIGN_EMAIL_DESIGNER_TEMPLATE_ID',
+          501
+        ),
       },
       defaultTemplates: [
         {
@@ -38,7 +57,8 @@ export function buildMosqueCertificatesPluginConfig(env: any, hijriCalendar: any
           minWitnesses: 2,
           requiresApproval: true,
           esignEnabled: true,
-          esignProvider: 'docusign',
+          esignProvider:
+            resolvedProvider === 'none' ? 'docuseal' : resolvedProvider,
           organizationName: 'Mezquita Central Abu Bakr As-Siddiq de Bogotá',
           organizationSubheader:
             'Centro Cultural Islámico de Colombia — Bogotá D.C., Colombia',

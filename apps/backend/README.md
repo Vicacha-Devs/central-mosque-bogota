@@ -1,6 +1,6 @@
 # Central Mosque of Bogotá — Strapi v5 Headless CMS (`/backend`)
 
-Headless CMS backend for the **Central Mosque of Bogotá (Mezquita Central Abu Bakr As-Siddiq)**, powered by **Strapi v5** (`@strapi/strapi` `5.61.1`), `strapi-cache` (`^1.13.0`), and 16 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions.
+Headless CMS backend for the **Central Mosque of Bogotá (Mezquita Central Abu Bakr As-Siddiq)**, powered by **Strapi v5** (`@strapi/strapi` `5.61.1`), `strapi-cache` (`^1.13.0`), and 17 custom `@vicacha-devs/strapi-plugin-*` domain and editorial extensions.
 
 ---
 
@@ -11,7 +11,7 @@ Headless CMS backend for the **Central Mosque of Bogotá (Mezquita Central Abu B
    - **Single Types (5)**: `about-page`, `contact-page`, `donations-page`, `global-setting`, `islam-faith-page`.
    - **Shared Components (7)**: `content.internal-links`, `donation.impact-stat`, `donation.payment-channel`, `faith.pillar-card`, `institution.value-card`, `shared.link`, `shared.seo`.
    - **Operational Endpoint**: `health` (`GET /api/health`).
-2. **16 Custom `@vicacha-devs` Domain & Editorial Plugins (`config/vicachaPlugins.ts` & `config/plugins.ts`)**:
+2. **17 Custom `@vicacha-devs` Domain & Editorial Plugins (`config/vicachaPlugins.ts` & `config/plugins.ts`)**:
    - `@vicacha-devs/strapi-plugin-bookings` — Bookable resources (`plugin::bookings.resource`) & guided visit reservations (`plugin::bookings.booking`)
    - `@vicacha-devs/strapi-plugin-broadcasts` — Omnichannel campaigns (`plugin::broadcasts.campaign`), automation rules & delivery logs
    - `@vicacha-devs/strapi-plugin-calendar` — Hijri (`islamic-umalqura`) & Gregorian multi-source calendar and `.ics` feeds
@@ -32,11 +32,11 @@ Headless CMS backend for the **Central Mosque of Bogotá (Mezquita Central Abu B
 3. **Editorial Productivity, Caching & Search Plugins (`config/plugins.ts`)**:
    - `strapi-cache` (`^1.13.0`) — LRU/Redis/Valkey REST response caching with automatic cache invalidation and localized (`en`, `es`, `ar`, `tr`, `de`) admin purge controls
    - `@juadariasmar/strapi-plugin-typesense` — Real-time Typesense search indexing
-   - `strapi-plugin-navigation`, `strapi-plugin-email-designer-5`, `strapi-plugin-content-manager-organizer`, `strapi-plugin-publisher`, `strapi-plugin-config-sync`, `strapi-plugin-preview-button`
+   - `strapi-plugin-navigation`, `strapi-plugin-email-designer-5`, `strapi-plugin-publisher`, `strapi-plugin-config-sync`, `strapi-plugin-preview-button`
 4. **Zero-Touch First-Boot Bootstrap (`src/index.ts`, `src/bootstrap/`, & `src/seed/`)**:
    - Automatically registers all 4 supported locales (`es`, `en`, `ar`, `tr`) with `es` as default.
    - Configures least-privilege Public role permissions (read-only access on public content types and dedicated `content-api` submission endpoints rather than raw collection `.create` permissions).
-   - Seeds Content Manager Organizer sidebar groups, TipTap presets, Navigation menus, Sitemap config, Email Designer templates, Media Library folders, and 4-locale initial content idempotently.
+   - Syncs native Content-Type Folders (`src/content-structure/groups.json`), TipTap presets, Navigation menus, Sitemap config, Email Designer templates, Media Library folders, and 4-locale initial content idempotently.
 
 ---
 
@@ -58,7 +58,22 @@ The Strapi Admin Panel will be available at `http://127.0.0.1:1337/admin`.
 From the monorepo root:
 
 ```bash
+# Standard full-stack Compose
 docker compose up --build
+
+# Port-isolated loopback-only QA infra (Postgres 5433, Valkey 6380, Typesense 8109, Mailpit 1026/8026)
+pnpm qa:docker:up
+```
+
+### Switching `@vicacha-devs/*` Plugin Sources (Local `file:` vs. npm)
+
+From the monorepo root:
+
+```bash
+pnpm qa:link:status   # Inspect current local vs npm resolution
+pnpm qa:link:local    # Link sibling ../strapi-v5-extensions packages for plugin dev
+pnpm qa:link:npm      # Switch to published npm versions (.qa-plugin-versions.json) for CI/main
+pnpm qa:verify        # Run doctor, judges, backend 10-plugin E2E & frontend Vitest
 ```
 
 ---

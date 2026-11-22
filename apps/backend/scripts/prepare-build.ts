@@ -1,4 +1,4 @@
-import { syncContentStructureGroupsFile } from '../src/bootstrap/content-manager-organizer';
+import { syncContentStructureGroupsFile } from '../src/bootstrap/content-structure';
 import { patchContentManagerAndPreviewLocalization } from '../src/bootstrap/plugin-patches';
 
 /**

@@ -28,6 +28,9 @@ export const EMAIL_TEMPLATE_IDS = {
     ar: 403,
     tr: 404,
   },
+  certificateSignatureRequest: {
+    es: 501,
+  },
   adminAlerts: {
     contact: 901,
     visit: 902,
@@ -590,6 +593,42 @@ const INITIAL_EMAIL_TEMPLATES: SeedEmailTemplateRecord[] = [
     ),
     design: buildUnlayerDesign(
       `<h2 style="color:#1b4332;margin-top:0">{{subject}}</h2><p style="font-size:13px;color:#52796f">📅 {{secondaryDate}} • {{organizationName}}</p><div>{{bodyHtml}}</div><p><a href="{{ctaUrl}}">{{ctaLabel}}</a></p><hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" /><p style="font-size:12px;color:#52796f">{{organizationName}} • <a href="{{unsubscribeUrl}}">Abonelikten çık</a></p>`,
+      'ltr'
+    ),
+  },
+  // ============================================================================
+  // 501: Branded DocuSeal Certificate E-Signature Invitation (send_email: false)
+  // ============================================================================
+  {
+    templateReferenceId: EMAIL_TEMPLATE_IDS.certificateSignatureRequest.es,
+    name: '[ES] Solicitud de Firma de Certificado Oficial — Mezquita Central',
+    subject:
+      'Firma requerida: {{certificate.templateName}} ({{certificate.serialNumber}}) — {{organization.name}}',
+    tags: ['certificates', 'esign', 'docuseal', 'es'],
+    bodyText:
+      'As-salamu alaykum {{signer.name}},\n\nHas sido invitado(a) en calidad de {{signer.role}} para firmar electrónicamente el documento "{{certificate.templateName}}" ({{certificate.serialNumber}}) emitido para {{certificate.recipientFullName}}.\n\nRevisa y firma el documento aquí:\n{{signer.signingUrl}}\n\n{{organization.name}} • {{organization.subheader}}',
+    bodyHtml: wrapHtmlCard(
+      `<div style="border-bottom:3px solid #1b4332;padding-bottom:14px;margin-bottom:20px">
+        <h1 style="color:#1b4332;margin:0;font-size:20px">{{organization.name}}</h1>
+        <p style="margin:4px 0 0;font-size:13px;color:#52796f">{{organization.subheader}}</p>
+      </div>
+      <h2 style="color:#1b4332;margin-top:0">As-salamu alaykum, {{signer.name}}</h2>
+      <p>Te solicitamos tu firma electrónica en calidad de <strong>{{signer.role}}</strong> para el siguiente certificado oficial:</p>
+      <div style="background:#f6f8f7;border:1px solid #d8e2dc;border-radius:8px;padding:14px 16px;margin:18px 0">
+        <p style="margin:0 0 6px"><strong>Certificado:</strong> {{certificate.templateName}}</p>
+        <p style="margin:0 0 6px"><strong>Serial:</strong> {{certificate.serialNumber}}</p>
+        <p style="margin:0"><strong>Titular:</strong> {{certificate.recipientFullName}}</p>
+      </div>
+      <p style="text-align:center;margin:24px 0">
+        <a href="{{signer.signingUrl}}" style="background:#1b4332;color:#ffffff;padding:12px 26px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">Revisar y Firmar Documento</a>
+      </p>
+      <p style="font-size:12px;color:#52796f;word-break:break-all">Si el botón no funciona, copia y abre este enlace en tu navegador:<br />{{signer.signingUrl}}</p>
+      <hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" />
+      <p style="font-size:12px;color:#52796f">{{organization.name}} • {{organization.subheader}}</p>`,
+      'ltr'
+    ),
+    design: buildUnlayerDesign(
+      `<h2 style="color:#1b4332;margin-top:0">As-salamu alaykum, {{signer.name}}</h2><p>Te solicitamos tu firma electrónica como <strong>{{signer.role}}</strong> para <strong>{{certificate.templateName}}</strong> ({{certificate.serialNumber}}) de {{certificate.recipientFullName}}.</p><p><a href="{{signer.signingUrl}}">Revisar y Firmar Documento</a></p><hr style="border:none;border-top:1px solid #d8e2dc;margin:24px 0" /><p style="font-size:12px;color:#52796f">{{organization.name}} • {{organization.subheader}}</p>`,
       'ltr'
     ),
   },
