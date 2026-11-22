@@ -12,6 +12,7 @@ import {
   useTranslatedPath,
 } from "@i18n/utils";
 import { ui, type TLang } from "@i18n/ui";
+import { fetchInboxFormConfig } from "@services/strapi";
 import { getLocalizedMocks } from "@utils/data.mocks";
 
 export function getStaticPaths() {
@@ -23,10 +24,10 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const localizedMocks = getLocalizedMocks(lang);
-const serviceEntries = await getCollection(
-  "communityServices",
-  (entry) => entry.data.locale === lang
-);
+const [serviceEntries, serviceDeskFormConfig] = await Promise.all([
+  getCollection("communityServices", (entry) => entry.data.locale === lang),
+  fetchInboxFormConfig("service-request", lang),
+]);
 const defaultServices =
   serviceEntries.length > 0
     ? serviceEntries.map((entry) => entry.data)
@@ -49,7 +50,7 @@ const defaultServices =
     services={defaultServices}
   />
 
-  <ServiceDeskIntakeSection lang={lang} />
+  <ServiceDeskIntakeSection lang={lang} formConfig={serviceDeskFormConfig} />
 
   <CommunityBroadcastChannelsSection lang={lang} />
 

@@ -6,6 +6,10 @@ import ContactAndVisitFormsSection from "@components/actions/ContactAndVisitForm
 import VisitorEtiquetteSection from "@components/data/display/VisitorEtiquetteSection/VisitorEtiquetteSection.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { ui, type TLang } from "@i18n/ui";
+import {
+  fetchBookingResourceConfig,
+  fetchInboxFormConfig,
+} from "@services/strapi";
 import { getLocalizedMocks } from "@utils/data.mocks";
 
 export function getStaticPaths() {
@@ -17,9 +21,16 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const localizedMocks = getLocalizedMocks(lang);
 
-const [globalEntries, contactPageEntries] = await Promise.all([
+const [
+  globalEntries,
+  contactPageEntries,
+  contactFormConfig,
+  visitResourceConfig,
+] = await Promise.all([
   getCollection("globalSetting", (entry) => entry.data.locale === lang),
   getCollection("contactPage", (entry) => entry.data.locale === lang),
+  fetchInboxFormConfig("general-contact", lang),
+  fetchBookingResourceConfig("visit-bookings"),
 ]);
 
 const contactInfo =
@@ -41,7 +52,11 @@ const contactPageData =
   />
 
   <!-- Forms Section: General Contact + Guided Visit Booking -->
-  <ContactAndVisitFormsSection lang={lang} />
+  <ContactAndVisitFormsSection
+    lang={lang}
+    contactFormConfig={contactFormConfig}
+    visitMaxGroupSize={visitResourceConfig?.maxPartySize}
+  />
 
   <!-- Visitor Etiquette Guidelines & Directions -->
   <VisitorEtiquetteSection

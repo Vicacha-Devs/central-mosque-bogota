@@ -22,3 +22,10 @@ export {
   sanitizeTiptapHtml,
   type TTiptapRichContent,
 } from "./tiptap-sanitizer";
+export {
+  fetchBookingResourceConfig,
+  fetchInboxFormConfig,
+  type TStrapiBookingResourceConfig,
+  type TStrapiFormConfig,
+  type TStrapiFormSelectOption,
+} from "./forms";

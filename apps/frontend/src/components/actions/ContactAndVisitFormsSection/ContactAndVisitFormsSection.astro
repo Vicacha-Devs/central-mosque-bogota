@@ -15,22 +15,44 @@ import {
 import { Textarea } from "@/components/starwind/textarea";
 import { useTranslations } from "@i18n/utils";
 import type { TLang } from "@i18n/ui";
+import type { TStrapiFormConfig } from "@services/strapi";
 
 export interface Props {
   /** Active page locale (`es` | `en` | `ar` | `tr`). */
   lang?: TLang;
+  /** Optional Strapi `inbox/forms/general-contact` configuration. */
+  contactFormConfig?: TStrapiFormConfig | null;
+  /** Optional max party size from Strapi `bookings/resources`. */
+  visitMaxGroupSize?: number;
 }
 
-const { lang = "es" } = Astro.props;
+const {
+  lang = "es",
+  contactFormConfig = null,
+  visitMaxGroupSize = 150,
+} = Astro.props;
 const t = useTranslations(lang);
 
-const subjects = [
+const defaultSubjects = [
   { value: "general", label: t("contact-page.subject-general") },
   { value: "education", label: t("contact-page.subject-education") },
   { value: "nikah", label: t("contact-page.subject-nikah") },
   { value: "funeral", label: t("contact-page.subject-funeral") },
   { value: "media", label: t("contact-page.subject-media") },
 ];
+const subjects =
+  contactFormConfig?.fieldOptions?.subject &&
+  contactFormConfig.fieldOptions.subject.length > 0
+    ? contactFormConfig.fieldOptions.subject
+    : defaultSubjects;
+const contactTitle =
+  contactFormConfig?.title ?? t("contact-page.contact-title");
+const contactSubtitle =
+  contactFormConfig?.description ?? t("contact-page.contact-subtitle");
+const contactSuccessText =
+  contactFormConfig?.successMessage ?? t("contact-page.contact-success");
+const contactSubmitLabel =
+  contactFormConfig?.submitButtonLabel ?? t("contact-page.contact-submit");
 ---
 
 <section class="
@@ -50,14 +72,14 @@ const subjects = [
       dark:text-white
     "
     >
-      {t("contact-page.contact-title")}
+      {contactTitle}
     </h2>
     <p class="
       mb-6 text-sm text-slate-600
       dark:text-slate-400
     "
     >
-      {t("contact-page.contact-subtitle")}
+      {contactSubtitle}
     </p>
 
     <form
@@ -66,7 +88,7 @@ const subjects = [
       action="/api/submissions"
       data-locale={lang}
       data-sending-text={t("contact-page.sending")}
-      data-success-text={t("contact-page.contact-success")}
+      data-success-text={contactSuccessText}
       data-error-text={t("contact-page.error")}
       class="space-y-4"
     >
@@ -202,7 +224,7 @@ const subjects = [
       </p>
 
       <Button type="submit" variant="primary" class="w-full">
-        {t("contact-page.contact-submit")}
+        {contactSubmitLabel}
       </Button>
     </form>
   </div>
@@ -405,7 +427,7 @@ const subjects = [
             name="groupSize"
             type="number"
             min="1"
-            max="150"
+            max={visitMaxGroupSize}
             value="5"
             required
             class="rounded-xl"

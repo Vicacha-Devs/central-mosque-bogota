@@ -72,5 +72,24 @@ export function getDonatePageStrings(lang: TLang) {
     submittingText: t("donate-page.submittingText"),
     successText: t("donate-page.successText"),
     errorText: t("donate-page.errorText"),
+    docTypeOptions: [
+      { value: "CC", label: t("donate-page.docTypeCc") },
+      { value: "NIT", label: t("donate-page.docTypeNit") },
+      { value: "CE", label: t("donate-page.docTypeCe") },
+      { value: "PASSPORT", label: t("donate-page.docTypePassport") },
+      { value: "OTHER", label: t("donate-page.docTypeOther") },
+    ],
+    invoiceOptionPrefix: t("donate-page.invoiceOptionPrefix"),
+    campaignOptionPrefix: t("donate-page.campaignOptionPrefix"),
+    defaultCurrencies: ["COP", "USD", "EUR", "TRY"],
+    defaultCategories: [
+      { key: "utility_bills", label: t("donate-page.catUtilityBills") },
+      { key: "zakat", label: t("donate-page.catZakat") },
+      { key: "sadaqah", label: t("donate-page.catSadaqah") },
+      { key: "waqf", label: t("donate-page.catWaqf") },
+      { key: "iftar", label: t("donate-page.catIftar") },
+      { key: "general", label: t("donate-page.catGeneral") },
+    ],
+    methodOther: t("donate-page.methodOther"),
   };
 }

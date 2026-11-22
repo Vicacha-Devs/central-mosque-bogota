@@ -47,8 +47,11 @@ const campaigns =
     ? campaignEntries.map((entry) => entry.data)
     : localizedMocks.donationCampaigns;
 
-const cmsMethods = donationsPageEntries[0]?.data.paymentMethods;
+const donationsPageData = donationsPageEntries[0]?.data;
+const cmsMethods = donationsPageData?.paymentMethods;
 const methods = cmsMethods ?? localizedMocks.paymentMethods;
+const supportedCurrencies = donationsPageData?.supportedCurrencies;
+const donationCategories = donationsPageData?.categories;
 
 const liveZakatCop = await getLiveEntry("zakatNisab", {
   standard: "common",
@@ -115,5 +118,8 @@ const zakatData = liveZakatCop.entry?.data ?? {
     lang={lang}
     invoices={utilityInvoices}
     campaigns={campaigns}
+    currencies={supportedCurrencies}
+    categories={donationCategories}
+    paymentMethods={methods}
   />
 </Layout>

@@ -48,14 +48,82 @@ interface Props {
    * Optional list of major fundraising campaigns selectable in the form.
    */
   campaigns?: Array<{ slug?: string; title: string }>;
+  /**
+   * Optional list of supported ISO currency codes from Strapi (`donations/calculator`).
+   */
+  currencies?: Array<string>;
+  /**
+   * Optional list of localized donation categories from Strapi (`donations/calculator`).
+   */
+  categories?: Array<{ key: string; label: string }>;
+  /**
+   * Optional list of payment channels from Strapi (`donations/calculator`).
+   */
+  paymentMethods?: Array<{ key?: string; providerName: string }>;
 }
 
-const { lang, invoices, campaigns = [] } = Astro.props;
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  COP: "$",
+  USD: "$",
+  EUR: "€",
+  TRY: "₺",
+};
+
+function resolvePaymentMethodValue(method: {
+  key?: string;
+  providerName: string;
+}): string {
+  if (method.key && method.key.trim().length > 0) {
+    return method.key.trim();
+  }
+  const lower = method.providerName.toLowerCase();
+  if (lower.includes("bancolombia") && !lower.includes("wompi")) {
+    return "bancolombia";
+  }
+  if (lower.includes("wompi") || lower.includes("pse")) return "wompi";
+  if (lower.includes("nequi")) return "nequi";
+  if (lower.includes("daviplata")) return "daviplata";
+  if (lower.includes("paypal")) return "paypal";
+  return "other";
+}
+
+const {
+  lang,
+  invoices,
+  campaigns = [],
+  currencies,
+  categories,
+  paymentMethods,
+} = Astro.props;
 const t = getDonatePageStrings(lang);
 const invoiceItems =
   invoices && invoices.length > 0
     ? invoices
     : getLocalizedUtilityInvoices(lang);
+const currencyItems =
+  currencies && currencies.length > 0 ? currencies : t.defaultCurrencies;
+const categoryItems =
+  categories && categories.length > 0 ? categories : t.defaultCategories;
+const resolvedPaymentMethods = (
+  paymentMethods && paymentMethods.length > 0
+    ? paymentMethods.map((m) => ({
+        value: resolvePaymentMethodValue(m),
+        label: m.providerName,
+      }))
+    : [
+        { value: "bancolombia", label: "Bancolombia" },
+        { value: "nequi", label: "Nequi" },
+        { value: "daviplata", label: "Daviplata" },
+        { value: "wompi", label: "Wompi / PSE" },
+        { value: "paypal", label: "PayPal" },
+      ]
+).filter(
+  (item, index, arr) =>
+    arr.findIndex((other) => other.value === item.value) === index
+);
+if (!resolvedPaymentMethods.some((m) => m.value === "other")) {
+  resolvedPaymentMethods.push({ value: "other", label: t.methodOther });
+}
 ---
 
 <section
@@ -198,11 +266,13 @@ const invoiceItems =
             name="documentType"
             class="w-full rounded-xl"
           >
-            <NativeSelectOption value="CC">CC (Cédula)</NativeSelectOption>
-            <NativeSelectOption value="NIT">NIT</NativeSelectOption>
-            <NativeSelectOption value="CE">CE</NativeSelectOption>
-            <NativeSelectOption value="PASSPORT">Passport</NativeSelectOption>
-            <NativeSelectOption value="OTHER">Other</NativeSelectOption>
+            {
+              t.docTypeOptions.map((opt) => (
+                <NativeSelectOption value={opt.value}>
+                  {opt.label}
+                </NativeSelectOption>
+              ))
+            }
           </NativeSelect>
         </div>
         <div>
@@ -283,10 +353,16 @@ const invoiceItems =
             name="currency"
             class="w-full rounded-xl"
           >
-            <NativeSelectOption value="COP">COP ($)</NativeSelectOption>
-            <NativeSelectOption value="USD">USD ($)</NativeSelectOption>
-            <NativeSelectOption value="EUR">EUR (€)</NativeSelectOption>
-            <NativeSelectOption value="TRY">TRY (₺)</NativeSelectOption>
+            {
+              currencyItems.map((code) => {
+                const sym = CURRENCY_SYMBOLS[code];
+                return (
+                  <NativeSelectOption value={code}>
+                    {sym ? `${code} (${sym})` : code}
+                  </NativeSelectOption>
+                );
+              })
+            }
           </NativeSelect>
         </div>
         <div>
@@ -304,14 +380,13 @@ const invoiceItems =
             name="donationType"
             class="w-full rounded-xl"
           >
-            <NativeSelectOption value="utility_bills">
-              Facturas / Mosque Utility Bills (Luz, Gas, Internet, Agua)
-            </NativeSelectOption>
-            <NativeSelectOption value="zakat">Zakat Al-Mal (2.5%)</NativeSelectOption>
-            <NativeSelectOption value="sadaqah">Sadaqah (Caridad / Charity)</NativeSelectOption>
-            <NativeSelectOption value="waqf">Waqf (Sostenimiento / Endowment)</NativeSelectOption>
-            <NativeSelectOption value="iftar">Iftar Comunitario</NativeSelectOption>
-            <NativeSelectOption value="general">Fondo General / General</NativeSelectOption>
+            {
+              categoryItems.map((cat) => (
+                <NativeSelectOption value={cat.key}>
+                  {cat.label}
+                </NativeSelectOption>
+              ))
+            }
           </NativeSelect>
         </div>
       </div>
@@ -340,7 +415,7 @@ const invoiceItems =
             {
               invoiceItems.map((inv) => (
                 <NativeSelectOption value={inv.slug}>
-                  [Factura]
+                  {t.invoiceOptionPrefix}
                   {" "}
                   {inv.title}
                   {" "}
@@ -353,7 +428,7 @@ const invoiceItems =
             {
               campaigns.map((camp) => (
                 <NativeSelectOption value={camp.slug || camp.title}>
-                  [Campaña]
+                  {t.campaignOptionPrefix}
                   {" "}
                   {camp.title}
                 </NativeSelectOption>
@@ -376,12 +451,13 @@ const invoiceItems =
             name="paymentMethodUsed"
             class="w-full rounded-xl"
           >
-            <NativeSelectOption value="bancolombia">Bancolombia</NativeSelectOption>
-            <NativeSelectOption value="nequi">Nequi</NativeSelectOption>
-            <NativeSelectOption value="daviplata">Daviplata</NativeSelectOption>
-            <NativeSelectOption value="wompi">Wompi / PSE / Tarjetas</NativeSelectOption>
-            <NativeSelectOption value="paypal">PayPal / Internacional</NativeSelectOption>
-            <NativeSelectOption value="other">Otro / Other</NativeSelectOption>
+            {
+              resolvedPaymentMethods.map((method) => (
+                <NativeSelectOption value={method.value}>
+                  {method.label}
+                </NativeSelectOption>
+              ))
+            }
           </NativeSelect>
         </div>
         <div>

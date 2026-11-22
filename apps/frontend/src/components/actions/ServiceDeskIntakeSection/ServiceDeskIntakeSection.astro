@@ -6,6 +6,7 @@ import { NativeSelect, NativeSelectOption } from "@/components/starwind/native-s
 import { Textarea } from "@/components/starwind/textarea";
 import Icon from "@components/data/display/Icons/Icon.astro";
 import type { TLang } from "@i18n/ui";
+import type { TStrapiFormConfig } from "@services/strapi";
 import { getServiceDeskCopy } from "@utils/inbox-mocks";
 
 /**
@@ -35,10 +36,22 @@ interface Props {
    * Active UI locale code.
    */
   lang: TLang;
+  /**
+   * Optional Strapi `inbox/forms/service-request` configuration.
+   */
+  formConfig?: TStrapiFormConfig | null;
 }
 
-const { lang } = Astro.props;
+const { lang, formConfig = null } = Astro.props;
 const COPY = getServiceDeskCopy(lang);
+const formTitle = formConfig?.title ?? COPY.title;
+const formSubtitle = formConfig?.description ?? COPY.subtitle;
+const formSubmitLabel = formConfig?.submitButtonLabel ?? COPY.submitLabel;
+const serviceOptions =
+  formConfig?.fieldOptions?.serviceType &&
+  formConfig.fieldOptions.serviceType.length > 0
+    ? formConfig.fieldOptions.serviceType
+    : COPY.services;
 ---
 
 <section
@@ -66,7 +79,7 @@ const COPY = getServiceDeskCopy(lang);
       dark:text-white
     "
     >
-      {COPY.title}
+      {formTitle}
     </h2>
     <p class="
       mx-auto mt-2 max-w-3xl text-sm text-slate-600
@@ -74,7 +87,7 @@ const COPY = getServiceDeskCopy(lang);
       dark:text-slate-400
     "
     >
-      {COPY.subtitle}
+      {formSubtitle}
     </p>
   </div>
 
@@ -175,7 +188,7 @@ const COPY = getServiceDeskCopy(lang);
             class="w-full rounded-xl"
           >
             {
-              COPY.services.map((svc) => (
+              serviceOptions.map((svc) => (
                 <NativeSelectOption value={svc.value}>
                   {svc.label}
                 </NativeSelectOption>
@@ -302,7 +315,7 @@ const COPY = getServiceDeskCopy(lang);
       </p>
 
       <Button type="submit" variant="primary" class="w-full">
-        {COPY.submitLabel}
+        {formSubmitLabel}
       </Button>
     </form>
   </div>

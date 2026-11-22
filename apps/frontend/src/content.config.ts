@@ -1,4 +1,5 @@
 import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
 import {
   createStrapiCollectionLoader,
   createStrapiSingleTypeLoader,
@@ -689,14 +690,67 @@ const islamFaithPageCollection = defineCollection({
   }),
 });
 
+const DEFAULT_SUPPORTED_CURRENCIES = ["COP", "USD", "EUR", "TRY"];
+
+function buildDefaultDonationCategories(
+  lang: TLang
+): Array<{ key: string; label: string }> {
+  const t = useTranslations(lang);
+  return [
+    { key: "utility_bills", label: t("donate-page.catUtilityBills") },
+    { key: "zakat", label: t("donate-page.catZakat") },
+    { key: "sadaqah", label: t("donate-page.catSadaqah") },
+    { key: "waqf", label: t("donate-page.catWaqf") },
+    { key: "iftar", label: t("donate-page.catIftar") },
+    { key: "general", label: t("donate-page.catGeneral") },
+  ];
+}
+
 const donationsPageCollection = defineCollection({
   loader: createStrapiSingleTypeLoader({
     contentType: "donations/calculator",
     fallbackByLocale: (lang: TLang) => ({
       paymentMethods: getLocalizedPaymentMethods(lang),
+      supportedCurrencies: DEFAULT_SUPPORTED_CURRENCIES,
+      categories: buildDefaultDonationCategories(lang),
     }),
     mapStrapiEntry: (raw: Record<string, unknown>, lang: TLang) => {
       const defaults = getLocalizedPaymentMethods(lang);
+      const supportedCurrencies =
+        Array.isArray(raw.supportedCurrencies) &&
+        raw.supportedCurrencies.length > 0
+          ? raw.supportedCurrencies.filter(
+              (c): c is string => typeof c === "string" && c.trim().length > 0
+            )
+          : DEFAULT_SUPPORTED_CURRENCIES;
+
+      const defaultCategories = buildDefaultDonationCategories(lang);
+      const categories =
+        Array.isArray(raw.categories) && raw.categories.length > 0
+          ? raw.categories
+              .map((cat: unknown) => {
+                if (!cat || typeof cat !== "object") return null;
+                const rec = cat as Record<string, unknown>;
+                const key = asStr(rec.key);
+                if (!key) return null;
+                const labels =
+                  rec.labels && typeof rec.labels === "object"
+                    ? (rec.labels as Record<string, unknown>)
+                    : {};
+                const label = asStr(
+                  labels[lang],
+                  labels.es,
+                  labels.en,
+                  rec.label,
+                  key
+                );
+                return { key, label };
+              })
+              .filter(
+                (item): item is { key: string; label: string } => item !== null
+              )
+          : defaultCategories;
+
       if (Array.isArray(raw.paymentMethods) && raw.paymentMethods.length > 0) {
         const mapped = raw.paymentMethods.map(
           (item: Record<string, unknown>, idx: number) => {
@@ -711,6 +765,7 @@ const donationsPageCollection = defineCollection({
                 : asStr(rawInstructions, fallbackItem.instructions);
 
             return {
+              key: asStr(item.key) || undefined,
               providerName: asStr(item.providerName, fallbackItem.providerName),
               accountType: asStr(
                 item.accountType,
@@ -731,10 +786,22 @@ const donationsPageCollection = defineCollection({
             };
           }
         );
-        return { paymentMethods: mapped };
+        return {
+          paymentMethods: mapped,
+          supportedCurrencies:
+            supportedCurrencies.length > 0
+              ? supportedCurrencies
+              : DEFAULT_SUPPORTED_CURRENCIES,
+          categories: categories.length > 0 ? categories : defaultCategories,
+        };
       }
       return {
         paymentMethods: defaults,
+        supportedCurrencies:
+          supportedCurrencies.length > 0
+            ? supportedCurrencies
+            : DEFAULT_SUPPORTED_CURRENCIES,
+        categories: categories.length > 0 ? categories : defaultCategories,
       };
     },
   }),
@@ -742,8 +809,20 @@ const donationsPageCollection = defineCollection({
     documentId: z.string(),
     locale: langEnum,
     slug: z.string(),
+    supportedCurrencies: z
+      .array(z.string())
+      .default(DEFAULT_SUPPORTED_CURRENCIES),
+    categories: z
+      .array(
+        z.object({
+          key: z.string(),
+          label: z.string(),
+        })
+      )
+      .default([]),
     paymentMethods: z.array(
       z.object({
+        key: z.string().optional(),
         providerName: z.string(),
         accountType: z.string(),
         accountNumber: z.string(),
