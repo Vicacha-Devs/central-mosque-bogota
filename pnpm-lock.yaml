@@ -189,8 +189,8 @@ importers:
         specifier: 4.3.2
         version: 4.3.2(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
       '@vicacha-devs/astro-tiptap-blocks':
-        specifier: file:../../../astro-tiptap-blocks
-        version: file:../astro-tiptap-blocks(astro@7.0.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)(@types/node@24.19.2)(@vercel/functions@3.11.3(ws@8.22.0))(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1))(shiki@4.6.0)
+        specifier: ^1.2.4
+        version: 1.2.4(astro@7.0.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)(@types/node@24.19.2)(@vercel/functions@3.11.3(ws@8.22.0))(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1))(shiki@4.6.0)
       astro:
         specifier: 7.0.6
         version: 7.0.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)(@types/node@24.19.2)(@vercel/functions@3.11.3(ws@8.22.0))(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1)
@@ -7124,8 +7124,8 @@ packages:
   '@vercel/stega@0.1.2':
     resolution: {integrity: sha512-P7mafQXjkrsoyTRppnt0N21udKS9wUmLXHRyP9saLXLHw32j/FgUJ3FscSWgvSqRs4cj7wKZtwqJEvWJ2jbGmA==}
 
-  '@vicacha-devs/astro-tiptap-blocks@file:../astro-tiptap-blocks':
-    resolution: {directory: ../astro-tiptap-blocks, type: directory}
+  '@vicacha-devs/astro-tiptap-blocks@1.2.4':
+    resolution: {integrity: sha512-X7tcxS7qz8HmUnQP2/t3y7KYFvOKp4ZEhMj6BLHmPWa0aL6nC8MkOG4RdBVd0kVfS1ghWdzJyl4cB6bC8B//OQ==}
     engines: {node: '>=20.16.0', pnpm: '>=10.0.0'}
     peerDependencies:
       astro: ^5.0.0 || ^6.0.0 || ^7.0.0
@@ -22482,7 +22482,7 @@ snapshots:
 
   '@vercel/stega@0.1.2': {}
 
-  '@vicacha-devs/astro-tiptap-blocks@file:../astro-tiptap-blocks(astro@7.0.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)(@types/node@24.19.2)(@vercel/functions@3.11.3(ws@8.22.0))(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1))(shiki@4.6.0)':
+  '@vicacha-devs/astro-tiptap-blocks@1.2.4(astro@7.0.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)(@types/node@24.19.2)(@vercel/functions@3.11.3(ws@8.22.0))(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1))(shiki@4.6.0)':
     dependencies:
       astro: 7.0.6(@emnapi/core@2.0.0-beta.2)(@emnapi/runtime@2.0.0-beta.2)(@types/node@24.19.2)(@vercel/functions@3.11.3(ws@8.22.0))(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.65.0)(terser@5.51.2)(yaml@2.9.1)
     optionalDependencies:
