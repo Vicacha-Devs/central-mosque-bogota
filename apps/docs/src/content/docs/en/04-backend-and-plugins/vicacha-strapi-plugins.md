@@ -34,9 +34,9 @@ flowchart TB
 | `@vicacha-devs/strapi-plugin-bookings` | `bookings` | `/api/bookings/*` | `POST /api/submissions` (`visit-booking`) |
 | `@vicacha-devs/strapi-plugin-resources` | `resources` | `/api/resources/*` | `fetchPublicationsFromStrapi`, `fetchGlossaryFromStrapi`, `fetchPhotoGalleriesFromStrapi`, `GET /api/resources/publications/[slug]/download` |
 | `@vicacha-devs/strapi-plugin-media-feeds` | `media-feeds` | `/api/media-feeds/*` | `fetchMediaArchiveFromStrapi`, `GET /api/media-feeds/rss.xml` |
-| `@vicacha-devs/strapi-plugin-broadcasts` | `broadcasts` | `/api/broadcasts/*` | `fetchBroadcastsFromStrapi`, `POST /api/submissions` (`newsletter-subscription`) |
+| `@vicacha-devs/strapi-plugin-broadcasts` | `broadcasts` | `/api/broadcasts/*` | `fetchBroadcastsFromStrapi`, `POST /api/submissions` (`newsletter-subscription`), Email (Resend SMTP), Telegram Bot & WhatsApp (`meta-cloud` / self-hosted `rmyndharis/OpenWA`) |
 | `@vicacha-devs/strapi-plugin-calendar` | `calendar` | `/api/calendar/*` | Hijri (`islamic-umalqura`) observance synchronization with `QiblaAndObservancesSection` |
-| `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Official Mosque Ed25519-signed certificate generation & verification (Shahada, Nikah, Donations) |
+| `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Official Mosque Ed25519-signed certificate generation, public QR verification, and self-hosted **DocuSeal** e-signatures (`ESIGN_PROVIDER=docuseal`, `send_email: false` branded template `501` via Resend SMTP, `POST /api/certificates/webhooks/docuseal`) |
 | `@vicacha-devs/strapi-plugin-notes` | `notes` | `/api/notes/*` | Editorial entity notes (`plugin::notes.note`) with Audit Logs-style author/timestamp metadata, pinned notes, category badges & Global Notes Hub (10 locales) |
 
 ---
@@ -51,8 +51,8 @@ flowchart TB
 | `@vicacha-devs/strapi-plugin-seo` | `file:` | SEO metadata component, `autoPopulateOnSave` / localized generator hooks (`apps/backend/config/plugins/seo.plugin.ts`), & live SERP/JSON-LD analyzer (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Real-time Typesense search indexing across localized collections |
 | `strapi-plugin-navigation` | `^3.4.2` | Hierarchical header/footer menu builder supporting both `api::*` and `plugin::*` items |
-| `strapi-plugin-content-manager-organizer` | `^2.0.3` | Groups the 28 visible collection and single types into 8 logical sidebar folders |
-| `strapi-plugin-email-designer-5` | `^0.0.10` | Visual Unlayer template designer for transactional notification emails |
+| `src/content-structure/groups.json` | Native | Strapi v5 native content-type sidebar folder grouping synced via `src/bootstrap/content-structure.ts` |
+| `strapi-plugin-email-designer-5` | `^0.0.10` | Visual Unlayer template designer for 20 seeded branded transactional & DocuSeal signing emails (`101–104`, `201–204`, `301–304`, `401–404`, `501`, `901–903`) sent over Resend SMTP |
 | `strapi-plugin-form-builder-cms` | `1.1.0-rc.2` | Visual form builder synchronized with `@vicacha-devs/strapi-plugin-inbox` (including `file` upload field metadata) |
 | `@vicacha-devs/strapi-plugin-sitemap` | `file:` | Dynamic multilingual XML sitemap & sitemap index generator (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `strapi-plugin-publisher` | `^2.0.9` | Scheduled publish/unpublish automation |
