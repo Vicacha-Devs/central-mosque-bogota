@@ -196,6 +196,13 @@ export default defineConfig([
     languageOptions: {
       customSyntax: tailwind4,
     },
+    rules: {
+      // Tailwind v4 theme tokens and component-scoped custom properties
+      // are defined outside the linted file.
+      "css/no-invalid-properties": ["error", { allowUnknownVariables: true }],
+      // ::marker and content-visibility are progressive enhancements.
+      "css/use-baseline": "warn",
+    },
   },
   {
     files: ["src/**/*.test.[tj]s?(x)"],
