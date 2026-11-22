@@ -100,6 +100,15 @@ From the monorepo root, you can also run `pnpm qa:verify` (offline judges + Vite
 
 ---
 
+## Deploying to Vercel
+
+1. Import the repo in Vercel and set **Root Directory** to `apps/frontend` (`vercel.json` supplies the install/build commands and security headers).
+2. Set the variables from `.env.example` (at minimum `STRAPI_API_URL`, `STRAPI_API_TOKEN`, `ISLAMIC_API_KEY`, `CLOUDINARY_CLOUD_NAME`, and `TRUST_PROXY=true`).
+3. Vercel sets `VERCEL=1`, which makes `astro.config.ts` use `@astrojs/vercel` instead of `@astrojs/node`. Verify locally with `VERCEL=1 pnpm build`.
+4. Keep `@vicacha-devs/*` dependencies on npm semver (`pnpm qa:link:npm` from the repo root); `file:` links to sibling repos do not resolve on Vercel.
+
+---
+
 ## Responsive Screen Sizes
 
 Declared in `src/styles/global.css` (`@theme`) and synced with Storybook viewports in `.storybook/constants.ts`:
