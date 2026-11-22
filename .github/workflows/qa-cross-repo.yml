@@ -1,0 +1,62 @@
+name: Cross-Repo Plugin Compatibility QA
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [strapi-plugins-updated, astro-tiptap-updated]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qa-cross-repo-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cross-repo-matrix:
+    name: Verify Central Mosque Against Latest Sibling Plugin Repos
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout central-mosque-bogota
+        uses: actions/checkout@v4
+        with:
+          path: central-mosque-bogota
+          persist-credentials: false
+
+      - name: Checkout strapi-v5-extensions
+        uses: actions/checkout@v4
+        with:
+          repository: Vicacha-Devs/strapi-v5-extensions
+          path: strapi-v5-extensions
+          persist-credentials: false
+
+      - name: Checkout astro-tiptap-blocks
+        uses: actions/checkout@v4
+        with:
+          repository: Vicacha-Devs/astro-tiptap-blocks
+          path: astro-tiptap-blocks
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Verify sibling local links & run offline QA across all 3 repos
+        run: |
+          (cd strapi-v5-extensions && node ./scripts/qa/verify.ts)
+          (cd astro-tiptap-blocks && node ./scripts/qa/verify.ts)
+          (cd central-mosque-bogota && node ./scripts/qa/link-plugins.ts --local && node ./scripts/qa/verify.ts && node ./scripts/qa/report.ts)
+
+      - name: Upload Multi-Repo QA Control Center Dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-repo-mosque-qa-dashboard
+          path: |
+            central-mosque-bogota/.qa/dashboard.html
+            central-mosque-bogota/.qa/report.json
+          retention-days: 14

@@ -1,0 +1,260 @@
+---
+/**
+ * Organism: EventsCatalogSection
+ *
+ * Renders the filterable Events Catalog with category filter buttons
+ * (`[data-event-filter]`) and `EventVerticalCard` molecules.
+ */
+import EventVerticalCard from "@components/data/display/Events/EventVerticalCard/EventVerticalCard.astro";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { useTranslations } from "@i18n/utils";
+import type { TLang } from "@i18n/ui";
+import { getLocalizedMocks } from "@utils/data.mocks";
+import type { TEvent } from "@utils/models/events";
+
+export interface Props {
+  lang?: TLang;
+  events?: TEvent[];
+}
+
+const { lang = "es", events } = Astro.props;
+const t = useTranslations(lang);
+const allEvents = events ?? getLocalizedMocks(lang).events;
+const categories = Array.from(new Set(allEvents.map((e) => e.category)));
+
+const serializedEvents = JSON.stringify(
+  allEvents.map((ev) => ({
+    title: ev.title,
+    category: ev.category,
+    schedule: ev.schedule,
+    location: ev.location ?? "",
+    url: ev.url ?? "#",
+    day: ev.date?.day ?? 1,
+    month: ev.date?.month ?? "",
+  }))
+);
+---
+
+<section
+  class="space-y-8"
+  data-events-catalog
+  data-lang={lang}
+  data-events-json={serializedEvents}
+  data-no-events-label={t("events-page.no-events")}
+>
+  <div
+    class="
+      flex flex-col items-center justify-between gap-4
+      lg:flex-row
+    "
+  >
+    <div
+      class="flex flex-wrap items-center justify-center gap-2.5"
+      role="tablist"
+      aria-label={t("events-page.filter-aria")}
+    >
+      <button
+        type="button"
+        role="tab"
+        aria-selected="true"
+        data-event-filter="all"
+        class="
+          cursor-pointer rounded-full border border-transparent bg-secondary
+          px-5 py-2 text-sm font-bold text-secondary-foreground shadow-sm
+          transition-colors
+        "
+      >
+        {t("events-page.filter-all")}
+      </button>
+      {
+        categories.map((cat) => (
+          <button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-event-filter={cat}
+            class="
+              cursor-pointer rounded-full border border-border bg-card px-5 py-2
+              text-sm font-semibold text-foreground transition-colors
+              hover:bg-muted
+            "
+          >
+            {cat}
+          </button>
+        ))
+      }
+    </div>
+
+    <div
+      class="
+        inline-flex items-center rounded-full border border-border bg-muted p-1
+      "
+      role="tablist"
+      aria-label={t("events-page.view-aria")}
+    >
+      <button
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="events-grid"
+        data-events-view-tab="list"
+        class="
+          inline-flex cursor-pointer items-center gap-1.5 rounded-full
+          bg-secondary px-4 py-1.5 text-sm font-bold text-secondary-foreground
+          shadow-xs transition-colors
+        "
+      >
+        <Icon name="view_agenda" class="text-base" />
+        <span>{t("events-page.view-list")}</span>
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="events-calendar-panel"
+        data-events-view-tab="calendar"
+        class="
+          inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4
+          py-1.5 text-sm font-semibold text-muted-foreground transition-colors
+          hover:text-foreground
+        "
+      >
+        <Icon name="calendar_month" class="text-base" />
+        <span>{t("events-page.view-calendar")}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Events List Grid -->
+  <div
+    id="events-grid"
+    class="
+      grid grid-cols-1 gap-8
+      md:grid-cols-2
+      lg:grid-cols-3
+    "
+  >
+    {
+      allEvents.map((eventItem) => (
+        <div data-event-category={eventItem.category}>
+          <EventVerticalCard lang={lang} {...eventItem} />
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Events Calendar View -->
+  <div
+    id="events-calendar-panel"
+    data-events-calendar-panel
+    class="
+      hidden space-y-6 rounded-2xl border border-border bg-surface-sand p-4
+      sm:p-6
+    "
+  >
+    <div class="flex items-center justify-between gap-4">
+      <h2
+        data-cal-month-label
+        class="
+          text-xl font-extrabold tracking-tight text-foreground capitalize
+          sm:text-2xl
+        "
+      >
+      </h2>
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          data-cal-prev
+          aria-label={t("events-page.prev-month")}
+          class="
+            inline-flex size-11 cursor-pointer items-center justify-center
+            rounded-full border border-border bg-card text-foreground
+            transition-colors
+            hover:bg-muted
+            md:size-9
+          "
+        >
+          <Icon
+            name="chevron_left"
+            class="
+              text-lg
+              rtl:-scale-x-100
+            "
+          />
+        </button>
+        <button
+          type="button"
+          data-cal-next
+          aria-label={t("events-page.next-month")}
+          class="
+            inline-flex size-11 cursor-pointer items-center justify-center
+            rounded-full border border-border bg-card text-foreground
+            transition-colors
+            hover:bg-muted
+            md:size-9
+          "
+        >
+          <Icon
+            name="chevron_right"
+            class="
+              text-lg
+              rtl:-scale-x-100
+            "
+          />
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop 7-column grid -->
+    <div class="
+      hidden overflow-hidden rounded-xl border border-border bg-card
+      md:block
+    "
+    >
+      <div
+        data-cal-weekdays-desktop
+        class="
+          grid grid-cols-7 bg-secondary text-center text-xs font-bold
+          tracking-wider text-secondary-foreground uppercase
+        "
+      >
+      </div>
+      <div
+        data-cal-grid-desktop
+        class="grid grid-cols-7 tabular-nums"
+      >
+      </div>
+    </div>
+
+    <!-- Mobile compact dot calendar + agenda -->
+    <div class="
+      space-y-4
+      md:hidden
+    "
+    >
+      <div class="overflow-hidden rounded-xl border border-border bg-card p-3">
+        <div
+          data-cal-weekdays-mobile
+          class="
+            mb-2 grid grid-cols-7 text-center text-[11px] font-bold
+            text-muted-foreground uppercase
+          "
+        >
+        </div>
+        <div
+          data-cal-grid-mobile
+          class="grid grid-cols-7 gap-y-1 text-center tabular-nums"
+        >
+        </div>
+      </div>
+      <div data-cal-mobile-agenda class="space-y-3"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initEventFilters } from "./events-catalog.controller";
+
+  initEventFilters();
+  document.addEventListener("astro:after-swap", initEventFilters);
+</script>

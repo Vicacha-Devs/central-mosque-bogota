@@ -1,0 +1,145 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import type {
+  THijriObservanceCard,
+  TIslamSuiteLocalizedCopy,
+} from "@utils/islam-suite-mocks";
+
+/**
+ * @component HijriObservanceCard
+ * @title Hijri Observance & Fasting Guidance Card
+ * @description Renders an upcoming Umm al-Qura Hijri observance card with Hijri date badge, Gregorian estimate, countdown days, and optional fasting guidance badge.
+ *
+ * Props
+ * - `observance`: Hijri observance card model (`THijriObservanceCard`)
+ * - `copy`: localized Islam suite copy (`TIslamSuiteLocalizedCopy`)
+ *
+ * @preview
+ *
+ * <HijriObservanceCard
+ *   observance={{
+ *     id: "ramadan-start",
+ *     hijriFormatted: "1 Ramadán 1447 AH",
+ *     estimatedGregorianDate: "2026-02-18",
+ *     daysUntil: 120,
+ *     category: "ramadan",
+ *     fastingStatus: "obligatory",
+ *     title: "Inicio del Sagrado Mes de Ramadán",
+ *     description: "Comienzo del mes de ayuno obligatorio y oraciones nocturnas de Taraweeh."
+ *   }}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import HijriObservanceCard from "@components/data/display/QiblaAndObservancesSection/HijriObservanceCard.astro";
+ * ---
+ *
+ * <HijriObservanceCard observance={obsItem} copy={copy} />
+ * ```
+ */
+interface Props {
+  /**
+   * Hijri observance card model.
+   */
+  observance: THijriObservanceCard;
+  /**
+   * Localized Islam suite copy for fasting status and days-remaining labels.
+   */
+  copy: TIslamSuiteLocalizedCopy;
+}
+
+const { observance, copy } = Astro.props;
+
+const getFastingBadge = (status: THijriObservanceCard["fastingStatus"]) => {
+  if (status === "obligatory") {
+    return {
+      variant: "primary" as const,
+      label: copy.fastingObligatoryLabel,
+    };
+  }
+  if (status === "sunnah") {
+    return {
+      variant: "secondary" as const,
+      label: copy.fastingSunnahLabel,
+    };
+  }
+  if (status === "forbidden") {
+    return {
+      variant: "warning" as const,
+      label: copy.fastingForbiddenLabel,
+    };
+  }
+  return null;
+};
+
+const fastingBadge = getFastingBadge(observance.fastingStatus);
+---
+
+<Card
+  class="
+    flex flex-col justify-between rounded-2xl border border-slate-200 bg-white
+    p-0 shadow-sm
+    dark:border-slate-800 dark:bg-slate-900
+  "
+  data-hijri-observance-card={observance.id}
+>
+  <CardContent class="flex h-full flex-col justify-between p-6">
+    <div>
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <Badge
+          variant="secondary"
+          class="
+            rounded-full bg-secondary px-3 py-1 text-xs font-bold text-white
+          "
+        >
+          {observance.hijriFormatted}
+        </Badge>
+        <span class="text-xs font-bold text-primary">
+          {observance.estimatedGregorianDate}
+          {" "}
+          •
+          {observance.daysUntil}
+          {" "}
+          {copy.daysRemainingLabel}
+        </span>
+      </div>
+
+      <h3 class="
+        text-lg font-extrabold text-slate-900
+        dark:text-white
+      "
+      >
+        {observance.title}
+      </h3>
+      <p class="
+        mt-2 text-sm/relaxed text-slate-600
+        dark:text-slate-400
+      "
+      >
+        {observance.description}
+      </p>
+    </div>
+
+    {
+      fastingBadge && (
+        <div class="mt-4 pt-3">
+          <Separator class="
+            mb-3 bg-slate-100
+            dark:bg-slate-800
+          "
+          />
+          <Badge
+            variant={fastingBadge.variant}
+            class="rounded-lg px-2.5 py-1 text-[11px] font-bold"
+          >
+            {fastingBadge.label}
+          </Badge>
+        </div>
+      )
+    }
+  </CardContent>
+</Card>

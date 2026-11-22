@@ -1,0 +1,142 @@
+---
+import { Button } from "@/components/starwind/button";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import { Image } from "astro:assets";
+
+type Props = {
+  /** Background image URL. */
+  imageUrl: string;
+  /** Accessible description for the background image. */
+  imageAlt: string;
+  /** Editorial hero headline. Falls back to `hijriDate` if omitted. */
+  title?: string;
+  /** Optional Hijri date fallback when `title` is omitted. */
+  hijriDate?: string;
+  /** Deprecated: kept for caller compatibility. */
+  currentDate?: string;
+  /** Supporting sentence shown under the headline. */
+  phrase: string;
+  /** Optional primary CTA label (e.g. Plan Your Visit). */
+  primaryCtaLabel?: string;
+  /** Optional primary CTA href. */
+  primaryCtaHref?: string;
+  /** Optional secondary CTA label (e.g. Prayer Times). */
+  secondaryCtaLabel?: string;
+  /** Optional secondary CTA href. */
+  secondaryCtaHref?: string;
+};
+
+const {
+  imageUrl,
+  imageAlt,
+  title,
+  hijriDate,
+  phrase,
+  primaryCtaLabel,
+  primaryCtaHref,
+  secondaryCtaLabel,
+  secondaryCtaHref,
+} = Astro.props as Props;
+
+const headingText = title ?? hijriDate;
+---
+
+<section
+  class="
+    relative w-full overflow-hidden bg-secondary text-white
+    lg:min-h-[560px]
+  "
+>
+  <Image
+    src={imageUrl}
+    alt={imageAlt}
+    class="absolute inset-0 size-full object-cover"
+    fetchpriority="high"
+    loading="eager"
+    layout="constrained"
+    widths={[640, 1024, 1600]}
+    sizes="100vw"
+    width={1600}
+    height={900}
+  />
+  <div
+    class="
+      hero-overlay absolute inset-0 bg-linear-to-b from-secondary/55
+      via-secondary/75 to-secondary/95
+    "
+  >
+  </div>
+
+  <div
+    class="
+      relative z-10 mx-auto flex min-h-[480px] max-w-4xl flex-col items-center
+      justify-center px-6 pt-16 pb-28 text-center
+      sm:min-h-[520px] sm:px-10 sm:pb-32
+      lg:min-h-[560px] lg:px-12 lg:pb-36
+    "
+  >
+    <h1
+      class="
+        mb-4 text-3xl/tight font-extrabold tracking-tight text-white
+        sm:text-4xl/tight
+        lg:text-5xl/tight
+      "
+    >
+      {headingText}
+    </h1>
+    <p
+      class="
+        max-w-2xl text-base/relaxed font-medium text-white/90
+        lg:text-lg/relaxed
+      "
+    >
+      {phrase}
+    </p>
+    {
+      (primaryCtaHref || secondaryCtaHref) && (
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3.5">
+          {
+            primaryCtaHref && primaryCtaLabel && (
+              <Button
+                href={primaryCtaHref}
+                variant="primary"
+                size="lg"
+                class="rounded-full px-7 shadow-lg"
+              >
+                <span>{primaryCtaLabel}</span>
+                <Icon
+                  name="arrow_forward"
+                  class="
+                    text-base
+                    rtl:-scale-x-100
+                  "
+                />
+              </Button>
+            )
+          }
+          {
+            secondaryCtaHref && secondaryCtaLabel && (
+              /* TODO(https://github.com/starwind-ui/starwind-ui/issues/278): Starwind's outline variant uses
+                 --outline (#212e80 in light mode) for focus-visible; keep focus treatments coordinated with
+                 the dark hero surface until upstream contrast handling is resolved. */
+              <Button
+                href={secondaryCtaHref}
+                variant="outline"
+                size="lg"
+                class="
+                  rounded-full border-white/35 bg-white/10 px-7 text-white
+                  backdrop-blur-sm
+                  hover:bg-white/20 hover:text-white
+                  focus-visible:border-white focus-visible:ring-white/50
+                "
+              >
+                <Icon name="schedule" class="text-base" />
+                <span>{secondaryCtaLabel}</span>
+              </Button>
+            )
+          }
+        </div>
+      )
+    }
+  </div>
+</section>

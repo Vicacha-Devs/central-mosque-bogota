@@ -1,0 +1,24 @@
+---
+import TabsPrimitive from "@starwind-ui/astro/tabs";
+import type { HTMLAttributes } from "astro/types";
+import { tabsTrigger } from "./variants";
+
+type Props = Omit<HTMLAttributes<"button">, "type" | "value"> & {
+  disabled?: boolean;
+  value: string;
+};
+
+const { disabled = false, value, class: className, ...rest } = Astro.props;
+---
+
+{/* TODO: drop role="tab" once Starwind renders it server-side, see https://github.com/starwind-ui/starwind-ui/issues/297 */}
+<TabsPrimitive.Tab
+  class={tabsTrigger({ class: className })}
+  disabled={disabled}
+  value={value}
+  role="tab"
+  {...rest}
+  data-slot="tabs-trigger"
+>
+  <slot />
+</TabsPrimitive.Tab>

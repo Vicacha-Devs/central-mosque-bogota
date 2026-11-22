@@ -1,0 +1,24 @@
+---
+import TabsPrimitive from "@starwind-ui/astro/tabs";
+import type { HTMLAttributes } from "astro/types";
+import { tabsList } from "./variants";
+
+type Props = HTMLAttributes<"div"> & {
+  activateOnFocus?: boolean;
+  loopFocus?: boolean;
+};
+
+const { activateOnFocus, loopFocus, class: className, ...rest } = Astro.props;
+---
+
+{/* TODO: drop role="tablist" once Starwind renders it server-side, see https://github.com/starwind-ui/starwind-ui/issues/297 */}
+<TabsPrimitive.List
+  class={tabsList({ class: className })}
+  activateOnFocus={activateOnFocus}
+  loopFocus={loopFocus}
+  role="tablist"
+  {...rest}
+  data-slot="tabs-list"
+>
+  <slot />
+</TabsPrimitive.List>

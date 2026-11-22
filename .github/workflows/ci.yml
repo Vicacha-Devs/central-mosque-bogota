@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  commitlint:
+    name: Commitlint (PR Title & Commits)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Resolve relative local plugin links for standalone CI
+        run: |
+          if ! node ./scripts/qa/link-plugins.ts --check-ci; then
+            node ./scripts/qa/link-plugins.ts --npm
+          fi
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Validate PR title with Commitlint
+        working-directory: ./apps/frontend
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: echo "$PR_TITLE" | npx commitlint --config ./commitlint.config.ts
+
+  verify:
+    name: Verify (Format, Lint, Astro Check, Unit Coverage, Builds & Docs)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Resolve relative local plugin links for standalone CI
+        run: |
+          if ! node ./scripts/qa/link-plugins.ts --check-ci; then
+            node ./scripts/qa/link-plugins.ts --npm
+          fi
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Run full monorepo verification gate (pnpm verify)
+        run: pnpm verify
+
+      - name: Run QA Control Center checks & generate dashboard
+        run: pnpm qa:verify
+
+      - name: Run Backend TypeScript check
+        run: pnpm --filter @central-mosque-bogota/backend typecheck
+
+      - name: Upload Interactive QA Control Center HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: central-mosque-qa-dashboard
+          path: |
+            .qa/dashboard.html
+            .qa/report.json
+          retention-days: 14

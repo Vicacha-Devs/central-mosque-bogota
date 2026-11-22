@@ -1,0 +1,141 @@
+---
+import { Card, CardContent } from "@/components/starwind/card";
+import { Progress } from "@/components/starwind/progress";
+import type { TLang } from "@i18n/ui";
+import { useTranslations } from "@i18n/utils";
+import {
+  getLocalizedDonationCampaigns,
+  type TDonationCampaign,
+} from "@utils/institutional-mocks";
+
+interface Props {
+  lang?: TLang;
+  campaigns?: TDonationCampaign[];
+}
+
+const {
+  lang = "es",
+  campaigns = getLocalizedDonationCampaigns(lang),
+} = Astro.props;
+const t = useTranslations(lang);
+
+const formatCop = (value: number) =>
+  new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(value);
+---
+
+<section class="space-y-8">
+  <div class="text-center">
+    <h2 class="
+      text-3xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {t("donate-page.campaignsTitle")}
+    </h2>
+    <p class="
+      mt-2 text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {t("donate-page.campaignsSub")}
+    </p>
+  </div>
+
+  <div class="
+    grid grid-cols-1 gap-8
+    md:grid-cols-3
+  "
+  >
+    {
+      campaigns.map((camp) => (
+        <Card class="
+          flex flex-col justify-between rounded-2xl border border-slate-200
+          bg-white shadow-sm
+          dark:border-slate-800 dark:bg-slate-900
+        "
+        >
+          <CardContent class="flex h-full flex-col justify-between p-6">
+            <div>
+              <h3 class="
+                mb-2 text-xl font-bold text-slate-900
+                dark:text-white
+              "
+              >
+                {camp.title}
+              </h3>
+              <p class="
+                mb-6 text-sm/relaxed text-slate-600
+                dark:text-slate-400
+              "
+              >
+                {camp.description}
+              </p>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="
+                  text-secondary
+                  dark:text-blue-400
+                "
+                >
+                  {t("donate-page.raisedLabel")}
+                  :
+                  {formatCop(camp.raisedAmount)}
+                </span>
+                <span class="text-slate-500">
+                  {t("donate-page.goalLabel")}
+                  :
+                  {formatCop(camp.goalAmount)}
+                </span>
+              </div>
+              <Progress
+                value={camp.percent}
+                max={100}
+                variant="primary"
+                aria-label={camp.title}
+                class="h-2.5"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      ))
+    }
+  </div>
+
+  <div class="
+    flex flex-col items-start justify-between gap-6 rounded-3xl bg-secondary p-8
+    text-secondary-foreground shadow-lg
+    md:flex-row md:items-center
+  "
+  >
+    <div class="max-w-2xl space-y-2 text-start">
+      <span class="
+        inline-block rounded-full bg-primary px-3 py-1 text-xs font-extrabold
+        tracking-wider text-primary-foreground uppercase
+      "
+      >
+        {t("donate-page.waqf-badge")}
+      </span>
+      <h3 class="text-2xl font-extrabold">
+        {t("donate-page.waqf-title")}
+      </h3>
+      <p class="text-sm/relaxed text-blue-100/85">
+        {t("donate-page.waqf-desc")}
+      </p>
+    </div>
+    <a
+      href="#donation-form"
+      class="
+        inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3
+        text-sm font-extrabold text-secondary shadow-md transition-transform
+        hover:scale-105
+      "
+    >
+      <span>{t("donate-page.waqf-cta")}</span>
+    </a>
+  </div>
+</section>

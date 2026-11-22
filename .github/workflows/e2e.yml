@@ -1,0 +1,67 @@
+name: E2E & Accessibility (Playwright)
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  playwright:
+    name: Playwright E2E + Axe WCAG 2.2 AA
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Resolve relative local plugin links for standalone CI
+        run: |
+          if ! node ./scripts/qa/link-plugins.ts --check-ci; then
+            node ./scripts/qa/link-plugins.ts --npm
+          fi
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Install Playwright Chromium browser
+        if: ${{ hashFiles('apps/frontend/e2e/**') != '' }}
+        working-directory: ./apps/frontend
+        run: pnpm dlx --package=@playwright/test@1.53.0 playwright install --with-deps chromium
+
+      - name: Build Astro SSR Frontend
+        run: pnpm build:frontend
+
+      - name: Run Playwright E2E tests
+        if: ${{ hashFiles('apps/frontend/e2e/**') != '' }}
+        working-directory: ./apps/frontend
+        run: pnpm dlx --package=@playwright/test@1.53.0 playwright test --config playwright.config.ts
+
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: apps/frontend/playwright-report/
+          retention-days: 14
+          if-no-files-found: ignore

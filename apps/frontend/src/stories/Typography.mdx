@@ -1,0 +1,60 @@
+import { Meta, Typeset } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Typography" />
+
+# Typography · Plus Jakarta Sans & Public Sans
+
+Central Mosque of Bogotá pairs **Plus Jakarta Sans** (`--font-display`, weights `400`–`800`) for display headlines and section titles with **Public Sans** (`--font-sans`) for body copy, UI controls, and multilingual (`es`, `en`, `ar`, `tr`) layouts.
+
+export const typography = {
+  type: {
+    display:
+      '"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+    sans: '"Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+  },
+  weight: {
+    regular: "400",
+    medium: "500",
+    semibold: "600",
+    bold: "700",
+    extrabold: "800",
+  },
+  size: {
+    display: 48,
+    headlineFeature: 36,
+    headline: 30,
+    title: 24,
+    lead: 20,
+    body: 16,
+    bodySm: 14,
+    label: 12,
+  },
+};
+
+## Display & Headings (`Plus Jakarta Sans · 700 Bold`)
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.display),
+    Number(typography.size.headlineFeature),
+    Number(typography.size.headline),
+    Number(typography.size.title),
+  ]}
+  fontWeight={typography.weight.bold}
+  sampleText="Mezquita Central Abu Bakr As-Siddiq · Bogotá"
+  fontFamily={typography.type.display}
+/>
+
+## Body, Lead & Labels (`Public Sans · 400 Regular`)
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.lead),
+    Number(typography.size.body),
+    Number(typography.size.bodySm),
+    Number(typography.size.label),
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText="Unidos en oración y comunidad. Horarios de oración, academia, eventos y servicios comunitarios."
+  fontFamily={typography.type.sans}
+/>

@@ -1,0 +1,299 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Separator } from "@/components/starwind/separator";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import Link from "@components/actions/Link/Link.astro";
+import SvgIcon from "@components/data/display/Icons/SvgIcon.astro";
+import type { TLang } from "@i18n/ui";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+import type {
+  TSVGIcon,
+  TNavLink,
+  TContactInfo,
+  TRightsTexts,
+} from "@utils/models/types";
+
+/**
+ * @component Footer
+ * @title Site Footer
+ * @description Renders the 4-column institutional footer with mosque branding, social network links, quick navigation links, Bogotá contact details, newsletter subscription form, and legal copyright bar.
+ *
+ * Props
+ * - `lang`: optional locale override (`es`, `en`, `ar`, `tr`)
+ * - `lemma`: institutional tagline
+ * - `socialNetworkLinks`: array of social media links with SVG icons
+ * - `fastLinks`: array of quick navigation links
+ * - `contactInfo`: address, phone, and email contact details
+ * - `rightsText`: copyright and legal links metadata
+ *
+ * @preview
+ *
+ * <Footer
+ *   lemma={lemma}
+ *   socialNetworkLinks={socialNetworkLinks}
+ *   fastLinks={fastLinks}
+ *   contactInfo={contactInfo}
+ *   rightsText={rightsText}
+ * />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import Footer from "@components/layout/Footer/Footer.astro";
+ * ---
+ *
+ * <Footer
+ *   lemma={lemma}
+ *   socialNetworkLinks={socialNetworkLinks}
+ *   fastLinks={fastLinks}
+ *   contactInfo={contactInfo}
+ *   rightsText={rightsText}
+ * />
+ * ```
+ */
+interface Props {
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * Optional short tagline/description for the mosque.
+   */
+  lemma: string;
+  /**
+   * Optional list of social links with an icon.
+   * @default []
+   */
+  socialNetworkLinks: Array<TNavLink & { icon: TSVGIcon }>;
+  /**
+   * Optional list of quick navigation links.
+   * @default []
+   */
+  fastLinks: Array<TNavLink>;
+  /**
+   * Contact information displayed in the footer.
+   */
+  contactInfo: TContactInfo;
+  /**
+   * Rights text displayed in the footer.
+   */
+  rightsText: TRightsTexts;
+}
+
+const {
+  lang: langProp,
+  lemma,
+  socialNetworkLinks = [],
+  fastLinks = [],
+  contactInfo,
+  rightsText,
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<footer class="bg-secondary pt-20 pb-10 text-white">
+  <section
+    class="
+      mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pb-16
+      sm:px-6
+      md:grid-cols-4
+      lg:px-8
+    "
+  >
+    <div class="
+      col-span-1
+      md:col-span-1
+    "
+    >
+      <!-- Mosque branding -->
+      <a href={translatePath("/")} class="mb-6 flex items-center gap-3">
+        <div class="rounded-full bg-white px-3 py-1.5">
+          <Icon name="mosque" class="text-3xl text-secondary" />
+        </div>
+        <div>
+          <span class="block text-xl/tight font-bold tracking-tight">
+            {t("brand.title")}
+          </span>
+          <span class="text-xs tracking-widest uppercase opacity-80">
+            {t("brand.subtitle")}
+          </span>
+        </div>
+      </a>
+      <!-- Mosque lemma -->
+      {lemma && <p class="mb-6 leading-relaxed text-white/85">{lemma}</p>}
+      <!-- Mosque social networks -->
+      <ul class="flex gap-4">
+        {
+          socialNetworkLinks.map(({ label, href, icon }) => (
+            <li>
+              <Link
+                color="navbar"
+                class="
+                  flex size-10 items-center justify-center rounded-full
+                  bg-white/10 text-white
+                  hover:bg-primary hover:text-white
+                "
+                href={href}
+                aria-label={label}
+              >
+                <SvgIcon name={icon} class="size-5 fill-current" />
+              </Link>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h2 class="mb-6 text-lg font-bold">{t("footer.quick-links")}</h2>
+      <ul class="space-y-4 text-white/85">
+        {
+          fastLinks.map(({ label, href }) => (
+            <li>
+              <Link href={translatePath(href)} color="navbar">
+                {label}
+              </Link>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h2 class="mb-6 text-lg font-bold">{t("footer.contact")}</h2>
+      <ul class="space-y-4 text-white/85">
+        <li class="flex items-center gap-3">
+          <Icon
+            name="location_on"
+            class="items-baseline text-sm text-blue-300"
+          />
+          <address class="not-italic">{contactInfo.address}</address>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="phone" class="text-sm text-blue-300" />
+          <a
+            href={`tel:${contactInfo.phone.replace(/[^\d+]/g, "")}`}
+            class="
+              transition-colors
+              hover:text-white
+            "
+          >
+            {contactInfo.phone}
+          </a>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="email" class="text-sm text-blue-300" />
+          <a
+            href={`mailto:${contactInfo.email}`}
+            class="
+              transition-colors
+              hover:text-white
+            "
+          >
+            {contactInfo.email}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h2 class="mb-6 text-lg font-bold">{t("footer.newsletter")}</h2>
+      <p class="mb-4 text-sm text-white/85">
+        {t("footer.newsletter-description")}
+      </p>
+      <form
+        id="footer-newsletter-form"
+        method="POST"
+        action="/api/submissions"
+        data-locale={lang}
+        data-success-msg={t("footer.newsletter-success")}
+        data-invalid-msg={t("footer.newsletter-invalid-email")}
+        data-error-msg={t("footer.newsletter-error")}
+        class="flex flex-col gap-2"
+      >
+        <div class="hidden" aria-hidden="true">
+          <input name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <label
+          for="footer-newsletter-email"
+          class="text-xs font-semibold text-white/90"
+        >
+          {t("footer.email-placeholder")}
+        </label>
+        <Input
+          id="footer-newsletter-email"
+          name="email"
+          required
+          autocomplete="email"
+          inputmode="email"
+          enterkeyhint="send"
+          class="
+            rounded-lg border-white/25 bg-white/10 px-4 py-2 text-base
+            text-white
+            placeholder:text-white/60
+          "
+          placeholder={t("footer.email-placeholder")}
+          type="email"
+        />
+        <Button variant="primary" type="submit">
+          {t("footer.subscribe")}
+        </Button>
+        <p
+          id="footer-newsletter-status"
+          role="status"
+          class="hidden text-xs font-medium text-emerald-300"
+        >
+        </p>
+      </form>
+    </div>
+  </section>
+  <div class="
+    mx-auto max-w-7xl px-4
+    sm:px-6
+    lg:px-8
+  "
+  >
+    <Separator class="bg-white/15" />
+  </div>
+  <section
+    class="
+      mx-auto mt-10 flex max-w-7xl flex-col justify-between px-4 text-sm
+      text-white/75
+      sm:px-6
+      md:flex-row md:items-center
+      lg:px-8
+    "
+  >
+    <p>{rightsText?.copyRight}</p>
+    <div
+      class="
+        mt-4 flex flex-col justify-between gap-4
+        sm:flex-row
+        md:mt-0 md:gap-6
+      "
+    >
+      <Link color="navbar" href={translatePath(rightsText?.privacyPolicy.href)}>
+        {rightsText?.privacyPolicy.label}
+      </Link>
+      <Link
+        color="navbar"
+        href={translatePath(rightsText?.termsAndConditions.href)}
+      >
+        {rightsText?.termsAndConditions.label}
+      </Link>
+    </div>
+  </section>
+</footer>
+
+<script>
+  import { initFooterNewsletter } from "./footer-newsletter.controller";
+
+  initFooterNewsletter();
+  document.addEventListener("astro:after-swap", () => initFooterNewsletter());
+</script>

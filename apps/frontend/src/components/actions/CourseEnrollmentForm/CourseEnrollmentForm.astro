@@ -1,0 +1,260 @@
+---
+import { Button } from "@/components/starwind/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/starwind/card";
+import { Input } from "@/components/starwind/input";
+import { Label } from "@/components/starwind/label";
+import { NativeSelect, NativeSelectOption } from "@/components/starwind/native-select";
+import { Textarea } from "@/components/starwind/textarea";
+import Icon from "@components/data/display/Icons/Icon.astro";
+import type { TLang } from "@i18n/ui";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+/**
+ * @component CourseEnrollmentForm
+ * @title Academy Course Enrollment Form
+ * @description Enrollment and study-guide request form for Academy courses and educational articles. Submits to `POST /api/submissions` (`formType: "contact"`, `subject: "education"`).
+ *
+ * i18n keys
+ * - `article-detail.register-title`
+ * - `article-detail.register-desc`
+ * - `article-detail.full-name`
+ * - `article-detail.email`
+ * - `article-detail.phone`
+ * - `article-detail.modality`
+ * - `article-detail.modality-in-person`
+ * - `article-detail.modality-online`
+ * - `article-detail.message-label`
+ * - `article-detail.submit`
+ * - `article-detail.submitting`
+ * - `article-detail.success`
+ * - `article-detail.error`
+ *
+ * @preview
+ *
+ * <CourseEnrollmentForm courseTitle="Introducción al Árabe Clásico" />
+ *
+ * @usage
+ *
+ * ```astro nocollapse
+ * ---
+ * import CourseEnrollmentForm from "@components/actions/CourseEnrollmentForm/CourseEnrollmentForm.astro";
+ * ---
+ *
+ * <CourseEnrollmentForm courseTitle="Introducción al Árabe Clásico" />
+ * ```
+ */
+interface Props {
+  /**
+   * Title of the course or article being enrolled in.
+   */
+  courseTitle: string;
+  /**
+   * Optional locale override (`es`, `en`, `ar`, `tr`).
+   */
+  lang?: TLang;
+  /**
+   * Optional Strapi API base URL override.
+   */
+  strapiBaseUrl?: string;
+}
+
+const {
+  courseTitle,
+  lang: langProp,
+  strapiBaseUrl = import.meta.env.PUBLIC_STRAPI_URL || "http://localhost:1337",
+} = Astro.props as Props;
+
+const lang = langProp ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Card
+  class="
+    sticky top-24 rounded-3xl border border-slate-200 bg-white shadow-lg
+    dark:border-slate-800 dark:bg-slate-900
+  "
+>
+  <CardHeader class="p-8 pb-4">
+    <CardTitle class="
+      text-xl font-extrabold text-slate-900
+      dark:text-white
+    "
+    >
+      {t("article-detail.register-title")}
+    </CardTitle>
+    <CardDescription class="
+      mt-1 text-sm text-slate-600
+      dark:text-slate-400
+    "
+    >
+      {t("article-detail.register-desc")}
+    </CardDescription>
+  </CardHeader>
+
+  <CardContent class="p-8 pt-2">
+    <form
+      id="course-enrollment-form"
+      data-strapi-url={strapiBaseUrl}
+      data-locale={lang}
+      data-course-title={courseTitle}
+      data-submit-label={t("article-detail.submit")}
+      data-submitting-label={t("article-detail.submitting")}
+      data-success-msg={t("article-detail.success")}
+      data-error-msg={t("article-detail.error")}
+      class="space-y-4"
+    >
+      <div class="hidden" aria-hidden="true">
+        <label for="course-website">Website</label>
+        <input
+          id="course-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <div>
+        <Label
+          for="course-fullName"
+          class="
+            mb-1.5 block text-xs font-bold tracking-wider text-slate-700
+            uppercase
+            dark:text-slate-300
+          "
+        >
+          {t("article-detail.full-name")}
+          {" "}
+          *
+        </Label>
+        <Input
+          id="course-fullName"
+          name="fullName"
+          type="text"
+          required
+          class="rounded-xl"
+        />
+      </div>
+
+      <div>
+        <Label
+          for="course-email"
+          class="
+            mb-1.5 block text-xs font-bold tracking-wider text-slate-700
+            uppercase
+            dark:text-slate-300
+          "
+        >
+          {t("article-detail.email")}
+          {" "}
+          *
+        </Label>
+        <Input
+          id="course-email"
+          name="email"
+          type="email"
+          required
+          class="rounded-xl"
+        />
+      </div>
+
+      <div class="
+        grid grid-cols-1 gap-4
+        sm:grid-cols-2
+      "
+      >
+        <div>
+          <Label
+            for="course-phone"
+            class="
+              mb-1.5 block text-xs font-bold tracking-wider text-slate-700
+              uppercase
+              dark:text-slate-300
+            "
+          >
+            {t("article-detail.phone")}
+          </Label>
+          <Input
+            id="course-phone"
+            name="phone"
+            type="tel"
+            class="rounded-xl"
+          />
+        </div>
+
+        <div>
+          <Label
+            for="course-modality"
+            class="
+              mb-1.5 block text-xs font-bold tracking-wider text-slate-700
+              uppercase
+              dark:text-slate-300
+            "
+          >
+            {t("article-detail.modality")}
+          </Label>
+          <NativeSelect
+            id="course-modality"
+            name="modality"
+            class="w-full rounded-xl"
+          >
+            <NativeSelectOption value="in-person">
+              {t("article-detail.modality-in-person")}
+            </NativeSelectOption>
+            <NativeSelectOption value="online">
+              {t("article-detail.modality-online")}
+            </NativeSelectOption>
+          </NativeSelect>
+        </div>
+      </div>
+
+      <div>
+        <Label
+          for="course-message"
+          class="
+            mb-1.5 block text-xs font-bold tracking-wider text-slate-700
+            uppercase
+            dark:text-slate-300
+          "
+        >
+          {t("article-detail.message-label")}
+        </Label>
+        <Textarea
+          id="course-message"
+          name="message"
+          rows={3}
+          class="rounded-xl"
+        />
+      </div>
+
+      <div
+        id="course-enrollment-feedback"
+        role="status"
+        aria-live="polite"
+        class="hidden rounded-xl p-3.5 text-sm font-medium"
+      >
+      </div>
+
+      <Button
+        type="submit"
+        id="course-enrollment-submit"
+        variant="primary"
+        class="w-full justify-center py-3.5"
+      >
+        <Icon name="school" />
+        <span id="course-enrollment-submit-label">
+          {t("article-detail.submit")}
+        </span>
+      </Button>
+    </form>
+  </CardContent>
+</Card>
+
+<script>
+  import {
+    initCourseEnrollmentForm,
+  } from "./course-enrollment-form.controller";
+
+  initCourseEnrollmentForm();
+  document.addEventListener("astro:after-swap", initCourseEnrollmentForm);
+</script>
