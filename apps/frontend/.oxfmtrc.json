@@ -30,7 +30,11 @@
   "ignorePatterns": [
     "coverage",
     "dist",
+    "e2e",
+    "playwright-report",
+    "playwright.config.ts",
     "storybook-static",
+    "test-results",
     "node_modules",
     "yarn.lock",
     "package-lock.json",
