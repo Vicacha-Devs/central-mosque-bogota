@@ -116,11 +116,14 @@ Las lecciones islámicas se organizan en **4 tipos de contenido** según su form
 
 El backend integra **`@Publishable/strapi-plugin-email-designer-5`** (`/admin/plugins/email-designer-5`), que gestiona dos pestañas de plantillas:
 
-1. **Custom Templates (`plugin::email-designer-5.email-template`)**:
-   - Sembradas automáticamente al iniciar por [`seedEmailDesignerTemplates`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/seed/cms-seed-data.ts) con 3 plantillas institucionales de la **Mezquita Central de Bogotá** (encabezado esmeralda `#1B4332`, borde dorado `#D4AF37` y pie institucional):
-     - **`101`**: *Mezquita Central — Confirmación de Solicitud y Ventanilla (Inbox)*
-     - **`102`**: *Mezquita Central — Confirmación de Visita Guiada / Reserva*
-     - **`103`**: *Mezquita Central — Boletín Comunitario y Horarios de Yumu'ah*
+1. **Custom Templates (`plugin::email-designer-5.email-designer-template`)**:
+   - Sembradas automáticamente de forma idempotente al iniciar por `apps/backend/src/seed/email-templates-seed.ts` con **20 plantillas institucionales de la Mezquita Central de Bogotá** (encabezado esmeralda `#1b4332`, tarjeta `#d8e2dc`, soporte RTL para árabe, enviadas sin marcas de terceros vía **Resend SMTP**):
+     - **`101–104`**: Confirmaciones de Contacto (`es`, `en`, `ar`, `tr`)
+     - **`201–204`**: Confirmaciones de Visita Guiada (`es`, `en`, `ar`, `tr`)
+     - **`301–304`**: Confirmaciones de Donación y Certificado Tributario DIAN (`es`, `en`, `ar`, `tr`)
+     - **`401–404`**: Boletines Comunitarios de Broadcasts (`es`, `en`, `ar`, `tr`)
+     - **`501`**: Invitación Institucional de Firma Electrónica **DocuSeal** (`send_email: false` en DocuSeal; Strapi envía a cada firmante su enlace `embed_src` validado)
+     - **`901–903`**: Alertas Internas para el Equipo (Contacto, Visita, Donación)
 2. **Core Email Templates (`Reset Password` y `Email Address Confirmation`)**:
    - Almacenadas en el store interno de Strapi (`plugin_users-permissions_email`) y preconfiguradas con el diseño institucional esmeralda y dorado.
 

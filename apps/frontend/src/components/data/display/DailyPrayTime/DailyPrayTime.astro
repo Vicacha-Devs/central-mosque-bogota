@@ -205,6 +205,7 @@ const items = PRAYER_ITEMS.map(({ key, label }) => ({
         class="
           mt-3 hidden items-center gap-2 rounded-full bg-primary/10 px-3 py-1
           text-xs font-bold text-primary tabular-nums
+          dark:text-primary-accent
         "
       >
         <Icon name="schedule" class="text-sm" />
@@ -235,7 +236,7 @@ const items = PRAYER_ITEMS.map(({ key, label }) => ({
               "dark:data-prayer-item-active:bg-primary",
               "data-prayer-item-active:ring-secondary/20",
               "dark:data-prayer-item-active:ring-primary/20",
-              "data-prayer-item-active:scale-105",
+              "motion-safe:data-prayer-item-active:scale-105",
             ]}
             data-prayer-item
             data-prayer={item.key}

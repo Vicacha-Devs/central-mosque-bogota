@@ -128,7 +128,12 @@ const formatCop = (value: number) =>
     "
   >
     <div>
-      <span class="text-xs font-bold tracking-wider text-primary uppercase">
+      <span
+        class="
+          text-xs font-bold tracking-wider text-primary uppercase
+          dark:text-primary-accent
+        "
+      >
         {t.zakatBadge}
       </span>
       <h2 class="
@@ -311,14 +316,24 @@ const formatCop = (value: number) =>
             "
             >
               <span class="text-blue-100/80">{t.netWorthLabel}</span>
-              <span id="zakat-net-worth" class="font-bold tabular-nums">$ 0 COP</span>
+              <span
+                id="zakat-net-worth"
+                aria-live="polite"
+                class="font-bold tabular-nums"
+              >
+                $ 0 COP
+              </span>
             </div>
             <div class="
               flex justify-between gap-2 border-b border-white/10 pb-3 text-sm
             "
             >
               <span class="text-blue-100/80">{t.nisabStatusLabel}</span>
-              <span id="zakat-status" class="font-bold text-amber-300">
+              <span
+                id="zakat-status"
+                aria-live="polite"
+                class="font-bold text-amber-300"
+              >
                 {t.belowNisabText}
               </span>
             </div>
@@ -335,6 +350,7 @@ const formatCop = (value: number) =>
               <span
                 id="zakat-due-amount"
                 data-raw-zakat="0"
+                aria-live="polite"
                 class="
                   mt-2 block text-2xl font-extrabold wrap-break-word text-white
                   tabular-nums
@@ -461,7 +477,11 @@ const formatCop = (value: number) =>
             "
             >
               <span class="text-blue-100/80">Zakat al-Fitr (Fitrana)</span>
-              <span id="fitrana-subtotal" class="font-bold">
+              <span
+                id="fitrana-subtotal"
+                aria-live="polite"
+                class="font-bold tabular-nums"
+              >
                 {formatCop(fitranaPerPersonCop)}
                 {" "}
                 COP
@@ -472,7 +492,11 @@ const formatCop = (value: number) =>
             "
             >
               <span class="text-blue-100/80">Fidyah & Kaffarah</span>
-              <span id="fidyah-kaffarah-subtotal" class="font-bold">
+              <span
+                id="fidyah-kaffarah-subtotal"
+                aria-live="polite"
+                class="font-bold tabular-nums"
+              >
                 $ 0 COP
               </span>
             </div>
@@ -489,8 +513,9 @@ const formatCop = (value: number) =>
               <span
                 id="fitrana-total-due"
                 data-raw-fitrana={String(fitranaPerPersonCop)}
+                aria-live="polite"
                 class="
-                  mt-2 block text-3xl font-extrabold text-white
+                  mt-2 block text-3xl font-extrabold text-white tabular-nums
                   sm:text-4xl
                 "
               >

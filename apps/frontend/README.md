@@ -71,9 +71,11 @@ apps/frontend/
 │   │   └── strapi/                 # Strapi v5 REST client (api.ts), Content Layer loader.ts, and tiptap-sanitizer.ts
 │   ├── content.config.ts           # Astro Content Layer collections
 │   └── utils/                      # Domain types, Hijri/date helpers, and 4-locale offline mocks (*-mocks.ts)
+├── e2e/                            # Playwright E2E & WCAG 2.2 AA specs (i18n-and-rtl, core-journeys, accessibility)
 ├── astro.config.ts
 ├── eslint.config.ts
 ├── package.json
+├── playwright.config.ts
 └── vitest.config.ts
 ```
 
@@ -93,6 +95,8 @@ apps/frontend/
 | `pnpm build:storybook` | Build static Storybook bundle to `./storybook-static/`                    |
 | `pnpm lint`            | Run ESLint (`eslint .`) across TypeScript, Astro, CSS, JSON, and Markdown |
 | `pnpm format:check`    | Verify formatting with `oxfmt --check`                                    |
+
+From the monorepo root, you can also run `pnpm qa:verify` (offline judges + Vitest + backend tests + `.qa/dashboard.html`), `pnpm qa:smoke` (live HTTP route/iCal/RSS checks), and `pnpm qa:e2e` (Playwright E2E + `@axe-core/playwright` WCAG 2.2 AA suite in `apps/frontend/e2e/`).
 
 ---
 

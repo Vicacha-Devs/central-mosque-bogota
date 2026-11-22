@@ -28,8 +28,12 @@ export default defineConfig([
   globalIgnores([
     "coverage",
     "dist",
+    "e2e",
+    "playwright-report",
+    "playwright.config.ts",
     "src/components/starwind",
     "storybook-static",
+    "test-results",
     "node_modules",
     ".astro",
     ".github",

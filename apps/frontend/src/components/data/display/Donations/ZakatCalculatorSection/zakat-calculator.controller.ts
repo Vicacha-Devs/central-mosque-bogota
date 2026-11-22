@@ -31,7 +31,14 @@ function populateDonationFormWithZakat(rawAmount: number): void {
   if (typeSelect) typeSelect.value = "zakat";
   if (campaignSelect) campaignSelect.value = "";
   if (coversCheck) coversCheck.checked = false;
-  formSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  formSection?.scrollIntoView({
+    behavior: prefersReducedMotion ? "auto" : "smooth",
+    block: "start",
+  });
 }
 
 export function initZakatCalculator(): void {

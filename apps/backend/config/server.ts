@@ -15,6 +15,9 @@ export default ({ env }) => {
     app: {
       keys: resolveAppKeys('APP_KEYS'),
     },
+    // TODO(strapi-5.60+): If enabling Vercel ISR or CDN caching on apps/frontend (or external
+    // notification hooks), configure granular per-content-type webhook events in Settings -> Webhooks
+    // (e.g., publish/unpublish/delete only for public content types, excluding submissions/bookings/logs).
     webhooks: {
       populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
     },

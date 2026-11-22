@@ -198,7 +198,9 @@ const fetchPrayerTimes = async ({
             city,
             country,
             languageCode,
-            date: new Date(entry.date),
+            date: /^\d{4}-\d{2}-\d{2}$/.test(entry.date)
+              ? new Date(`${entry.date}T12:00:00Z`)
+              : new Date(entry.date),
           }),
         })),
       };

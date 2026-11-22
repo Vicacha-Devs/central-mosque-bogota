@@ -66,12 +66,7 @@ export default ({ env }: { env: StrapiEnvFn }) => ({
   // 13. Visual Email Template Designer for Strapi v5 (strapi-plugin-email-designer-5)
   "email-designer-5": buildEmailDesignerPluginConfig(),
 
-  // 14. Content Manager Sidebar Organizer (strapi-plugin-content-manager-organizer)
-  "content-manager-organizer": {
-    enabled: true,
-  },
-
-  // 14b. Collapsible & Pinnable Left Navigation (@vicacha-devs/strapi-plugin-collapsible-nav)
+  // 14. Collapsible & Pinnable Left Navigation (@vicacha-devs/strapi-plugin-collapsible-nav)
   "collapsible-nav": {
     enabled: true,
   },

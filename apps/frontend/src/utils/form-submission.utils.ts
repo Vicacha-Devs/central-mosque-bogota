@@ -74,6 +74,46 @@ export function bindJsonFormSubmission(options: TBindJsonFormOptions): void {
   if (boundForms.has(form)) return;
   boundForms.add(form);
 
+  const syncFieldAriaInvalid = (target: EventTarget | null): void => {
+    if (
+      !(
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement
+      )
+    ) {
+      return;
+    }
+    let isUserInvalid: boolean;
+    try {
+      isUserInvalid = target.matches(":user-invalid");
+    } catch {
+      isUserInvalid = !target.checkValidity();
+    }
+    if (isUserInvalid) {
+      target.setAttribute("aria-invalid", "true");
+    } else {
+      target.removeAttribute("aria-invalid");
+    }
+  };
+
+  form.addEventListener(
+    "blur",
+    (e) => {
+      syncFieldAriaInvalid(e.target);
+    },
+    true
+  );
+  form.addEventListener("input", (e) => {
+    const target = e.target;
+    if (
+      target instanceof HTMLElement &&
+      target.getAttribute("aria-invalid") === "true"
+    ) {
+      syncFieldAriaInvalid(target);
+    }
+  });
+
   const submitBtn =
     options.submitButton ??
     form.querySelector<HTMLButtonElement>(
@@ -119,10 +159,20 @@ export function bindJsonFormSubmission(options: TBindJsonFormOptions): void {
         if (res.ok && json.ok !== false) {
           setStatusClasses(statusEl, "success", statusClasses);
           statusEl.textContent = messages.formatSuccess(json);
+          form.querySelectorAll("[aria-invalid]").forEach((el) => {
+            el.removeAttribute("aria-invalid");
+          });
           form.reset();
         } else {
           setStatusClasses(statusEl, "error", statusClasses);
           statusEl.textContent = messages.error;
+          const firstInvalid = form.querySelector<HTMLElement>(
+            "input:invalid, textarea:invalid, select:invalid"
+          );
+          if (firstInvalid) {
+            firstInvalid.setAttribute("aria-invalid", "true");
+            firstInvalid.focus();
+          }
         }
       } catch {
         setStatusClasses(statusEl, "error", statusClasses);

@@ -89,8 +89,8 @@ function updateUI(root: HTMLElement): void {
     "[data-prayer-countdown-value]"
   );
   if (countdownEl && countdownValEl && orderedTimes.length > 0) {
-    const diffMin =
-      nextToday !== undefined ? nextToday - now : 1440 - now + orderedTimes[0];
+    const untilNext = nextToday ?? 1440 + orderedTimes[0];
+    const diffMin = untilNext - now;
     const hrs = Math.floor(diffMin / 60);
     const mins = diffMin % 60;
     countdownValEl.textContent = `${String(hrs).padStart(2, "0")}h ${String(mins).padStart(2, "0")}m`;
@@ -100,6 +100,11 @@ function updateUI(root: HTMLElement): void {
 }
 
 export function initDailyPrayerTimes(): void {
+  if (updateTimer !== null) {
+    window.clearInterval(updateTimer);
+    updateTimer = null;
+  }
+
   const roots = Array.from(
     document.querySelectorAll<HTMLElement>("[data-prayer-schedule]")
   );
@@ -107,11 +112,17 @@ export function initDailyPrayerTimes(): void {
 
   for (const root of roots) updateUI(root);
 
-  if (updateTimer !== null) window.clearInterval(updateTimer);
   updateTimer = window.setInterval(() => {
     const nextRoots = Array.from(
       document.querySelectorAll<HTMLElement>("[data-prayer-schedule]")
     );
+    if (nextRoots.length === 0) {
+      if (updateTimer !== null) {
+        window.clearInterval(updateTimer);
+        updateTimer = null;
+      }
+      return;
+    }
     for (const root of nextRoots) updateUI(root);
   }, CONFIG.updateIntervalMs);
 }

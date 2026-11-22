@@ -116,11 +116,14 @@ Islamic lessons are organized into **4 content types** depending on how the comm
 
 The backend integrates **`@Publishable/strapi-plugin-email-designer-5`** (`/admin/plugins/email-designer-5`), which manages two tabs of templates:
 
-1. **Custom Templates (`plugin::email-designer-5.email-template`)**:
-   - Pre-seeded at startup by [`seedEmailDesignerTemplates`](file:///Users/sjoseluis/Projects/experiments/central-mosque-bogota/backend/src/seed/cms-seed-data.ts) with 3 official **Mezquita Central de Bogotá** brand templates (`#1B4332` emerald header, `#D4AF37` gold border, bilingual footer):
-     - **`101`**: *Mezquita Central — Confirmación de Solicitud y Ventanilla (Inbox)*
-     - **`102`**: *Mezquita Central — Confirmación de Visita Guiada / Reserva*
-     - **`103`**: *Mezquita Central — Boletín Comunitario y Horarios de Yumu'ah*
+1. **Custom Templates (`plugin::email-designer-5.email-designer-template`)**:
+   - Pre-seeded idempotently at startup by `apps/backend/src/seed/email-templates-seed.ts` with **20 official Mezquita Central de Bogotá brand templates** (`#1b4332` emerald header, `#d8e2dc` card, RTL Arabic support, delivered unbranded over **Resend SMTP**):
+     - **`101–104`**: Contact Inquiry Confirmations (`es`, `en`, `ar`, `tr`)
+     - **`201–204`**: Guided Visit Booking Confirmations (`es`, `en`, `ar`, `tr`)
+     - **`301–304`**: Donation & DIAN Tax Certificate Confirmations (`es`, `en`, `ar`, `tr`)
+     - **`401–404`**: Community Broadcast Newsletters (`es`, `en`, `ar`, `tr`)
+     - **`501`**: Branded **DocuSeal** Official Certificate Signature Request (`send_email: false` in DocuSeal; Strapi emails each signer's validated `embed_src` link directly)
+     - **`901–903`**: Staff Admin Alerts (Contact, Visit, Donation)
 2. **Core Email Templates (`Reset Password` & `Email Address Confirmation`)**:
    - Stored in Strapi's core store (`plugin_users-permissions_email`) and pre-seeded with the Mosque's emerald-and-gold HTML layout.
 

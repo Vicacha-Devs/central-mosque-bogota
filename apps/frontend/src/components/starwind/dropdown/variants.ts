@@ -65,9 +65,7 @@ export const dropdownItem = tv({
 });
 
 export const dropdownLabel = tv({
-  base: [
-    "text-muted-foreground px-2 py-1.5 text-sm font-medium",
-  ],
+  base: ["text-muted-foreground px-2 py-1.5 text-sm font-medium"],
   variants: {
     inset: {
       true: "ps-8",

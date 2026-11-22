@@ -385,6 +385,8 @@ const storageKey = `mosque_spotlight_min_${activeSpotlights.map((s) => s.id).joi
                           alt={posterAlt}
                           width={item.poster.width ?? 800}
                           height={item.poster.height ?? 1120}
+                          loading="lazy"
+                          decoding="async"
                           class="max-h-[60vh] w-full object-contain"
                         />
                       </div>

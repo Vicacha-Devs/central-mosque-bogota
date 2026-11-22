@@ -21,7 +21,8 @@
   margin: auto;
 }
 
-[data-sw-checkbox][data-checked]:not([data-indeterminate]) [data-sw-checkbox-check-icon] {
+[data-sw-checkbox][data-checked]:not([data-indeterminate])
+  [data-sw-checkbox-check-icon] {
   animation: draw-check 0.3s ease forwards;
   animation-delay: 0.15s;
 }

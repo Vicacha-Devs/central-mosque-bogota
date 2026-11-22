@@ -2,9 +2,7 @@
 import { tv } from "tailwind-variants";
 
 export const nativeSelectWrapper = tv({
-  base: [
-    "group/native-select relative w-fit has-[select:disabled]:opacity-50",
-  ],
+  base: ["group/native-select relative w-fit has-[select:disabled]:opacity-50"],
 });
 
 export const nativeSelect = tv({

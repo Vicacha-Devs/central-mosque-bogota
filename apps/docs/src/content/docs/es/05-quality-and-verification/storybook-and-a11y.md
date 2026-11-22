@@ -35,3 +35,17 @@ pnpm storybook
 
 - **Viewports (`.storybook/constants.ts`)**: `Mobile Small (320px)`, `Mobile (365px)`, `Tablet (768px)`, `Desktop (1024px)` y `Desktop Wide (1440px)` están configurados en `CUSTOM_VIEW_PORTS`.
 - **Selector RTL en Barra Superior (`.storybook/preview.ts`)**: `applyDocumentDirection` sincroniza `globals.addonRtl` (`"ltr"` / `"rtl"`) sobre `document.documentElement.dir`, `document.body.dir` y `#storybook-root.dir` mediante el canal de globals y el decorador de preview para que las reglas `[dir="rtl"]` y las utilidades `rtl:` de Tailwind funcionen en todas las historias Astro.
+
+---
+
+## 4. Auditorías E2E de Página Completa WCAG 2.2 AA y RTL (`apps/frontend/e2e/`)
+
+Además de `addon-a11y` por componente en Storybook, ejecuta auditorías completas en Chromium con Playwright desde la raíz del monorepo:
+
+```bash
+pnpm qa:e2e
+```
+
+- **`apps/frontend/e2e/accessibility.spec.ts`**: Ejecuta `@axe-core/playwright` (`wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa`) y validaciones de navegación por teclado en páginas localizadas.
+- **`apps/frontend/e2e/i18n-and-rtl.spec.ts`**: Verifica `<html lang="ar" dir="rtl">`, ausencia de desbordamiento horizontal en árabe RTL y enrutamiento en los 4 idiomas (`es`, `en`, `ar`, `tr`).
+- **`apps/frontend/e2e/core-journeys.spec.ts`**: Valida flujos interactivos clave (horarios de oración, calculadora de Zakat, feeds BFF y protecciones antispam/validación).

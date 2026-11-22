@@ -22,6 +22,10 @@ storybook-static/
 .env
 .env.*
 !.env.example
+!.env.qa.example
+
+# QA outputs
+.qa/
 
 # Logs & Databases
 *.log

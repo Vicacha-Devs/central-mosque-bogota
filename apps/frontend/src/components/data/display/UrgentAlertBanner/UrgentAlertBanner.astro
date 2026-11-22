@@ -94,8 +94,8 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
   >
     <div
       class="
-        flex min-w-0 flex-1 flex-col items-start gap-1.5 pr-8
-        md:flex-row md:flex-wrap md:items-center md:gap-2 md:pr-0
+        flex min-w-0 flex-1 flex-col items-start gap-1.5 pe-11
+        md:flex-row md:flex-wrap md:items-center md:gap-2 md:pe-0
       "
     >
       <Badge
@@ -169,11 +169,10 @@ const SEVERITY_STYLES: Record<TAlertBannerItem["severity"], string> = {
                     : "Cerrar aviso"
             }
             class="
-              absolute top-0 right-0 inline-flex size-7 items-center
+              absolute inset-e-0 -top-2 inline-flex size-11 items-center
               justify-center rounded-full bg-white/10 text-white transition
               hover:bg-white/20
-              md:static md:size-6
-              rtl:right-auto rtl:left-0
+              md:static md:size-8
             "
           >
             <Icon name="close" class="text-sm" />

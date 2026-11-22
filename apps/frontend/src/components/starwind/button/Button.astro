@@ -1,14 +1,15 @@
 ---
 import ButtonPrimitive from "@starwind-ui/astro/button";
+import { toSafeHref } from "@utils/url.utils";
 import type { HTMLAttributes } from "astro/types";
 import type { VariantProps } from "tailwind-variants";
 import { button } from "./variants";
 
 interface Props
   extends HTMLAttributes<"button">, Omit<HTMLAttributes<"a">, "type">, VariantProps<typeof button> {
-  as?: "button" | "a";
+  "as"?: "button" | "a";
   "data-slot"?: string;
-  focusableWhenDisabled?: boolean;
+  "focusableWhenDisabled"?: boolean;
 }
 
 const {
@@ -26,27 +27,29 @@ const {
 ---
 
 {
-  buttonAs === "a" || href !== undefined ? (
-    <a
-      {...rest}
-      class={button({ variant, size, class: className })}
-      href={disabled ? undefined : href}
-      aria-disabled={disabled ? "true" : undefined}
-      data-disabled={disabled ? "" : undefined}
-      tabindex={disabled ? -1 : tabindex}
-      data-slot={dataSlot}
-    >
-      <slot />
-    </a>
-  ) : (
-    <ButtonPrimitive.Root
-      class={button({ variant, size, class: className })}
-      disabled={disabled}
-      focusableWhenDisabled={focusableWhenDisabled}
-      {...rest}
-      data-slot={dataSlot}
-    >
-      <slot />
-    </ButtonPrimitive.Root>
-  )
+  buttonAs === "a" || href !== undefined
+    ? (
+        <a
+          {...rest}
+          class={button({ variant, size, class: className })}
+          href={disabled ? undefined : toSafeHref(href)}
+          aria-disabled={disabled ? "true" : undefined}
+          data-disabled={disabled ? "" : undefined}
+          tabindex={disabled ? -1 : tabindex}
+          data-slot={dataSlot}
+        >
+          <slot />
+        </a>
+      )
+    : (
+        <ButtonPrimitive.Root
+          class={button({ variant, size, class: className })}
+          disabled={disabled}
+          focusableWhenDisabled={focusableWhenDisabled}
+          {...rest}
+          data-slot={dataSlot}
+        >
+          <slot />
+        </ButtonPrimitive.Root>
+      )
 }

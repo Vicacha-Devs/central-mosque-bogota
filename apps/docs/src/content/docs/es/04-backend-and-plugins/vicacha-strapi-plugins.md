@@ -34,9 +34,9 @@ flowchart TB
 | `@vicacha-devs/strapi-plugin-bookings` | `bookings` | `/api/bookings/*` | `POST /api/submissions` (`visit-booking`) |
 | `@vicacha-devs/strapi-plugin-resources` | `resources` | `/api/resources/*` | `fetchPublicationsFromStrapi`, `fetchGlossaryFromStrapi`, `fetchPhotoGalleriesFromStrapi`, `GET /api/resources/publications/[slug]/download` |
 | `@vicacha-devs/strapi-plugin-media-feeds` | `media-feeds` | `/api/media-feeds/*` | `fetchMediaArchiveFromStrapi`, `GET /api/media-feeds/rss.xml` |
-| `@vicacha-devs/strapi-plugin-broadcasts` | `broadcasts` | `/api/broadcasts/*` | `fetchBroadcastsFromStrapi`, `POST /api/submissions` (`newsletter-subscription`) |
+| `@vicacha-devs/strapi-plugin-broadcasts` | `broadcasts` | `/api/broadcasts/*` | `fetchBroadcastsFromStrapi`, `POST /api/submissions` (`newsletter-subscription`), correo (Resend SMTP), Telegram Bot y WhatsApp (`meta-cloud` / `rmyndharis/OpenWA` autoalojado) |
 | `@vicacha-devs/strapi-plugin-calendar` | `calendar` | `/api/calendar/*` | Sincronización de efemérides Hijri (`islamic-umalqura`) con `QiblaAndObservancesSection` |
-| `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Emisión y verificación de certificados firmados con Ed25519 (Shahada, Nikah y Donaciones) |
+| `@vicacha-devs/strapi-plugin-certificates` | `certificates` | `/api/certificates/*` | Emisión y verificación QR de certificados firmados con Ed25519 y firma electrónica vía **DocuSeal** autoalojado (`ESIGN_PROVIDER=docuseal`, `send_email: false` con plantilla institucional `501` por Resend SMTP, `POST /api/certificates/webhooks/docuseal`) |
 | `@vicacha-devs/strapi-plugin-notes` | `notes` | `/api/notes/*` | Notas editoriales (`plugin::notes.note`) con metadatos de autor/fecha tipo Audit Logs, notas fijadas, categorías y Hub Global (10 idiomas) |
 
 ---
@@ -51,8 +51,8 @@ flowchart TB
 | `@vicacha-devs/strapi-plugin-seo` | `file:` | Componente SEO, `autoPopulateOnSave` / generadores localizados (`apps/backend/config/plugins/seo.plugin.ts`) y analizador SERP/JSON-LD en vivo (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `@juadariasmar/strapi-plugin-typesense` | `^1.0.0` | Indexación en tiempo real hacia Typesense |
 | `strapi-plugin-navigation` | `^3.4.2` | Constructor de menús jerárquicos compatible con modelos `api::*` y `plugin::*` |
-| `strapi-plugin-content-manager-organizer` | `^2.0.3` | Organiza los 28 modelos visibles en 8 carpetas temáticas en la barra lateral |
-| `strapi-plugin-email-designer-5` | `^0.0.10` | Diseñador visual Unlayer para plantillas de correo transaccional |
+| `src/content-structure/groups.json` | Nativo | Agrupación nativa de colecciones de Strapi v5 sincronizada por `src/bootstrap/content-structure.ts` |
+| `strapi-plugin-email-designer-5` | `^0.0.10` | Diseñador visual Unlayer para 20 plantillas institucionales transaccionales y de firma DocuSeal (`101–104`, `201–204`, `301–304`, `401–404`, `501`, `901–903`) enviadas vía Resend SMTP |
 | `strapi-plugin-form-builder-cms` | `1.1.0-rc.2` | Constructor visual de formularios sincronizado con `@vicacha-devs/strapi-plugin-inbox` (incluyendo metadatos de campos `file`) |
 | `@vicacha-devs/strapi-plugin-sitemap` | `file:` | Generador dinámico de sitemap e índice de sitemaps XML multilingüe (`en`, `es`, `ar`, `tr`, `fr`, `pt-BR`) |
 | `strapi-plugin-publisher` | `^2.0.9` | Publicación y despublicación programada |

@@ -11,7 +11,7 @@ vi.mock("@services/strapi", () => ({
 }));
 
 describe("GET /api/prayer-calendar.ics", () => {
-  it("should generate a fallback VCALENDAR when Strapi is unreachable for a month and locale", async () => {
+  it("should generate a valid fallback VCALENDAR when a month and locale are requested", async () => {
     const res = await GET({
       url: new URL(
         "http://localhost:4321/api/prayer-calendar.ics?ym=2026-03&lang=en"
@@ -30,7 +30,7 @@ describe("GET /api/prayer-calendar.ics", () => {
     expect(body).toContain("END:VCALENDAR");
   });
 
-  it("should proxy the upstream VCALENDAR when Strapi is online", async () => {
+  it("should proxy upstream VCALENDAR when Strapi is online", async () => {
     const { fetchStrapiRaw } = await import("@services/strapi");
     vi.mocked(fetchStrapiRaw).mockResolvedValueOnce(
       new Response("BEGIN:VCALENDAR\r\nVERSION:2.0\r\nEND:VCALENDAR\r\n", {

@@ -124,6 +124,30 @@ function isUpstreamHttpRejection(err: unknown): boolean {
   return /Strapi API request failed \(\d+\)/.test(err.message);
 }
 
+function handleUpstreamSubmissionError(
+  err: unknown,
+  rejectedMessage: string
+): Response | null {
+  if (isUpstreamHttpRejection(err)) {
+    return jsonResponse({ ok: false, error: rejectedMessage }, 502);
+  }
+  const allowOfflineFallback =
+    !import.meta.env.PROD ||
+    process.env.ALLOW_OFFLINE_MOCK_SUBMISSIONS === "true";
+  if (!allowOfflineFallback) {
+    return jsonResponse(
+      { ok: false, error: "Upstream submission service unavailable" },
+      503
+    );
+  }
+  return null;
+}
+
+function getTurnstileToken(body: Record<string, unknown>): string | undefined {
+  const token = sanitizeText(body.turnstileToken, 4096);
+  return token || undefined;
+}
+
 function isOriginAllowed(request: Request, url?: URL): boolean {
   if (!url) return true;
   const origin = request.headers.get("origin");
@@ -137,6 +161,10 @@ function isOriginAllowed(request: Request, url?: URL): boolean {
     } catch {
       return false;
     }
+  }
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
+    return false;
   }
   return true;
 }
@@ -177,16 +205,16 @@ async function handleContact(
           subject,
           message,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream service rejected submission" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream service rejected submission"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -249,6 +277,7 @@ async function handleVisit(
           preferredGuideLanguage: locale,
           notes,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
@@ -258,12 +287,11 @@ async function handleVisit(
       referenceCode = upstreamRef.trim();
     }
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream booking service rejected request" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream booking service rejected request"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -353,6 +381,7 @@ async function handleDonation(
           donorNotes: notes,
           notes,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
@@ -362,12 +391,11 @@ async function handleDonation(
       referenceCode = upstreamRef.trim();
     }
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream donation service rejected request" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream donation service rejected request"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -449,16 +477,16 @@ async function handleServiceDesk(
           preferredDate,
           details,
           locale,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream service-desk rejected application" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream service-desk rejected application"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, referenceCode });
@@ -495,16 +523,16 @@ async function handleNewsletter(
           locale,
           topics,
           sourceFormSlug,
+          turnstileToken: getTurnstileToken(body),
         }),
       }
     );
   } catch (err) {
-    if (isUpstreamHttpRejection(err)) {
-      return jsonResponse(
-        { ok: false, error: "Upstream subscription service rejected request" },
-        502
-      );
-    }
+    const errorRes = handleUpstreamSubmissionError(
+      err,
+      "Upstream subscription service rejected request"
+    );
+    if (errorRes) return errorRes;
   }
 
   return jsonResponse({ ok: true, status: "pending" });
@@ -540,10 +568,10 @@ export const POST: APIRoute = async ({ request, url, clientAddress }) => {
     }
 
     const addr = (clientAddress as string | undefined) ?? "";
-    const forwardedIp = request.headers
-      .get("x-forwarded-for")
-      ?.split(",")[0]
-      ?.trim();
+    const trustProxy = process.env.TRUST_PROXY === "true";
+    const forwardedIp = trustProxy
+      ? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      : undefined;
     const clientKey =
       addr.length > 0
         ? addr

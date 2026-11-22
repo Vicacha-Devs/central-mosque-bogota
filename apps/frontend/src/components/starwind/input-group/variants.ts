@@ -26,8 +26,10 @@ export const inputGroupAddon = tv({
     align: {
       "inline-start": "order-first ps-2.5 has-[>button]:ms-[-0.3rem]",
       "inline-end": "order-last pe-2.5 has-[>button]:me-[-0.3rem]",
-      "block-start": "order-first w-full justify-start px-3 pt-2 group-has-[>input]/input-group:pt-2.5 [.border-b]:pb-2.5",
-      "block-end": "order-last w-full justify-start px-3 pb-2 group-has-[>input]/input-group:pb-2.5 [.border-t]:pt-2.5",
+      "block-start":
+        "order-first w-full justify-start px-3 pt-2 group-has-[>input]/input-group:pt-2.5 [.border-b]:pb-2.5",
+      "block-end":
+        "order-last w-full justify-start px-3 pb-2 group-has-[>input]/input-group:pb-2.5 [.border-t]:pt-2.5",
     },
   },
   defaultVariants: {
@@ -39,7 +41,7 @@ export const inputGroupButton = tv({
   base: "gap-2 rounded-sm shadow-none",
   variants: {
     size: {
-      sm: "h-8 px-2",
+      "sm": "h-8 px-2",
       "icon-sm": "size-8 p-0 has-[>svg]:p-0",
     },
   },

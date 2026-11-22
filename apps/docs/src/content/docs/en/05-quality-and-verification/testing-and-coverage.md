@@ -57,3 +57,21 @@ flowchart LR
      ```
 2. **Always Close Happy-DOM Windows**:
    - Wrap assertions in `try { ... } finally { await close(); }` so background timers and observers are cleaned up.
+
+---
+
+## 5. Multi-Repo QA Control Center, Plugin Link Switcher & Playwright E2E
+
+In addition to Vitest unit coverage, the repository ships an offline-first QA automation suite under `scripts/qa/` and full-stack Playwright E2E tests under `apps/frontend/e2e/`:
+
+| Command | Purpose |
+| :--- | :--- |
+| `pnpm qa:doctor` | Verifies Node.js runtime, `@vicacha-devs/*` link integrity, Strapi version parity with `strapi-v5-extensions`, and loopback-only QA Compose security |
+| `pnpm qa:judges` | Runs 4 offline adversarial judges: doc line limit (`<= 500`), 4-locale parity (`es/en/ar/tr`), XSS `set:html` scan, and Playwright E2E suite presence |
+| `pnpm qa:verify` | Executes doctor + judges + backend 10-plugin runtime tests + frontend Vitest, emitting `.qa/report.json` and interactive `.qa/dashboard.html` |
+| `pnpm qa:report` | Aggregates `.qa/report.json` from sibling Vicacha repos into a unified multi-repo HTML Control Center |
+| `pnpm qa:link:status` / `qa:link:local` / `qa:link:npm` | Toggles all 17 `@vicacha-devs/strapi-plugin-*` deps, overrides, and `@vicacha-devs/astro-tiptap-blocks` between sibling `file:` paths and npm semver (`.qa-plugin-versions.json`) |
+| `pnpm qa:docker:up` / `qa:docker:down` | Manages port-isolated `127.0.0.1` QA services (`docker-compose.qa.yml`: Postgres `5433`, Valkey `6380`, Typesense `8109`, Mailpit `1026`/`8026`) |
+| `pnpm qa:smoke` / `pnpm qa:e2e` | Runs live HTTP route/iCal/RSS smoke tests and Playwright Chromium E2E + WCAG 2.2 AA suites (`i18n-and-rtl.spec.ts`, `core-journeys.spec.ts`, `accessibility.spec.ts`) |
+
+> **CI Automation**: `.github/workflows/ci.yml` and `e2e.yml` auto-switch unresolved `file:` links to npm in standalone CI and upload `.qa/dashboard.html` as a build artifact; `.github/workflows/qa-cross-repo.yml` checks out `strapi-v5-extensions` and `astro-tiptap-blocks` together for live cross-repo verification.

@@ -41,10 +41,15 @@ export function initSiteSearch(root: ParentNode = document): void {
 
       filterButtons.forEach((b) => {
         const isActive = b === btn;
+        b.setAttribute("aria-pressed", String(isActive));
         b.classList.toggle("bg-secondary", isActive);
         b.classList.toggle("text-white", isActive);
-        b.classList.toggle("bg-white", !isActive);
-        b.classList.toggle("text-slate-700", !isActive);
+        b.classList.toggle("shadow-sm", isActive);
+        b.classList.toggle("border", !isActive);
+        b.classList.toggle("border-border", !isActive);
+        b.classList.toggle("bg-card", !isActive);
+        b.classList.toggle("text-foreground", !isActive);
+        b.classList.toggle("hover:bg-muted", !isActive);
       });
 
       applyFilters();

@@ -1,4 +1,3 @@
-// Control characters are intentionally matched so they can be stripped.
 const ICS_CONTROL_CHARS_REGEX =
   // eslint-disable-next-line no-control-regex
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;

@@ -7,12 +7,16 @@ Utiliza este checklist antes de publicar un release o integrar una rama importan
 
 ```bash
 pnpm verify
+pnpm qa:verify
 ```
 
 ---
 
-## 1. Compuertas Automatizadas de Análisis Estático y Build
+## 1. Compuertas Automatizadas de Análisis Estático, Centro de Control QA y Build
 
+- [ ] **QA Doctor y Jueces Adversarios (`pnpm qa:verify`)**: Aprueba paridad de Strapi, límite de `<= 500` líneas en documentación, paridad de 4 idiomas, escaneo XSS `set:html`, E2E de 10 plugins del backend y Vitest del frontend, generando `.qa/report.json` y `.qa/dashboard.html`.
+- [ ] **Compuerta de Enlaces de Plugins (`pnpm qa:link:status`)**: Antes de fusionar a `main` o publicar un release, ejecuta `pnpm qa:link:npm` y verifica que `node ./scripts/qa/link-plugins.ts --check-ci` apruebe sin enlaces locales `file:`.
+- [ ] **Playwright E2E y WCAG 2.2 AA (`pnpm qa:smoke` y `pnpm qa:e2e`)**: Sobre el stack QA (`pnpm qa:docker:up` + backend/frontend), aprueba `apps/frontend/e2e/{i18n-and-rtl,core-journeys,accessibility}.spec.ts`.
 - [ ] **Formato (`oxfmt`)**: `./node_modules/.bin/oxfmt --check` en `apps/frontend/` finaliza con código `0` (máximo 80 columnas por línea).
 - [ ] **Linting (`eslint`)**: `./node_modules/.bin/eslint . --quiet` en `apps/frontend/` finaliza con `0` errores en archivos `.astro`, `.ts`, `.json`, `.css` y `.md`.
 - [ ] **Diagnósticos TypeScript y Astro (`astro check`)**: `./node_modules/.bin/astro check` reporta `0 errors` en los 477+ archivos.

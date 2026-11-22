@@ -7,12 +7,16 @@ Use this checklist before cutting a release or merging a major feature branch. T
 
 ```bash
 pnpm verify
+pnpm qa:verify
 ```
 
 ---
 
-## 1. Automated Static Analysis & Build Gates
+## 1. Automated Static Analysis, QA Control Center & Build Gates
 
+- [ ] **QA Doctor & Adversarial Judges (`pnpm qa:verify`)**: Exits cleanly across runtime/Strapi parity, doc `<= 500` line limit, 4-locale parity, XSS `set:html` scan, backend 10-plugin E2E, and frontend Vitest, updating `.qa/report.json` and `.qa/dashboard.html`.
+- [ ] **Plugin Link Mode Guardrail (`pnpm qa:link:status`)**: Before merging to `main` or cutting a standalone release, run `pnpm qa:link:npm` and confirm `node ./scripts/qa/link-plugins.ts --check-ci` passes with zero unresolved `file:` links.
+- [ ] **Playwright E2E & WCAG 2.2 AA (`pnpm qa:smoke` & `pnpm qa:e2e`)**: Against running QA stack (`pnpm qa:docker:up` + backend/frontend), passes `apps/frontend/e2e/{i18n-and-rtl,core-journeys,accessibility}.spec.ts`.
 - [ ] **Formatting (`oxfmt`)**: `./node_modules/.bin/oxfmt --check` in `apps/frontend/` exits with `0` (all files adhere to the 80-column print width).
 - [ ] **Linting (`eslint`)**: `./node_modules/.bin/eslint . --quiet` in `apps/frontend/` exits with `0` errors across `.astro`, `.ts`, `.json`, `.css`, and `.md` files.
 - [ ] **TypeScript & Astro Diagnostics (`astro check`)**: `./node_modules/.bin/astro check` reports `0 errors` across all 477+ files.

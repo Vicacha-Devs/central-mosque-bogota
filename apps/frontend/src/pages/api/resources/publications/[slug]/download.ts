@@ -160,6 +160,7 @@ export const GET: APIRoute = async ({ params, url }) => {
               "Content-Disposition": `attachment; filename="${rawSlug}-${safeLang}.pdf"`,
               "X-Content-Type-Options": "nosniff",
               "X-Frame-Options": "DENY",
+              "Content-Security-Policy": "default-src 'none'; sandbox",
               "Cache-Control": "public, max-age=3600",
             },
           });
@@ -196,6 +197,7 @@ export const GET: APIRoute = async ({ params, url }) => {
       "Content-Disposition": `attachment; filename="${rawSlug}-${safeLang}.pdf"`,
       "X-Content-Type-Options": "nosniff",
       "X-Frame-Options": "DENY",
+      "Content-Security-Policy": "default-src 'none'; sandbox",
       "Cache-Control": "public, max-age=3600",
     },
   });
